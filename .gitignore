@@ -1,0 +1,5 @@
+.ipynb_checkpoints
+chest_xray
+data
+.DS_Store
+*.zip
