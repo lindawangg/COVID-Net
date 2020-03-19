@@ -3,3 +3,4 @@ chest_xray
 data
 .DS_Store
 *.zip
+__pycache__
