@@ -1,5 +1,7 @@
-## COVID-19 Classifier
-WIP
+## COVID-19 Classifier (WIP)
+To train:
+* download npy files from [here](https://drive.google.com/file/d/1zCnmcMxSRZTqJywur7jCqZk0z__Mevxp/view?usp=sharing)
+* use train.ipynb to train model
 
 ## Chest X-Ray and CT Dataset
 Combined datasets from https://github.com/ieee8023/covid-chestxray-dataset and https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia
