@@ -3,21 +3,28 @@ The COVID-19 pandemic continues to have a devastating effect on the health and w
 
 If you would like to contribute COVID-19 x-ray images, please contact us at linda.wang513@gmail.com and a28wong@uwaterloo.ca/alex@darwinai.ca. Lets all work together to stop the spread of COVID-19!
 
+## COVIDx Dataset
+Currently, the COVIDx dataset is constructed by the following open source chest radiography datasets:
+* https://github.com/ieee8023/covid-chestxray-dataset
+* https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia
+
+The COVIDx dataset can be downloaded [here](https://drive.google.com/file/d/1-T26bHP7MCwB8vWeKufjGmPKl8pesM1J/view?usp=sharing).
+Preprocessed ready-for-training COVIDx dataset can be downloaded [here](https://drive.google.com/file/d/1zCnmcMxSRZTqJywur7jCqZk0z__Mevxp/view?usp=sharing).
+
+Chest radiography images distribution
+|  Type | Normal | Viral | Bacteria | COVID-19 | Total |
+|:-----:|:------:|:-----:|:--------:|:--------:|:-----:|
+| train |  1349  |  1355 |   2540   |    60    |  5304 |
+|  test |   234  |  149  |    246   |     8    |   637 |
+
+Patients distribution
+|  Type | Normal | Viral | Bacteria | COVID-19 | Total |
+|:-----:|:------:|:-----:|:--------:|:--------:|:-----:|
+| train |  1001  |  534  |   853    |    41    | 2429  |
+|  test |   202  |  126  |    78    |     4    |  410  |
+
 ## Training
-To train:
-* download npy files from [here](https://drive.google.com/file/d/1zCnmcMxSRZTqJywur7jCqZk0z__Mevxp/view?usp=sharing)
-* use train.ipynb to train model
-
-## Chest X-Ray and CT Dataset
-Combined datasets from https://github.com/ieee8023/covid-chestxray-dataset and https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia
-
-Combined dataset can be downloaded [here](https://drive.google.com/file/d/1-T26bHP7MCwB8vWeKufjGmPKl8pesM1J/view?usp=sharing)
-
-Stats
-|  Type | Normal | Viral | Bacteria | COVID-19 |
-|:-----:|:------:|:-----:|:--------:|:--------:|
-| train |  1349  |  1355 |   2540   |    60    |
-|  test |   234  |  149  |    246   |     8    |
+(Releasing soon)
 
 ## License
 Our desire is to encourage broad adoption and contribution to this project. Accordingly this project has been licensed under the GNU Affero General Public License 3.0. If you would like to discuss alternative licensing models, please reach out to us at: linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca
