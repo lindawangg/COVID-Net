@@ -28,7 +28,6 @@ Currently, the COVIDx dataset is constructed by the following open source chest 
 The COVIDx dataset can be downloaded [here](https://drive.google.com/file/d/1-T26bHP7MCwB8vWeKufjGmPKl8pesM1J/view?usp=sharing).
 Preprocessed ready-for-training COVIDx dataset can be downloaded [here](https://drive.google.com/file/d/1zCnmcMxSRZTqJywur7jCqZk0z__Mevxp/view?usp=sharing).
 
-<center>
 Chest radiography images distribution
 |  Type | Normal | Viral | Bacteria | COVID-19 | Total |
 |:-----:|:------:|:-----:|:--------:|:--------:|:-----:|
@@ -40,19 +39,18 @@ Patients distribution
 |:-----:|:------:|:-----:|:--------:|:--------:|:-----:|
 | train |  1001  |  534  |   853    |    41    | 2429  |
 |  test |   202  |  126  |    78    |     4    |  410  |
-</center>
 
 ## Training and Evaluation
 (Releasing soon)
 
 ## Results
 <p align="center">
-	<img src="assets/confusion.png" alt="photo not available" width="70%" height="70%">
+	<img src="assets/confusion.png" alt="photo not available" width="50%" height="50%">
 	<br>
 	<em>Confusion matrix for COVID-Net on the COVIDx test dataset.</em>
 </p>
 
-<div class="tg-wrap"><table class="tg">
+<div class="tg-wrap" align="center"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="4">Sensitivity (%)</th>
   </tr>
