@@ -31,7 +31,17 @@ Patients distribution
 | train |  1001  |  534  |   853    |    41    | 2429  |
 |  test |   202  |  126  |    78    |     4    |  410  |
 
-## Training
+## Training and Evaluation
+(Releasing soon)
+
+## Results
+<p align="center">
+	<img src="assets/cm-edge.png" alt="photo not available" width="70%" height="70%">
+	<br>
+	<em>Confusion matrix for COVID-Net on the COVIDx test dataset.</em>
+</p>
+
+## Pretrained Models
 (Releasing soon)
 
 ## License
