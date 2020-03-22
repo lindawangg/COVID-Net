@@ -8,3 +8,11 @@ callbacks.py
 class_labels.csv
 explain/
 masks.ipynb
+eval.ipynb
+get_stats.ipynb
+graph.csv
+hyperparameter_op.ipynb
+models/
+output/
+train-Copy1.ipynb
+train.py
