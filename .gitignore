@@ -4,3 +4,11 @@ data
 .DS_Store
 *.zip
 __pycache__
+eval.ipynb
+get_stats.ipynb
+graph.csv
+hyperparameter_op.ipynb
+models/
+output/
+train-Copy1.ipynb
+train.py
