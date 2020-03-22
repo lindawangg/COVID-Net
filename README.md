@@ -13,3 +13,6 @@ Stats
 |:-----:|:------:|:-----:|:--------:|:--------:|
 | train |  1349  |  1355 |   2540   |    60    |
 |  test |   234  |  149  |    246   |     8    |
+
+## License
+Our desire is to encourage broad adoption and contribution to this project. Accordingly this project has been licensed under the GNU Affero General Public License 3.0. If you would like to discuss alternative licensing models, please reach out to us at: linda.wang513@gmail.com and alex@darwinai.ca
