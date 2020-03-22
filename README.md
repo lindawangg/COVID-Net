@@ -11,9 +11,14 @@ The COVID-19 pandemic continues to have a devastating effect on the health and w
 
 If you would like to contribute COVID-19 x-ray images, please contact us at linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca. Lets all work together to stop the spread of COVID-19!
 
-If you are a researcher or healthcare worker and you would like access to the GSInquire tool to use to interpret CovidNet results on your data or existing data, please reach out to a28wong@uwaterloo.ca or alex@darwinai.ca
+If you are a researcher or healthcare worker and you would like access to the GSInquire tool to use to interpret COVID-Net results on your data or existing data, please reach out to a28wong@uwaterloo.ca or alex@darwinai.ca
 
 Our desire is to encourage broad adoption and contribution to this project. Accordingly this project has been licensed under the GNU Affero General Public License 3.0. Please see [license file](LICENSE.md) for terms. If you would like to discuss alternative licensing models, please reach out to us at: linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca.
+
+## Requirements
+* Tested with Tensorflow 1.13 and 1.15
+* Keras 2.3.1
+* OpenCV 4.2.0
 
 ## COVIDx Dataset
 Currently, the COVIDx dataset is constructed by the following open source chest radiography datasets:
@@ -23,6 +28,7 @@ Currently, the COVIDx dataset is constructed by the following open source chest 
 The COVIDx dataset can be downloaded [here](https://drive.google.com/file/d/1-T26bHP7MCwB8vWeKufjGmPKl8pesM1J/view?usp=sharing).
 Preprocessed ready-for-training COVIDx dataset can be downloaded [here](https://drive.google.com/file/d/1zCnmcMxSRZTqJywur7jCqZk0z__Mevxp/view?usp=sharing).
 
+<center>
 Chest radiography images distribution
 |  Type | Normal | Viral | Bacteria | COVID-19 | Total |
 |:-----:|:------:|:-----:|:--------:|:--------:|:-----:|
@@ -34,6 +40,7 @@ Patients distribution
 |:-----:|:------:|:-----:|:--------:|:--------:|:-----:|
 | train |  1001  |  534  |   853    |    41    | 2429  |
 |  test |   202  |  126  |    78    |     4    |  410  |
+</center>
 
 ## Training and Evaluation
 (Releasing soon)
@@ -82,4 +89,4 @@ Patients distribution
 </table></div>
 
 ## Pretrained Models
-(Releasing soon)
+Can download COVID-Net tensorflow model from [here](https://drive.google.com/file/d/1pwtXGDLbo-31ILjf2devYRds8Ue3aJFn/view?usp=sharing)
