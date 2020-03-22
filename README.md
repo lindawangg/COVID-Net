@@ -25,23 +25,26 @@ Currently, the COVIDx dataset is constructed by the following open source chest 
 * https://github.com/ieee8023/covid-chestxray-dataset
 * https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia
 
+We provide jupyter notebooks for [creating the COVIDx dataset](create_COVIDx.ipynb) and the [preprocessing](preprocessing.ipynb) used for training.
+This project is still a work in progress and will continuously update these files.
+
 The COVIDx dataset can be downloaded [here](https://drive.google.com/file/d/1-T26bHP7MCwB8vWeKufjGmPKl8pesM1J/view?usp=sharing).
 Preprocessed ready-for-training COVIDx dataset can be downloaded [here](https://drive.google.com/file/d/1zCnmcMxSRZTqJywur7jCqZk0z__Mevxp/view?usp=sharing).
 
 Chest radiography images distribution
-|  Type | Normal | Viral | Bacteria | COVID-19 | Total |
-|:-----:|:------:|:-----:|:--------:|:--------:|:-----:|
-| train |  1349  |  1355 |   2540   |    60    |  5304 |
-|  test |   234  |  149  |    246   |     8    |   637 |
+|  Type | Normal | Bacterial| Non-COVID19 Viral | COVID-19 Viral | Total |
+|:-----:|:------:|:--------:|:-----------------:|:--------------:|:-----:|
+| train |  1349  |   2540   |       1355        |        60      |  5304 |
+|  test |   234  |    246   |        149        |         8      |   637 |
 
 Patients distribution
-|  Type | Normal | Viral | Bacteria | COVID-19 | Total |
-|:-----:|:------:|:-----:|:--------:|:--------:|:-----:|
-| train |  1001  |  534  |   853    |    41    | 2429  |
-|  test |   202  |  126  |    78    |     4    |  410  |
+|  Type | Normal | Bacterial | Non-COVID19 Viral| COVID-19 Viral | Total |
+|:-----:|:------:|:---------:|:----------------:|:--------------:|:-----:|
+| train |  1001  |     853   |        534       |       41       | 2429  |
+|  test |   202  |      78   |        126       |        4       |  410  |
 
 ## Training and Evaluation
-(Releasing soon)
+Releasing soon but can download COVID-Net and start training/inferencing [here](hhttps://drive.google.com/file/d/1FyfcAkRf-0gQ1nOrDJ9ccGVSZAO9VFP1/view?usp=sharing).
 
 ## Results
 <p align="center">
@@ -87,4 +90,4 @@ Patients distribution
 </table></div>
 
 ## Pretrained Models
-Can download COVID-Net tensorflow model from [here](https://drive.google.com/file/d/1pwtXGDLbo-31ILjf2devYRds8Ue3aJFn/view?usp=sharing)
+Can download COVID-Net tensorflow model from [here](https://drive.google.com/file/d/1FyfcAkRf-0gQ1nOrDJ9ccGVSZAO9VFP1/view?usp=sharing)
