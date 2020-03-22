@@ -4,3 +4,7 @@ data
 .DS_Store
 *.zip
 __pycache__
+callbacks.py
+class_labels.csv
+explain/
+masks.ipynb
