@@ -44,7 +44,7 @@ Patients distribution
 |  test |   202  |      78   |        126       |        4       |  410  |
 
 ## Training and Evaluation
-Releasing soon but can download COVID-Net and start training/inferencing [here](hhttps://drive.google.com/file/d/1FyfcAkRf-0gQ1nOrDJ9ccGVSZAO9VFP1/view?usp=sharing).
+Releasing soon but can download COVID-Net and start training/inferencing [here](https://drive.google.com/file/d/1FyfcAkRf-0gQ1nOrDJ9ccGVSZAO9VFP1/view?usp=sharing).
 
 ## Results
 <p align="center">
