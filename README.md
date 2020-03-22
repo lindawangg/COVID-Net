@@ -11,6 +11,8 @@ The COVID-19 pandemic continues to have a devastating effect on the health and w
 
 If you would like to contribute COVID-19 x-ray images, please contact us at linda.wang513@gmail.com and a28wong@uwaterloo.ca/alex@darwinai.ca. Lets all work together to stop the spread of COVID-19!
 
+Our desire is to encourage broad adoption and contribution to this project. Accordingly this project has been licensed under the GNU Affero General Public License 3.0. Please see [license file](LICENSE.md) for terms. If you would like to discuss alternative licensing models, please reach out to us at: linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca.
+
 ## COVIDx Dataset
 Currently, the COVIDx dataset is constructed by the following open source chest radiography datasets:
 * https://github.com/ieee8023/covid-chestxray-dataset
@@ -43,6 +45,3 @@ Patients distribution
 
 ## Pretrained Models
 (Releasing soon)
-
-## License
-Our desire is to encourage broad adoption and contribution to this project. Accordingly this project has been licensed under the GNU Affero General Public License 3.0. If you would like to discuss alternative licensing models, please reach out to us at: linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca
