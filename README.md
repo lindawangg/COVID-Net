@@ -19,6 +19,7 @@ Our desire is to encourage broad adoption and contribution to this project. Acco
 * Tested with Tensorflow 1.13 and 1.15
 * Keras 2.3.1
 * OpenCV 4.2.0
+* Python 3.6
 
 ## COVIDx Dataset
 Currently, the COVIDx dataset is constructed by the following open source chest radiography datasets:
