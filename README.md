@@ -46,6 +46,10 @@ Patients distribution
 ## Training and Evaluation
 Releasing soon but can download COVID-Net and start training/inferencing [here](https://drive.google.com/file/d/1FyfcAkRf-0gQ1nOrDJ9ccGVSZAO9VFP1/view?usp=sharing).
 
+Input tensor (N, 224, 224, 3): `input_1:0`
+
+Output tensor (N, 4): `dense_3/Softmax:0`
+
 ## Results
 <p align="center">
 	<img src="assets/confusion.png" alt="photo not available" width="50%" height="50%">
