@@ -66,6 +66,10 @@ Input tensor (N, 224, 224, 3): `input_1:0`
 Output tensor (N, 4): `dense_3/Softmax:0`
 
 ## Results
+The results do not reflect the new COVIDx dataset.
+The results are still from the previous COVIDx dataset with 8 COVID test samples.
+Will update when new results become available.  
+
 <p align="center">
 	<img src="assets/confusion.png" alt="photo not available" width="50%" height="50%">
 	<br>
