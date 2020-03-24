@@ -635,3 +635,5 @@
 1000109 person109_bacteria_512.jpeg bacteria
 100083 person83_bacteria_410.jpeg bacteria
 1000112 person112_bacteria_538.jpeg bacteria
+86 B2D20576-00B7-4519-A415-72DE29C90C34.jpeg COVID-19
+86 6C94A287-C059-46A0-8600-AFB95F4727B7.jpeg COVID-19
