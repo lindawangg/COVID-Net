@@ -33,8 +33,11 @@ If you find our work useful, can cite our paper using:
 * Keras 2.3.1
 * OpenCV 4.2.0
 * Python 3.6
+* OpenCV
 
 ## COVIDx Dataset
+**Update: We are currently constructing an new COVIDx dataset in light of the Kaggle dataset being composed of pediatric patient cases.  Please stay tuned for the new COVIDx dataset and accompanying COVID-Net model.**
+
 Currently, the COVIDx dataset is constructed by the following open source chest radiography datasets:
 * https://github.com/ieee8023/covid-chestxray-dataset
 * https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia
