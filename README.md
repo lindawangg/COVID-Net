@@ -35,6 +35,8 @@ If you find our work useful, can cite our paper using:
 * Python 3.6
 * OpenCV
 
+[Run it on dockerized JupyterLab in your machine](docker/README.md)
+
 ## COVIDx Dataset
 **Update: We are currently constructing an new COVIDx dataset in light of the Kaggle dataset being composed of pediatric patient cases.  Please stay tuned for the new COVIDx dataset and accompanying COVID-Net model.**
 

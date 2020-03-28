@@ -1,0 +1,11 @@
+{
+ "argv": [
+  "/opt/covidnet/bin/python",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "covidNet",
+ "language": "python"
+}

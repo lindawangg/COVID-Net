@@ -1,0 +1,15 @@
+---
+version: '3'
+services:
+  covidnetlab:
+    hostname: covidnetlab
+    container_name: covidnetlab
+    image: covidnetlab
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/home/ds/covidNet
+      - ../covid-chestxray-dataset:/home/ds/covid-chestxray-dataset
