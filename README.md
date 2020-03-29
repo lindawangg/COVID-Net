@@ -196,5 +196,5 @@ These are the final results for COVID-Net Small and COVID-Net Large.
 
 |  Type | COVID-19 Sensitivity | # Params (M) | MACs (G) |        Model        |
 |:-----:|:--------------------:|:------------:|:--------:|:-------------------:|
-|  ckpt |         80.0         |     116.6    |   2.26   |[COVID-Net Small](https://drive.google.com/file/d/1djqWcxzRehtyJV9EQsppj1YdgsP2JRQy/view?usp=sharing)|
-|  ckpt |         90.0         |     126.6    |   3.59   |[COVID-Net Large](https://drive.google.com/file/d/1xrxK9swFVlFI-WAYcccIgm0tt9RgawXD/view?usp=sharing)|
+|  ckpt |         80.0         |     116.6    |   2.26   |[COVID-Net Small](https://drive.google.com/file/d/1xrxK9swFVlFI-WAYcccIgm0tt9RgawXD/view?usp=sharing)|
+|  ckpt |         90.0         |     126.6    |   3.59   |[COVID-Net Large](https://drive.google.com/file/d/1djqWcxzRehtyJV9EQsppj1YdgsP2JRQy/view?usp=sharing)|
