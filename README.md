@@ -20,7 +20,10 @@ If you are a researcher or healthcare worker and you would like access to the GS
 
 Our desire is to encourage broad adoption and contribution to this project. Accordingly this project has been licensed under the GNU Affero General Public License 3.0. Please see [license file](LICENSE.md) for terms. If you would like to discuss alternative licensing models, please reach out to us at: linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca.
 
-If there are any technical questions, please contact desmond.zq.lin@gmail.com
+If there are any technical questions, please contact:
+* desmond.zq.lin@gmail.com
+* paul@darwinai.ca
+* jamesrenhoulee@gmail.com
 
 If you find our work useful, can cite our paper using:
 
