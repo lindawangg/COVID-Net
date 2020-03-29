@@ -8,9 +8,7 @@
 
 **Core COVID-Net team: Linda Wang, Alexander Wong, Zhong Qiu Lin, James Lee, Paul McInnis**
 
-**Linda Wang and Alexander Wong, "COVID-Net: A Tailored Deep Convolutional Neural Network Design for Detection of COVID-19 Cases from Chest Radiography Images", 2020.**
-
-The COVID-19 pandemic continues to have a devastating effect on the health and well-being of the global population.  A critical step in the fight against COVID-19 is effective screening of infected patients, with one of the key screening approaches being radiological imaging using chest radiography.  It was found in early studies that patients present abnormalities in chest radiography images that are characteristic of those infected with COVID-19.  Motivated by this, a number of artificial intelligence (AI) systems based on deep learning have been proposed and results have been shown to be quite promising in terms of accuracy in detecting patients infected with COVID-19 using chest radiography images.  However, to the best of the authors' knowledge, these developed AI systems have been closed source and unavailable to the research community for deeper understanding and extension, and unavailable for public access and use.  Therefore, in this study we introduce COVID-Net, a deep convolutional neural network design tailored for the detection of COVID-19 cases from chest radiography images that is open source and available to the general public.  We also describe the chest radiography dataset leveraged to train COVID-Net, which we will refer to as COVIDx and is comprised of 16,756 posteroanterior chest radiography images across 13,645 patient cases from two open access data repositories.  Furthermore, we investigate how COVID-Net makes predictions using an explainability method in an attempt to gain deeper insights into critical factors associated with COVID cases, which can aid clinicians in improved screening.  By no means a production-ready solution, the hope is that the open access COVID-Net, along with the description on constructing the open source COVIDx dataset, will be leveraged and build upon by both researchers and citizen data scientists alike to accelerate the development of highly accurate yet practical deep learning solutions for detecting COVID-19 cases and accelerate treatment of those who need it the most.
+The COVID-19 pandemic continues to have a devastating effect on the health and well-being of the global population.  A critical step in the fight against COVID-19 is effective screening of infected patients, with one of the key screening approaches being radiological imaging using chest radiography.  It was found in early studies that patients present abnormalities in chest radiography images that are characteristic of those infected with COVID-19.  Motivated by this, a number of artificial intelligence (AI) systems based on deep learning have been proposed and results have been shown to be quite promising in terms of accuracy in detecting patients infected with COVID-19 using chest radiography images.  However, to the best of the authors' knowledge, these developed AI systems have been closed source and unavailable to the research community for deeper understanding and extension, and unavailable for public access and use.  Therefore, in this study we introduce COVID-Net, a deep convolutional neural network design tailored for the detection of COVID-19 cases from chest radiography images that is open source and available to the general public.  We also describe the chest radiography dataset leveraged to train COVID-Net, which we will refer to as COVIDx and is comprised of 16,756 chest radiography images across 13,645 patient cases from two open access data repositories.  Furthermore, we investigate how COVID-Net makes predictions using an explainability method in an attempt to gain deeper insights into critical factors associated with COVID cases, which can aid clinicians in improved screening.  By no means a production-ready solution, the hope is that the open access COVID-Net, along with the description on constructing the open source COVIDx dataset, will be leveraged and build upon by both researchers and citizen data scientists alike to accelerate the development of highly accurate yet practical deep learning solutions for detecting COVID-19 cases and accelerate treatment of those who need it the most.
 
 For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](assets/COVID_Netv2.pdf).
 
@@ -21,6 +19,8 @@ If you would like to contribute COVID-19 x-ray images, please contact us at lind
 If you are a researcher or healthcare worker and you would like access to the GSInquire tool to use to interpret COVID-Net results on your data or existing data, please reach out to a28wong@uwaterloo.ca or alex@darwinai.ca
 
 Our desire is to encourage broad adoption and contribution to this project. Accordingly this project has been licensed under the GNU Affero General Public License 3.0. Please see [license file](LICENSE.md) for terms. If you would like to discuss alternative licensing models, please reach out to us at: linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca.
+
+If there are any technical questions, please contact desmond.zq.lin@gmail.com
 
 If you find our work useful, can cite our paper using:
 
@@ -49,7 +49,7 @@ The main requirements are listed below:
 
 ## COVIDx Dataset
 
-**Update: we have released the brand-new COVIDx dataset with 16,756 posteroanterior chest radiography images across 13,645 patient cases.**
+**Update: we have released the brand-new COVIDx dataset with 16,756 chest radiography images across 13,645 patient cases.**
 
 The current COVIDx dataset is constructed by the following open source chest radiography datasets:
 * https://github.com/ieee8023/covid-chestxray-dataset
@@ -73,7 +73,7 @@ We especially thank the Radiological Society of North America and others involve
 Chest radiography images distribution
 |  Type | Normal | Pneumonia | COVID-19 | Total |
 |:-----:|:------:|:---------:|:--------:|:-----:|
-| train |  7966  |    8514   |    66    | 16279 |
+| train |  7966  |    8514   |    66    | 16546 |
 |  test |   100  |     100   |    10    |   210 |
 
 Patients distribution
