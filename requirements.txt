@@ -41,7 +41,7 @@ mistune==0.8.4
 nbconvert==5.4.1
 nbformat==4.4.0
 networkx==2.4
-notebook==5.7.4
+notebook==5.7.8
 numpy==1.18.1
 opencv-python==4.2.0.32
 opt-einsum==3.1.0
