@@ -41,22 +41,9 @@ RUN apt-get clean && \
 	rm -Rf /var/cache/* && \
 	rm -Rf /root/.cache
 
-COPY requirements.txt covidnet-requirements.txt
-
-# -----------------------------------------------------------------------------
-# This docker does not expose gpu to the container so we replace 
-# the gpu version for the none gpu version
-# -----------------------------------------------------------------------------
-RUN sed -i "s/tensorflow-gpu/tensorflow/g" covidnet-requirements.txt
-# -----------------------------------------------------------------------------
-# Workaround as pipeline not found on debian python 3.6 pip.
-# -----------------------------------------------------------------------------
-RUN sed -i '/pipeline==0.1/d' covidnet-requirements.txt
-# -----------------------------------------------------------------------------
-
 USER ${USER}
 
-COPY docker/opt/ .
+COPY ./opt .
 
 RUN virtualenv covidnet && \
 	covidnet/bin/pip install ipykernel && \

@@ -17,3 +17,4 @@ export_to_meta.py
 model.py
 train_tf.py
 archive/
+requirements.txt

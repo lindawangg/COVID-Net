@@ -42,17 +42,22 @@ If you find our work useful, can cite our paper using:
 
 ## Requirements
 
-Install requirements using `pip install -r requirements.txt`
-
 The main requirements are listed below:
 
 * Tested with Tensorflow 1.13 and 1.15
 * OpenCV 4.2.0
 * Python 3.6
-* OpenCV
-* PyDicom
+* Numpy
+* Scikit-Learn
+* Matplotlib
 
-[Run it on dockerized JupyterLab in your machine](docker/README.md)
+Additional requirements to generate dataset:
+
+* PyDicom
+* Pandas
+* Jupyter
+
+Please refer to [covidnet-requirements.txt](docker/opt/covidnet-requirements.txt) to install the needed packages on your local machine or [Run it on dockerized JupyterLab in your machine](docker/README.md)
 
 ## COVIDx Dataset
 
@@ -114,7 +119,7 @@ Releasing TF training script from pretrained model soon.
 3. To evaluate a tf checkpoint, `python eval.py --weightspath models/COVID-Netv2 --metaname model.meta_eval --ckptname model-2069`
 4. For more options and information, `python eval.py --help`
 
-### Step for inference
+### Steps for inference
 **DISCLAIMER: Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.**
 
 1. Download a model from the [pretrained models section](#pretrained-models)

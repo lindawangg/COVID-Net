@@ -1,0 +1,8 @@
+matplotlib
+tensorflow==1.15
+opencv-python==4.2.0.*
+pydicom
+pandas
+jupyter
+numpy
+scikit-learn

@@ -27,6 +27,15 @@ Visit [http://localhost:8888](http://localhost:8888)
 
 ### Notes
 
+### Activate covidnet virutalenv on the jupyter terminal
+Covidnet virtualenv is installed on /opt/covidnet, containing all the packages specified on the [covidnet-requirements.txt](opt/covidnet-requirements.txt)
+```console
+source /opt/covidnet/bin/activate
+```
+<p align="center">
+  <img src="assets/covidnet-virtualenv.png" />
+</p>
+
 #### Access control
 Feel free if you need to add authentication modifying the entrypoint [start-notebook.sh](start-notebook.sh)
 
