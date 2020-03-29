@@ -1,4 +1,3 @@
-from keras.utils import to_categorical
 from sklearn.metrics import confusion_matrix
 import numpy as np
 import tensorflow as tf
