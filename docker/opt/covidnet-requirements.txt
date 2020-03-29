@@ -1,5 +1,0 @@
-matplotlib
-tensorflow==1.15
-keras==2.3.1
-opencv-python==4.2.0.*
-pandas

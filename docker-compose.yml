@@ -6,8 +6,8 @@ services:
     container_name: covidnetlab
     image: covidnetlab
     build:
-      context: ./docker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./docker/Dockerfile
     ports:
       - "8888:8888"
     volumes:
