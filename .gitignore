@@ -11,10 +11,7 @@ output/
 train_3000.txt
 test_split_v2.txt
 gensynth/
-train.py
-data.py
 export_to_meta.py
-model.py
 train_tf.py
 archive/
 requirements.txt
