@@ -132,7 +132,6 @@ f7379744-be39-44b2-8816-a743857bd6a6 f7379744-be39-44b2-8816-a743857bd6a6.png pn
 b51c3c24-f9aa-4039-9fc1-527a5567dff6 b51c3c24-f9aa-4039-9fc1-527a5567dff6.png pneumonia
 e9e58e10-2795-4dec-a738-c9792ea8f685 e9e58e10-2795-4dec-a738-c9792ea8f685.png pneumonia
 cd9d2d22-4395-4e4d-8837-cfb33c2bdaab cd9d2d22-4395-4e4d-8837-cfb33c2bdaab.png pneumonia
-0b7a4fb2-adab-484b-a0f7-23f5111bc745 0b7a4fb2-adab-484b-a0f7-23f5111bc745.png pneumonia
 b42eaeb8-b6d3-41d7-836c-56fd0922abf6 b42eaeb8-b6d3-41d7-836c-56fd0922abf6.png pneumonia
 ae06b30f-ae30-40d3-b237-c934ce499774 ae06b30f-ae30-40d3-b237-c934ce499774.png pneumonia
 f59ae80d-d98e-465f-963a-1064764211f8 f59ae80d-d98e-465f-963a-1064764211f8.png pneumonia
@@ -180,7 +179,6 @@ a6c364d2-b2d6-4b0b-a439-40b992ff65c7 a6c364d2-b2d6-4b0b-a439-40b992ff65c7.png pn
 c3751c94-ea6f-4a7c-b3bf-87a54012fa80 c3751c94-ea6f-4a7c-b3bf-87a54012fa80.png pneumonia
 1c0a780d-1cac-4eee-b46d-470ecebc9ae0 1c0a780d-1cac-4eee-b46d-470ecebc9ae0.png pneumonia
 b852bc3c-0de5-4448-aff8-f96b2cc13d51 b852bc3c-0de5-4448-aff8-f96b2cc13d51.png pneumonia
-098906c5-cf22-43d3-9f0d-90e88e602090 098906c5-cf22-43d3-9f0d-90e88e602090.png pneumonia
 a2616330-1f29-4019-928f-e2d62b3b737b a2616330-1f29-4019-928f-e2d62b3b737b.png pneumonia
 a6236ddd-6367-4569-b5f1-07d2df9390ad a6236ddd-6367-4569-b5f1-07d2df9390ad.png pneumonia
 b8d6b40d-2a3d-475f-88d3-03560f645223 b8d6b40d-2a3d-475f-88d3-03560f645223.png pneumonia
@@ -193,7 +191,6 @@ f12d7b12-0398-4533-8f55-8772cc434945 f12d7b12-0398-4533-8f55-8772cc434945.png pn
 becefa4b-f719-48c6-a903-85e391e026a4 becefa4b-f719-48c6-a903-85e391e026a4.png pneumonia
 3f2b878e-9e3b-410b-a739-b43d81b98692 3f2b878e-9e3b-410b-a739-b43d81b98692.png pneumonia
 adce8349-6836-4328-ab63-f356d0bbe298 adce8349-6836-4328-ab63-f356d0bbe298.png pneumonia
-b8d6b40d-2a3d-475f-88d3-03560f645223 b8d6b40d-2a3d-475f-88d3-03560f645223.png pneumonia
 854fee36-d54c-4cde-904d-ab77f5e2e091 854fee36-d54c-4cde-904d-ab77f5e2e091.png pneumonia
 baf8fe18-a7ca-4e9c-b3dc-5c80d474545b baf8fe18-a7ca-4e9c-b3dc-5c80d474545b.png pneumonia
 a77b32f6-1999-4cc6-8a0d-1ef7e53850f0 a77b32f6-1999-4cc6-8a0d-1ef7e53850f0.png pneumonia
@@ -208,3 +205,6 @@ a77b32f6-1999-4cc6-8a0d-1ef7e53850f0 a77b32f6-1999-4cc6-8a0d-1ef7e53850f0.png pn
 20 covid-19-pneumonia-15-PA.jpg COVID-19
 86 6C94A287-C059-46A0-8600-AFB95F4727B7.jpeg COVID-19
 36 8FDE8DBA-CFBD-4B4C-B1A4-6F36A93B7E87.jpeg COVID-19
+31 streptococcus-pneumoniae-pneumonia-temporal-evolution-1-day0.jpg pneumonia
+31 streptococcus-pneumoniae-pneumonia-temporal-evolution-1-day1.jpg pneumonia
+31 streptococcus-pneumoniae-pneumonia-temporal-evolution-1-day3.jpg pneumonia
