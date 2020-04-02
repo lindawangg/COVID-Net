@@ -8,26 +8,34 @@
 	<em>Example chest radiography images of COVID-19 cases from 2 different patients and their associated critical factors (highlighted in red) as identified by GSInquire.</em>
 </p>
 
-**Core COVID-Net team: Linda Wang, Alexander Wong, Zhong Qiu Lin, James Lee, Paul McInnis**
+**Core COVID-Net team: Linda Wang, Alexander Wong, Zhong Qiu Lin, James Lee, Paul McInnis, Matt Ross (City of London), Blake VanBerlo (City of London)**
 Vision and Image Processing Research Group, University of Waterloo, Canada
 DarwinAI Corp., Canada
 
 The COVID-19 pandemic continues to have a devastating effect on the health and well-being of the global population.  A critical step in the fight against COVID-19 is effective screening of infected patients, with one of the key screening approaches being radiological imaging using chest radiography.  It was found in early studies that patients present abnormalities in chest radiography images that are characteristic of those infected with COVID-19.  Motivated by this, a number of artificial intelligence (AI) systems based on deep learning have been proposed and results have been shown to be quite promising in terms of accuracy in detecting patients infected with COVID-19 using chest radiography images.  However, to the best of the authors' knowledge, these developed AI systems have been closed source and unavailable to the research community for deeper understanding and extension, and unavailable for public access and use.  Therefore, in this study we introduce COVID-Net, a deep convolutional neural network design tailored for the detection of COVID-19 cases from chest radiography images that is open source and available to the general public.  We also describe the chest radiography dataset leveraged to train COVID-Net, which we will refer to as COVIDx and is comprised of 16,756 chest radiography images across 13,645 patient cases from two open access data repositories.  Furthermore, we investigate how COVID-Net makes predictions using an explainability method in an attempt to gain deeper insights into critical factors associated with COVID cases, which can aid clinicians in improved screening. **By no means a production-ready solution**, the hope is that the open access COVID-Net, along with the description on constructing the open source COVIDx dataset, will be leveraged and build upon by both researchers and citizen data scientists alike to accelerate the development of highly accurate yet practical deep learning solutions for detecting COVID-19 cases and accelerate treatment of those who need it the most.
 
-For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](assets/COVID_Netv2.pdf).
+For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](https://arxiv.org/pdf/2003.09871.pdf).
 
 Currently, the COVID-Net team is working on COVID-RiskNet, a deep neural network tailored for COVID-19 risk stratification.  Stay tuned as we make it available soon.
 
-If you would like to contribute COVID-19 x-ray images, please contact us at linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca. Lets all work together to stop the spread of COVID-19!
+If you would like to **contribute COVID-19 x-ray images**, please contact us at linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca. Lets all work together to stop the spread of COVID-19!
 
-If you are a researcher or healthcare worker and you would like access to the GSInquire tool to use to interpret COVID-Net results on your data or existing data, please reach out to a28wong@uwaterloo.ca or alex@darwinai.ca
+If you are a researcher or healthcare worker and you would like access to the **GSInquire tool to use to interpret COVID-Net results** on your data or existing data, please reach out to a28wong@uwaterloo.ca or alex@darwinai.ca
 
-Our desire is to encourage broad adoption and contribution to this project. Accordingly this project has been licensed under the GNU Affero General Public License 3.0. Please see [license file](LICENSE.md) for terms. If you would like to discuss alternative licensing models, please reach out to us at: linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca.
+Our desire is to encourage broad adoption and contribution to this project. Accordingly this project has been licensed under the GNU Affero General Public License 3.0. Please see [license file](LICENSE.md) for terms. If you would like to discuss alternative licensing models, please reach out to us at linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca
 
-If there are any technical questions, please contact:
+The README contains information about:
+* [requirements](#requirements) to install on your system
+* how to [generate COVIDx dataset](#covidx-dataset)
+* steps for [training](#steps-for-training), [evaluation](#steps-for-evaluation) and [inference](#steps-for-inference)
+* [results](#results)
+* [links to pretrained models](#pretrained-models)
+
+If there are any technical questions after the README and past/current issues have been read, please post an issue or contact:
 * desmond.zq.lin@gmail.com
 * paul@darwinai.ca
 * jamesrenhoulee@gmail.com
+* linda.wang513@gmail.com
 
 If you find our work useful, can cite our paper using:
 
