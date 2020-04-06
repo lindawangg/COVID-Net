@@ -8,7 +8,7 @@
 	<em>Example chest radiography images of COVID-19 cases from 2 different patients and their associated critical factors (highlighted in red) as identified by GSInquire.</em>
 </p>
 
-**Core COVID-Net team: Linda Wang, Alexander Wong, Zhong Qiu Lin, James Lee, Paul McInnis, Audrey Chung (Mount Sinai), Matt Ross (City of London), Blake VanBerlo (City of London)**\
+**Core COVID-Net team: Linda Wang, Alexander Wong, Zhong Qiu Lin, James Lee, Paul McInnis, Audrey Chung, Matt Ross (City of London), Blake VanBerlo (City of London)**\
 Vision and Image Processing Research Group, University of Waterloo, Canada\
 DarwinAI Corp., Canada
 
