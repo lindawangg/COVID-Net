@@ -18,7 +18,7 @@ For a detailed description of the methodology behind COVID-Net and a full descri
 
 Currently, the COVID-Net team is working on COVID-RiskNet, a deep neural network tailored for COVID-19 risk stratification.  Stay tuned as we make it available soon.
 
-If you would like to **contribute COVID-19 x-ray images**, please contact us at linda.wang513@gmail.com and a28wong@uwaterloo.ca or alex@darwinai.ca. Lets all work together to stop the spread of COVID-19!
+If you would like to **contribute COVID-19 x-ray images**, please submit to https://figure1.typeform.com/to/lLrHwv. Lets all work together to stop the spread of COVID-19!
 
 If you are a researcher or healthcare worker and you would like access to the **GSInquire tool to use to interpret COVID-Net results** on your data or existing data, please reach out to a28wong@uwaterloo.ca or alex@darwinai.ca
 
@@ -74,7 +74,7 @@ Additional requirements to generate dataset:
 
 The current COVIDx dataset is constructed by the following open source chest radiography datasets:
 * https://github.com/ieee8023/covid-chestxray-dataset
-* https://www.kaggle.com/c/rsna-pneumonia-detection-challenge
+* https://www.kaggle.com/c/rsna-pneumonia-detection-challenge (which came from: https://nihcc.app.box.com/v/ChestXray-NIHCC)
 
 We especially thank the Radiological Society of North America and others involved in the RSNA Pneumonia Detection Challenge, and Dr. Joseph Paul Cohen and the team at MILA involved in the COVID-19 image data collection project, for making data available to the global community.
 
@@ -108,18 +108,18 @@ The network takes as input an image of shape (N, 224, 224, 3) and outputs the so
 If using the TF checkpoints, here are some useful tensors:
 
 * input tensor: `input_1:0`
+* logit tensor: `dense_3/MatMul:0`
 * output tensor: `dense_3/Softmax:0`
 * label tensor: `dense_3_target:0`
 * class weights tensor: `dense_3_sample_weights:0`
 * loss tensor: `loss/mul:0`
 
 ### Steps for training
-Releasing TF training script from pretrained model soon.
-<!--1. To train from scratch, `python train.py`
-2. To train from an existing hdf5 file, `python train.py --checkpoint output/example/cp-0.hdf5`
-3. For more options and information, `python train.py --help`
-4. If you have a GenSynth account, to convert hdf5 file to TF checkpoints,
-`python export_to_meta.py --weightspath output/example --weightspath cp-0.hdf5`-->  
+TF training script from a pretrained model:
+1. We provide you with the tensorflow evaluation script, [train_tf.py](train_tf.py)
+2. Locate the tensorflow checkpoint files (location of pretrained model)
+3. To train from a pretrained model, `python train_tf.py --weightspath models/COVIDNetv2 --metaname model.meta_train --ckptname model-2069`
+4. For more options and information, `python train_tf.py --help`
 
 ### Steps for evaluation
 

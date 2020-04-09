@@ -30,5 +30,7 @@ x = x.astype('float32') / 255.0
 pred = sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})
 
 print('Prediction: {}'.format(inv_mapping[pred.argmax(axis=1)[0]]))
+print('Confidence')
+print('Normal: {:.3f}, Pneumonia: {:.3f}, Normal: {:.3f}'.format(pred[0][0], pred[0][1], pred[0][2]))
 print('**DISCLAIMER**')
 print('Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.')
