@@ -139,7 +139,7 @@ TF training script from a pretrained model:
 ## Results
 These are the final results for COVID-Net Small and COVID-Net Large.   
 
-### COVIDNet Small
+### COVID-Net Small
 <p align="center">
 	<img src="assets/cm-covidnet-small.png" alt="photo not available" width="50%" height="50%">
 	<br>
