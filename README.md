@@ -201,7 +201,7 @@ These are the final results for COVID-Net Small and COVID-Net Large.
   </tr>
 </table></div>
 
-<div class="tg-wrap"><table class="tg">
+<div class="tg-wrap" align="center"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
   </tr>
