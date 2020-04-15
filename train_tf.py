@@ -4,17 +4,17 @@ import tensorflow as tf
 import os, argparse, pathlib
 
 from eval import eval
-from data import BalanceDataGenerator
+from data import BalanceCovidDataset
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=10, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.00002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
-parser.add_argument('--weightspath', default='models/COVIDNetv2', type=str, help='Path to output folder')
-parser.add_argument('--metaname', default='model.meta_train', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='model-2069', type=str, help='Name of model ckpts')
-parser.add_argument('--trainfile', default='train_COVIDx.txt', type=str, help='Name of train file')
-parser.add_argument('--testfile', default='test_COVIDx.txt', type=str, help='Name of test file')
+parser.add_argument('--weightspath', default='models/COVIDNet-CXR-Large', type=str, help='Path to output folder')
+parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
+parser.add_argument('--ckptname', default='model-8485', type=str, help='Name of model ckpts')
+parser.add_argument('--trainfile', default='train_COVIDx2.txt', type=str, help='Name of train file')
+parser.add_argument('--testfile', default='test_COVIDx2.txt', type=str, help='Name of test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='data', type=str, help='Path to data folder')
 
@@ -37,19 +37,7 @@ with open(args.trainfile) as f:
 with open(args.testfile) as f:
     testfiles = f.readlines()
 
-generator = BalanceDataGenerator(trainfiles, datadir=args.datadir, class_weights=[1., 1., 25.])
-
-# Create a dataset tensor from the images and the labels
-'''dataset = tf.data.Dataset.from_generator(lambda: generator,
-                                         output_types=(tf.float32, tf.float32, tf.float32),
-                                         output_shapes=([batch_size, 224, 224, 3],
-                                                        [batch_size, 3],
-                                                        [batch_size]))'''
-
-# Create an iterator over the dataset
-#iterator = dataset.make_initializable_iterator()
-# Neural Net Input (images, labels, weights)
-#batch_x, batch_y, weights = iterator.get_next()
+generator = BalanceCovidDataset(data_dir=args.datadir, csv_file=args.trainfile, covid_percent=0.3, class_weights=[1., 1., 12.])
 
 with tf.Session() as sess:
     tf.get_default_graph()
