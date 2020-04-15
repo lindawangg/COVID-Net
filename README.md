@@ -2,8 +2,10 @@
 
 **Note: The COVID-Net models provided here are intended to be used as reference models that can be built upon and enhanced as new data becomes available. They are currently at a research stage and not yet intended as production-ready models (not meant for direct clinicial diagnosis), and we are working continuously to improve them as new data becomes available. Please do not use COVID-Net for self-diagnosis and seek help from your local health authorities.**
 
+**Update 04/14/2020: We released two new models, COVIDNet-CXR Small and COVIDNet-CXR Large, which were trained on a new COVIDx Dataset with both PA and AP X-Rays from Cohen et al, as well as additional COVID-19 X-Ray images from Figure1**
+
 <p align="center">
-	<img src="assets/covidnet-small-exp.png" alt="photo not available" width="70%" height="70%">
+	<img src="assets/covidnet-cxr-small-exp.png" alt="photo not available" width="70%" height="70%">
 	<br>
 	<em>Example chest radiography images of COVID-19 cases from 2 different patients and their associated critical factors (highlighted in red) as identified by GSInquire.</em>
 </p>
@@ -12,9 +14,9 @@
 Vision and Image Processing Research Group, University of Waterloo, Canada\
 DarwinAI Corp., Canada
 
-The COVID-19 pandemic continues to have a devastating effect on the health and well-being of the global population.  A critical step in the fight against COVID-19 is effective screening of infected patients, with one of the key screening approaches being radiological imaging using chest radiography.  It was found in early studies that patients present abnormalities in chest radiography images that are characteristic of those infected with COVID-19.  Motivated by this, a number of artificial intelligence (AI) systems based on deep learning have been proposed and results have been shown to be quite promising in terms of accuracy in detecting patients infected with COVID-19 using chest radiography images.  However, to the best of the authors' knowledge, these developed AI systems have been closed source and unavailable to the research community for deeper understanding and extension, and unavailable for public access and use.  Therefore, in this study we introduce COVID-Net, a deep convolutional neural network design tailored for the detection of COVID-19 cases from chest radiography images that is open source and available to the general public.  We also describe the chest radiography dataset leveraged to train COVID-Net, which we will refer to as COVIDx and is comprised of 16,756 chest radiography images across 13,645 patient cases from two open access data repositories.  Furthermore, we investigate how COVID-Net makes predictions using an explainability method in an attempt to gain deeper insights into critical factors associated with COVID cases, which can aid clinicians in improved screening. **By no means a production-ready solution**, the hope is that the open access COVID-Net, along with the description on constructing the open source COVIDx dataset, will be leveraged and build upon by both researchers and citizen data scientists alike to accelerate the development of highly accurate yet practical deep learning solutions for detecting COVID-19 cases and accelerate treatment of those who need it the most.
+The COVID-19 pandemic continues to have a devastating effect on the health and well-being of the global population.  A critical step in the fight against COVID-19 is effective screening of infected patients, with one of the key screening approaches being radiological imaging using chest radiography.  It was found in early studies that patients present abnormalities in chest radiography images that are characteristic of those infected with COVID-19.  Motivated by this, a number of artificial intelligence (AI) systems based on deep learning have been proposed and results have been shown to be quite promising in terms of accuracy in detecting patients infected with COVID-19 using chest radiography images.  However, to the best of the authors' knowledge, these developed AI systems have been closed source and unavailable to the research community for deeper understanding and extension, and unavailable for public access and use.  Therefore, in this study we introduce COVID-Net, a deep convolutional neural network design tailored for the detection of COVID-19 cases from chest radiography images that is open source and available to the general public.  We also describe the chest radiography dataset leveraged to train COVID-Net, which we will refer to as COVIDx and is comprised of 13,800 chest radiography images across 13,725 patient patient cases from three open access data repositories.  Furthermore, we investigate how COVID-Net makes predictions using an explainability method in an attempt to gain deeper insights into critical factors associated with COVID cases, which can aid clinicians in improved screening.  **By no means a production-ready solution**, the hope is that the open access COVID-Net, along with the description on constructing the open source COVIDx dataset, will be leveraged and build upon by both researchers and citizen data scientists alike to accelerate the development of highly accurate yet practical deep learning solutions for detecting COVID-19 cases and accelerate treatment of those who need it the most.
 
-For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](https://arxiv.org/pdf/2003.09871.pdf).
+For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](assets/COVIDNet_CXR.pdf).
 
 Currently, the COVID-Net team is working on COVID-RiskNet, a deep neural network tailored for COVID-19 risk stratification.  Stay tuned as we make it available soon.
 
@@ -58,7 +60,6 @@ The main requirements are listed below:
 * OpenCV 4.2.0
 * Python 3.6
 * Numpy
-* OpenCV
 * Scikit-Learn
 * Matplotlib
 
@@ -69,39 +70,40 @@ Additional requirements to generate dataset:
 * Jupyter
 
 ## COVIDx Dataset
-
-**Update: we have released the brand-new COVIDx dataset with 16,756 chest radiography images across 13,645 patient cases.**
+**Update 04/14/2020: Released new dataset with 152 COVID-19 train and 31 COVID-19 test samples. There are constantly new xray images being added to covid-chestxray-dataset and Figure1 covid dataset so we included train_COVIDx2.txt and test_COVIDx2.txt, which are the xray images we used for training and testing of CovidNet-CXR models.**
 
 The current COVIDx dataset is constructed by the following open source chest radiography datasets:
 * https://github.com/ieee8023/covid-chestxray-dataset
+* https://github.com/agchung/Figure1-COVID-chestxray-dataset
 * https://www.kaggle.com/c/rsna-pneumonia-detection-challenge (which came from: https://nihcc.app.box.com/v/ChestXray-NIHCC)
 
-We especially thank the Radiological Society of North America and others involved in the RSNA Pneumonia Detection Challenge, and Dr. Joseph Paul Cohen and the team at MILA involved in the COVID-19 image data collection project, for making data available to the global community.
+We especially thank the Radiological Society of North America, National Institutes of Health, Figure1, Dr. Joseph Paul Cohen and the team at MILA involved in the COVID-19 image data collection project for making data available to the global community.
 
 ### Steps to generate the dataset
 
 1. Download the datasets listed above
  * `git clone https://github.com/ieee8023/covid-chestxray-dataset.git`
+ * `git clone https://github.com/agchung/Figure1-COVID-chestxray-dataset`
  * go to this [link](https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data) to download the RSNA pneumonia dataset
 2. Create a `data` directory and within the data directory, create a `train` and `test` directory
-3. Use [create\_COVIDx\_v2.ipynb](create_COVIDx_v2.ipynb) to combine the two dataset to create COVIDx. Make sure to remember to change the file paths.
+3. Use [create\_COVIDx\_v3.ipynb](create_COVIDx_v3.ipynb) to combine the three dataset to create COVIDx. Make sure to remember to change the file paths.
 4. We provide the train and test txt files with patientId, image path and label (normal, pneumonia or COVID-19). The description for each file is explained below:
- * [train\_COVIDx.txt](train_COVIDx.txt): This file contains the samples used for training.
- * [test\_COVIDx.txt](test_COVIDx.txt): This file contains the samples used for testing.
+ * [train\_COVIDx2.txt](train_COVIDx2.txt): This file contains the samples used for training COVIDNet-CXR.
+ * [test\_COVIDx2.txt](test_COVIDx2.txt): This file contains the samples used for testing COVIDNet-CXR.
 
 ### COVIDx data distribution
 
 Chest radiography images distribution
 |  Type | Normal | Pneumonia | COVID-19 | Total |
 |:-----:|:------:|:---------:|:--------:|:-----:|
-| train |  7966  |    8514   |    66    | 16546 |
-|  test |   100  |     100   |    10    |   210 |
+| train |  7966  |    5451   |   152    | 13569 |
+|  test |   100  |     100   |    31    |   231 |
 
 Patients distribution
 |  Type | Normal | Pneumonia | COVID-19 |  Total |
 |:-----:|:------:|:---------:|:--------:|:------:|
-| train |  7966  |    5429   |    48    |  13443 |
-|  test |   100  |      98   |     5    |    203 |
+| train |  7966  |    5440   |    107   |  13513 |
+|  test |   100  |      98   |     14   |    212 |
 
 ## Training and Evaluation
 The network takes as input an image of shape (N, 224, 224, 3) and outputs the softmax probabilities as (N, 3), where N is the number of batches.
@@ -133,17 +135,17 @@ TF training script from a pretrained model:
 
 1. Download a model from the [pretrained models section](#pretrained-models)
 2. Locate models and xray image to be inferenced
-3. To inference, `python inference.py --weightspath models/COVID-Netv2 --metaname model.meta_eval --ckptname model-2069 --imagepath assets/ex-covid.jpeg`
+3. To inference, `python inference.py --weightspath models/COVIDNet-CXR-Large --metaname model.meta_eval --ckptname model-8485 --imagepath assets/ex-covid.jpeg`
 4. For more options and information, `python inference.py --help`
 
 ## Results
-These are the final results for COVID-Net Small and COVID-Net Large.   
+These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
 
-### COVIDNet Small
+### COVIDNet-CXR Small
 <p align="center">
-	<img src="assets/cm-covidnet-small.png" alt="photo not available" width="50%" height="50%">
+	<img src="assets/cm-covidnetcxr-small.png" alt="photo not available" width="50%" height="50%">
 	<br>
-	<em>Confusion matrix for COVID-Net on the COVIDx test dataset.</em>
+	<em>Confusion matrix for COVIDNet-CXR Small on the COVIDx test dataset.</em>
 </p>
 
 <div class="tg-wrap" align="center"><table class="tg">
@@ -156,13 +158,13 @@ These are the final results for COVID-Net Small and COVID-Net Large.
     <td class="tg-7btt">COVID-19</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">95.0</td>
-    <td class="tg-c3ow">91.0</td>
-    <td class="tg-c3ow">80.0</td>
+    <td class="tg-c3ow">97.0</td>
+    <td class="tg-c3ow">90.0</td>
+    <td class="tg-c3ow">87.1</td>
   </tr>
 </table></div>
 
-<div class="tg-wrap"><table class="tg">
+<div class="tg-wrap" align="center"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
   </tr>
@@ -172,17 +174,18 @@ These are the final results for COVID-Net Small and COVID-Net Large.
     <td class="tg-7btt">COVID-19</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">91.3</td>
-    <td class="tg-c3ow">93.8</td>
-    <td class="tg-c3ow">88.9</td>
+    <td class="tg-c3ow">89.8</td>
+    <td class="tg-c3ow">94.7</td>
+    <td class="tg-c3ow">96.4</td>
   </tr>
 </table></div>
 
-### COVID-Net Large
+
+### COVIDNet-CXR Large
 <p align="center">
-	<img src="assets/cm-covidnet-large.png" alt="photo not available" width="50%" height="50%">
+	<img src="assets/cm-covidnetcxr-large.png" alt="photo not available" width="50%" height="50%">
 	<br>
-	<em>Confusion matrix for COVID-Net on the COVIDx test dataset.</em>
+	<em>Confusion matrix for COVIDNet-CXR Large on the COVIDx test dataset.</em>
 </p>
 
 <div class="tg-wrap" align="center"><table class="tg">
@@ -195,13 +198,13 @@ These are the final results for COVID-Net Small and COVID-Net Large.
     <td class="tg-7btt">COVID-19</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">94.0</td>
-    <td class="tg-c3ow">90.0</td>
-    <td class="tg-c3ow">90.0</td>
+    <td class="tg-c3ow">99.0</td>
+    <td class="tg-c3ow">89.0</td>
+    <td class="tg-c3ow">96.8</td>
   </tr>
 </table></div>
 
-<div class="tg-wrap"><table class="tg">
+<div class="tg-wrap" align="center"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
   </tr>
@@ -211,9 +214,9 @@ These are the final results for COVID-Net Small and COVID-Net Large.
     <td class="tg-7btt">COVID-19</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">90.4</td>
-    <td class="tg-c3ow">93.8</td>
-    <td class="tg-c3ow">90.0</td>
+    <td class="tg-c3ow">91.7</td>
+    <td class="tg-c3ow">98.9</td>
+    <td class="tg-c3ow">90.9</td>
   </tr>
 </table></div>
 
@@ -221,5 +224,5 @@ These are the final results for COVID-Net Small and COVID-Net Large.
 
 |  Type | COVID-19 Sensitivity | # Params (M) | MACs (G) |        Model        |
 |:-----:|:--------------------:|:------------:|:--------:|:-------------------:|
-|  ckpt |         80.0         |     116.6    |   2.26   |[COVID-Net Small](https://drive.google.com/file/d/1xrxK9swFVlFI-WAYcccIgm0tt9RgawXD/view?usp=sharing)|
-|  ckpt |         90.0         |     126.6    |   3.59   |[COVID-Net Large](https://drive.google.com/file/d/1djqWcxzRehtyJV9EQsppj1YdgsP2JRQy/view?usp=sharing)|
+|  ckpt |         87.1         |     117.4    |   2.26   |[COVIDNet-CXR Small](https://bit.ly/CovidNet-CXR-Small)|
+|  ckpt |         90.0         |     127.4    |   3.59   |[COVIDNet-CXR Large](https://bit.ly/CovidNet-CXR-Large)|

@@ -98,6 +98,8 @@ class BalanceDataGenerator(keras.utils.Sequence):
                 folder = 'test'
 
             x = cv2.imread(os.path.join(self.datadir, folder, sample[1]))
+            h, w, c = x.shape
+            x = x[int(h/6):, :]
             x = cv2.resize(x, self.input_shape)
 
             if self.is_training and hasattr(self, 'augmentation'):

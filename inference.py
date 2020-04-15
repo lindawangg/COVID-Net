@@ -4,9 +4,9 @@ import os, argparse
 import cv2
 
 parser = argparse.ArgumentParser(description='COVID-Net Inference')
-parser.add_argument('--weightspath', default='output', type=str, help='Path to output folder')
+parser.add_argument('--weightspath', default='models/COVIDNet-CXR-Large', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
+parser.add_argument('--ckptname', default='model-8485', type=str, help='Name of model ckpts')
 parser.add_argument('--imagepath', default='assets/ex-covid.jpeg', type=str, help='Full path to image to be inferenced')
 
 args = parser.parse_args()
@@ -25,6 +25,8 @@ image_tensor = graph.get_tensor_by_name("input_1:0")
 pred_tensor = graph.get_tensor_by_name("dense_3/Softmax:0")
 
 x = cv2.imread(args.imagepath)
+h, w, c = x.shape
+x = x[int(h/6):, :]
 x = cv2.resize(x, (224, 224))
 x = x.astype('float32') / 255.0
 pred = sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})

@@ -15,6 +15,8 @@ def eval(sess, graph, testfile, testfolder):
     for i in range(len(testfile)):
         line = testfile[i].split()
         x = cv2.imread(os.path.join('data', testfolder, line[1]))
+        h, w, c = x.shape
+        x = x[int(h/6):, :]
         x = cv2.resize(x, (224, 224))
         x = x.astype('float32') / 255.0
         y_test.append(mapping[line[2]])

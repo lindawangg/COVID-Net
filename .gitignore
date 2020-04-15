@@ -17,5 +17,6 @@ model.py
 archive/
 requirements.txt
 test_dups.py
-test_COVIDx2.txt
-train_COVIDx2.txt
+test_COVIDx.txt
+train_COVIDx.txt
+create_COVIDx_v2.ipynb
