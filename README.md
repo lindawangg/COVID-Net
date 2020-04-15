@@ -18,7 +18,7 @@ The COVID-19 pandemic continues to have a devastating effect on the health and w
 
 For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](assets/COVIDNet_CXR.pdf).
 
-Currently, the COVID-Net team is working on COVID-RiskNet, a deep neural network tailored for COVID-19 risk stratification.  Stay tuned as we make it available soon.
+Currently, the COVID-Net team is working on **COVID-RiskNet**, a deep neural network tailored for COVID-19 risk stratification.  Currently this is available as a work-in-progress via included `train_risknet.py` script, help to contribute data and we can improve this tool.
 
 If you would like to **contribute COVID-19 x-ray images**, please submit to https://figure1.typeform.com/to/lLrHwv. Lets all work together to stop the spread of COVID-19!
 
@@ -138,6 +138,15 @@ TF training script from a pretrained model:
 3. To inference, `python inference.py --weightspath models/COVIDNet-CXR-Large --metaname model.meta_eval --ckptname model-8485 --imagepath assets/ex-covid.jpeg`
 4. For more options and information, `python inference.py --help`
 
+### Steps for Training COVIDNet-Risk
+
+COVIDNet-Risk uses the same architecture as the existing COVIDNet - but instead it predicts the *"number of days since symptom onset"\** for a diagnosed COVID-19 patient based on their chest radiography (same data as COVIDNet). By performing offset stratification, we aim to provide an estimate of prognosis for the patient. Note that the initial dataset is fairly small at the time of writing and we hope to see more results as data increases.
+
+1. Complete data creation and training for COVIDNet (see Training above)
+2. run `train_risknet.py` (see `-h` for argument help)
+
+*\* note that definition varies between data sources*
+
 ## Results
 These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
 
@@ -221,6 +230,7 @@ These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
 </table></div>
 
 ## Pretrained Models
+**Information on these new models to be released soon**
 
 |  Type | COVID-19 Sensitivity | # Params (M) | MACs (G) |        Model        |
 |:-----:|:--------------------:|:------------:|:--------:|:-------------------:|
