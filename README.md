@@ -4,7 +4,7 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
-**Update 04/16/2020:** If you have questions, please check the new [FAQ](misc/FAQ.md) page first.
+**Update 04/16/2020:** If you have questions, please check the new [FAQ](misc/FAQ.md) page first.\
 **Update 04/15/2020:** We released two new models, COVIDNet-CXR Small and COVIDNet-CXR Large, which were trained on a new COVIDx Dataset with both PA and AP X-Rays from Cohen et al, as well as additional COVID-19 X-Ray images from Figure1.
 
 <p align="center">
