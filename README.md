@@ -1,6 +1,6 @@
 # COVID-Net Open Source Initiative
 
-**Note: The COVID-Net models provided here are intended to be used as reference models that can be built upon and enhanced as new data becomes available. They are currently at a research stage and not yet intended as production-ready models (not meant for direct clinicial diagnosis), and we are working continuously to improve them as new data becomes available. Please do not use COVID-Net for self-diagnosis and seek help from your local health authorities.**
+**Note: The COVID-Net models provided here are intended to be used as reference models that can be built upon and enhanced as new data becomes available. They are currently at a research stage and not yet intended as production-ready models (not meant for direct clinical diagnosis), and we are working continuously to improve them as new data becomes available. Please do not use COVID-Net for self-diagnosis and seek help from your local health authorities.**
 
 **Update 04/15/2020: We released two new models, COVIDNet-CXR Small and COVIDNet-CXR Large, which were trained on a new COVIDx Dataset with both PA and AP X-Rays from Cohen et al, as well as additional COVID-19 X-Ray images from Figure1**
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
@@ -153,13 +153,13 @@ COVIDNet-Risk uses the same architecture as the existing COVIDNet - but instead 
 These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
 
 ### COVIDNet-CXR Small
-<p align="center">
+<p>
 	<img src="assets/cm-covidnetcxr-small.png" alt="photo not available" width="50%" height="50%">
 	<br>
 	<em>Confusion matrix for COVIDNet-CXR Small on the COVIDx test dataset.</em>
 </p>
 
-<div class="tg-wrap" align="center"><table class="tg">
+<div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
   </tr>
@@ -175,7 +175,7 @@ These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
   </tr>
 </table></div>
 
-<div class="tg-wrap" align="center"><table class="tg">
+<div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
   </tr>
@@ -193,13 +193,13 @@ These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
 
 
 ### COVIDNet-CXR Large
-<p align="center">
+<p>
 	<img src="assets/cm-covidnetcxr-large.png" alt="photo not available" width="50%" height="50%">
 	<br>
 	<em>Confusion matrix for COVIDNet-CXR Large on the COVIDx test dataset.</em>
 </p>
 
-<div class="tg-wrap" align="center"><table class="tg">
+<div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
   </tr>
@@ -215,7 +215,7 @@ These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
   </tr>
 </table></div>
 
-<div class="tg-wrap" align="center"><table class="tg">
+<div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
   </tr>
