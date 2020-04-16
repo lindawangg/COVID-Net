@@ -122,14 +122,14 @@ If using the TF checkpoints, here are some useful tensors:
 TF training script from a pretrained model:
 1. We provide you with the tensorflow evaluation script, [train_tf.py](train_tf.py)
 2. Locate the tensorflow checkpoint files (location of pretrained model)
-3. To train from a pretrained model, `python train_tf.py --weightspath models/COVIDNetv2 --metaname model.meta_train --ckptname model-2069`
+3. To train from a pretrained model, `python train_tf.py --weightspath models/COVIDNet-CXR-Large --metaname model.meta --ckptname model-8485`
 4. For more options and information, `python train_tf.py --help`
 
 ### Steps for evaluation
 
 1. We provide you with the tensorflow evaluation script, [eval.py](eval.py)
 2. Locate the tensorflow checkpoint files
-3. To evaluate a tf checkpoint, `python eval.py --weightspath models/COVID-Netv2 --metaname model.meta_eval --ckptname model-2069`
+3. To evaluate a tf checkpoint, `python eval.py --weightspath models/COVIDNet-CXR-Large --metaname model.meta --ckptname model-8485`
 4. For more options and information, `python eval.py --help`
 
 ### Steps for inference
