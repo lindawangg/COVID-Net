@@ -3,6 +3,7 @@
 **Note: The COVID-Net models provided here are intended to be used as reference models that can be built upon and enhanced as new data becomes available. They are currently at a research stage and not yet intended as production-ready models (not meant for direct clinicial diagnosis), and we are working continuously to improve them as new data becomes available. Please do not use COVID-Net for self-diagnosis and seek help from your local health authorities.**
 
 **Update 04/15/2020: We released two new models, COVIDNet-CXR Small and COVIDNet-CXR Large, which were trained on a new COVIDx Dataset with both PA and AP X-Rays from Cohen et al, as well as additional COVID-19 X-Ray images from Figure1**
+**Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
 <p align="center">
 	<img src="assets/covidnet-cxr-small-exp.png" alt="photo not available" width="70%" height="70%">
