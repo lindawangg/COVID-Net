@@ -17,6 +17,8 @@ parser.add_argument('--trainfile', default='train_COVIDx2.txt', type=str, help='
 parser.add_argument('--testfile', default='test_COVIDx2.txt', type=str, help='Name of test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='data', type=str, help='Path to data folder')
+parser.add_argument('--covid_weight', default=12., type=float, help='Class weighting for covid')
+parser.add_argument('--covid_percent', default=0.3, type=float, help='Percentage of covid samples in batch')
 
 args = parser.parse_args()
 
@@ -37,7 +39,10 @@ with open(args.trainfile) as f:
 with open(args.testfile) as f:
     testfiles = f.readlines()
 
-generator = BalanceCovidDataset(data_dir=args.datadir, csv_file=args.trainfile, covid_percent=0.3, class_weights=[1., 1., 12.])
+generator = BalanceCovidDataset(data_dir=args.datadir,
+                                csv_file=args.trainfile,
+                                covid_percent=args.covid_percent,
+                                class_weights=[1., 1., args.covid_weight])
 
 with tf.Session() as sess:
     tf.get_default_graph()
