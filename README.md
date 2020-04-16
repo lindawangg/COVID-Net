@@ -1,6 +1,6 @@
 # COVID-Net Open Source Initiative
 
-**Note: The COVID-Net models provided here are intended to be used as reference models that can be built upon and enhanced as new data becomes available. They are currently at a research stage and not yet intended as production-ready models (not meant for direct clinicial diagnosis), and we are working continuously to improve them as new data becomes available. Please do not use COVID-Net for self-diagnosis and seek help from your local health authorities.**
+**Note: The COVID-Net models provided here are intended to be used as reference models that can be built upon and enhanced as new data becomes available. They are currently at a research stage and not yet intended as production-ready models (not meant for direct clinical diagnosis), and we are working continuously to improve them as new data becomes available. Please do not use COVID-Net for self-diagnosis and seek help from your local health authorities.**
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
@@ -124,14 +124,14 @@ If using the TF checkpoints, here are some useful tensors:
 TF training script from a pretrained model:
 1. We provide you with the tensorflow evaluation script, [train_tf.py](train_tf.py)
 2. Locate the tensorflow checkpoint files (location of pretrained model)
-3. To train from a pretrained model, `python train_tf.py --weightspath models/COVIDNetv2 --metaname model.meta_train --ckptname model-2069`
+3. To train from a pretrained model, `python train_tf.py --weightspath models/COVIDNet-CXR-Large --metaname model.meta --ckptname model-8485`
 4. For more options and information, `python train_tf.py --help`
 
 ### Steps for evaluation
 
 1. We provide you with the tensorflow evaluation script, [eval.py](eval.py)
 2. Locate the tensorflow checkpoint files
-3. To evaluate a tf checkpoint, `python eval.py --weightspath models/COVID-Netv2 --metaname model.meta_eval --ckptname model-2069`
+3. To evaluate a tf checkpoint, `python eval.py --weightspath models/COVIDNet-CXR-Large --metaname model.meta --ckptname model-8485`
 4. For more options and information, `python eval.py --help`
 
 ### Steps for inference
@@ -155,13 +155,13 @@ COVIDNet-Risk uses the same architecture as the existing COVIDNet - but instead 
 These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
 
 ### COVIDNet-CXR Small
-<p align="center">
+<p>
 	<img src="assets/cm-covidnetcxr-small.png" alt="photo not available" width="50%" height="50%">
 	<br>
 	<em>Confusion matrix for COVIDNet-CXR Small on the COVIDx test dataset.</em>
 </p>
 
-<div class="tg-wrap" align="center"><table class="tg">
+<div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
   </tr>
@@ -177,7 +177,7 @@ These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
   </tr>
 </table></div>
 
-<div class="tg-wrap" align="center"><table class="tg">
+<div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
   </tr>
@@ -195,13 +195,13 @@ These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
 
 
 ### COVIDNet-CXR Large
-<p align="center">
+<p>
 	<img src="assets/cm-covidnetcxr-large.png" alt="photo not available" width="50%" height="50%">
 	<br>
 	<em>Confusion matrix for COVIDNet-CXR Large on the COVIDx test dataset.</em>
 </p>
 
-<div class="tg-wrap" align="center"><table class="tg">
+<div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
   </tr>
@@ -217,7 +217,7 @@ These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
   </tr>
 </table></div>
 
-<div class="tg-wrap" align="center"><table class="tg">
+<div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
   </tr>
