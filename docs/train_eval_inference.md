@@ -1,4 +1,4 @@
-## Training, Evaluation and Inference
+# Training, Evaluation and Inference
 The network takes as input an image of shape (N, 224, 224, 3) and outputs the softmax probabilities as (N, 3), where N is the number of batches.
 If using the TF checkpoints, here are some useful tensors:
 

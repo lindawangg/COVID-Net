@@ -1,4 +1,4 @@
-#Pretrained Models
+# Pretrained Models
 
 |  Type | COVID-19 Sensitivity | # Params (M) | MACs (G) |        Model        |
 |:-----:|:--------------------:|:------------:|:--------:|:-------------------:|
