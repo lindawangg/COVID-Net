@@ -1,4 +1,5 @@
 # Issue Template
+Before posting, have you looked at the [FAQ](../docs/FAQ.md) page?
 
 ## Description
 
