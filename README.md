@@ -53,7 +53,7 @@ If you find our work useful, can cite our paper using:
 	* Paul McInnis
 	* Audrey Chung
 	* Hayden Gunraj, COVIDNet for CT: https://github.com/haydengunraj/COVIDNet-CT
-* University of Waterloo, Canada
+* Vision and Image Processing Research Group, University of Waterloo, Canada
 	* James Lee
 * Matt Ross and Blake VanBerlo (City of London), COVID-19 Chest X-Ray Model: https://github.com/aildnont/covid-cxr
 * Ashkan Ebadi (National Research Council Canada)
