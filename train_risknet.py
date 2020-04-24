@@ -105,6 +105,22 @@ def parse_split(split_txt_path: str, chestxraydir: str, stratification=[3,5,10])
                 labels.append(offset)
     return files, labels
 
+def parse_split_severity(severity_csv:str, chestxraydir: str) -> Tuple[List[str], List[int]]:
+    """Read the Severity CSV and return all the files. This does not split the data"""
+    base_csv = pd.read_csv(os.path.join(chestxraydir, "metadata.csv"), nrows=None)
+    severity_csv = pd.read_csv(severity_csv, nrows=None)
+
+    files, labels = [], [],
+    for index, row in severity_csv.iterrows():
+        image_file = row['Filename']
+        image_path = os.path.abspath(os.path.join(chestxraydir, 'images', image_file))
+        #assert os.path.exists(image_path), "Missing file {}".format(image_path)
+            
+        files.append(image_file)
+        labels.append([float(row['Geographic Extent']), float(row['Opacity Extent']),
+                float(row['Sum']),float(row['Product'])])
+    
+    return files, labels
 
 def eval_net(sess: tf.Session, dataset_dict: Dict[str, Any], test_files: List[str],
              test_labels: List[int]) -> None:
