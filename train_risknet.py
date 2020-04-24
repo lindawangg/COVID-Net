@@ -13,7 +13,9 @@ Steps to use this:
 TODO: Make this script more general so that it can be used to transfer learn for other applications
 
 paul@darwinai.ca
+jamesrenhoulee@gmail.com
 """
+
 import argparse
 from collections import namedtuple
 import cv2
@@ -24,9 +26,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import confusion_matrix
 import tensorflow as tf
-
-from data import BalanceDataGenerator
-
+import random
 
 # We will create a checkpoint which has initial values for these variables
 VARS_TO_FORGET = [
@@ -46,9 +46,31 @@ SAMPLE_WEIGHTS = "dense_3_sample_weights:0"
 def get_parse_fn(num_classes: int, augment: bool = False):
     def parse_function(imagepath: str, label: int):
         """Parse a single element of the stratification dataset"""
-        # TODO add augmentation here ideally
         image_decoded = tf.image.resize_images(
             tf.image.decode_jpeg(tf.io.read_file(imagepath), IMAGE_SHAPE[-1]), IMAGE_SHAPE[:2])
+        # Add augmentation
+        if augment:
+            # Pick a random augmentation to use
+            # https://www.tensorflow.org/versions/r1.15/api_docs/python/tf/image
+            # Will add Rotational Augmentation in the future
+            aug = random.randint(0, 3)
+            if aug == 0:
+                # Random crop then resize back to 224x224. 
+                # This is essentially a width/height shift by 10%
+                image_decoded = tf.image.random_crop(
+                    image_decoded, size=[int(IMAGE_SHAPE[0] * 0.9), 
+                                         int(IMAGE_SHAPE[1] * 0.9), 
+                                         IMAGE_SHAPE[2]])
+                image_decoded = tf.image.resize_images(
+                    image_decoded, size=[IMAGE_SHAPE[0], IMAGE_SHAPE[1]])
+            elif aug == 1:
+                # Brightness aug by 10%
+                image_decoded = tf.image.random_brightness(
+                    image_decoded, max_delta=0.1)
+            elif aug == 2:
+                # Horizontal flip
+                image_decoded = tf.image.flip_left_right(image_decoded)
+
         return (
             tf.image.convert_image_dtype(image_decoded, dtype=tf.float32) / 255.0, # x
             tf.one_hot(label, num_classes), # y
@@ -56,21 +78,28 @@ def get_parse_fn(num_classes: int, augment: bool = False):
         )
     return parse_function
 
+def stratify(offset, stratification):
+    for i in range(len(stratification)-1,-1,-1):
+        if offset >= stratification[i]:
+            return i
+    return 0
 
-def parse_split(split_txt_path: str) -> Tuple[List[str], List[int]]:
+def parse_split(split_txt_path: str, chestxraydir: str, stratification=[3,5,10]) -> Tuple[List[str], List[int]]:
     """Read the offsets for COVID patients based on the files in our split"""
+    csv = pd.read_csv(os.path.join(chestxraydir, "metadata.csv"), nrows=None)
+
     # FIXME: ideally we should just store the offset in the split as well or read it from CSV by id.
     # FIXME: we need to add pretrained weights + .txts for split with well-distributed offset.
     files, labels = [], [],
     for split_entry in open(split_txt_path).readlines():
-        _, image_file, diagnosis = split_entry.strip().split() # TODO: txts should just contain ids
+        _, image_file, _, diagnosis = split_entry.strip().split() # TODO: txts should just contain ids
         if diagnosis == 'COVID-19':
             patient = csv[csv["filename"] == image_file]
             recorded_offset = patient['offset'].item()
             if not np.isnan(recorded_offset):
-                offset = stratify(int(recorded_offset))
+                offset = stratify(int(recorded_offset), stratification)
                 image_path = os.path.abspath(
-                    os.path.join(args.chestxraydir, 'images', image_file))
+                    os.path.join(chestxraydir, 'images', image_file))
                 assert os.path.exists(image_path), "Missing file {}".format(image_path)
                 files.append(image_path)
                 labels.append(offset)
@@ -130,9 +159,9 @@ if __name__ == "__main__":
                         help='Name of meta file within <input-weights-dir>')
     parser.add_argument('--outputdir', default='models/COVIDNet-Risk', type=str,
                         help='Path to output folder.')
-    parser.add_argument('--trainfile', default='train_COVIDx.txt', type=str,
+    parser.add_argument('--trainfile', default='train_stratification.txt', type=str,
                         help='Name of train file. NOTE: stock split is insufficient at this time.')
-    parser.add_argument('--testfile', default='test_COVIDx.txt', type=str,
+    parser.add_argument('--testfile', default='test_stratification.txt', type=str,
                         help='Name of test file. NOTE: stock split is insufficient at this time.')
     parser.add_argument('--name', default='COVIDNet-Risk', type=str,
                         help='Name of folder to store training checkpoints.')
@@ -146,51 +175,29 @@ if __name__ == "__main__":
         "Missing file {}".format(args.input_meta_name)
 
     # Format and define a stratification method based on our points
-    # TODO we could do a different amount of stratification but we have to add our own dense layers
     assert len(args.stratification) == 3, "Must pass exactly 3 offset stratification points"
     if args.stratification[0] != 0:
         stratification = np.array([0, *args.stratification])
     else:
         stratification = np.array(args.stratification)
     num_classes = len(stratification)
-    stratify = lambda offset: np.where(offset >= stratification)[0][-1]
 
     # Read CSV of dataset
     assert os.path.exists(args.chestxraydir), "please clone "\
         "https://github.com/ieee8023/covid-chestxray-dataset and pass path to dir as --chestxraydir"
-    csv = pd.read_csv(os.path.join(args.chestxraydir, "metadata.csv"), nrows=None)
 
     # Get the image filepaths and labels for training and testing split
-    train_files, train_labels = parse_split(args.trainfile)
+    train_files, train_labels = parse_split(args.trainfile, args.chestxraydir, args.stratification)
     assert len(train_files) >= 0 and len(train_files) == len(train_labels)
-    test_files, test_labels = parse_split(args.testfile)
+    test_files, test_labels = parse_split(args.testfile, args.chestxraydir, args.stratification)
     assert len(test_files) >= 0 and len(test_labels) == len(test_files)
     print("collected {} training and {} test cases for transfer-learning".format(
         len(train_files), len(test_files)))
 
-    # Init augmentation fn - FIXME: we need a way to put this in a parse_fn for tf.data.dataset
-    # augmentation_fn = tf.keras.preprocessing.image.ImageDataGenerator(
-    #     featurewise_center=False,
-    #     featurewise_std_normalization=False,
-    #     rotation_range=10,
-    #     width_shift_range=0.1,
-    #     height_shift_range=0.1,
-    #     horizontal_flip=True,
-    #     brightness_range=(0.9, 1.1),
-    #     fill_mode='constant',
-    #     cval=0.,
-    # )
-    # < define generator from augmentation_fn + cv loads? >
-    # dataset = tf.data.Dataset.from_generator(lambda: generator,
-    #                                       output_types=(tf.float32, tf.float32, tf.float32),
-    #                                       output_shapes=([batch_size, 224, 224, 3],
-    #                                                      [batch_size, 3],
-    #                                                      [batch_size]))
-
     # Output path creation for this run with lr param in name
     train_dir = os.path.join(args.outputdir, args.name + '-lr' + str(args.lr))
     os.makedirs(args.outputdir, exist_ok=True)
-    os.makedirs(train_dir)
+    os.makedirs(train_dir, exist_ok=True)
     print('Output: ' + train_dir)
 
     # Train
@@ -217,13 +224,21 @@ if __name__ == "__main__":
         sample_weights = graph.get_tensor_by_name(SAMPLE_WEIGHTS)
         pred_tensor = graph.get_tensor_by_name("dense_3/MatMul:0")
 
+        # If the number of classes is not equal to the pred_tensor classes,
+        # change the pred_layer to a new one with the new number of classes
+        if num_classes != pred_tensor.shape[1]:
+            old_pred = graph.get_tensor_by_name("dense_2/Relu:0")
+            dim_reducer = tf.Variable(tf.ones([old_pred.shape[1], num_classes]))
+            pred_tensor = tf.matmul(old_pred, dim_reducer)
+            print("Added Dense layer with {} classes.".format(num_classes))
+
         # Define tf.datasets
         datasets = {}
         for is_training, files, labels in zip(
                 [True, False], [train_files, test_files], [train_labels, test_labels]):
 
             dataset = tf.data.Dataset.from_tensor_slices((files, labels))
-            dataset = dataset.map(get_parse_fn(num_classes))
+            dataset = dataset.map(get_parse_fn(num_classes, augment=is_training))
             if is_training:
                 dataset = dataset.shuffle(15)
             dataset = dataset.batch(args.batch_size if is_training else args.eval_batch_size)
