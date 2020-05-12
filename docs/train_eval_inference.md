@@ -1,12 +1,12 @@
 # Training, Evaluation and Inference
-The network takes as input an image of shape (N, 224, 224, 3) and outputs the softmax probabilities as (N, 3), where N is the number of batches.
+COVIDNet-CXR3 models takes as input an image of shape (N, 480, 480, 3) and outputs the softmax probabilities as (N, 3), where N is the number of batches.
 If using the TF checkpoints, here are some useful tensors:
 
 * input tensor: `input_1:0`
-* logit tensor: `dense_3/MatMul:0`
-* output tensor: `dense_3/Softmax:0`
-* label tensor: `dense_3_target:0`
-* class weights tensor: `dense_3_sample_weights:0`
+* logit tensor: `norm_dense_1/MatMul:0`
+* output tensor: `norm_dense_1/Softmax:0`
+* label tensor: `norm_dense_1_target:0`
+* class weights tensor: `norm_dense_1_sample_weights:0`
 * loss tensor: `loss/mul:0`
 
 ## Steps for training
@@ -16,9 +16,9 @@ TF training script from a pretrained model:
 3. To train from a pretrained model:
 ```
 python train_tf.py \
-    --weightspath models/COVIDNet-CXR-Large \
+    --weightspath models/COVIDNet-CXR3-B \
     --metaname model.meta \
-    --ckptname model-8485
+    --ckptname model-1014
 ```
 4. For more options and information, `python train_tf.py --help`
 
@@ -29,9 +29,9 @@ python train_tf.py \
 3. To evaluate a tf checkpoint:
 ```
 python eval.py \
-    --weightspath models/COVIDNet-CXR-Large \
+    --weightspath models/COVIDNet-CXR3-B \
     --metaname model.meta \
-    --ckptname model-8485
+    --ckptname model-1014
 ```
 4. For more options and information, `python eval.py --help`
 
@@ -43,9 +43,9 @@ python eval.py \
 3. To inference,
 ```
 python inference.py \
-    --weightspath models/COVIDNet-CXR-Large \
-    --metaname model.meta_eval \
-    --ckptname model-8485 \
+    --weightspath models/COVIDNet-CXR3-B \
+    --metaname model.meta \
+    --ckptname model-1014 \
     --imagepath assets/ex-covid.jpeg
 ```
 4. For more options and information, `python inference.py --help`

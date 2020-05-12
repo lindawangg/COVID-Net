@@ -4,20 +4,19 @@ import tensorflow as tf
 import os, argparse
 import cv2
 
+from data import process_image_file
+
 mapping = {'normal': 0, 'pneumonia': 1, 'COVID-19': 2}
 
-def eval(sess, graph, testfile, testfolder):
-    image_tensor = graph.get_tensor_by_name("input_1:0")
-    pred_tensor = graph.get_tensor_by_name("dense_3/Softmax:0")
+def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size):
+    image_tensor = graph.get_tensor_by_name(input_tensor)
+    pred_tensor = graph.get_tensor_by_name(output_tensor)
 
     y_test = []
     pred = []
     for i in range(len(testfile)):
         line = testfile[i].split()
-        x = cv2.imread(os.path.join('data', testfolder, line[1]))
-        h, w, c = x.shape
-        x = x[int(h/6):, :]
-        x = cv2.resize(x, (224, 224))
+        x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
         x = x.astype('float32') / 255.0
         y_test.append(mapping[line[2]])
         pred.append(np.array(sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})).argmax(axis=1))
@@ -40,11 +39,14 @@ def eval(sess, graph, testfile, testfolder):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='COVID-Net Evaluation')
-    parser.add_argument('--weightspath', default='output', type=str, help='Path to output folder')
+    parser.add_argument('--weightspath', default='models/COVIDNet-CXR3-S', type=str, help='Path to output folder')
     parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
-    parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
-    parser.add_argument('--testfile', default='test_COVIDx.txt', type=str, help='Name of testfile')
-    parser.add_argument('--testfolder', default='test', type=str, help='Folder where test data is located')
+    parser.add_argument('--ckptname', default='model-1014', type=str, help='Name of model ckpts')
+    parser.add_argument('--testfile', default='test_COVIDx3.txt', type=str, help='Name of testfile')
+    parser.add_argument('--testfolder', default='data/test', type=str, help='Folder where test data is located')
+    parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
+    parser.add_argument('--out_tensorname', default='norm_dense_1/Softmax:0', type=str, help='Name of output tensor from graph')
+    parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 
     args = parser.parse_args()
 
@@ -58,4 +60,4 @@ if __name__ == '__main__':
     file = open(args.testfile, 'r')
     testfile = file.readlines()
 
-    eval(sess, graph, testfile, args.testfolder)
+    eval(sess, graph, testfile, args.testfolder, args.in_tensorname, args.out_tensorname, args.input_size)

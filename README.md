@@ -4,18 +4,18 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
+**Update 05/13/2020:** We released 3 new models, COVIDNet-CXR3-A, COVIDNet-CXR3-B, COVIDNet-CXR3-C, which were trained on a new COVIDx dataset with both PA and AP X-Rays. The results are now based on a test set containing 100 COVID-19 samples.\
 **Update 04/16/2020:** If you have questions, please check the new [FAQ](docs/FAQ.md) page first.\
-**Update 04/15/2020:** We released two new models, COVIDNet-CXR Small and COVIDNet-CXR Large, which were trained on a new COVIDx Dataset with both PA and AP X-Rays from Cohen et al, as well as additional COVID-19 X-Ray images from Figure1.
 
 <p align="center">
-	<img src="assets/covidnet-cxr-small-exp.png" alt="photo not available" width="70%" height="70%">
+	<img src="assets/covidnetv3-3p-rca.png" alt="photo not available" width="70%" height="70%">
 	<br>
 	<em>Example chest radiography images of COVID-19 cases from 2 different patients and their associated critical factors (highlighted in red) as identified by GSInquire.</em>
 </p>
 
-The COVID-19 pandemic continues to have a devastating effect on the health and well-being of the global population.  A critical step in the fight against COVID-19 is effective screening of infected patients, with one of the key screening approaches being radiological imaging using chest radiography.  It was found in early studies that patients present abnormalities in chest radiography images that are characteristic of those infected with COVID-19.  Motivated by this, a number of artificial intelligence (AI) systems based on deep learning have been proposed and results have been shown to be quite promising in terms of accuracy in detecting patients infected with COVID-19 using chest radiography images.  However, to the best of the authors' knowledge, these developed AI systems have been closed source and unavailable to the research community for deeper understanding and extension, and unavailable for public access and use.  Therefore, in this study we introduce COVID-Net, a deep convolutional neural network design tailored for the detection of COVID-19 cases from chest radiography images that is open source and available to the general public.  We also describe the chest radiography dataset leveraged to train COVID-Net, which we will refer to as COVIDx and is comprised of 13,800 chest radiography images across 13,725 patient patient cases from three open access data repositories.  Furthermore, we investigate how COVID-Net makes predictions using an explainability method in an attempt to gain deeper insights into critical factors associated with COVID cases, which can aid clinicians in improved screening.  **By no means a production-ready solution**, the hope is that the open access COVID-Net, along with the description on constructing the open source COVIDx dataset, will be leveraged and build upon by both researchers and citizen data scientists alike to accelerate the development of highly accurate yet practical deep learning solutions for detecting COVID-19 cases and accelerate treatment of those who need it the most.
+The COVID-19 pandemic continues to have a devastating effect on the health and well-being of the global population.  A critical step in the fight against COVID-19 is effective screening of infected patients, with one of the key screening approaches being radiology examination using chest radiography.  It was found in early studies that patients present abnormalities in chest radiography images that are characteristic of those infected with COVID-19.  Motivated by this and inspired by the open source efforts of the research community, in this study we introduce COVID-Net, a deep convolutional neural network design tailored for the detection of COVID-19 cases from chest X-ray (CXR) images that is open source and available to the general public. To the best of the authors' knowledge, COVID-Net is one of the first open source network designs for COVID-19 detection from CXR images at the time of initial release.  We also introduce COVIDx, an open access benchmark dataset that we generated comprising of 13,975 CXR images across 13,870 patient patient cases, with the largest number of publicly available COVID-19 positive cases to the best of the authors' knowledge.  Furthermore, we investigate how COVID-Net makes predictions using an explainability method in an attempt to not only gain deeper insights into critical factors associated with COVID cases, which can aid clinicians in improved screening, but also audit COVID-Net in a responsible and transparent manner to validate that it is making decisions based on relevant information from the CXR images.  **By no means a production-ready solution**, the hope is that the open access COVID-Net, along with the description on constructing the open source COVIDx dataset, will be leveraged and build upon by both researchers and citizen data scientists alike to accelerate the development of highly accurate yet practical deep learning solutions for detecting COVID-19 cases and accelerate treatment of those who need it the most.
 
-For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](https://arxiv.org/abs/2003.09871v3).
+For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](https://arxiv.org/abs/2003.09871).
 
 Currently, the COVID-Net team is working on **COVID-RiskNet**, a deep neural network tailored for COVID-19 risk stratification.  Currently this is available as a work-in-progress via included `train_risknet.py` script, help to contribute data and we can improve this tool.
 
@@ -85,7 +85,106 @@ Additional requirements to generate dataset:
 * Jupyter
 
 ## Results
-These are the final results for COVIDNet-CXR Small and COVIDNet-CXR Large.
+These are the final results for the COVIDNet models.
+
+### COVIDNet-CXR3-A
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">93.0</td>
+    <td class="tg-c3ow">93.0</td>
+    <td class="tg-c3ow">94.0</td>
+  </tr>
+</table></div>
+
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">92.1</td>
+    <td class="tg-c3ow">90.3</td>
+    <td class="tg-c3ow">97.9</td>
+  </tr>
+</table></div>
+
+### COVIDNet-CXR3-B
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">95.0</td>
+    <td class="tg-c3ow">94.0</td>
+    <td class="tg-c3ow">91.0</td>
+  </tr>
+</table></div>
+
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">90.5</td>
+    <td class="tg-c3ow">91.3</td>
+    <td class="tg-c3ow">98.9</td>
+  </tr>
+</table></div>
+
+### COVIDNet-CXR3-C
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">92.0</td>
+    <td class="tg-c3ow">90.0</td>
+    <td class="tg-c3ow">95.0</td>
+  </tr>
+</table></div>
+
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">90.2</td>
+    <td class="tg-c3ow">91.8</td>
+    <td class="tg-c3ow">95.0</td>
+  </tr>
+</table></div>
 
 ### COVIDNet-CXR Small
 <p>

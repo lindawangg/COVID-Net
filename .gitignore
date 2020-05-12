@@ -19,5 +19,11 @@ requirements.txt
 test_dups.py
 test_COVIDx.txt
 train_COVIDx.txt
+create_COVIDx_v1.ipynb
 create_COVIDx_v2.ipynb
 data_keras.py
+test_split_v4.txt
+train_split_v4.txt
+test_COVIDx2.txt
+train_COVIDx2.txt
+eval_ensemble.py
