@@ -187,11 +187,11 @@ These are the final results for the COVIDNet models.
 </table></div>
 
 ### COVIDNet-CXR Small
-<p>
+<!--<p>
 	<img src="assets/cm-covidnetcxr-small.png" alt="photo not available" width="50%" height="50%">
 	<br>
 	<em>Confusion matrix for COVIDNet-CXR Small on the COVIDx test dataset.</em>
-</p>
+</p>-->
 
 <div class="tg-wrap"><table class="tg">
   <tr>
@@ -227,11 +227,11 @@ These are the final results for the COVIDNet models.
 
 
 ### COVIDNet-CXR Large
-<p>
+<!--<p>
 	<img src="assets/cm-covidnetcxr-large.png" alt="photo not available" width="50%" height="50%">
 	<br>
 	<em>Confusion matrix for COVIDNet-CXR Large on the COVIDx test dataset.</em>
-</p>
+</p>-->
 
 <div class="tg-wrap"><table class="tg">
   <tr>

@@ -4,7 +4,7 @@
 The current COVIDx dataset is constructed by the following open source chest radiography datasets:
 * https://github.com/ieee8023/covid-chestxray-dataset
 * https://github.com/agchung/Figure1-COVID-chestxray-dataset
-* https://github.com/agchung/Actualmed-COVID-chestxray-dataset.git
+* https://github.com/agchung/Actualmed-COVID-chestxray-dataset
 * https://www.kaggle.com/tawsifurrahman/covid19-radiography-database
 * https://www.kaggle.com/c/rsna-pneumonia-detection-challenge (which came from: https://nihcc.app.box.com/v/ChestXray-NIHCC)
 
@@ -14,7 +14,7 @@ The current COVIDx dataset is constructed by the following open source chest rad
 
 1. Download the datasets listed above
  * `git clone https://github.com/ieee8023/covid-chestxray-dataset.git`
- * `git clone https://github.com/agchung/Figure1-COVID-chestxray-dataset`
+ * `git clone https://github.com/agchung/Figure1-COVID-chestxray-dataset.git`
  * `git clone https://github.com/agchung/Actualmed-COVID-chestxray-dataset.git`
  * go to this [link](https://www.kaggle.com/tawsifurrahman/covid19-radiography-database) to download the COVID-19 Radiography database. Only the COVID-19 image folder and metadata file is required. The overlaps between covid-chestxray-dataset are handled
  * go to this [link](https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data) to download the RSNA pneumonia dataset
