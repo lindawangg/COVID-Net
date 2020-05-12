@@ -5,7 +5,7 @@
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
 **Update 05/13/2020:** We released 3 new models, COVIDNet-CXR3-A, COVIDNet-CXR3-B, COVIDNet-CXR3-C, which were trained on a new COVIDx dataset with both PA and AP X-Rays. The results are now based on a test set containing 100 COVID-19 samples.\
-**Update 04/16/2020:** If you have questions, please check the new [FAQ](docs/FAQ.md) page first.\
+**Update 04/16/2020:** If you have questions, please check the new [FAQ](docs/FAQ.md) page first.
 
 <p align="center">
 	<img src="assets/covidnetv3-3p-rca.png" alt="photo not available" width="70%" height="70%">
