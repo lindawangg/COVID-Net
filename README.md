@@ -87,7 +87,7 @@ Additional requirements to generate dataset:
 ## Results
 These are the final results for the COVIDNet models.
 
-### COVIDNet-CXR3-A
+### COVIDNet-CXR3-A on COVIDx3 (100 COVID-19 test)
 <div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
@@ -120,7 +120,7 @@ These are the final results for the COVIDNet models.
   </tr>
 </table></div>
 
-### COVIDNet-CXR3-B
+### COVIDNet-CXR3-B on COVIDx3 (100 COVID-19 test)
 <div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
@@ -153,7 +153,7 @@ These are the final results for the COVIDNet models.
   </tr>
 </table></div>
 
-### COVIDNet-CXR3-C
+### COVIDNet-CXR3-C on COVIDx3 (100 COVID-19 test)
 <div class="tg-wrap"><table class="tg">
   <tr>
     <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
@@ -186,7 +186,7 @@ These are the final results for the COVIDNet models.
   </tr>
 </table></div>
 
-### COVIDNet-CXR Small
+### COVIDNet-CXR Small on COVIDx2 (31 COVID-19 test)
 <!--<p>
 	<img src="assets/cm-covidnetcxr-small.png" alt="photo not available" width="50%" height="50%">
 	<br>
@@ -226,7 +226,7 @@ These are the final results for the COVIDNet models.
 </table></div>
 
 
-### COVIDNet-CXR Large
+### COVIDNet-CXR Large on COVIDx2 (31 COVID-19 test)
 <!--<p>
 	<img src="assets/cm-covidnetcxr-large.png" alt="photo not available" width="50%" height="50%">
 	<br>
