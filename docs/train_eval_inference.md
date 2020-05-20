@@ -18,7 +18,8 @@ TF training script from a pretrained model:
 python train_tf.py \
     --weightspath models/COVIDNet-CXR3-B \
     --metaname model.meta \
-    --ckptname model-1014
+    --ckptname model-1014 \
+    --trainfile train_split_v3.txt
 ```
 4. For more options and information, `python train_tf.py --help`
 
