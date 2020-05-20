@@ -10,7 +10,7 @@ Due to limited cloud space, we cannot hold the entire dataset, so we provided [d
 Possible ways to contribute: provide more data, experiment with other model prototypes, validate model on external data, medical expertise.
 
 ## Why is test_COVIDxX.txt different than test set created?
-To create a more balanced test set, since there are only 31 covid test samples, we randomly sampled 100 from normal and pneumonia.
+To create a more balanced test set, since there are only 100 covid test samples, we randomly sampled 100 from normal and pneumonia.
 
 ## Can you provide the model/network architecture code?
 Since this model is designed by GenSynth and have different microarchitecture designs in each module, we do not have the code available, but we provided the [training script](train_eval_inference.md) for retraining on the given pretrained models.
