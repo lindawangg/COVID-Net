@@ -58,7 +58,7 @@ If you find our work useful, can cite our paper using:
 * Matt Ross and Blake VanBerlo (City of London), COVID-19 Chest X-Ray Model: https://github.com/aildnont/covid-cxr
 * Ashkan Ebadi (National Research Council Canada)
 * Kim-Ann Git (Selayang Hospital)
-* Abdul Al-Haimi
+* Abdul Al-Haimi, COVID-19 ShuffleNet Chest X-Ray Model: https://github.com/aalhaimi/covid-net-cxr-shuffle
 
 ## Table of Contents
 1. [Requirements](#requirements) to install on your system
