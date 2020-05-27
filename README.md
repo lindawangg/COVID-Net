@@ -17,6 +17,8 @@ The COVID-19 pandemic continues to have a devastating effect on the health and w
 
 For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](https://arxiv.org/abs/2003.09871).
 
+For a detailed description of the methodology behind COVID-Net based deep neural networks for geographic extent and opacity extent scoring of chest X-rays for SARS-CoV-2 lung disease severity, please click [here](https://arxiv.org/abs/2005.12855).
+
 Currently, the COVID-Net team is working on **COVID-RiskNet**, a deep neural network tailored for COVID-19 risk stratification.  Currently this is available as a work-in-progress via included `train_risknet.py` script, help to contribute data and we can improve this tool.
 
 If you would like to **contribute COVID-19 x-ray images**, please submit to https://figure1.typeform.com/to/lLrHwv. Lets all work together to stop the spread of COVID-19!
