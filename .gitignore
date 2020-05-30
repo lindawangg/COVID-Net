@@ -15,7 +15,6 @@ train.py
 export_to_meta.py
 model.py
 archive/
-requirements.txt
 test_dups.py
 test_COVIDx.txt
 train_COVIDx.txt

@@ -87,6 +87,18 @@ Additional requirements to generate dataset:
 * Pandas
 * Jupyter
 
+The requirements can be installed using the following command:
+```bash
+pip install -r requirements.txt
+```
+
+You might need to install `gdcm` as part of `pydicom` package.
+
+If using conda, you can run the following command:
+```bash
+conda install -c conda-forge gdcm
+```
+
 ## Results
 These are the final results for the COVIDNet models.
 
