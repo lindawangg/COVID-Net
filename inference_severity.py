@@ -5,13 +5,10 @@ import os, argparse
 from data import process_image_file
 from collections import defaultdict
 
-def cat2val_with_step(preds, step_size):
-    return (preds + 0.5) * step_size
-
-def cat2val_with_weights(probs, step_size):
+def score_prediction(softmax, step_size):
     vals = np.arange(3) * step_size + (step_size / 2.)
     vals = np.expand_dims(vals, axis=0)
-    return np.sum(probs * vals, axis=-1)
+    return np.sum(softmax * vals, axis=-1)
 
 class MetaModel:
     def __init__(self, meta_file, ckpt_file):
@@ -40,13 +37,11 @@ class MetaModel:
             for k in outputs.keys():
                 outputs[k] = np.concatenate(outputs[k], axis=0)
 
-            outputs['probs'] = np.exp(outputs['logits']) / np.sum(
+            outputs['softmax'] = np.exp(outputs['logits']) / np.sum(
                 np.exp(outputs['logits']), axis=-1, keepdims=True)
-            outputs['preds'] = np.argmax(outputs['probs'], axis=-1)
-            outputs['dvals'] = cat2val_with_step(outputs['preds'], 1 / 3.)
-            outputs['wvals'] = cat2val_with_weights(outputs['probs'], 1 / 3.)
+            outputs['score'] = score_prediction(outputs['softmax'], 1 / 3.)
 
-        return outputs['wvals']
+        return outputs['score']
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='COVID-Net Lung Severity Scoring')
