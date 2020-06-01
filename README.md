@@ -63,9 +63,10 @@ If you find our work useful, can cite our paper using:
 ## Table of Contents
 1. [Requirements](#requirements) to install on your system
 2. How to [generate COVIDx dataset](docs/COVIDx.md)
-3. Steps for [training, evaluation and inference](docs/train_eval_inference.md)
-4. [Results](#results)
-5. [Links to pretrained models](docs/models.md)
+3. Steps for [training, evaluation and inference](docs/train_eval_inference.md) of COVIDNet
+4. Steps for [inference](docs/covidnet_severity.md) of COVIDNet lung severity scoring
+5. [Results](#results)
+6. [Links to pretrained models](docs/models.md)
 
 ## Requirements
 
