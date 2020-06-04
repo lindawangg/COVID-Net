@@ -45,7 +45,8 @@ class MetaModel:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='COVID-Net Lung Severity Scoring')
-    parser.add_argument('--weightspath', default='models/COVIDNet-SEV-GEO', type=str, help='Path to output folder')
+    parser.add_argument('--weightspath_geo', default='models/COVIDNet-SEV-GEO', type=str, help='Path to output folder')
+    parser.add_argument('--weightspath_opc', default='models/COVIDNet-SEV-OPC', type=str, help='Path to output folder')
     parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
     parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
     parser.add_argument('--imagepath', default='assets/ex-covid.jpeg', type=str, help='Full path to image to perfom scoring on')
@@ -57,20 +58,20 @@ if __name__ == '__main__':
     x = process_image_file(args.imagepath, args.top_percent, args.input_size)
     x = x.astype('float32') / 255.0
 
-    model = MetaModel(os.path.join(args.weightspath, args.metaname),
-                      os.path.join(args.weightspath, args.ckptname))
-    output = model.infer(x)
+    model_geo = MetaModel(os.path.join(args.weightspath_geo, args.metaname),
+                          os.path.join(args.weightspath_geo, args.ckptname))
+    output_geo = model_geo.infer(x)
 
-    if 'GEO' in args.weightspath:
-        print('Geographic severity: {:.3f}'.format(output[0]))
-        print('Geographic extent score for right + left lung (0 - 8): {:.3f}'.format(output[0]*8))
-        print('For each lung: 0 = no involvement; 1 = <25%; 2 = 25-50%; 3 = 50-75%; 4 = >75% involvement.')
-    elif 'OPC' in args.weightspath:
-        print('Opacity severity: {:.3f}'.format(output[0]))
-        print('Opacity extent score for right + left lung (0 - 6): {:.3f}'.format(output[0]*6))
-        print('For each lung: 0 = no opacity; 1 = ground glass opacity; 2 =consolidation; 3 = white-out.')
-    else:
-        print('Severity (0 - 1): {:.3f}'.format(output[0]))
+    model_opc = MetaModel(os.path.join(args.weightspath_opc, args.metaname),
+                          os.path.join(args.weightspath_opc, args.ckptname))
+    output_opc = model_opc.infer(x)
+
+    print('Geographic severity: {:.3f}'.format(output_geo[0]))
+    print('Geographic extent score for right + left lung (0 - 8): {:.3f}'.format(output_geo[0]*8))
+    print('For each lung: 0 = no involvement; 1 = <25%; 2 = 25-50%; 3 = 50-75%; 4 = >75% involvement.')
+    print('Opacity severity: {:.3f}'.format(output_opc[0]))
+    print('Opacity extent score for right + left lung (0 - 6): {:.3f}'.format(output_opc[0]*6))
+    print('For each lung: 0 = no opacity; 1 = ground glass opacity; 2 =consolidation; 3 = white-out.')
 
     print('**DISCLAIMER**')
     print('Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.')
