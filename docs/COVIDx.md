@@ -29,11 +29,11 @@ The current COVIDx dataset is constructed by the following open source chest rad
 Chest radiography images distribution
 |  Type | Normal | Pneumonia | COVID-19 | Total |
 |:-----:|:------:|:---------:|:--------:|:-----:|
-| train |  7966  |    5451   |   258    | 13675 |
+| train |  7966  |    5459   |   473    | 13898 |
 |  test |   100  |     100   |   100    |   300 |
 
 Patients distribution
 |  Type | Normal | Pneumonia | COVID-19 |  Total |
 |:-----:|:------:|:---------:|:--------:|:------:|
-| train |  7966  |    5440   |    192   |  13598 |
+| train |  7966  |    5444   |    320   |  13730 |
 |  test |   100  |      98   |     74   |    272 |

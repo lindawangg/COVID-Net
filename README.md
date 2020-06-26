@@ -4,6 +4,7 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
+**Update 06/26/2020:** We released 3 new models, COVIDNet-CXR4-A, COVIDNet-CXR4-B, COVIDNet-CXR4-C, which were trained on the new COVIDx4 dataset with 473 positive COVID-19 images. The test results are based on the same test dataset as COVIDNet-CXR3 models.\
 **Update 06/01/2020:** We released an [inference script](docs/covidnet_severity.md) and the [models](docs/models.md) for  geographic and opacity extent scoring of SARS-CoV-2 lung severity.\
 **Update 05/26/2020:** For a detailed description of the methodology behind COVID-Net based deep neural networks for geographic extent and opacity extent scoring of chest X-rays for SARS-CoV-2 lung disease severity, see the paper [here](https://arxiv.org/abs/2005.12855).\
 **Update 05/13/2020:** We released 3 new models, COVIDNet-CXR3-A, COVIDNet-CXR3-B, COVIDNet-CXR3-C, which were trained on a new COVIDx dataset with both PA and AP X-Rays. The results are now based on a test set containing 100 COVID-19 samples.\
@@ -91,6 +92,105 @@ Additional requirements to generate dataset:
 
 ## Results
 These are the final results for the COVIDNet models.
+
+### COVIDNet-CXR4-A on COVIDx4 (100 COVID-19 test)
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">94.0</td>
+    <td class="tg-c3ow">94.0</td>
+    <td class="tg-c3ow">95.0</td>
+  </tr>
+</table></div>
+
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">91.3</td>
+    <td class="tg-c3ow">93.1</td>
+    <td class="tg-c3ow">99.0</td>
+  </tr>
+</table></div>
+
+### COVIDNet-CXR4-B on COVIDx4 (100 COVID-19 test)
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">96.0</td>
+    <td class="tg-c3ow">92.0</td>
+    <td class="tg-c3ow">93.0</td>
+  </tr>
+</table></div>
+
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">88.9</td>
+    <td class="tg-c3ow">93.9</td>
+    <td class="tg-c3ow">98.9</td>
+  </tr>
+</table></div>
+
+### COVIDNet-CXR4-C on COVIDx4 (100 COVID-19 test)
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">95.0</td>
+    <td class="tg-c3ow">89.0</td>
+    <td class="tg-c3ow">96.0</td>
+  </tr>
+</table></div>
+
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Normal</td>
+    <td class="tg-7btt">Pneumonia</td>
+    <td class="tg-7btt">COVID-19</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">90.5</td>
+    <td class="tg-c3ow">93.7</td>
+    <td class="tg-c3ow">96.0</td>
+  </tr>
+</table></div>
 
 ### COVIDNet-CXR3-A on COVIDx3 (100 COVID-19 test)
 <div class="tg-wrap"><table class="tg">

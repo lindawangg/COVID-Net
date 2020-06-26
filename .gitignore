@@ -21,6 +21,7 @@ test_COVIDx.txt
 train_COVIDx.txt
 create_COVIDx_v1.ipynb
 create_COVIDx_v2.ipynb
+create_COVIDx_v3.ipynb
 data_keras.py
 test_split_v4.txt
 train_split_v4.txt
