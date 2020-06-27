@@ -4,7 +4,7 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
-**Update 06/26/2020:** We released 3 new models, COVIDNet-CXR4-A, COVIDNet-CXR4-B, COVIDNet-CXR4-C, which were trained on the new COVIDx4 dataset with 473 positive COVID-19 images. The test results are based on the same test dataset as COVIDNet-CXR3 models.\
+**Update 06/26/2020:** We released 3 new models, COVIDNet-CXR4-A, COVIDNet-CXR4-B, COVIDNet-CXR4-C, which were trained on the new COVIDx4 dataset with over 14000 CXR images and 473 positive COVID-19 images for training. The test results are based on the same test dataset as COVIDNet-CXR3 models.\
 **Update 06/01/2020:** We released an [inference script](docs/covidnet_severity.md) and the [models](docs/models.md) for  geographic and opacity extent scoring of SARS-CoV-2 lung severity.\
 **Update 05/26/2020:** For a detailed description of the methodology behind COVID-Net based deep neural networks for geographic extent and opacity extent scoring of chest X-rays for SARS-CoV-2 lung disease severity, see the paper [here](https://arxiv.org/abs/2005.12855).\
 **Update 05/13/2020:** We released 3 new models, COVIDNet-CXR3-A, COVIDNet-CXR3-B, COVIDNet-CXR3-C, which were trained on a new COVIDx dataset with both PA and AP X-Rays. The results are now based on a test set containing 100 COVID-19 samples.\
