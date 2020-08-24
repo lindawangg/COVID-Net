@@ -71,11 +71,11 @@ Training, inference, and evaluation scripts for COVIDNet-CXR, COVIDNet-CT, and C
 	* Audrey Chung
 	* Melissa Rinch
 	* Maya Pavlova
-	* Hossain Aboutaleb 
 	* Hayden Gunraj, COVIDNet for CT: https://github.com/haydengunraj/COVIDNet-CT
 	* Jeffer Peng, COVIDNet UI: https://github.com/darwinai/covidnet_ui
 * Vision and Image Processing Research Group, University of Waterloo, Canada
 	* James Lee
+	* Hossain Aboutaleb 
 * Ashkan Ebadi and Pengcheng Xi (National Research Council Canada)
 * Kim-Ann Git (Selayang Hospital)
 * Abdul Al-Haimi, COVID-19 ShuffleNet Chest X-Ray Model: https://github.com/aalhaimi/covid-net-cxr-shuffle
