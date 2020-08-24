@@ -60,6 +60,8 @@ If you find our work useful, can cite our paper using:
 5. COVIDx-CT dataset: https://github.com/haydengunraj/COVIDNet-CT/blob/master/docs/dataset.md
 6. COVIDx-S dataset: https://github.com/lindawangg/COVID-Net/tree/master/annotations
 
+Training, inference, and evaluation scripts for COVIDNet-CXR, COVIDNet-CT, and COVIDNet-S models are available at the respective repos
+
 ## Core COVID-Net Team
 * DarwinAI Corp., Canada and Vision and Image Processing Research Group, University of Waterloo, Canada
 	* Linda Wang
