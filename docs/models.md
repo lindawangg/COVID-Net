@@ -17,3 +17,5 @@
 |:-----:|:----------------:|:-------------------:|
 |  ckpt |      480x480     |[COVIDNet-SEV-GEO](https://bit.ly/COVIDNet-SEV-GEO)|
 |  ckpt |      480x480     |[COVIDNet-SEV-OPC](https://bit.ly/COVIDNet-SEV-OPC)|
+|  ckpt |      480x480     |[COVIDNet-S-GEO](https://bit.ly/COVIDNet-S-GEO)|
+|  ckpt |      480x480     |[COVIDNet-S-OPC](https://bit.ly/COVIDNet-S-OPC)|

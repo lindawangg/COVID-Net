@@ -77,7 +77,7 @@ if __name__ == '__main__':
         output_opc = model_opc.infer(x)
 
         print('Opacity severity: {:.3f}'.format(output_opc[0]))
-        print('Opacity extent score for right + left lung (0 - 6): {:.3f}'.format(output_opc[0]*6))
+        print('Opacity extent score for right + left lung (0 - 8): {:.3f}'.format(output_opc[0]*8))
         print('For each lung: 0 = no opacity; 1 = ground glass opacity; 2 =consolidation; 3 = white-out.')
 
     print('**DISCLAIMER**')
