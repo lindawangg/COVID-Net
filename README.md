@@ -4,6 +4,7 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
+**Update 11/09/2020** We released updated COVIDNet-S [models](docs/models.md) for geographic and opacity extent scoring of SARS-CoV-2 lung severity and updated the [inference script](docs/covidnet_severity.md) for an opacity extent scoring ranging from 0-8.
 **Update 07/08/2020:** We released COVIDNet-CT, which was trained and tested on 104,009 CT images from 1,489 patients. For more information, as well as instructions to run and download the models, refer to [this repo](https://github.com/haydengunraj/COVIDNet-CT).\
 **Update 06/26/2020:** We released 3 new models, COVIDNet-CXR4-A, COVIDNet-CXR4-B, COVIDNet-CXR4-C, which were trained on the new COVIDx4 dataset with over 14000 CXR images and 473 positive COVID-19 images for training. The test results are based on the same test dataset as COVIDNet-CXR3 models.\
 **Update 06/01/2020:** We released an [inference script](docs/covidnet_severity.md) and the [models](docs/models.md) for  geographic and opacity extent scoring of SARS-CoV-2 lung severity.\
