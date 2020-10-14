@@ -134,7 +134,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
 
         # If we have processed the entire dataset then
         if self.n >= self.__len__():
-            self.on_epoch_end
+            self.on_epoch_end()
             self.n = 0
 
         return batch_x, batch_y, weights
