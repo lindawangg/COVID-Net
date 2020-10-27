@@ -6,9 +6,9 @@ import cv2
 from data import process_image_file
 
 parser = argparse.ArgumentParser(description='COVID-Net Inference')
-parser.add_argument('--weightspath', default='models/COVIDNet-CXR3-S', type=str, help='Path to output folder')
+parser.add_argument('--weightspath', default='models/COVIDNet-CXR4-A', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='model-1014', type=str, help='Name of model ckpts')
+parser.add_argument('--ckptname', default='model-18540', type=str, help='Name of model ckpts')
 parser.add_argument('--imagepath', default='assets/ex-covid.jpeg', type=str, help='Full path to image to be inferenced')
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
 parser.add_argument('--out_tensorname', default='norm_dense_1/Softmax:0', type=str, help='Name of output tensor from graph')
