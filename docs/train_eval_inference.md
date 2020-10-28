@@ -1,5 +1,5 @@
 # Training, Evaluation and Inference
-COVIDNet-CXR3 models takes as input an image of shape (N, 480, 480, 3) and outputs the softmax probabilities as (N, 3), where N is the number of batches.
+COVIDNet-CXR4 models takes as input an image of shape (N, 480, 480, 3) and outputs the softmax probabilities as (N, 3), where N is the number of batches.
 If using the TF checkpoints, here are some useful tensors:
 
 * input tensor: `input_1:0`
@@ -16,10 +16,11 @@ TF training script from a pretrained model:
 3. To train from a pretrained model:
 ```
 python train_tf.py \
-    --weightspath models/COVIDNet-CXR3-B \
+    --weightspath models/COVIDNet-CXR4-A \
     --metaname model.meta \
-    --ckptname model-1014 \
-    --trainfile train_split_v3.txt
+    --ckptname model-18540 \
+    --trainfile train_COVIDx5.txt \
+    --testfile test_COVIDx5.txt \
 ```
 4. For more options and information, `python train_tf.py --help`
 
@@ -30,9 +31,9 @@ python train_tf.py \
 3. To evaluate a tf checkpoint:
 ```
 python eval.py \
-    --weightspath models/COVIDNet-CXR3-B \
+    --weightspath models/COVIDNet-CXR4-A \
     --metaname model.meta \
-    --ckptname model-1014
+    --ckptname model-18540
 ```
 4. For more options and information, `python eval.py --help`
 
@@ -44,9 +45,9 @@ python eval.py \
 3. To inference,
 ```
 python inference.py \
-    --weightspath models/COVIDNet-CXR3-B \
+    --weightspath models/COVIDNet-CXR4-A \
     --metaname model.meta \
-    --ckptname model-1014 \
+    --ckptname model-18540 \
     --imagepath assets/ex-covid.jpeg
 ```
 4. For more options and information, `python inference.py --help`
