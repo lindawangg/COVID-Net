@@ -36,5 +36,5 @@ Chest radiography images distribution
 Patients distribution
 |  Type | Normal | Pneumonia | COVID-19 |  Total |
 |:-----:|:------:|:---------:|:--------:|:------:|
-| train |  7966  |    5444   |    320   |  13730 |
+| train |  7966  |    5451   |    353   |  13770 |
 |  test |   100  |      98   |     74   |    272 |
