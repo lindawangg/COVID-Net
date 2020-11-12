@@ -60,6 +60,7 @@ If you find our work useful, can cite our paper using:
 4. COVIDx-CXR dataset: https://github.com/lindawangg/COVID-Net/blob/master/docs/COVIDx.md
 5. COVIDx-CT dataset: https://github.com/haydengunraj/COVIDNet-CT/blob/master/docs/dataset.md
 6. COVIDx-S dataset: https://github.com/lindawangg/COVID-Net/tree/master/annotations
+7. COVIDNet-P inference for pneumonia: https://github.com/lindawangg/COVID-Net/blob/master/docs/covidnet_pneumonia.md
 
 Training, inference, and evaluation scripts for COVIDNet-CXR, COVIDNet-CT, and COVIDNet-S models are available at the respective repos
 
