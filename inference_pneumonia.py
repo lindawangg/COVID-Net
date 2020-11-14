@@ -17,6 +17,7 @@ parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top
 
 args = parser.parse_args()
 
+#Combine the COVID and non-COVID pneumonia predictions
 mapping = {'normal': 0, 'pneumonia': 1, 'pneumonia': 2}
 inv_mapping = {0: 'normal', 1: 'pneumonia', 2: 'pneumonia'}
 

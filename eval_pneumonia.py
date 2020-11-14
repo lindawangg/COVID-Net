@@ -6,6 +6,7 @@ import cv2
 
 from data import process_image_file
 
+#Combine the COVID and non-COVID pneumonia cases
 mapping = {'normal': 0, 'pneumonia': 1, 'COVID-19': 1}
 
 def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size):
