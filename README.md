@@ -4,9 +4,9 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
-**Update 11/15/2020** We released COVIDNet-P [inference](inference_pneumonia.py) and [evaluation](eval_pneumonia.py) scripts for identifying pneumonia in CXR images using the COVIDx5 dataset. For more information please refer to this [doc](docs/covidnet_pneumonia.md).\
+**Update 11/15/2020:** We released COVIDNet-P [inference](inference_pneumonia.py) and [evaluation](eval_pneumonia.py) scripts for identifying pneumonia in CXR images using the COVIDx5 dataset. For more information please refer to this [doc](docs/covidnet_pneumonia.md).\
 **Update 10/30/2020:** We released a new COVIDx5 dataset with over 14200 CXR images and 617 positive COVID-19 images.\
-**Update 09/11/2020** We released updated COVIDNet-S [models](docs/models.md) for geographic and opacity extent scoring of SARS-CoV-2 lung severity and updated the [inference script](docs/covidnet_severity.md) for an opacity extent scoring ranging from 0-8.\
+**Update 09/11/2020:** We released updated COVIDNet-S [models](docs/models.md) for geographic and opacity extent scoring of SARS-CoV-2 lung severity and updated the [inference script](docs/covidnet_severity.md) for an opacity extent scoring ranging from 0-8.\
 **Update 07/08/2020:** We released COVIDNet-CT, which was trained and tested on 104,009 CT images from 1,489 patients. For more information, as well as instructions to run and download the models, refer to [this repo](https://github.com/haydengunraj/COVIDNet-CT).\
 **Update 06/26/2020:** We released 3 new models, COVIDNet-CXR4-A, COVIDNet-CXR4-B, COVIDNet-CXR4-C, which were trained on the new COVIDx4 dataset with over 14000 CXR images and 473 positive COVID-19 images for training. The test results are based on the same test dataset as COVIDNet-CXR3 models.\
 **Update 06/01/2020:** We released an [inference script](docs/covidnet_severity.md) and the [models](docs/models.md) for  geographic and opacity extent scoring of SARS-CoV-2 lung severity.\
@@ -22,7 +22,7 @@
 
 The COVID-19 pandemic continues to have a devastating effect on the health and well-being of the global population.  A critical step in the fight against COVID-19 is effective screening of infected patients, with one of the key screening approaches being radiology examination using chest radiography.  It was found in early studies that patients present abnormalities in chest radiography images that are characteristic of those infected with COVID-19.  Motivated by this and inspired by the open source efforts of the research community, in this study we introduce COVID-Net, a deep convolutional neural network design tailored for the detection of COVID-19 cases from chest X-ray (CXR) images that is open source and available to the general public. To the best of the authors' knowledge, COVID-Net is one of the first open source network designs for COVID-19 detection from CXR images at the time of initial release.  We also introduce COVIDx, an open access benchmark dataset that we generated comprising of 13,975 CXR images across 13,870 patient patient cases, with the largest number of publicly available COVID-19 positive cases to the best of the authors' knowledge.  Furthermore, we investigate how COVID-Net makes predictions using an explainability method in an attempt to not only gain deeper insights into critical factors associated with COVID cases, which can aid clinicians in improved screening, but also audit COVID-Net in a responsible and transparent manner to validate that it is making decisions based on relevant information from the CXR images.  **By no means a production-ready solution**, the hope is that the open access COVID-Net, along with the description on constructing the open source COVIDx dataset, will be leveraged and build upon by both researchers and citizen data scientists alike to accelerate the development of highly accurate yet practical deep learning solutions for detecting COVID-19 cases and accelerate treatment of those who need it the most.
 
-For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](https://arxiv.org/abs/2003.09871).
+For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](https://www.nature.com/articles/s41598-020-76550-z).
 
 For a detailed description of the methodology behind COVID-Net based deep neural networks for geographic extent and opacity extent scoring of chest X-rays for SARS-CoV-2 lung disease severity, please click [here](https://arxiv.org/abs/2005.12855).
 
@@ -46,13 +46,19 @@ If there are any technical questions after the README, FAQ, and past/current iss
 If you find our work useful, can cite our paper using:
 
 ```
-@misc{wang2020covidnet,
-    title={COVID-Net: A Tailored Deep Convolutional Neural Network Design for Detection of COVID-19 Cases from Chest Radiography Images},
-    author={Linda Wang, Zhong Qiu Lin and Alexander Wong},
-    year={2020},
-    eprint={2003.09871},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV}
+@Article{Wang2020,
+	author={Wang, Linda and Lin, Zhong Qiu and Wong, Alexander},
+	title={COVID-Net: a tailored deep convolutional neural network design for detection of COVID-19 cases from chest X-ray images},
+	journal={Scientific Reports},
+	year={2020},
+	month={Nov},
+	day={11},
+	volume={10},
+	number={1},
+	pages={19549},
+	issn={2045-2322},
+	doi={10.1038/s41598-020-76550-z},
+	url={https://doi.org/10.1038/s41598-020-76550-z}
 }
 ```
 ## Quick Links
@@ -75,6 +81,7 @@ Training, inference, and evaluation scripts for COVIDNet-CXR, COVIDNet-CT, and C
 	* Audrey Chung
 	* Melissa Rinch
 	* Maya Pavlova
+  * Naomi Terhljan
 	* Hayden Gunraj, COVIDNet for CT: https://github.com/haydengunraj/COVIDNet-CT
 	* Jeffer Peng, COVIDNet UI: https://github.com/darwinai/covidnet_ui
 * Vision and Image Processing Research Group, University of Waterloo, Canada
