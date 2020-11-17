@@ -30,13 +30,13 @@ python eval_pneumonia.py \
     --weightspath models/COVIDNet-CXR4-A \
     --metaname model.meta \
     --ckptname model-18540 \
-    --testfile test_COVIDx4.txt
+    --testfile test_COVIDx5.txt
     --testfolder data/test
 ```
 4. For more options and information, `python eval_pneumonia.py --help`
 
 ## Results
-These are the results generated using the eval_pneumonia.py script with the COVIDNet-CXR4-A model and test_COVIDx4.txt dataset.
+These are the results generated using the eval_pneumonia.py script with the COVIDNet-CXR4-A model and test_COVIDx5.txt dataset.
 
 <div class="tg-wrap"><table class="tg">
   <tr>
