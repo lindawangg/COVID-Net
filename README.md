@@ -4,8 +4,9 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
+**Update 11/15/2020:** We released COVIDNet-P [inference](inference_pneumonia.py) and [evaluation](eval_pneumonia.py) scripts for identifying pneumonia in CXR images using the COVIDx5 dataset. For more information please refer to this [doc](docs/covidnet_pneumonia.md).\
 **Update 10/30/2020:** We released a new COVIDx5 dataset with over 14200 CXR images and 617 positive COVID-19 images.\
-**Update 11/09/2020:** We released updated COVIDNet-S [models](docs/models.md) for geographic and opacity extent scoring of SARS-CoV-2 lung severity and updated the [inference script](docs/covidnet_severity.md) for an opacity extent scoring ranging from 0-8.\
+**Update 09/11/2020:** We released updated COVIDNet-S [models](docs/models.md) for geographic and opacity extent scoring of SARS-CoV-2 lung severity and updated the [inference script](docs/covidnet_severity.md) for an opacity extent scoring ranging from 0-8.\
 **Update 07/08/2020:** We released COVIDNet-CT, which was trained and tested on 104,009 CT images from 1,489 patients. For more information, as well as instructions to run and download the models, refer to [this repo](https://github.com/haydengunraj/COVIDNet-CT).\
 **Update 06/26/2020:** We released 3 new models, COVIDNet-CXR4-A, COVIDNet-CXR4-B, COVIDNet-CXR4-C, which were trained on the new COVIDx4 dataset with over 14000 CXR images and 473 positive COVID-19 images for training. The test results are based on the same test dataset as COVIDNet-CXR3 models.\
 **Update 06/01/2020:** We released an [inference script](docs/covidnet_severity.md) and the [models](docs/models.md) for  geographic and opacity extent scoring of SARS-CoV-2 lung severity.\
@@ -67,6 +68,7 @@ If you find our work useful, can cite our paper using:
 4. COVIDx-CXR dataset: https://github.com/lindawangg/COVID-Net/blob/master/docs/COVIDx.md
 5. COVIDx-CT dataset: https://github.com/haydengunraj/COVIDNet-CT/blob/master/docs/dataset.md
 6. COVIDx-S dataset: https://github.com/lindawangg/COVID-Net/tree/master/annotations
+7. COVIDNet-P inference for pneumonia: https://github.com/lindawangg/COVID-Net/blob/master/docs/covidnet_pneumonia.md
 
 Training, inference, and evaluation scripts for COVIDNet-CXR, COVIDNet-CT, and COVIDNet-S models are available at the respective repos
 
