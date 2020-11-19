@@ -18,8 +18,8 @@ parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top
 args = parser.parse_args()
 
 #Combine the COVID and non-COVID pneumonia predictions
-mapping = {'normal': 0, 'pneumonia': 1, 'pneumonia': 2}
-inv_mapping = {0: 'normal', 1: 'pneumonia', 2: 'pneumonia'}
+mapping = {'normal': 0, 'pneumonia': 1}
+inv_mapping = {0: 'normal', 1: 'pneumonia'}
 
 sess = tf.Session()
 tf.get_default_graph()
@@ -38,7 +38,7 @@ pred = sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)}
 pred_pneumonia = np.array([pred[0][0], np.max([pred[0][1], pred[0][2]])])
 pred_pneumonia = pred_pneumonia / np.sum(pred_pneumonia)
 
-print('Prediction: {}'.format(inv_mapping[pred_pneumonia.argmax()[0]]))
+print('Prediction: {}'.format(inv_mapping[pred_pneumonia.argmax()]))
 print('Confidence')
 print('Normal: {:.3f}, Pneumonia: {:.3f}'.format(pred_pneumonia[0], pred_pneumonia[1]))
 print('**DISCLAIMER**')
