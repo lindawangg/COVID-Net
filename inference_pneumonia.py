@@ -5,7 +5,7 @@ import cv2
 
 from data import process_image_file
 
-parser = argparse.ArgumentParser(description='COVID-Net Inference')
+parser = argparse.ArgumentParser(description='COVID-Net-P Inference')
 parser.add_argument('--weightspath', default='models/COVIDNet-CXR4-A', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model-18540', type=str, help='Name of model ckpts')
@@ -18,8 +18,8 @@ parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top
 args = parser.parse_args()
 
 #Combine the COVID and non-COVID pneumonia predictions
-mapping = {'normal': 0, 'pneumonia': 1, 'pneumonia': 2}
-inv_mapping = {0: 'normal', 1: 'pneumonia', 2: 'pneumonia'}
+mapping = {'normal': 0, 'pneumonia': 1}
+inv_mapping = {0: 'normal', 1: 'pneumonia'}
 
 sess = tf.Session()
 tf.get_default_graph()
@@ -34,9 +34,12 @@ pred_tensor = graph.get_tensor_by_name(args.out_tensorname)
 x = process_image_file(args.imagepath, args.top_percent, args.input_size)
 x = x.astype('float32') / 255.0
 pred = sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})
+# Combining pneumonia and covid predictions into single pneumonia prediction.
+pred_pneumonia = np.array([pred[0][0], np.max([pred[0][1], pred[0][2]])])
+pred_pneumonia = pred_pneumonia / np.sum(pred_pneumonia)
 
-print('Prediction: {}'.format(inv_mapping[pred.argmax(axis=1)[0]]))
+print('Prediction: {}'.format(inv_mapping[pred_pneumonia.argmax()]))
 print('Confidence')
-print('Normal: {:.3f}, Pneumonia: {:.3f}'.format(pred[0][0], np.max([pred[0][1], pred[0][2]])))
+print('Normal: {:.3f}, Pneumonia: {:.3f}'.format(pred_pneumonia[0], pred_pneumonia[1]))
 print('**DISCLAIMER**')
 print('Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.')
