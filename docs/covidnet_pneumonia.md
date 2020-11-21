@@ -1,9 +1,6 @@
-# Evaluation and Inference for Pneumonia Cases
+# COVIDNet-P: COVID-Net for Pneumonia Detection
 
-This section describes how the currently available COVIDNet chest CXR4 models can be leveraged to create a COVIDNet-P model which distinguishes between cases where
-pneumonia is present and where it is not. COVIDNet-CXR4 models take as input an image of shape (N, 480, 480, 3) and output the softmax probabilities as (N, 3),
-where N is the number of batches. The file inference_pneumonia.py modifies the output to return a prediction of whether
-pneumonia is present or not in the given image. 
+This section describes how we leveraged COVID-Net to create a COVIDNet-P model which distinguishes between cases where pneumonia is present and where it is not. Using the inference_pneumonia.py file provided, COVIDNet-P takes as input an image of shape (N, 480, 480, 3) and outputs the likelihood of whether pneumonia is present or not in the given image.
 
 ## Steps for Inference
 **DISCLAIMER: Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.**
@@ -36,7 +33,7 @@ python eval_pneumonia.py \
 4. For more options and information, `python eval_pneumonia.py --help`
 
 ## Results
-These are the results generated using the eval_pneumonia.py script with the COVIDNet-CXR4-A model and test_COVIDx5.txt dataset.
+These are the results generated using the eval_pneumonia.py script with the COVIDNet-CXR4-A model acting as the backbone of COVIDNet-P and test_COVIDx5.txt dataset
 
 <div class="tg-wrap"><table class="tg">
   <tr>
