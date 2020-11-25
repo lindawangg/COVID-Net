@@ -4,6 +4,7 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
+**Update 11/24/2020:** We released [CancerNet-SCa](https://github.com/jamesrenhoulee/CancerNet-SCa) for skin cancer detection, part of the CancerNet initiatives.\
 **Update 11/15/2020:** We released COVIDNet-P [inference](inference_pneumonia.py) and [evaluation](eval_pneumonia.py) scripts for identifying pneumonia in CXR images using the COVIDx5 dataset. For more information please refer to this [doc](docs/covidnet_pneumonia.md).\
 **Update 10/30/2020:** We released a new COVIDx5 dataset with over 14200 CXR images and 617 positive COVID-19 images.\
 **Update 09/11/2020:** We released updated COVIDNet-S [models](docs/models.md) for geographic and opacity extent scoring of SARS-CoV-2 lung severity and updated the [inference script](docs/covidnet_severity.md) for an opacity extent scoring ranging from 0-8.\
@@ -69,8 +70,9 @@ If you find our work useful, can cite our paper using:
 5. COVIDx-CT dataset: https://github.com/haydengunraj/COVIDNet-CT/blob/master/docs/dataset.md
 6. COVIDx-S dataset: https://github.com/lindawangg/COVID-Net/tree/master/annotations
 7. COVIDNet-P inference for pneumonia: https://github.com/lindawangg/COVID-Net/blob/master/docs/covidnet_pneumonia.md
+8. CancerNet-SCa models for skin cancer detection: https://github.com/jamesrenhoulee/CancerNet-SCa/blob/main/docs/models.md
 
-Training, inference, and evaluation scripts for COVIDNet-CXR, COVIDNet-CT, and COVIDNet-S models are available at the respective repos
+Training, inference, and evaluation scripts for COVIDNet-CXR, COVIDNet-CT, COVIDNet-S, and CancerNet-SCa models are available at the respective repos
 
 ## Core COVID-Net Team
 * DarwinAI Corp., Canada and Vision and Image Processing Research Group, University of Waterloo, Canada
