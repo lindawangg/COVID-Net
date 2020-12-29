@@ -4,7 +4,7 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
-**Update 12/23/2020:** Released a new COVIDx6 dataset for binary classification (COVID-19 positive or COVID-19 negative) with over 14500 CXR images.\
+**Update 12/23/2020:** We released a new COVIDx6 dataset for binary classification (COVID-19 positive or COVID-19 negative) with over 14500 CXR images.\
 **Update 11/15/2020:** We released COVIDNet-P [inference](inference_pneumonia.py) and [evaluation](eval_pneumonia.py) scripts for identifying pneumonia in CXR images using the COVIDx5 dataset. For more information please refer to this [doc](docs/covidnet_pneumonia.md).\
 **Update 10/30/2020:** We released a new COVIDx5 dataset with over 14200 CXR images and 517 positive COVID-19 images.\
 **Update 09/11/2020:** We released updated COVIDNet-S [models](docs/models.md) for geographic and opacity extent scoring of SARS-CoV-2 lung severity and updated the [inference script](docs/covidnet_severity.md) for an opacity extent scoring ranging from 0-8.\
