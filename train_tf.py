@@ -26,6 +26,7 @@ parser.add_argument('--out_tensorname', default='norm_dense_1/Softmax:0', type=s
 parser.add_argument('--logit_tensorname', default='norm_dense_1/MatMul:0', type=str, help='Name of logit tensor for loss')
 parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str, help='Name of label tensor for loss')
 parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
+parser.add_argument('--epochs_to_save', default=5, type=int, help='Number of epochs to keep')
 
 
 args = parser.parse_args()
@@ -38,7 +39,7 @@ display_step = 1
 # output path
 outputPath = './output/'
 runID = args.name + '-lr' + str(learning_rate)
-runPath = outputPath + runID
+runPath = outputPath + runID + "test_epoch"
 pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
 print('Output: ' + runPath)
 
@@ -58,6 +59,7 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
 with tf.Session() as sess:
     tf.get_default_graph()
     saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
+    saver = tf.train.Saver(max_to_keep=args.epochs_to_save)
 
     graph = tf.get_default_graph()
 
