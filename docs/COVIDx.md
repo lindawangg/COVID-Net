@@ -23,11 +23,11 @@ The current COVIDx dataset is constructed by the following open source chest rad
  * go to this [link](https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data) to download the RSNA pneumonia dataset
 2. Create a `data` directory and within the data directory, create a `train` and `test` directory
 3. Use [create\_COVIDx\_binary.ipynb](../create_COVIDx_binary.ipynb) to combine the three datasets to create COVIDx for binary classification. Make sure to remember to change the file paths. Use [create\_COVIDx.ipynb](../create_COVIDx.ipynb) for datasets compatible with COVIDx5 and earlier models (not binary classification).
-4. We provide the train and test txt files with patientId, image path and label. Note that the label is 'positive' or 'negative' for COVIDx6 and later or 'normal', 'pneumonia', and 'COVID-19' for COVIDx5 and earlier. The description for each file is explained below:
- * [train\_COVIDx7A.txt](../labels/train_COVIDx7A.txt): This file contains the samples used for training COVIDNet-CXR for multi-class classification.
- * [test\_COVIDx7A.txt](../labels/test_COVIDx7A.txt): This file contains the samples used for testing COVIDNet-CXR for multi-class classification.
- * [train\_COVIDx7B.txt](../labels/train_COVIDx7B.txt): This file contains the samples used for training COVIDNet-CXR for binary classification.
- * [test\_COVIDx7B.txt](../labels/test_COVIDx7B.txt): This file contains the samples used for testing COVIDNet-CXR for binary classification..
+4. We provide the train and test txt files with patientId, image path and label. Note that the label is 'positive' or 'negative' for COVIDx7B and later or 'normal', 'pneumonia', and 'COVID-19' for COVIDx7A and COVIDx5 and earlier datasets. The description for each file is explained below:
+ * [train\_COVIDx7A.txt](../labels/train_COVIDx7A.txt): This file contains the samples used for training COVIDNet-CXR for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia.
+ * [test\_COVIDx7A.txt](../labels/test_COVIDx7A.txt): This file contains the samples used for testing COVIDNet-CXR for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia.
+ * [train\_COVIDx7B.txt](../labels/train_COVIDx7B.txt): This file contains the samples used for training COVIDNet-CXR for COVID-19 positive/negative detection.
+ * [test\_COVIDx7B.txt](../labels/test_COVIDx7B.txt): This file contains the samples used for testing COVIDNet-CXR for COVID-19 positive/negative detection.
 
 ## COVIDx data distribution
 COVIDx V7B
