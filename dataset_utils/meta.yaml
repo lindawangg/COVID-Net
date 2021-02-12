@@ -1,0 +1,114 @@
+# meta.yaml file
+
+root: /home/hossein/data_hoss
+mapping:
+
+  COVID-19: COVID-19
+  SARS: pneumonia
+  MERS: pneumonia
+  Streptococcus: pneumonia
+  Klebsiella: pneumonia
+  Chlamydophila: pneumonia
+  Legionella: pneumonia
+  E.Coli: pneumonia
+  Normal: normal
+  Lung Opacity: pneumonia
+  1: pneumonia
+
+urls_csv:
+
+  - 1-yem_V_XjmkU6QyZN_o-bo4hV3roC14z
+
+urls_dataset:
+
+  - 1-yem_V_XjmkU6QyZN_o-bo4hV3roC14z
+
+dataset_names:
+
+  - fig1
+
+test_specials:
+
+  COVID-19:
+    - 9
+    - 20
+    - 36
+    - 42
+    - 86
+    - 94
+    - 97
+    - 117
+    - 132
+    - 138
+    - 144
+    - 150
+    - 163
+    - 169
+    - 174
+    - 175
+    - 179
+    - 190
+    - 191COVID-00024
+    - COVID-00025
+    - COVID-00026
+    - COVID-00027
+    - COVID-00029
+    - COVID-00030
+    - COVID-00032
+    - COVID-00033
+    - COVID-00035
+    - COVID-00036
+    - COVID-00037
+    - COVID-00038
+    - ANON24
+    - ANON45
+    - ANON126
+    - ANON106
+    - ANON67
+    - ANON153
+    - ANON135
+    - ANON44
+    - ANON29
+    - ANON201
+    - ANON191
+    - ANON234
+    - ANON110
+    - ANON112
+    - ANON73
+    - ANON220
+    - ANON189
+    - ANON30
+    - ANON53
+    - ANON46
+    - ANON218
+    - ANON240
+    - ANON100
+    - ANON237
+    - ANON158
+    - ANON174
+    - ANON19
+    - ANON195
+    - COVID 119
+    - COVID 87
+    - COVID 70
+    - COVID 94
+    - COVID 215
+    - COVID 77
+    - COVID 213
+    - COVID 81
+    - COVID 216
+    - COVID 72
+    - COVID 106
+    - COVID 131
+    - COVID 107
+    - COVID 116
+    - COVID 95
+    - COVID 214
+    - COVID 129
+
+  pneumonia:
+
+    - 8
+    - 31
+
+
