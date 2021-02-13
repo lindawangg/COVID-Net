@@ -1,6 +1,7 @@
 # meta.yaml file
 
 root: /home/hossein/data_hoss
+
 mapping:
 
   COVID-19: COVID-19
@@ -15,17 +16,27 @@ mapping:
   Lung Opacity: pneumonia
   1: pneumonia
 
+labels:
+  - normal
+  - pneumonia
+  - COVID-19
+
 urls_csv:
 
   - 1-yem_V_XjmkU6QyZN_o-bo4hV3roC14z
 
 urls_dataset:
 
-  - 1-yem_V_XjmkU6QyZN_o-bo4hV3roC14z
+  - 1aZnIMIUr8dsUjVFzDueA8mqfXWEkHJvn
 
-dataset_names:
+#the structure is a nested dict which contains filename, patient_id for each dataset
+dataset_meta:
 
-  - fig1
+  fig1:
+    patientid:
+      patientid
+    image_name:
+      patientid
 
 test_specials:
 

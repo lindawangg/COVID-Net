@@ -10,18 +10,25 @@ import os
 
 class BuildDataset:
 
-    def __init__(self, root_directory, mapping, urls_csv, urls_dataset, dataset_names, train_split=0.1,testspecials=None):
+    def __init__(self, root_directory, mapping, urls_csv, urls_dataset, dataset_meta, train_split=0.1,
+                 test_specials=None, label_list=[], complete_set=False):
+        self.train = []
+        self.test = []
+        _, self.test_count = self.create_labels(label_list)
+        _, self.train_count = self.create_labels(label_list)
         self.root_directory = root_directory
         self.mapping = mapping
-        self.testspecials=testspecials
-        self.filename_label = {'normal': [], 'pneumonia': [], 'COVID-19': []}
-        self.count = {'normal': 0, 'pneumonia': 0, 'COVID-19': 0}
+        self.test_specials = test_specials
+        self.labels, self.count_labels = self.create_labels(label_list)
         self.dataset_files = {}
         self.csv_files = {}
-        self.dataset_names = dataset_names
+        self.complete_set = complete_set
+        self.dataset_meta = dataset_meta
+        self.dataset_names = list(dataset_meta.keys())
         self.create_datasets(urls_dataset)
         self.create_csv(urls_csv)
         self.process_csv_file()
+        self.train_test_split()
 
     def create_datasets(self, urls_dataset):
         for i in range(len(urls_dataset)):
@@ -35,6 +42,14 @@ class BuildDataset:
             remove_sub_dir(dir_images)
             self.dataset_files[self.dataset_names[i]] = dir_images
 
+    def create_labels(self, label_list):
+        labels = {}
+        count_labels = {}
+        for label in label_list:
+            labels[label] = []
+            count_labels[label] = 0
+        return labels, count_labels
+
     def create_csv(self, urls_csv):
         for i in range(len(urls_csv)):
             file_name = self.download_url(urls_csv[i], self.dataset_names[i], extension="csv")
@@ -47,12 +62,29 @@ class BuildDataset:
                 if not str(row['finding']) == 'nan':
                     f = row['finding'].split(',')[0]  # take the first finding
                     if f in self.mapping:  #
-                        self.count[self.mapping[f]] += 1
-                        if os.path.exists(os.path.join(self.dataset_files[element], row['patientid'] + '.jpg')):
-                            entry = [row['patientid'], row['patientid'] + '.jpg', self.mapping[f], 'fig1']
-                        elif os.path.exists(os.path.join(self.dataset_files[element], row['patientid'] + '.png')):
-                            entry = [row['patientid'], row['patientid'] + '.png', self.mapping[f], 'fig1']
-                        self.filename_label[self.mapping[f]].append(entry)
+                        self.count_labels[self.mapping[f]] += 1
+                        image_name = self.check_image_exist(self.dataset_files[element],
+                                                            self.dataset_meta[element]['image_name'], row)
+                        if image_name is not None:
+                            entry = [row[self.dataset_meta[element]['patientid']], image_name, self.mapping[f], element]
+                            self.labels[self.mapping[f]].append(entry)
+
+    # This is for handling special cases
+    def check_image_exist(self, path, image_name, row):
+        if ("png" in row[image_name]):
+            return row[image_name]
+        elif ("jpg" in row[image_name]):
+            return row[image_name]
+        else:
+            if os.path.exists(os.path.join(path, row[image_name] + '.jpg')):
+                return row[image_name] + '.jpg'
+            elif os.path.exists(os.path.join(path, row[image_name] + '.png')):
+                return row[image_name] + '.png'
+            elif (self.complete_set):
+                raise Exception(
+                    'Missing Image. Please check if all csv images exists or change the complete flag')
+            else:
+                return None
 
     def download_url(self, url, name, extension):
         name = name + "." + extension
@@ -60,13 +92,9 @@ class BuildDataset:
         return file_name
 
     def train_test_split(self):
-        train = []
-        test = []
-        test_count = {'normal': 0, 'pneumonia': 0, 'COVID-19': 0}
-        train_count = {'normal': 0, 'pneumonia': 0, 'COVID-19': 0}
-        patient_imgpath={}
-        for key in self.filename_label.keys():
-            arr = np.array(self.filename_label[key])
+        patient_imgpath = {}
+        for key in self.labels.keys():
+            arr = np.array(self.labels[key])
             if arr.size == 0:
                 continue
             # split by patients
@@ -75,9 +103,9 @@ class BuildDataset:
             # select num_test number of random patients
             # random.sample(list(arr[:,0]), num_test)
             if key == 'pneumonia':
-                test_patients = self.testspecials['pneumonia']
+                test_patients = self.test_specials['pneumonia']
             elif key == 'COVID-19':
-                test_patients = self.testspecials['COVID-19']
+                test_patients = self.test_specials['COVID-19']
             else:
                 test_patients = []
             print('Key: ', key)
@@ -100,8 +128,8 @@ class BuildDataset:
                     else:
                         copyfile(os.path.join(self.dataset_files[patient[3]], patient[1]),
                                  os.path.join(self.root, 'test', patient[1]))
-                    test.append(patient)
-                    test_count[patient[2]] += 1
+                    self.test.append(patient)
+                    self.test_count[patient[2]] += 1
                 else:
                     if patient[3] == 'sirm':
                         image = cv2.imread(os.path.join(self.dataset_files[patient[3]], patient[1]))
@@ -111,13 +139,13 @@ class BuildDataset:
                     else:
                         copyfile(os.path.join(self.dataset_files[patient[3]], patient[1]),
                                  os.path.join(self.root, 'train', patient[1]))
-                    train.append(patient)
-                    train_count[patient[2]] += 1
+                    self.train.append(patient)
+                    self.train_count[patient[2]] += 1
 
-        print('test count: ', test_count)
-        print('train count: ', train_count)
+        print('test count: ', self.test_count)
+        print('train count: ', self.train_count)
 
-    def create_train_test_files(self,train,test):
+    def create_train_test_files(self, train, test):
         # export to train and test csv
         # format as patientid, filename, label, separated by a space
         train_file = open("train_split.txt", 'w')
@@ -139,5 +167,3 @@ class BuildDataset:
             test_file.write(info)
 
         test_file.close()
-
-
