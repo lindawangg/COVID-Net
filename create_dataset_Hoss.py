@@ -8,5 +8,5 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
     b = BuildDataset(root_directory=loader["root"], mapping=loader["mapping"], urls_csv=loader["urls_csv"],
-                     urls_dataset=loader["urls_dataset"], dataset_names=loader["dataset_names"],
-                     testspecials = loader["test_specials"])
+                     urls_dataset=loader["urls_dataset"], dataset_meta=loader["dataset_meta"],
+                     test_specials= loader["test_specials"], label_list=loader["labels"])
