@@ -87,7 +87,6 @@ Training, inference, and evaluation scripts for COVIDNet-CXR, COVIDNet-CT, COVID
 	* Maya Pavlova
 	* Naomi Terhljan
 	* Siddharth Surana
-  	* Naomi Terhljan
   	* Andy Zhao
 	* Hayden Gunraj, COVIDNet for CT: https://github.com/haydengunraj/COVIDNet-CT
 	* Jeffer Peng, COVIDNet UI: https://github.com/darwinai/covidnet_ui
