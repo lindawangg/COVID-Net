@@ -2,7 +2,7 @@ from dataset_utils.build_dataset import BuildDataset
 import yaml
 
 if __name__ == "__main__":
-    with open("dataset_utils/meta.yaml", 'r') as stream:
+    with open("meta.yaml", 'r') as stream:
         try:
             loader = yaml.safe_load(stream)
         except yaml.YAMLError as exc:

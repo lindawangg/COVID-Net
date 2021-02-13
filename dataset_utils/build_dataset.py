@@ -1,3 +1,4 @@
+from dataset_utils.especial import sirm_image_handling
 from dataset_utils.utils import download_file_from_google_drive, remove_sub_dir
 import zipfile
 import pandas as pd
@@ -29,6 +30,7 @@ class BuildDataset:
         self.create_csv(urls_csv)
         self.process_csv_file()
         self.train_test_split()
+        self.create_train_test_files()
 
     def create_datasets(self, urls_dataset):
         for i in range(len(urls_dataset)):
@@ -102,10 +104,8 @@ class BuildDataset:
             # num_test = max(1, round(split*num_diff_patients))
             # select num_test number of random patients
             # random.sample(list(arr[:,0]), num_test)
-            if key == 'pneumonia':
-                test_patients = self.test_specials['pneumonia']
-            elif key == 'COVID-19':
-                test_patients = self.test_specials['COVID-19']
+            if(key in self.test_specials):
+                test_patients=self.test_specials[key]
             else:
                 test_patients = []
             print('Key: ', key)
@@ -121,35 +121,32 @@ class BuildDataset:
                         continue  # skip since image has already been written
                 if patient[0] in test_patients:
                     if patient[3] == 'sirm':
-                        image = cv2.imread(os.path.join(self.dataset_files[patient[3]], patient[1]))
-                        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                        patient[1] = patient[1].replace(' ', '')
-                        cv2.imwrite(os.path.join(self.root, 'test', patient[1]), gray)
+                        sirm_image_handling(patient,self.root_directory,self.dataset_files,test_flag=True)
                     else:
+                        os.makedirs(os.path.dirname(os.path.join(self.root_directory, 'test', patient[1])), exist_ok=True)
                         copyfile(os.path.join(self.dataset_files[patient[3]], patient[1]),
-                                 os.path.join(self.root, 'test', patient[1]))
+                                 os.path.join(self.root_directory, 'test', patient[1]))
                     self.test.append(patient)
                     self.test_count[patient[2]] += 1
                 else:
                     if patient[3] == 'sirm':
-                        image = cv2.imread(os.path.join(self.dataset_files[patient[3]], patient[1]))
-                        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                        patient[1] = patient[1].replace(' ', '')
-                        cv2.imwrite(os.path.join(self.root, 'train', patient[1]), gray)
+                        sirm_image_handling(patient,self.root_directory,self.dataset_files,test_flag=False)
                     else:
+                        os.makedirs(os.path.dirname(os.path.join(self.root_directory, 'train', patient[1])), exist_ok=True)
                         copyfile(os.path.join(self.dataset_files[patient[3]], patient[1]),
-                                 os.path.join(self.root, 'train', patient[1]))
+                                 os.path.join(self.root_directory, 'train', patient[1]))
                     self.train.append(patient)
                     self.train_count[patient[2]] += 1
 
         print('test count: ', self.test_count)
         print('train count: ', self.train_count)
 
-    def create_train_test_files(self, train, test):
+
+    def create_train_test_files(self):
         # export to train and test csv
         # format as patientid, filename, label, separated by a space
-        train_file = open("train_split.txt", 'w')
-        for sample in train:
+        train_file = open(os.path.join(self.root_directory,"train_split.txt"), 'w')
+        for sample in self.train:
             if len(sample) == 4:
                 info = str(sample[0]) + ' ' + sample[1] + ' ' + sample[2] + ' ' + sample[3] + '\n'
             else:
@@ -158,8 +155,8 @@ class BuildDataset:
 
         train_file.close()
 
-        test_file = open("test_split.txt", 'w')
-        for sample in test:
+        test_file = open(os.path.join(self.root_directory,"test_split.txt"), 'w')
+        for sample in self.test:
             if len(sample) == 4:
                 info = str(sample[0]) + ' ' + sample[1] + ' ' + sample[2] + ' ' + sample[3] + '\n'
             else:

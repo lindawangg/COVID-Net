@@ -1,6 +1,7 @@
 import requests
 import os
 import shutil
+import ntpath
 
 
 
@@ -44,5 +45,6 @@ def remove_sub_dir(destination):
     source=os.path.join(destination,next(os.walk(destination))[1][0])
     files_list = os.listdir(source)
     for files in files_list:
-        shutil.move(os.path.join(source,files), destination)
+        image_name=ntpath.basename(os.path.join(source,files))
+        shutil.move(os.path.join(source,files), os.path.join(destination,image_name))
     os.rmdir(source)
