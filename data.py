@@ -1,4 +1,3 @@
-import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
 import numpy as np
@@ -87,11 +86,6 @@ class BalanceCovidDataset(keras.utils.Sequence):
             input_shape=(224, 224),
             n_classes=3,
             num_channels=3,
-            mapping={
-                'normal': 0,
-                'pneumonia': 1,
-                'COVID-19': 2
-            },
             shuffle=True,
             augmentation=apply_augmentation,
             covid_percent=0.3,
@@ -108,34 +102,27 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.batch_size = batch_size
         self.N = len(self.dataset)
         self.input_shape = input_shape
-        self.n_classes = n_classes
+        self.n_classes = 0
         self.num_channels = num_channels
-        self.mapping = mapping
+        self.mapping = {}
         self.shuffle = True
         self.covid_percent = covid_percent
         self.class_weights = class_weights
         self.n = 0
         self.augmentation = augmentation
         self.top_percent = top_percent
-
-        datasets = {'normal': [], 'pneumonia': [], 'COVID-19': []}
-        datasets={}
         self.datasets = []
+        self.mapping={}
         df = pd.read_csv(csv_file, delimiter=" ",names=col_name)
         # result=df["classific"].value_counts()
         for element in list(df[target_name].unique()):
             if element not in ["None"]:
-                datasets[element]=df.loc[df['classific'] == element]["img_path"]
-
-        # for l in self.dataset:
-        #     datasets[l.split()[2]].append(l)
-        # self.datasets = [
-        #     datasets['normal'] + datasets['pneumonia'],
-        #     datasets['COVID-19'],
-        # ]
-        print(len(self.datasets[0]), len(self.datasets[1]))
-
+                self.datasets.extend(df.loc[df[target_name] == element][["img_path",target_name]].values)
+                self.mapping[element]=self.n_classes
+                self.n_classes+=1
+        self.datasets=np.array(self.datasets)
         self.on_epoch_end()
+        print(self.mapping)
 
     def __next__(self):
         # Get one batch of data
@@ -156,37 +143,26 @@ class BalanceCovidDataset(keras.utils.Sequence):
     def on_epoch_end(self):
         'Updates indexes after each epoch'
         if self.shuffle == True:
-            for v in self.datasets:
-                np.random.shuffle(v)
+            np.random.shuffle(self.datasets)
 
     def __getitem__(self, idx):
         batch_x, batch_y = np.zeros(
             (self.batch_size, *self.input_shape,
              self.num_channels)), np.zeros(self.batch_size)
 
-        batch_files = self.datasets[0][idx * self.batch_size:(idx + 1) *
+        batch_files = self.datasets[idx * self.batch_size:(idx + 1) *
                                        self.batch_size]
 
-        # upsample covid cases
-        covid_size = max(int(len(batch_files) * self.covid_percent), 1)
-        covid_inds = np.random.choice(np.arange(len(batch_files)),
-                                      size=covid_size,
-                                      replace=False)
-        covid_files = np.random.choice(self.datasets[1],
-                                       size=covid_size,
-                                       replace=False)
-        for i in range(covid_size):
-            batch_files[covid_inds[i]] = covid_files[i]
-
         for i in range(len(batch_files)):
-            sample = batch_files[i].split()
+            sample = batch_files[i]
 
-            if self.is_training:
-                folder = 'train'
-            else:
-                folder = 'test'
+            # if self.is_training:
+            #     folder = 'train'
+            # else:
+            #     folder = 'test'
+            folder=""
 
-            x = process_image_file(os.path.join(self.datadir, folder, sample[1]),
+            x = process_image_file(os.path.join(self.datadir, folder, sample[0]),
                                    self.top_percent,
                                    self.input_shape[0])
 
@@ -194,7 +170,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 x = self.augmentation(x)
 
             x = x.astype('float32') / 255.0
-            y = self.mapping[sample[2]]
+            y = self.mapping[sample[1]]
 
             batch_x[i] = x
             batch_y[i] = y

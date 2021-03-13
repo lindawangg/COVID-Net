@@ -1,5 +1,5 @@
 from __future__ import print_function
-
+import pandas as pd
 import tensorflow as tf
 import os, argparse, pathlib
 
@@ -14,7 +14,7 @@ parser.add_argument('--col_name', nargs='+', default=["folder_name","img_path","
 parser.add_argument('--target_name', type=str, default="classific")
 parser.add_argument('--weightspath', default='models/COVIDNet-CXR4-A', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='model-18540', type=str, help='Name of model ckpts')
+parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
 parser.add_argument('--trainfile', default='labels/ricord_annotated_train_1.txt', type=str, help='Path to train file')
 parser.add_argument('--testfile', default='labels/ricord_annotated_test_1.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
@@ -44,17 +44,14 @@ runPath = outputPath + runID
 pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
 print('Output: ' + runPath)
 
-with open(args.trainfile) as f:
-    trainfiles = f.readlines()
-with open(args.testfile) as f:
-    testfiles = f.readlines()
+testfiles_frame = pd.read_csv(args.testfile, delimiter=" ",names=args.col_name).values
 
 generator = BalanceCovidDataset(data_dir=args.datadir,
                                 csv_file=args.trainfile,
                                 batch_size=batch_size,
                                 input_shape=(args.input_size, args.input_size),
                                 covid_percent=args.covid_percent,
-                                class_weights=[1., 1., args.covid_weight],
+                                class_weights=[1., 1., 1.,1.],
                                 top_percent=args.top_percent,
                                 col_name=args.col_name,
                                 target_name=args.target_name)
@@ -91,8 +88,8 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    eval(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-         args.in_tensorname, args.out_tensorname, args.input_size)
+    eval(sess, graph, testfiles_frame, args.datadir,
+         args.in_tensorname, args.out_tensorname, args.input_size,mapping=generator.mapping)
 
     # Training cycle
     print('Training started')
@@ -113,8 +110,8 @@ with tf.Session() as sess:
                                                 labels_tensor: batch_y,
                                                 sample_weights: weights})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
-            eval(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-                 args.in_tensorname, args.out_tensorname, args.input_size)
+            eval(sess, graph, testfiles_frame, os.path.join(args.datadir, 'test'),
+                 args.in_tensorname, args.out_tensorname, args.input_size,mapping=generator.mapping)
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
