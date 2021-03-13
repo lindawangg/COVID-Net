@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras
-
+import pandas as pd
 import numpy as np
 import os
 import cv2
@@ -96,7 +96,9 @@ class BalanceCovidDataset(keras.utils.Sequence):
             augmentation=apply_augmentation,
             covid_percent=0.3,
             class_weights=[1., 1., 6.],
-            top_percent=0.08
+            top_percent=0.08,
+            col_name=[],
+            target_name=""
     ):
         'Initialization'
 
@@ -117,12 +119,20 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.top_percent = top_percent
 
         datasets = {'normal': [], 'pneumonia': [], 'COVID-19': []}
-        for l in self.dataset:
-            datasets[l.split()[2]].append(l)
-        self.datasets = [
-            datasets['normal'] + datasets['pneumonia'],
-            datasets['COVID-19'],
-        ]
+        datasets={}
+        self.datasets = []
+        df = pd.read_csv(csv_file, delimiter=" ",names=col_name)
+        # result=df["classific"].value_counts()
+        for element in list(df[target_name].unique()):
+            if element not in ["None"]:
+                datasets[element]=df.loc[df['classific'] == element]["img_path"]
+
+        # for l in self.dataset:
+        #     datasets[l.split()[2]].append(l)
+        # self.datasets = [
+        #     datasets['normal'] + datasets['pneumonia'],
+        #     datasets['COVID-19'],
+        # ]
         print(len(self.datasets[0]), len(self.datasets[1]))
 
         self.on_epoch_end()

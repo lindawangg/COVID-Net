@@ -10,11 +10,13 @@ parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=10, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
+parser.add_argument('--col_name', nargs='+', default=["folder_name","img_path","classific","ADG"])
+parser.add_argument('--target_name', type=str, default="classific")
 parser.add_argument('--weightspath', default='models/COVIDNet-CXR4-A', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model-18540', type=str, help='Name of model ckpts')
-parser.add_argument('--trainfile', default='labels/train_COVIDx5.txt', type=str, help='Path to train file')
-parser.add_argument('--testfile', default='labels/test_COVIDx5.txt', type=str, help='Path to test file')
+parser.add_argument('--trainfile', default='labels/ricord_annotated_train_1.txt', type=str, help='Path to train file')
+parser.add_argument('--testfile', default='labels/ricord_annotated_test_1.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='data', type=str, help='Path to data folder')
 parser.add_argument('--covid_weight', default=4., type=float, help='Class weighting for covid')
@@ -53,7 +55,9 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
                                 input_shape=(args.input_size, args.input_size),
                                 covid_percent=args.covid_percent,
                                 class_weights=[1., 1., args.covid_weight],
-                                top_percent=args.top_percent)
+                                top_percent=args.top_percent,
+                                col_name=args.col_name,
+                                target_name=args.target_name)
 
 with tf.Session() as sess:
     tf.get_default_graph()
