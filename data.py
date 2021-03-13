@@ -99,6 +99,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             top_percent=0.08
     ):
         'Initialization'
+
         self.datadir = data_dir
         self.dataset = _process_csv_file(csv_file)
         self.is_training = is_training
