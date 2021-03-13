@@ -6,6 +6,7 @@ import os, argparse, pathlib
 from eval import eval
 from data import BalanceCovidDataset
 
+
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=10, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
