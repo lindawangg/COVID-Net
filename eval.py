@@ -56,7 +56,7 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
                                                             list(mapping.keys())[list(mapping.values()).index(1)],
                                                             ppvs[1],
                                                             list(mapping.keys())[list(mapping.values()).index(2)],
-                                                            ppvs[2])
+                                                            ppvs[2]))
 
 
 
