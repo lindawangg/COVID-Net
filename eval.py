@@ -31,15 +31,33 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     print(matrix)
     #class_acc = np.array(cm_norm.diagonal())
     class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
-    print('class_acc: {}: {}, {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],class_acc[0],
+    try:
+        print('class_acc: {}: {}, {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],class_acc[0],
                                                               list(mapping.keys())[list(mapping.values()).index(1)],class_acc[1],
                                                               list(mapping.keys())[list(mapping.values()).index(2)],class_acc[2],
                                                               list(mapping.keys())[list(mapping.values()).index(3)],class_acc[3]))
+    except:
+        print('class_acc: {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],
+                                                                 class_acc[0],
+                                                                 list(mapping.keys())[list(mapping.values()).index(1)],
+                                                                 class_acc[1],
+                                                                 list(mapping.keys())[list(mapping.values()).index(2)],
+                                                                 class_acc[2]))
+
     ppvs = [matrix[i,i]/np.sum(matrix[:,i]) if np.sum(matrix[:,i]) else 0 for i in range(len(matrix))]
-    print('ppvs: {}: {}, {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)], ppvs[0],
+    try:
+        print('ppvs: {}: {}, {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)], ppvs[0],
                                                   list(mapping.keys())[list(mapping.values()).index(1)], ppvs[1],
                                                   list(mapping.keys())[list(mapping.values()).index(2)], ppvs[2],
                                                   list(mapping.keys())[list(mapping.values()).index(3)], ppvs[3]))
+    except:
+        print('ppvs: {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],
+                                                            ppvs[0],
+                                                            list(mapping.keys())[list(mapping.values()).index(1)],
+                                                            ppvs[1],
+                                                            list(mapping.keys())[list(mapping.values()).index(2)],
+                                                            ppvs[2])
+
 
 
 if __name__ == '__main__':
