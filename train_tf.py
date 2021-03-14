@@ -111,7 +111,7 @@ with tf.Session() as sess:
                                                 labels_tensor: batch_y,
                                                 sample_weights: weights})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
-            eval(sess, graph, testfiles_frame, os.path.join(args.datadir, 'test'),
+            eval(sess, graph, testfiles_frame, args.datadir,
                  args.in_tensorname, args.out_tensorname, args.input_size,mapping=generator.mapping)
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
