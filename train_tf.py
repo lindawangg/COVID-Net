@@ -17,6 +17,7 @@ parser.add_argument('--weightspath', default='/home/maya.pavlova/covidnet-orig/o
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
 parser.add_argument('--trainfile', default='labels/sev_classific_train_1.txt', type=str, help='Path to train file')
+parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
 parser.add_argument('--testfile', default='labels/sev_classific_test_1.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/final_pngs', type=str, help='Path to data folder')
@@ -32,6 +33,7 @@ parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights
 
 
 args = parser.parse_args()
+os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
 
 # Parameters
 learning_rate = args.lr
