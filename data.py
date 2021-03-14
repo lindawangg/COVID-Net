@@ -138,7 +138,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         return batch_x, batch_y, weights
 
     def __len__(self):
-        return int(np.ceil(len(self.datasets[0]) / float(self.batch_size)))
+        return int(np.ceil(len(self.datasets) / float(self.batch_size)))
 
     def on_epoch_end(self):
         'Updates indexes after each epoch'
