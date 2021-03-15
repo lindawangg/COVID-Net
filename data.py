@@ -108,17 +108,20 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.shuffle = True
         self.covid_percent = covid_percent
         self.class_weights = class_weights
+        flag_empty_weight=True if len(self.class_weights)==0 else False
         self.n = 0
         self.augmentation = augmentation
         self.top_percent = top_percent
         self.datasets = []
         self.mapping={}
         df = pd.read_csv(csv_file, delimiter=" ",names=col_name)
-        # result=df["classific"].value_counts()
+        result=df[target_name].value_counts()
         for element in list(df[target_name].unique()):
             if element not in ["None"]:
                 self.datasets.extend(df.loc[df[target_name] == element][["img_path",target_name]].values)
                 self.mapping[element]=self.n_classes
+                if(flag_empty_weight):
+                    self.class_weights.append(1-result[element]/sum(result))
                 self.n_classes+=1
         self.datasets=np.array(self.datasets)
         self.on_epoch_end()
