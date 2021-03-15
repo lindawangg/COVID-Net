@@ -62,6 +62,7 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
 with tf.Session() as sess:
     tf.get_default_graph()
     saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
+    saver = tf.train.Saver(max_to_keep=100)
 
     graph = tf.get_default_graph()
 
