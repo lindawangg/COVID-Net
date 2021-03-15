@@ -30,7 +30,8 @@ parser.add_argument('--out_tensorname', default='sev_dense_2/Softmax:0', type=st
 parser.add_argument('--logit_tensorname', default='sev_dense_2/MatMul:0', type=str, help='Name of logit tensor for loss')
 parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str, help='Name of label tensor for loss')
 parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
-
+parser.add_argument('--load_weight', action='store_true',
+                    help='default False')
 
 args = parser.parse_args()
 os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
@@ -86,7 +87,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # load weights
-    saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
+    if(args.load_weight):
+        saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
     #saver.restore(sess, tf.train.latest_checkpoint(args.weightspath))
 
     # save base model
