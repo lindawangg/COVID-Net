@@ -176,6 +176,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             if self.is_training and hasattr(self, 'augmentation'):
                 x = self.augmentation(x)
 
+
             x = x.astype('float32') / 255.0
             y = self.mapping[sample[1]]
 
