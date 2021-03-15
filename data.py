@@ -114,12 +114,14 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.top_percent = top_percent
         self.datasets = []
         self.mapping={}
+        self.classes_data=[]
         df = pd.read_csv(csv_file, delimiter=" ",names=col_name)
         result=df[target_name].value_counts()
         for element in list(df[target_name].unique()):
             if element not in ["None"]:
                 self.datasets.extend(df.loc[df[target_name] == element][["img_path",target_name]].values)
                 self.mapping[element]=self.n_classes
+                self.classes_data.append(df.loc[df[target_name] == element][["img_path",target_name]].values)
                 if(flag_empty_weight):
                     self.class_weights.append(1-result[element]/sum(result))
                 self.n_classes+=1
@@ -147,25 +149,27 @@ class BalanceCovidDataset(keras.utils.Sequence):
         'Updates indexes after each epoch'
         if self.shuffle == True:
             np.random.shuffle(self.datasets)
+            for element in self.classes_data:
+                np.random.shuffle(element)
+
+    def create_balance_batch(self,size):
+        sample_per_class=np.floor(size/len(self.classes_data))
+        samples=[]
+        for i in range(len(self.classes_data)):
+            samples.extend(list(self.classes_data[i][np.random.choice((self.classes_data[i]).shape[0], int(sample_per_class), replace=False)]))
+        if(len(samples)<size):
+            samples.extend(list(self.datasets[np.random.choice(self.datasets.shape[0], size-len(samples), replace=False)]))
+        return samples
+
 
     def __getitem__(self, idx):
         batch_x, batch_y = np.zeros(
             (self.batch_size, *self.input_shape,
              self.num_channels)), np.zeros(self.batch_size)
+        samples=self.create_balance_batch(self.batch_size)
 
-        batch_files = self.datasets[idx * self.batch_size:(idx + 1) *
-                                       self.batch_size]
-
-        for i in range(len(batch_files)):
-            sample = batch_files[i]
-
-            # if self.is_training:
-            #     folder = 'train'
-            # else:
-            #     folder = 'test'
-            folder=""
-
-            x = process_image_file(os.path.join(self.datadir, folder, sample[0]),
+        for i,sample in enumerate(samples):
+            x = process_image_file(os.path.join(self.datadir, sample[0]),
                                    self.top_percent,
                                    self.input_shape[0])
 

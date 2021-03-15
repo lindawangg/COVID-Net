@@ -55,7 +55,7 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
                                 batch_size=batch_size,
                                 input_shape=(args.input_size, args.input_size),
                                 covid_percent=args.covid_percent,
-                                class_weights=[],
+                                class_weights=[1.,1.,1.],
                                 top_percent=args.top_percent,
                                 col_name=args.col_name,
                                 target_name=args.target_name)
