@@ -125,7 +125,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 if(flag_empty_weight):
                     self.class_weights.append(1-result[element]/sum(result))
                 if(element=="Mild"):
-                    self.class_weights=2
+                    self.class_weights[self.n_classes]=2
                 self.n_classes+=1
         self.datasets=np.array(self.datasets)
         self.on_epoch_end()
