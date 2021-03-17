@@ -8,17 +8,17 @@ from data import BalanceCovidDataset
 
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
-parser.add_argument('--epochs', default=10, type=int, help='Number of epochs')
+parser.add_argument('--epochs', default=200, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name","img_path","class"])
 parser.add_argument('--target_name', type=str, default="class")
-parser.add_argument('--weightspath', default='/home/maya.pavlova/covidnet-orig/output/sev_models', type=str, help='Path to output folder')
-parser.add_argument('--metaname', default='model-b-3-2.meta', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='model-b-3-2', type=str, help='Name of model ckpts')
-parser.add_argument('--trainfile', default='labels/sev_adg_train_1.txt', type=str, help='Path to train file')
+parser.add_argument('--weightspath', default='/home/maya.pavlova/covidnet-orig/output/sev_models/covidnet-cxr-2', type=str, help='Path to output folder')
+parser.add_argument('--metaname', default='model_train.meta', type=str, help='Name of ckpt meta file')
+parser.add_argument('--ckptname', default='model-1705', type=str, help='Name of model ckpts')
+parser.add_argument('--trainfile', default='labels/sev_adg_train_binary.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
-parser.add_argument('--testfile', default='labels/sev_adg_test_1.txt', type=str, help='Path to test file')
+parser.add_argument('--testfile', default='labels/sev_adg_test_binary.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/final_pngs', type=str, help='Path to data folder')
 parser.add_argument('--covid_weight', default=4., type=float, help='Class weighting for covid')
@@ -26,8 +26,8 @@ parser.add_argument('--covid_percent', default=0.3, type=float, help='Percentage
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
-parser.add_argument('--out_tensorname', default='sev_dense_2/Softmax:0', type=str, help='Name of output tensor from graph')
-parser.add_argument('--logit_tensorname', default='sev_dense_2/MatMul:0', type=str, help='Name of logit tensor for loss')
+parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str, help='Name of output tensor from graph')
+parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str, help='Name of logit tensor for loss')
 parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str, help='Name of label tensor for loss')
 parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
 parser.add_argument('--load_weight', action='store_true',
@@ -55,7 +55,7 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
                                 batch_size=batch_size,
                                 input_shape=(args.input_size, args.input_size),
                                 covid_percent=args.covid_percent,
-                                class_weights=[1.,1.,1.],
+                                class_weights=[1.,1.],
                                 top_percent=args.top_percent,
                                 col_name=args.col_name,
                                 target_name=args.target_name)
