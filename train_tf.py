@@ -2,6 +2,7 @@ from __future__ import print_function
 import pandas as pd
 import tensorflow as tf
 import os, argparse, pathlib
+import datetime
 
 from eval import eval
 from data import BalanceCovidDataset
@@ -42,7 +43,8 @@ batch_size = args.bs
 display_step = 1
 
 # output path
-outputPath = './output/'
+current_time = (str(datetime.datetime.now()).replace(" ", "#")).replace(":", "-")
+outputPath = './output/'+current_time
 runID = args.name + '-lr' + str(learning_rate)
 runPath = outputPath + runID
 pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
@@ -63,7 +65,7 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
 with tf.Session() as sess:
     tf.get_default_graph()
     saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
-    saver = tf.train.Saver(max_to_keep=100)
+    saver = tf.train.Saver(max_to_keep=1000)
 
     graph = tf.get_default_graph()
 
@@ -117,6 +119,7 @@ with tf.Session() as sess:
                                                 labels_tensor: batch_y,
                                                 sample_weights: weights})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
+            print('Output: ' + runPath)
             eval(sess, graph, testfiles_frame, args.datadir,
                  args.in_tensorname, args.out_tensorname, args.input_size,mapping=generator.mapping)
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
