@@ -1,5 +1,64 @@
 # Training, Evaluation and Inference
-COVIDNet-CXR4 models takes as input an image of shape (N, 480, 480, 3) and outputs the softmax probabilities as (N, 3), where N is the number of batches.
+## COVID-19 positive/negative detection
+COVIDNet-CXR-2 model takes as input an image of shape (N, 480, 480, 3) and outputs the softmax probabilities of COVID-19 positive and negative detection as (N, 2), where N is the number of batches.
+If using the TF checkpoints, here are some useful tensors:
+
+* input tensor: `input_1:0`
+* logit tensor: `norm_dense_2/MatMul:0`
+* output tensor: `norm_dense_2/Softmax:0`
+* label tensor: `norm_dense_1_target:0`
+* class weights tensor: `norm_dense_1_sample_weights:0`
+* loss tensor: `Mean:0`
+
+### Steps for training
+TF training script from a pretrained model:
+1. We provide you with the tensorflow evaluation script, [train_tf.py](../train_tf.py)
+2. Locate the tensorflow checkpoint files (location of pretrained model)
+3. To train from the COVIDNet-CXR-2 pretrained model:
+```
+python train_tf.py \
+    --weightspath models/COVIDNet-CXR-2 \
+    --metaname model.meta \
+    --ckptname model \
+    --n_classes 2 \
+    --trainfile train_COVIDx8B.txt \
+    --testfile test_COVIDx8B.txt \
+```
+4. For more options and information, `python train_tf.py --help`
+
+### Steps for evaluation
+
+1. We provide you with the tensorflow evaluation script, [eval.py](../eval.py)
+2. Locate the tensorflow checkpoint files
+3. To evaluate a tf checkpoint:
+```
+python eval.py \
+    --weightspath models/COVIDNet-CXR-2 \
+    --metaname model.meta \
+    --ckptname model \
+    --n_classes 2 \
+    --testfile test_COVIDx8B.txt
+```
+4. For more options and information, `python eval.py --help`
+
+### Steps for inference
+**DISCLAIMER: Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.**
+
+1. Download a model from the [pretrained models section](models.md)
+2. Locate models and xray image to be inferenced
+3. To inference,
+```
+python inference.py \
+    --weightspath models/COVIDNet-CXR-2 \
+    --metaname model.meta \
+    --ckptname model \
+    --n_classes 2 \
+    --imagepath assets/ex-covid.jpeg
+```
+4. For more options and information, `python inference.py --help`
+
+## Detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia
+COVIDNet-CXR4 models take as input an image of shape (N, 480, 480, 3) and outputs the softmax probabilities as (N, 2), where N is the number of batches.
 If using the TF checkpoints, here are some useful tensors:
 
 * input tensor: `input_1:0`
@@ -9,7 +68,7 @@ If using the TF checkpoints, here are some useful tensors:
 * class weights tensor: `norm_dense_1_sample_weights:0`
 * loss tensor: `loss/mul:0`
 
-## Steps for training
+### Steps for training
 TF training script from a pretrained model:
 1. We provide you with the tensorflow evaluation script, [train_tf.py](../train_tf.py)
 2. Locate the tensorflow checkpoint files (location of pretrained model)
@@ -19,12 +78,13 @@ python train_tf.py \
     --weightspath models/COVIDNet-CXR4-A \
     --metaname model.meta \
     --ckptname model-18540 \
+    --n_classes 3 \
     --trainfile train_COVIDx5.txt \
     --testfile test_COVIDx5.txt \
 ```
 4. For more options and information, `python train_tf.py --help`
 
-## Steps for evaluation
+### Steps for evaluation
 
 1. We provide you with the tensorflow evaluation script, [eval.py](../eval.py)
 2. Locate the tensorflow checkpoint files
@@ -33,11 +93,13 @@ python train_tf.py \
 python eval.py \
     --weightspath models/COVIDNet-CXR4-A \
     --metaname model.meta \
-    --ckptname model-18540
+    --ckptname model-18540 \
+    --n_classes 3 \
+    --testfile test_COVIDx7A.txt
 ```
 4. For more options and information, `python eval.py --help`
 
-## Steps for inference
+### Steps for inference
 **DISCLAIMER: Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.**
 
 1. Download a model from the [pretrained models section](models.md)
@@ -48,6 +110,7 @@ python inference.py \
     --weightspath models/COVIDNet-CXR4-A \
     --metaname model.meta \
     --ckptname model-18540 \
+    --n_classes 3 \
     --imagepath assets/ex-covid.jpeg
 ```
 4. For more options and information, `python inference.py --help`

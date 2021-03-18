@@ -7,6 +7,10 @@ import cv2
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
+# To remove TF Warnings
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 def crop_top(img, percent=0.15):
     offset = int(img.shape[0] * percent)
     return img[offset:]
@@ -85,17 +89,16 @@ class BalanceCovidDataset(keras.utils.Sequence):
             is_training=True,
             batch_size=8,
             input_shape=(224, 224),
-            n_classes=3,
+            n_classes=2,
             num_channels=3,
             mapping={
-                'normal': 0,
-                'pneumonia': 1,
-                'COVID-19': 2
+                'negative': 0,
+                'positive': 1,
             },
             shuffle=True,
             augmentation=apply_augmentation,
-            covid_percent=0.3,
-            class_weights=[1., 1., 6.],
+            covid_percent=0.5,
+            class_weights=[1., 1.],
             top_percent=0.08
     ):
         'Initialization'
@@ -108,20 +111,34 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.n_classes = n_classes
         self.num_channels = num_channels
         self.mapping = mapping
-        self.shuffle = True
+        self.shuffle = shuffle
         self.covid_percent = covid_percent
         self.class_weights = class_weights
         self.n = 0
         self.augmentation = augmentation
         self.top_percent = top_percent
 
-        datasets = {'normal': [], 'pneumonia': [], 'COVID-19': []}
+        datasets = {}
+        for key in self.mapping.keys():
+            datasets[key] = []
+
         for l in self.dataset:
-            datasets[l.split()[2]].append(l)
-        self.datasets = [
-            datasets['normal'] + datasets['pneumonia'],
-            datasets['COVID-19'],
-        ]
+            if l.split()[-1] == 'sirm':
+                datasets[l.split()[3]].append(l)
+            else:
+                datasets[l.split()[2]].append(l)
+        
+        if self.n_classes == 2:
+            self.datasets = [
+                datasets['negative'], datasets['positive']
+            ]
+        elif self.n_classes == 3:
+            self.datasets = [
+                datasets['normal'] + datasets['pneumonia'],
+                datasets['COVID-19'],
+            ]
+        else:
+            raise Exception('Only binary or 3 class classification currently supported.')
         print(len(self.datasets[0]), len(self.datasets[1]))
 
         self.on_epoch_end()
@@ -169,6 +186,10 @@ class BalanceCovidDataset(keras.utils.Sequence):
 
         for i in range(len(batch_files)):
             sample = batch_files[i].split()
+
+            # Remove first item from sirm samples for proper indexing as a result of spacing in file name
+            if sample[-1] == 'sirm':
+                sample.pop(0)
 
             if self.is_training:
                 folder = 'train'

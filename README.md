@@ -4,6 +4,7 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
+**Update 03/19/2021:** We released a new COVID-Net CXR-2 [model](docs/models.md) for COVID-19 positive/negative detection which was trained on the new COVIDx8B dataset with over 16,500 CXR images from a multinational cohort of 15,528 patients from at least 51 countries. The test results are based on the new COVIDx8B test set of 200 COVID-19 positive and 200 negative CXR images.\
 **Update 01/28/2021:** We released updated datasets and dataset curation scripts. The COVIDx V7A dataset and create_COVIDx.ipynb are for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V7B dataset and create_COVIDx_binary.ipynb are for COVID-19 positive/negative detection. Both datasets contain over 15600 CXR images with over 1700 positive COVID-19 images.\
 **Update 01/05/2021:** We released a new COVIDx6 dataset for binary classification (COVID-19 positive or COVID-19 negative) with over 14500 CXR images and 617 positive COVID-19 images.\
 **Update 11/24/2020:** We released [CancerNet-SCa](https://github.com/jamesrenhoulee/CancerNet-SCa) for skin cancer detection, part of the CancerNet initiatives.\
@@ -18,9 +19,9 @@
 **Update 04/16/2020:** If you have questions, please check the new [FAQ](docs/FAQ.md) page first.
 
 <p align="center">
-	<img src="assets/covidnetv3-3p-rca.png" alt="photo not available" width="70%" height="70%">
+	<img src="assets/covidnet-cxr-2.png" alt="photo not available" width="70%" height="70%">
 	<br>
-	<em>Example chest radiography images of COVID-19 cases from 2 different patients and their associated critical factors (highlighted in red) as identified by GSInquire.</em>
+	<em>COVID-Net CXR-2 for COVID-19 positive/negative detection architecture and example chest radiography images of COVID-19 cases from 2 different patients and their associated critical factors (highlighted in red) as identified by GSInquire.</em>
 </p>
 
 The COVID-19 pandemic continues to have a devastating effect on the health and well-being of the global population.  A critical step in the fight against COVID-19 is effective screening of infected patients, with one of the key screening approaches being radiology examination using chest radiography.  It was found in early studies that patients present abnormalities in chest radiography images that are characteristic of those infected with COVID-19.  Motivated by this and inspired by the open source efforts of the research community, in this study we introduce COVID-Net, a deep convolutional neural network design tailored for the detection of COVID-19 cases from chest X-ray (CXR) images that is open source and available to the general public. To the best of the authors' knowledge, COVID-Net is one of the first open source network designs for COVID-19 detection from CXR images at the time of initial release.  We also introduce COVIDx, an open access benchmark dataset that we generated comprising of 13,975 CXR images across 13,870 patient patient cases, with the largest number of publicly available COVID-19 positive cases to the best of the authors' knowledge.  Furthermore, we investigate how COVID-Net makes predictions using an explainability method in an attempt to not only gain deeper insights into critical factors associated with COVID cases, which can aid clinicians in improved screening, but also audit COVID-Net in a responsible and transparent manner to validate that it is making decisions based on relevant information from the CXR images.  **By no means a production-ready solution**, the hope is that the open access COVID-Net, along with the description on constructing the open source COVIDx dataset, will be leveraged and build upon by both researchers and citizen data scientists alike to accelerate the development of highly accurate yet practical deep learning solutions for detecting COVID-19 cases and accelerate treatment of those who need it the most.
@@ -126,6 +127,35 @@ Additional requirements to generate dataset:
 
 ## Results
 These are the final results for the COVIDNet models.
+
+### COVIDNet-CXR-2 on COVIDx8B (200 COVID-19 test)
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Sensitivity (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Negative</td>
+    <td class="tg-7btt">Positive</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">96.5</td>
+    <td class="tg-c3ow">95.5</td>
+  </tr>
+</table></div>
+
+<div class="tg-wrap"><table class="tg">
+  <tr>
+    <th class="tg-7btt" colspan="3">Positive Predictive Value (%)</th>
+  </tr>
+  <tr>
+    <td class="tg-7btt">Negative</td>
+    <td class="tg-7btt">Positive</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">95.5</td>
+    <td class="tg-c3ow">96.5</td>
+  </tr>
+</table></div>
 
 ### COVIDNet-CXR4-A on COVIDx4 (100 COVID-19 test)
 <div class="tg-wrap"><table class="tg">

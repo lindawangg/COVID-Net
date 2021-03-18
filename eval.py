@@ -6,9 +6,11 @@ import cv2
 
 from data import process_image_file
 
-mapping = {'normal': 0, 'pneumonia': 1, 'COVID-19': 2}
+# To remove TF Warnings
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size):
+def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size, mapping):
     image_tensor = graph.get_tensor_by_name(input_tensor)
     pred_tensor = graph.get_tensor_by_name(output_tensor)
 
@@ -29,23 +31,22 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     print(matrix)
     #class_acc = np.array(cm_norm.diagonal())
     class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
-    print('Sens Normal: {0:.3f}, Pneumonia: {1:.3f}, COVID-19: {2:.3f}'.format(class_acc[0],
-                                                                               class_acc[1],
-                                                                               class_acc[2]))
+
+    mapping_keys = list(mapping.keys())
+    print('Sens', ' '.join(mapping_keys[i].capitalize() + ': ' + str(class_acc[i]) + ' ' for i in range(len(mapping))))
     ppvs = [matrix[i,i]/np.sum(matrix[:,i]) if np.sum(matrix[:,i]) else 0 for i in range(len(matrix))]
-    print('PPV Normal: {0:.3f}, Pneumonia {1:.3f}, COVID-19: {2:.3f}'.format(ppvs[0],
-                                                                             ppvs[1],
-                                                                             ppvs[2]))
+    print('PPV', ' '.join(mapping_keys[i].capitalize() + ': ' + str(ppvs[i]) + ' ' for i in range(len(mapping))))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='COVID-Net Evaluation')
-    parser.add_argument('--weightspath', default='models/COVIDNet-CXR4-A', type=str, help='Path to output folder')
+    parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to output folder')
     parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
-    parser.add_argument('--ckptname', default='model-18540', type=str, help='Name of model ckpts')
-    parser.add_argument('--testfile', default='test_COVIDx5.txt', type=str, help='Name of testfile')
+    parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
+    parser.add_argument('--n_classes', default=2, type=int, help='Number of detected classes, defaults to 2')
+    parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, help='Name of testfile')
     parser.add_argument('--testfolder', default='data/test', type=str, help='Folder where test data is located')
     parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
-    parser.add_argument('--out_tensorname', default='norm_dense_1/Softmax:0', type=str, help='Name of output tensor from graph')
+    parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str, help='Name of output tensor from graph')
     parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 
     args = parser.parse_args()
@@ -60,4 +61,22 @@ if __name__ == '__main__':
     file = open(args.testfile, 'r')
     testfile = file.readlines()
 
-    eval(sess, graph, testfile, args.testfolder, args.in_tensorname, args.out_tensorname, args.input_size)
+    if args.n_classes == 2:
+        # For COVID-19 positive/negative detection
+        mapping = {
+            'negative': 0,
+            'positive': 1,
+        }
+    elif args.n_classes == 3:
+        # For detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia
+        mapping = {
+            'normal': 0,
+            'pneumonia': 1,
+            'COVID-19': 2
+        }
+    else:
+        raise Exception('''COVID-Net currently only supports 2 class COVID-19 positive/negative detection
+            or 3 class detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia''')
+
+
+    eval(sess, graph, testfile, args.testfolder, args.in_tensorname, args.out_tensorname, args.input_size, mapping)
