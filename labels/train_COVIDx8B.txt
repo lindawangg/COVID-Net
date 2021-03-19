@@ -430,30 +430,6 @@ ANON41 DX.1.2.840.113564.1722810162.20200420164750991860.1203801020003.png negat
 22 covid-19-pneumonia-7-PA.jpg positive cohen
 23 covid-19-pneumonia-14-PA.png positive cohen
 24 covid-19-pneumonia-12.jpg positive cohen
-32 39EE8E69-5801-48DE-B6E3-BE7D1BCF3092.jpeg positive cohen
-33 7C69C012-7479-493F-8722-ABC29C60A2DD.jpeg positive cohen
-34 2C10A413-AABE-4807-8CCE-6A2025594067.jpeg positive cohen
-35 E1724330-1866-4581-8CD8-CEC9B8AFEDDE.jpeg positive cohen
-37 F2DE909F-E19C-4900-92F5-8F435B031AC6.jpeg positive cohen
-37 31BA3780-2323-493F-8AED-62081B9C383B.jpeg positive cohen
-39 1312A392-67A3-4EBF-9319-810CF6DA5EF6.jpeg positive cohen
-40 23E99E2E-447C-46E5-8EB2-D35D12473C39.png positive cohen
-41 7AF6C1AF-D249-4BD2-8C26-449304105D03.jpeg positive cohen
-43 CD50BA96-6982-4C80-AE7B-5F67ACDBFA56.jpeg positive cohen
-44 85E52EB3-56E9-4D67-82DA-DEA247C82886.jpeg positive cohen
-45 6CB4EFC6-68FA-4CD5-940C-BEFA8DAFE9A7.jpeg positive cohen
-46 01E392EE-69F9-4E33-BFCE-E5C968654078.jpeg positive cohen
-47 F63AB6CE-1968-4154-A70F-913AF154F53D.jpeg positive cohen
-48 2C26F453-AF3B-4517-BB9E-802CF2179543.jpeg positive cohen
-49 93FE0BB1-022D-4F24-9727-987A07975FFB.jpeg positive cohen
-50 B59DD164-51D5-40DF-A926-6A42DD52EBE8.jpeg positive cohen
-51 F4341CE7-73C9-45C6-99C8-8567A5484B63.jpeg positive cohen
-51 E63574A7-4188-4C8D-8D17-9D67A18A1AFA.jpeg positive cohen
-52 5CBC2E94-D358-401E-8928-965CCD965C5C.jpeg positive cohen
-53 446B2CB6-B572-40AB-B01F-1910CA07086A.jpeg positive cohen
-54 80446565-E090-4187-A031-9D3CEAA586C8.jpeg positive cohen
-55 7E335538-2F86-424E-A0AB-6397783A38D0.jpeg positive cohen
-56 D7AF463C-2369-492D-908D-BE1911CCD74C.jpeg positive cohen
 57 all14238-fig-0001-m-b.jpg positive cohen
 57 all14238-fig-0001-m-c.jpg positive cohen
 58 all14238-fig-0002-m-d.jpg positive cohen
@@ -472,26 +448,14 @@ ANON41 DX.1.2.840.113564.1722810162.20200420164750991860.1203801020003.png negat
 68 1-s2.0-S1684118220300682-main.pdf-003-b2.png positive cohen
 69 gr1_lrg-a.jpg positive cohen
 69 gr1_lrg-b.jpg positive cohen
-70 7D2CF6CE-F529-4470-8356-D33FFAF98600.jpeg positive cohen
-70 FE9F9A5D-2830-46F9-851B-1FF4534959BE.jpeg positive cohen
-71 171CB377-62FF-4B76-906C-F3787A01CB2E.jpeg positive cohen
-71 5931B64A-7B97-485D-BE60-3F1EA76BC4F0.jpeg positive cohen
-71 C6EA0BE5-B01E-4113-B194-18D956675E25.jpeg positive cohen
-72 7EF28E12-F628-4BEC-A8C5-E6277C2E4F60.png positive cohen
 73 41591_2020_819_Fig1_HTML.webp-day5.png positive cohen
 73 41591_2020_819_Fig1_HTML.webp-day10.png positive cohen
 74 5e6dd879fde9502400e58b2f.jpeg positive cohen
 75 covid-19-pneumonia-19.jpg positive cohen
 76 kjr-21-e25-g001-l-a.jpg positive cohen
-77 03BF7561-A9BA-4C3C-B8A0-D3E585F73F3C.jpeg positive cohen
-78 353889E0-A1E8-4F9E-A0B8-F24F36BCFBFB.jpeg positive cohen
 79 figure1-5e73d7ae897e27ff066a30cb-98.jpeg positive cohen
 80 figure1-5e75d0940b71e1b702629659-98-right.jpeg positive cohen
 81 figure1-5e71be566aa8714a04de3386-98-left.jpeg positive cohen
-82 1F6343EE-AFEC-4B7D-97F5-62797EE18767.jpeg positive cohen
-83 5A78BCA9-5B7A-440D-8A4E-AE7710EA6EAD.jpeg positive cohen
-84 2B8649B2-00C4-4233-85D5-1CE240CF233B.jpeg positive cohen
-85 2966893D-5DDF-4B68-9E2B-4979D5956C8E.jpeg positive cohen
 93 covid-19-pneumonia-30-PA.jpg positive cohen
 95 58cb9263f16e94305c730685358e4e_jumbo.jpeg positive cohen
 95 9fdd3c3032296fd04d2cad5d9070d4_jumbo.jpeg positive cohen
@@ -511,10 +475,6 @@ ANON41 DX.1.2.840.113564.1722810162.20200420164750991860.1203801020003.png negat
 116 covid-19-pneumonia-24-day6.jpg positive cohen
 116 covid-19-pneumonia-24-day7.jpg positive cohen
 116 covid-19-pneumonia-24-day12.jpg positive cohen
-118 53EC07C9-5CC6-4BE4-9B6F-D7B0D72AAA7E.jpeg positive cohen
-137 A7E260CE-8A00-4C5F-A7F5-27336527A981.jpeg positive cohen
-139 covid-19-caso-70-1-PA.jpg positive cohen
-139 covid-19-caso-70-2-APS.jpg positive cohen
 140 4e43e48d52c9e2d4c6c1fb9bc1544f_jumbo.jpeg positive cohen
 141 covid-19-pneumonia-53.jpg positive cohen
 142 post-intubuation-pneumomediastium-and-pneumothorax-background-covid-19-pneumonia-day1.jpg positive cohen
@@ -555,18 +515,6 @@ ANON41 DX.1.2.840.113564.1722810162.20200420164750991860.1203801020003.png negat
 173 covid-19-pneumonia-58-day-9.jpg positive cohen
 173 covid-19-pneumonia-58-day-10.jpg positive cohen
 176 covid-19-pneumonia-bilateral.jpg positive cohen
-177 16663_1_1.jpg positive cohen
-178 16660_1_1.jpg positive cohen
-178 16660_2_1.jpg positive cohen
-178 16660_3_1.jpg positive cohen
-178 16660_4_1.jpg positive cohen
-178 16660_5_1.jpg positive cohen
-180 16691_1_1.jpg positive cohen
-181 16674_1_1.jpg positive cohen
-182 16672_1_1.jpg positive cohen
-183 16669_1_1.jpeg positive cohen
-183 16669_3_1.jpeg positive cohen
-184 16664_1_1.jpg positive cohen
 185 ajr.20.23034.pdf-001.png positive cohen
 185 ajr.20.23034.pdf-003.png positive cohen
 187 yxppt-2020-02-19_00-51-27_287214-day8.jpg positive cohen
@@ -585,15 +533,6 @@ ANON41 DX.1.2.840.113564.1722810162.20200420164750991860.1203801020003.png negat
 196 extubation-4.jpg positive cohen
 196 extubation-8.jpg positive cohen
 196 extubation-13.jpg positive cohen
-197 16724_1_1.jpg positive cohen
-197 16673_2_1.jpg positive cohen
-198 16708_1_1.jpg positive cohen
-198 16708_4_1.jpg positive cohen
-198 16708_5_1.jpg positive cohen
-199 16706_1_1.png positive cohen
-200 case_71_figura1.png positive cohen
-201 case_72_RX-TORACE1.jpg positive cohen
-202 case_76_1-3.png positive cohen
 203 covid-19-pneumonia-101.png positive cohen
 204 covid-19-pneumonia-93.png positive cohen
 205 covid-19-pneumonia-progression-and-regression-day1.jpg positive cohen
@@ -603,92 +542,6 @@ ANON41 DX.1.2.840.113564.1722810162.20200420164750991860.1203801020003.png negat
 205 covid-19-pneumonia-progression-and-regression-day20.jpg positive cohen
 205 covid-19-pneumonia-progression-and-regression-day24.jpg positive cohen
 205 covid-19-pneumonia-progression-and-regression-day28.jpg positive cohen
-206 16747_1_1.jpg positive cohen
-206 16747_2_1.jpg positive cohen
-206 16747_3_1.jpg positive cohen
-212 16745_4_1.png positive cohen
-213 16745_5_1.png positive cohen
-215 16745_7_1.png positive cohen
-216 16744_1_1.jpg positive cohen
-219 b343e657.jpg positive cohen
-219 53c9be49.jpg positive cohen
-221 bd3ceeb6.jpg positive cohen
-221 2168a917.jpg positive cohen
-222 61bc50d1.jpg positive cohen
-222 87d50e40.jpg positive cohen
-223 5f619d7e.jpg positive cohen
-224 a38e1877.jpg positive cohen
-225 4d98e1de.jpg positive cohen
-225 80b5f00f.jpg positive cohen
-226 00870a9c.jpg positive cohen
-226 35b446ce.jpg positive cohen
-226 90070cbc.jpg positive cohen
-227 c0f74558.jpg positive cohen
-228 f6575117.jpg positive cohen
-228 ac4f6e4e.jpg positive cohen
-229 2cd63b76.jpg positive cohen
-230 262a70ca.jpg positive cohen
-230 19abe1f3.jpg positive cohen
-232 bb0e626a.jpg positive cohen
-233 441c9cdd.jpg positive cohen
-234 f64132c8.jpg positive cohen
-235 bfefde5d.jpg positive cohen
-235 9d36404d.jpg positive cohen
-235 3dedeb92.jpg positive cohen
-236 483f2ad8.jpg positive cohen
-237 bd10d5e2.jpg positive cohen
-239 a2eba651.jpg positive cohen
-240 f8335316.jpg positive cohen
-241 4fed5061.jpg positive cohen
-242 3b46de94.jpg positive cohen
-243 d9d6ca9a.jpg positive cohen
-243 a361d7b7.jpg positive cohen
-244 d680397c.jpg positive cohen
-244 d6494b39.jpg positive cohen
-245 4fcafe41.jpg positive cohen
-245 1880e301.jpg positive cohen
-245 ee2d1bf6.jpg positive cohen
-245 3248cc61.jpg positive cohen
-245 3fd337c1.jpg positive cohen
-246 887db78f.jpg positive cohen
-246 527321ee.jpg positive cohen
-247 333932bd.jpg positive cohen
-248 e1446fe8.jpg positive cohen
-249 c828e894.jpg positive cohen
-249 24035bda.jpg positive cohen
-249 08d780ae.jpg positive cohen
-250 cb706009.jpg positive cohen
-250 e1a4f870.jpg positive cohen
-250 1663b242.jpg positive cohen
-250 4c0fcf57.jpg positive cohen
-250 a47dc73e.jpg positive cohen
-250 d7f2ee0f.jpg positive cohen
-250 db96a050.jpg positive cohen
-251 d009d61f.jpg positive cohen
-252 7afaaccc.jpg positive cohen
-252 ec083e35.jpg positive cohen
-252 c601f50d.jpg positive cohen
-253 8da14fff.jpg positive cohen
-253 1052b0fe.jpg positive cohen
-254 1f8a4a54.jpg positive cohen
-254 21982772.jpg positive cohen
-255 19073f37.jpg positive cohen
-256 8fc103ca.jpg positive cohen
-257 86d19bba.jpg positive cohen
-258 f6d980a0.jpg positive cohen
-259 b9673e89.jpg positive cohen
-261 1d435a4b.jpg positive cohen
-263 0a7faa2a.jpg positive cohen
-263 b39f5cf9.jpg positive cohen
-263 5782ae15.jpg positive cohen
-264 865336ed.jpg positive cohen
-264 436a6348.jpg positive cohen
-264 48c4542c.jpg positive cohen
-266 c3829ecb.jpg positive cohen
-267 5acb8ac5.jpg positive cohen
-268 a8ac1969.jpg positive cohen
-269 82a78c13.jpg positive cohen
-270 90986ce4.jpg positive cohen
 288 nejmoa2001017_f1-a.png positive cohen
 288 nejmoa2001017_f1-b.png positive cohen
 289 68_2020_1364_Fig1_HTML-a.png positive cohen
@@ -780,18 +633,6 @@ ANON41 DX.1.2.840.113564.1722810162.20200420164750991860.1203801020003.png negat
 337 article_river_de7471906e0011eabe5f9363acaf45c4-covid-cxr-2.png positive cohen
 338 article_river_1a00a3c07ea311eab70491c6fb93d336-figure-2.png positive cohen
 338 article_river_2a361d607ea311ea95dbcf0c95d13492-figure-4.png positive cohen
-341 covid-19-caso-82-1-8.png positive cohen
-342 covid-19-caso-85-1-9.png positive cohen
-342 covid-19-caso-85-4-6.png positive cohen
-343 covid-19-caso-85-5-4.png positive cohen
-344 covid-19-caso-86-Rx-torace-1.jpg positive cohen
-344 covid-19-caso-86-RX-Torace-2.jpg positive cohen
-345 covid-19-caso-91-1-12.png positive cohen
-346 covid-19-caso-94-1-14.png positive cohen
-347 covid-19-caso-95-1-15.png positive cohen
-347 covid-19-caso-95-3-14.png positive cohen
-348 covid-19-caso-99-1-19.png positive cohen
-349 covid-19-caso-111-1-21.png positive cohen
 350a 08ed451c576ee00935ee178ec85c57_jumbo-1.jpeg positive cohen
 350a e73d6e89fcd781b8afd159cf533358_jumbo-1.jpeg positive cohen
 350b 1141cc2b8b9cc394becce5d978b5a7_jumbo.jpeg positive cohen
@@ -813,7 +654,6 @@ ANON41 DX.1.2.840.113564.1722810162.20200420164750991860.1203801020003.png negat
 359 2d8a60a26381b256a5a6373708950e_jumbo.jpeg positive cohen
 359 2eadbbb367a0366d8c34350d083a83_jumbo.jpeg positive cohen
 360a 7867b1aa2d1241045c917f07a9e683_jumbo.jpeg positive cohen
-394 16755_3_1.jpg positive cohen
 422 1-s2.0-S2387020620301959-gr3_lrg-a.png positive cohen
 426a ansu-publish-ahead-of-print-10.1097.sla.0000000000003955-g001-a.png positive cohen
 426a ansu-publish-ahead-of-print-10.1097.sla.0000000000003955-g001-c.png positive cohen
@@ -832,16 +672,7 @@ ANON41 DX.1.2.840.113564.1722810162.20200420164750991860.1203801020003.png negat
 448 8781ac6b9589f3646d2bbfff8f9015_jumbo.jpeg positive cohen
 459 078d2e0b3e4fec1d603efb0e818c31_jumbo.jpeg positive cohen
 465 c94ef38ddb2d94aa11828716777139_jumbo.jpeg positive cohen
-471 16953_1_1.jpg positive cohen
-471 16953_3_1.jpg positive cohen
-471 16953_4_1.jpg positive cohen
-471 16953_5_1.jpg positive cohen
-472 16892_2_1.png positive cohen
-473 16883_1_1.png positive cohen
 474 2edb88df42cab5e5fbc18b3965e0bd_jumbo.jpeg positive cohen
-475 16858_1_1.png positive cohen
-475 16858_3_1.png positive cohen
-476 16865_1_1.jpg positive cohen
 COVID-00001 COVID-00001.jpg positive fig1
 COVID-00004 COVID-00004.jpg positive fig1
 COVID-00006 COVID-00006.jpg positive fig1
@@ -1834,245 +1665,902 @@ COVID 957 COVID(957).png positive sirm
 COVID 958 COVID(958).png positive sirm
 COVID 959 COVID(959).png positive sirm
 COVID 960 COVID(960).png positive sirm
-COVID 961 COVID(961).png positive sirm
-COVID 962 COVID(962).png positive sirm
-COVID 963 COVID(963).png positive sirm
-COVID 964 COVID(964).png positive sirm
-COVID 965 COVID(965).png positive sirm
-COVID 966 COVID(966).png positive sirm
-COVID 967 COVID(967).png positive sirm
-COVID 968 COVID(968).png positive sirm
-COVID 969 COVID(969).png positive sirm
-COVID 970 COVID(970).png positive sirm
-COVID 971 COVID(971).png positive sirm
-COVID 972 COVID(972).png positive sirm
-COVID 973 COVID(973).png positive sirm
-COVID 974 COVID(974).png positive sirm
-COVID 975 COVID(975).png positive sirm
-COVID 976 COVID(976).png positive sirm
-COVID 977 COVID(977).png positive sirm
-COVID 978 COVID(978).png positive sirm
-COVID 979 COVID(979).png positive sirm
-COVID 980 COVID(980).png positive sirm
-COVID 981 COVID(981).png positive sirm
-COVID 982 COVID(982).png positive sirm
-COVID 983 COVID(983).png positive sirm
-COVID 984 COVID(984).png positive sirm
-COVID 985 COVID(985).png positive sirm
-COVID 986 COVID(986).png positive sirm
-COVID 987 COVID(987).png positive sirm
-COVID 988 COVID(988).png positive sirm
-COVID 989 COVID(989).png positive sirm
-COVID 990 COVID(990).png positive sirm
-COVID 991 COVID(991).png positive sirm
-COVID 992 COVID(992).png positive sirm
-COVID 993 COVID(993).png positive sirm
-COVID 994 COVID(994).png positive sirm
-COVID 995 COVID(995).png positive sirm
-COVID 996 COVID(996).png positive sirm
-COVID 997 COVID(997).png positive sirm
-COVID 998 COVID(998).png positive sirm
-COVID 999 COVID(999).png positive sirm
-COVID 1000 COVID(1000).png positive sirm
-COVID 1001 COVID(1001).png positive sirm
-COVID 1002 COVID(1002).png positive sirm
-COVID 1003 COVID(1003).png positive sirm
-COVID 1004 COVID(1004).png positive sirm
-COVID 1005 COVID(1005).png positive sirm
-COVID 1006 COVID(1006).png positive sirm
-COVID 1007 COVID(1007).png positive sirm
-COVID 1008 COVID(1008).png positive sirm
-COVID 1009 COVID(1009).png positive sirm
-COVID 1010 COVID(1010).png positive sirm
-COVID 1011 COVID(1011).png positive sirm
-COVID 1012 COVID(1012).png positive sirm
-COVID 1013 COVID(1013).png positive sirm
-COVID 1014 COVID(1014).png positive sirm
-COVID 1015 COVID(1015).png positive sirm
-COVID 1016 COVID(1016).png positive sirm
-COVID 1017 COVID(1017).png positive sirm
-COVID 1018 COVID(1018).png positive sirm
-COVID 1019 COVID(1019).png positive sirm
-COVID 1020 COVID(1020).png positive sirm
-COVID 1021 COVID(1021).png positive sirm
-COVID 1022 COVID(1022).png positive sirm
-COVID 1023 COVID(1023).png positive sirm
-COVID 1024 COVID(1024).png positive sirm
-COVID 1025 COVID(1025).png positive sirm
-COVID 1026 COVID(1026).png positive sirm
-COVID 1027 COVID(1027).png positive sirm
-COVID 1028 COVID(1028).png positive sirm
-COVID 1029 COVID(1029).png positive sirm
-COVID 1030 COVID(1030).png positive sirm
-COVID 1031 COVID(1031).png positive sirm
-COVID 1032 COVID(1032).png positive sirm
-COVID 1033 COVID(1033).png positive sirm
-COVID 1034 COVID(1034).png positive sirm
-COVID 1035 COVID(1035).png positive sirm
-COVID 1036 COVID(1036).png positive sirm
-COVID 1037 COVID(1037).png positive sirm
-COVID 1038 COVID(1038).png positive sirm
-COVID 1039 COVID(1039).png positive sirm
-COVID 1040 COVID(1040).png positive sirm
-COVID 1041 COVID(1041).png positive sirm
-COVID 1042 COVID(1042).png positive sirm
-COVID 1043 COVID(1043).png positive sirm
-COVID 1044 COVID(1044).png positive sirm
-COVID 1045 COVID(1045).png positive sirm
-COVID 1046 COVID(1046).png positive sirm
-COVID 1047 COVID(1047).png positive sirm
-COVID 1048 COVID(1048).png positive sirm
-COVID 1049 COVID(1049).png positive sirm
-COVID 1050 COVID(1050).png positive sirm
-COVID 1051 COVID(1051).png positive sirm
-COVID 1052 COVID(1052).png positive sirm
-COVID 1053 COVID(1053).png positive sirm
-COVID 1054 COVID(1054).png positive sirm
-COVID 1055 COVID(1055).png positive sirm
-COVID 1056 COVID(1056).png positive sirm
-COVID 1057 COVID(1057).png positive sirm
-COVID 1058 COVID(1058).png positive sirm
-COVID 1059 COVID(1059).png positive sirm
-COVID 1060 COVID(1060).png positive sirm
-COVID 1061 COVID(1061).png positive sirm
-COVID 1062 COVID(1062).png positive sirm
-COVID 1063 COVID(1063).png positive sirm
-COVID 1064 COVID(1064).png positive sirm
-COVID 1065 COVID(1065).png positive sirm
-COVID 1066 COVID(1066).png positive sirm
-COVID 1067 COVID(1067).png positive sirm
-COVID 1068 COVID(1068).png positive sirm
-COVID 1069 COVID(1069).png positive sirm
-COVID 1070 COVID(1070).png positive sirm
-COVID 1071 COVID(1071).png positive sirm
-COVID 1072 COVID(1072).png positive sirm
-COVID 1073 COVID(1073).png positive sirm
-COVID 1074 COVID(1074).png positive sirm
-COVID 1075 COVID(1075).png positive sirm
-COVID 1076 COVID(1076).png positive sirm
-COVID 1077 COVID(1077).png positive sirm
-COVID 1078 COVID(1078).png positive sirm
-COVID 1079 COVID(1079).png positive sirm
-COVID 1080 COVID(1080).png positive sirm
-COVID 1081 COVID(1081).png positive sirm
-COVID 1082 COVID(1082).png positive sirm
-COVID 1083 COVID(1083).png positive sirm
-COVID 1084 COVID(1084).png positive sirm
-COVID 1085 COVID(1085).png positive sirm
-COVID 1086 COVID(1086).png positive sirm
-COVID 1087 COVID(1087).png positive sirm
-COVID 1088 COVID(1088).png positive sirm
-COVID 1089 COVID(1089).png positive sirm
-COVID 1090 COVID(1090).png positive sirm
-COVID 1091 COVID(1091).png positive sirm
-COVID 1092 COVID(1092).png positive sirm
-COVID 1093 COVID(1093).png positive sirm
-COVID 1094 COVID(1094).png positive sirm
-COVID 1095 COVID(1095).png positive sirm
-COVID 1096 COVID(1096).png positive sirm
-COVID 1097 COVID(1097).png positive sirm
-COVID 1098 COVID(1098).png positive sirm
-COVID 1099 COVID(1099).png positive sirm
-COVID 1100 COVID(1100).png positive sirm
-COVID 1101 COVID(1101).png positive sirm
-COVID 1102 COVID(1102).png positive sirm
-COVID 1103 COVID(1103).png positive sirm
-COVID 1104 COVID(1104).png positive sirm
-COVID 1105 COVID(1105).png positive sirm
-COVID 1106 COVID(1106).png positive sirm
-COVID 1107 COVID(1107).png positive sirm
-COVID 1108 COVID(1108).png positive sirm
-COVID 1109 COVID(1109).png positive sirm
-COVID 1110 COVID(1110).png positive sirm
-COVID 1111 COVID(1111).png positive sirm
-COVID 1112 COVID(1112).png positive sirm
-COVID 1113 COVID(1113).png positive sirm
-COVID 1114 COVID(1114).png positive sirm
-COVID 1115 COVID(1115).png positive sirm
-COVID 1116 COVID(1116).png positive sirm
-COVID 1117 COVID(1117).png positive sirm
-COVID 1118 COVID(1118).png positive sirm
-COVID 1119 COVID(1119).png positive sirm
-COVID 1120 COVID(1120).png positive sirm
-COVID 1121 COVID(1121).png positive sirm
-COVID 1122 COVID(1122).png positive sirm
-COVID 1123 COVID(1123).png positive sirm
-COVID 1124 COVID(1124).png positive sirm
-COVID 1125 COVID(1125).png positive sirm
-COVID 1126 COVID(1126).png positive sirm
-COVID 1127 COVID(1127).png positive sirm
-COVID 1128 COVID(1128).png positive sirm
-COVID 1129 COVID(1129).png positive sirm
-COVID 1130 COVID(1130).png positive sirm
-COVID 1131 COVID(1131).png positive sirm
-COVID 1132 COVID(1132).png positive sirm
-COVID 1133 COVID(1133).png positive sirm
-COVID 1134 COVID(1134).png positive sirm
-COVID 1135 COVID(1135).png positive sirm
-COVID 1136 COVID(1136).png positive sirm
-COVID 1137 COVID(1137).png positive sirm
-COVID 1138 COVID(1138).png positive sirm
-COVID 1139 COVID(1139).png positive sirm
-COVID 1140 COVID(1140).png positive sirm
-COVID 1141 COVID(1141).png positive sirm
-COVID 1142 COVID(1142).png positive sirm
-COVID 1143 COVID(1143).png positive sirm
-COVID 1144 COVID(1144).png positive sirm
-COVID 1145 COVID(1145).png positive sirm
-COVID 1146 COVID(1146).png positive sirm
-COVID 1147 COVID(1147).png positive sirm
-COVID 1148 COVID(1148).png positive sirm
-COVID 1149 COVID(1149).png positive sirm
-COVID 1150 COVID(1150).png positive sirm
-COVID 1151 COVID(1151).png positive sirm
-COVID 1152 COVID(1152).png positive sirm
-COVID 1153 COVID(1153).png positive sirm
-COVID 1154 COVID(1154).png positive sirm
-COVID 1155 COVID(1155).png positive sirm
-COVID 1156 COVID(1156).png positive sirm
-COVID 1157 COVID(1157).png positive sirm
-COVID 1158 COVID(1158).png positive sirm
-COVID 1159 COVID(1159).png positive sirm
-COVID 1160 COVID(1160).png positive sirm
-COVID 1161 COVID(1161).png positive sirm
-COVID 1162 COVID(1162).png positive sirm
-COVID 1163 COVID(1163).png positive sirm
-COVID 1164 COVID(1164).png positive sirm
-COVID 1165 COVID(1165).png positive sirm
-COVID 1166 COVID(1166).png positive sirm
-COVID 1167 COVID(1167).png positive sirm
-COVID 1168 COVID(1168).png positive sirm
-COVID 1169 COVID(1169).png positive sirm
-COVID 1170 COVID(1170).png positive sirm
-COVID 1171 COVID(1171).png positive sirm
-COVID 1172 COVID(1172).png positive sirm
-COVID 1173 COVID(1173).png positive sirm
-COVID 1174 COVID(1174).png positive sirm
-COVID 1175 COVID(1175).png positive sirm
-COVID 1176 COVID(1176).png positive sirm
-COVID 1177 COVID(1177).png positive sirm
-COVID 1178 COVID(1178).png positive sirm
-COVID 1179 COVID(1179).png positive sirm
-COVID 1180 COVID(1180).png positive sirm
-COVID 1181 COVID(1181).png positive sirm
-COVID 1182 COVID(1182).png positive sirm
-COVID 1183 COVID(1183).png positive sirm
-COVID 1184 COVID(1184).png positive sirm
-COVID 1185 COVID(1185).png positive sirm
-COVID 1186 COVID(1186).png positive sirm
-COVID 1187 COVID(1187).png positive sirm
-COVID 1188 COVID(1188).png positive sirm
-COVID 1189 COVID(1189).png positive sirm
-COVID 1190 COVID(1190).png positive sirm
-COVID 1191 COVID(1191).png positive sirm
-COVID 1192 COVID(1192).png positive sirm
-COVID 1193 COVID(1193).png positive sirm
-COVID 1194 COVID(1194).png positive sirm
-COVID 1195 COVID(1195).png positive sirm
-COVID 1196 COVID(1196).png positive sirm
-COVID 1197 COVID(1197).png positive sirm
-COVID 1198 COVID(1198).png positive sirm
-COVID 1199 COVID(1199).png positive sirm
+419639-000238 MIDRC-RICORD-1C-419639-000238-46556-1.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-06111-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-42010-1.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-65699-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-65699-1.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-82593-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-89050-0.png positive ricord
+419639-000418 MIDRC-RICORD-1C-419639-000418-35885-0.png positive ricord
+419639-000418 MIDRC-RICORD-1C-419639-000418-49559-0.png positive ricord
+419639-000481 MIDRC-RICORD-1C-419639-000481-91439-0.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-41183-0.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-41183-1.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-93895-0.png positive ricord
+419639-000766 MIDRC-RICORD-1C-419639-000766-96128-0.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-43112-0.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-92171-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-85508-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-05862-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-35798-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-47409-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-03510-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-34024-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-34024-1.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-58569-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-62826-0.png positive ricord
+419639-001060 MIDRC-RICORD-1C-419639-001060-15510-0.png positive ricord
+419639-001060 MIDRC-RICORD-1C-419639-001060-64097-0.png positive ricord
+419639-001060 MIDRC-RICORD-1C-419639-001060-86381-0.png positive ricord
+419639-001060 MIDRC-RICORD-1C-419639-001060-92092-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-32326-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-71188-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-71188-1.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-33151-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-49883-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-49883-1.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-74424-0.png positive ricord
+419639-001446 MIDRC-RICORD-1C-419639-001446-18929-0.png positive ricord
+419639-001569 MIDRC-RICORD-1C-419639-001569-43268-0.png positive ricord
+419639-001634 MIDRC-RICORD-1C-419639-001634-85920-0.png positive ricord
+419639-001646 MIDRC-RICORD-1C-419639-001646-41990-0.png positive ricord
+419639-001686 MIDRC-RICORD-1C-419639-001686-60394-1.png positive ricord
+419639-001687 MIDRC-RICORD-1C-419639-001687-11077-0.png positive ricord
+419639-001729 MIDRC-RICORD-1C-419639-001729-71729-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-28098-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-28098-1.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-50657-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-50657-1.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-50657-2.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-52138-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-90045-0.png positive ricord
+419639-002190 MIDRC-RICORD-1C-419639-002190-57058-0.png positive ricord
+419639-002195 MIDRC-RICORD-1C-419639-002195-26590-0.png positive ricord
+419639-002260 MIDRC-RICORD-1C-419639-002260-26595-0.png positive ricord
+419639-002260 MIDRC-RICORD-1C-419639-002260-26595-1.png positive ricord
+419639-002261 MIDRC-RICORD-1C-419639-002261-70507-1.png positive ricord
+419639-002592 MIDRC-RICORD-1C-419639-002592-18536-0.png positive ricord
+419639-002649 MIDRC-RICORD-1C-419639-002649-91958-0.png positive ricord
+419639-002649 MIDRC-RICORD-1C-419639-002649-91958-1.png positive ricord
+419639-002863 MIDRC-RICORD-1C-419639-002863-91811-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-20903-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-86129-0.png positive ricord
+419639-002904 MIDRC-RICORD-1C-419639-002904-36016-0.png positive ricord
+419639-002904 MIDRC-RICORD-1C-419639-002904-44945-0.png positive ricord
+419639-002904 MIDRC-RICORD-1C-419639-002904-84203-0.png positive ricord
+419639-002904 MIDRC-RICORD-1C-419639-002904-84203-1.png positive ricord
+419639-002972 MIDRC-RICORD-1C-419639-002972-12730-1.png positive ricord
+419639-002972 MIDRC-RICORD-1C-419639-002972-23173-0.png positive ricord
+419639-002972 MIDRC-RICORD-1C-419639-002972-49732-0.png positive ricord
+419639-003003 MIDRC-RICORD-1C-419639-003003-22541-0.png positive ricord
+419639-003003 MIDRC-RICORD-1C-419639-003003-51385-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-83540-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-53260-0.png positive ricord
+419639-003185 MIDRC-RICORD-1C-419639-003185-64353-1.png positive ricord
+419639-003210 MIDRC-RICORD-1C-419639-003210-36118-1.png positive ricord
+419639-003220 MIDRC-RICORD-1C-419639-003220-47550-0.png positive ricord
+419639-003269 MIDRC-RICORD-1C-419639-003269-27033-0.png positive ricord
+419639-003269 MIDRC-RICORD-1C-419639-003269-27033-1.png positive ricord
+419639-003302 MIDRC-RICORD-1C-419639-003302-96347-0.png positive ricord
+440808-000001 MIDRC-RICORD-1C-440808-000001-8.275-0.png positive ricord
+440808-000002 MIDRC-RICORD-1C-440808-000002-8.148-0.png positive ricord
+440808-000002 MIDRC-RICORD-1C-440808-000002-8.442-0.png positive ricord
+440808-000003 MIDRC-RICORD-1C-440808-000003-08.13-0.png positive ricord
+440808-000003 MIDRC-RICORD-1C-440808-000003-08.24-0.png positive ricord
+440808-000003 MIDRC-RICORD-1C-440808-000003-8.397-0.png positive ricord
+440808-000004 MIDRC-RICORD-1C-440808-000004-08.73-0.png positive ricord
+440808-000004 MIDRC-RICORD-1C-440808-000004-8.270-0.png positive ricord
+440808-000005 MIDRC-RICORD-1C-440808-000005-8.301-0.png positive ricord
+440808-000005 MIDRC-RICORD-1C-440808-000005-8.385-0.png positive ricord
+440808-000005 MIDRC-RICORD-1C-440808-000005-8.445-0.png positive ricord
+440808-000006 MIDRC-RICORD-1C-440808-000006-08.39-0.png positive ricord
+440808-000006 MIDRC-RICORD-1C-440808-000006-08.64-0.png positive ricord
+440808-000008 MIDRC-RICORD-1C-440808-000008-08.67-0.png positive ricord
+440808-000008 MIDRC-RICORD-1C-440808-000008-8.153-0.png positive ricord
+440808-000008 MIDRC-RICORD-1C-440808-000008-8.267-0.png positive ricord
+440808-000008 MIDRC-RICORD-1C-440808-000008-8.394-0.png positive ricord
+440808-000010 MIDRC-RICORD-1C-440808-000010-8.184-0.png positive ricord
+440808-000011 MIDRC-RICORD-1C-440808-000011-8.122-0.png positive ricord
+440808-000011 MIDRC-RICORD-1C-440808-000011-8.427-0.png positive ricord
+440808-000012 MIDRC-RICORD-1C-440808-000012-8.415-0.png positive ricord
+440808-000014 MIDRC-RICORD-1C-440808-000014-8.264-0.png positive ricord
+440808-000015 MIDRC-RICORD-1C-440808-000015-8.227-0.png positive ricord
+440808-000017 MIDRC-RICORD-1C-440808-000017-8.360-0.png positive ricord
+440808-000017 MIDRC-RICORD-1C-440808-000017-8.382-0.png positive ricord
+440808-000017 MIDRC-RICORD-1C-440808-000017-8.412-0.png positive ricord
+440808-000018 MIDRC-RICORD-1C-440808-000018-8.448-0.png positive ricord
+440808-000018 MIDRC-RICORD-1C-440808-000018-8.461-0.png positive ricord
+440808-000018 MIDRC-RICORD-1C-440808-000018-8.464-0.png positive ricord
+440808-000018 MIDRC-RICORD-1C-440808-000018-8.467-0.png positive ricord
+SITE2-000006 MIDRC-RICORD-1C-SITE2-000006-20879-0.png positive ricord
+SITE2-000006 MIDRC-RICORD-1C-SITE2-000006-73865-0.png positive ricord
+SITE2-000013 MIDRC-RICORD-1C-SITE2-000013-10106-0.png positive ricord
+SITE2-000021 MIDRC-RICORD-1C-SITE2-000021-46890-0.png positive ricord
+SITE2-000025 MIDRC-RICORD-1C-SITE2-000025-81457-0.png positive ricord
+SITE2-000025 MIDRC-RICORD-1C-SITE2-000025-83262-0.png positive ricord
+SITE2-000026 MIDRC-RICORD-1C-SITE2-000026-03208-0.png positive ricord
+SITE2-000026 MIDRC-RICORD-1C-SITE2-000026-29087-0.png positive ricord
+SITE2-000036 MIDRC-RICORD-1C-SITE2-000036-23357-1.png positive ricord
+SITE2-000042 MIDRC-RICORD-1C-SITE2-000042-17058-0.png positive ricord
+SITE2-000042 MIDRC-RICORD-1C-SITE2-000042-35509-0.png positive ricord
+SITE2-000042 MIDRC-RICORD-1C-SITE2-000042-47842-0.png positive ricord
+SITE2-000042 MIDRC-RICORD-1C-SITE2-000042-90941-0.png positive ricord
+SITE2-000046 MIDRC-RICORD-1C-SITE2-000046-95298-0.png positive ricord
+SITE2-000047 MIDRC-RICORD-1C-SITE2-000047-43639-0.png positive ricord
+SITE2-000047 MIDRC-RICORD-1C-SITE2-000047-43901-0.png positive ricord
+SITE2-000052 MIDRC-RICORD-1C-SITE2-000052-84213-0.png positive ricord
+SITE2-000052 MIDRC-RICORD-1C-SITE2-000052-92077-0.png positive ricord
+SITE2-000052 MIDRC-RICORD-1C-SITE2-000052-97543-1.png positive ricord
+SITE2-000057 MIDRC-RICORD-1C-SITE2-000057-91334-0.png positive ricord
+SITE2-000061 MIDRC-RICORD-1C-SITE2-000061-54700-0.png positive ricord
+SITE2-000061 MIDRC-RICORD-1C-SITE2-000061-61434-0.png positive ricord
+SITE2-000061 MIDRC-RICORD-1C-SITE2-000061-86515-0.png positive ricord
+SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-01812-0.png positive ricord
+SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-06327-0.png positive ricord
+SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-92860-0.png positive ricord
+SITE2-000065 MIDRC-RICORD-1C-SITE2-000065-08617-0.png positive ricord
+SITE2-000065 MIDRC-RICORD-1C-SITE2-000065-17848-0.png positive ricord
+SITE2-000065 MIDRC-RICORD-1C-SITE2-000065-17848-1.png positive ricord
+SITE2-000065 MIDRC-RICORD-1C-SITE2-000065-62836-0.png positive ricord
+SITE2-000065 MIDRC-RICORD-1C-SITE2-000065-90156-0.png positive ricord
+SITE2-000078 MIDRC-RICORD-1C-SITE2-000078-42484-0.png positive ricord
+SITE2-000080 MIDRC-RICORD-1C-SITE2-000080-27875-0.png positive ricord
+SITE2-000082 MIDRC-RICORD-1C-SITE2-000082-45376-0.png positive ricord
+SITE2-000082 MIDRC-RICORD-1C-SITE2-000082-94103-0.png positive ricord
+SITE2-000084 MIDRC-RICORD-1C-SITE2-000084-71242-0.png positive ricord
+SITE2-000086 MIDRC-RICORD-1C-SITE2-000086-01931-0.png positive ricord
+SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-06573-1.png positive ricord
+SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-83556-0.png positive ricord
+SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-83556-1.png positive ricord
+SITE2-000090 MIDRC-RICORD-1C-SITE2-000090-56799-0.png positive ricord
+SITE2-000101 MIDRC-RICORD-1C-SITE2-000101-36965-0.png positive ricord
+SITE2-000101 MIDRC-RICORD-1C-SITE2-000101-62268-0.png positive ricord
+SITE2-000101 MIDRC-RICORD-1C-SITE2-000101-62268-1.png positive ricord
+SITE2-000101 MIDRC-RICORD-1C-SITE2-000101-72147-0.png positive ricord
+SITE2-000102 MIDRC-RICORD-1C-SITE2-000102-72341-0.png positive ricord
+SITE2-000102 MIDRC-RICORD-1C-SITE2-000102-72341-1.png positive ricord
+SITE2-000103 MIDRC-RICORD-1C-SITE2-000103-05522-0.png positive ricord
+SITE2-000103 MIDRC-RICORD-1C-SITE2-000103-58285-0.png positive ricord
+SITE2-000107 MIDRC-RICORD-1C-SITE2-000107-80284-0.png positive ricord
+SITE2-000107 MIDRC-RICORD-1C-SITE2-000107-91580-0.png positive ricord
+SITE2-000112 MIDRC-RICORD-1C-SITE2-000112-19566-0.png positive ricord
+SITE2-000112 MIDRC-RICORD-1C-SITE2-000112-77926-0.png positive ricord
+SITE2-000118 MIDRC-RICORD-1C-SITE2-000118-31156-0.png positive ricord
+SITE2-000118 MIDRC-RICORD-1C-SITE2-000118-60279-0.png positive ricord
+SITE2-000118 MIDRC-RICORD-1C-SITE2-000118-93390-0.png positive ricord
+SITE2-000123 MIDRC-RICORD-1C-SITE2-000123-83242-0.png positive ricord
+SITE2-000126 MIDRC-RICORD-1C-SITE2-000126-79949-0.png positive ricord
+SITE2-000129 MIDRC-RICORD-1C-SITE2-000129-13478-0.png positive ricord
+SITE2-000129 MIDRC-RICORD-1C-SITE2-000129-45395-0.png positive ricord
+SITE2-000129 MIDRC-RICORD-1C-SITE2-000129-45776-0.png positive ricord
+SITE2-000129 MIDRC-RICORD-1C-SITE2-000129-92135-0.png positive ricord
+SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-95812-0.png positive ricord
+SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-96797-0.png positive ricord
+SITE2-000137 MIDRC-RICORD-1C-SITE2-000137-44937-0.png positive ricord
+SITE2-000139 MIDRC-RICORD-1C-SITE2-000139-03122-0.png positive ricord
+SITE2-000139 MIDRC-RICORD-1C-SITE2-000139-44010-0.png positive ricord
+SITE2-000139 MIDRC-RICORD-1C-SITE2-000139-58251-0.png positive ricord
+SITE2-000145 MIDRC-RICORD-1C-SITE2-000145-03730-0.png positive ricord
+SITE2-000145 MIDRC-RICORD-1C-SITE2-000145-08212-0.png positive ricord
+SITE2-000145 MIDRC-RICORD-1C-SITE2-000145-44375-0.png positive ricord
+SITE2-000145 MIDRC-RICORD-1C-SITE2-000145-53338-0.png positive ricord
+SITE2-000148 MIDRC-RICORD-1C-SITE2-000148-44042-0.png positive ricord
+SITE2-000163 MIDRC-RICORD-1C-SITE2-000163-04510-0.png positive ricord
+SITE2-000163 MIDRC-RICORD-1C-SITE2-000163-65449-0.png positive ricord
+SITE2-000163 MIDRC-RICORD-1C-SITE2-000163-92724-0.png positive ricord
+SITE2-000167 MIDRC-RICORD-1C-SITE2-000167-20021-0.png positive ricord
+SITE2-000167 MIDRC-RICORD-1C-SITE2-000167-57517-0.png positive ricord
+SITE2-000172 MIDRC-RICORD-1C-SITE2-000172-38954-0.png positive ricord
+SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-01747-0.png positive ricord
+SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-13955-0.png positive ricord
+SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-18979-0.png positive ricord
+SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-69094-0.png positive ricord
+SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-87628-0.png positive ricord
+SITE2-000177 MIDRC-RICORD-1C-SITE2-000177-12711-0.png positive ricord
+SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-05630-0.png positive ricord
+SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-35618-0.png positive ricord
+SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-92322-0.png positive ricord
+SITE2-000186 MIDRC-RICORD-1C-SITE2-000186-47380-1.png positive ricord
+SITE2-000186 MIDRC-RICORD-1C-SITE2-000186-51802-0.png positive ricord
+SITE2-000190 MIDRC-RICORD-1C-SITE2-000190-27714-0.png positive ricord
+SITE2-000190 MIDRC-RICORD-1C-SITE2-000190-46535-0.png positive ricord
+SITE2-000191 MIDRC-RICORD-1C-SITE2-000191-59223-0.png positive ricord
+SITE2-000191 MIDRC-RICORD-1C-SITE2-000191-62544-0.png positive ricord
+SITE2-000196 MIDRC-RICORD-1C-SITE2-000196-12076-0.png positive ricord
+SITE2-000196 MIDRC-RICORD-1C-SITE2-000196-49001-0.png positive ricord
+SITE2-000197 MIDRC-RICORD-1C-SITE2-000197-41761-0.png positive ricord
+SITE2-000197 MIDRC-RICORD-1C-SITE2-000197-77046-0.png positive ricord
+SITE2-000197 MIDRC-RICORD-1C-SITE2-000197-89069-0.png positive ricord
+SITE2-000198 MIDRC-RICORD-1C-SITE2-000198-99794-1.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-27382-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-33347-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-35392-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-37966-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-45945-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-61255-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-92778-0.png positive ricord
+SITE2-000205 MIDRC-RICORD-1C-SITE2-000205-44961-0.png positive ricord
+SITE2-000212 MIDRC-RICORD-1C-SITE2-000212-36422-0.png positive ricord
+SITE2-000216 MIDRC-RICORD-1C-SITE2-000216-99559-0.png positive ricord
+SITE2-000219 MIDRC-RICORD-1C-SITE2-000219-40295-0.png positive ricord
+SITE2-000219 MIDRC-RICORD-1C-SITE2-000219-84254-0.png positive ricord
+SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-40858-0.png positive ricord
+SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-45143-0.png positive ricord
+SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-47140-0.png positive ricord
+SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-85763-1.png positive ricord
+SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-05244-0.png positive ricord
+SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-70752-0.png positive ricord
+SITE2-000242 MIDRC-RICORD-1C-SITE2-000242-07550-0.png positive ricord
+SITE2-000243 MIDRC-RICORD-1C-SITE2-000243-15589-0.png positive ricord
+SITE2-000243 MIDRC-RICORD-1C-SITE2-000243-64468-0.png positive ricord
+SITE2-000243 MIDRC-RICORD-1C-SITE2-000243-71385-0.png positive ricord
+SITE2-000243 MIDRC-RICORD-1C-SITE2-000243-97534-0.png positive ricord
+SITE2-000245 MIDRC-RICORD-1C-SITE2-000245-40352-0.png positive ricord
+SITE2-000245 MIDRC-RICORD-1C-SITE2-000245-50475-0.png positive ricord
+SITE2-000245 MIDRC-RICORD-1C-SITE2-000245-67988-0.png positive ricord
+SITE2-000247 MIDRC-RICORD-1C-SITE2-000247-25535-0.png positive ricord
+SITE2-000247 MIDRC-RICORD-1C-SITE2-000247-48450-0.png positive ricord
+SITE2-000247 MIDRC-RICORD-1C-SITE2-000247-48957-0.png positive ricord
+SITE2-000248 MIDRC-RICORD-1C-SITE2-000248-12609-0.png positive ricord
+SITE2-000248 MIDRC-RICORD-1C-SITE2-000248-26347-0.png positive ricord
+SITE2-000248 MIDRC-RICORD-1C-SITE2-000248-77857-0.png positive ricord
+SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-01666-0.png positive ricord
+SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-07030-0.png positive ricord
+SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-74806-0.png positive ricord
+SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-77545-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-04481-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-19989-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-21053-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-21175-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-24572-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-30106-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-33501-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-36149-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-37996-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-40730-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-60630-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-70152-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-70282-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-75198-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-93011-0.png positive ricord
+SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-10263-0.png positive ricord
+SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-24698-0.png positive ricord
+SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-45928-0.png positive ricord
+SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-76378-0.png positive ricord
+SITE2-000255 MIDRC-RICORD-1C-SITE2-000255-24179-0.png positive ricord
+SITE2-000255 MIDRC-RICORD-1C-SITE2-000255-89235-0.png positive ricord
+SITE2-000256 MIDRC-RICORD-1C-SITE2-000256-10534-0.png positive ricord
+SITE2-000256 MIDRC-RICORD-1C-SITE2-000256-41172-0.png positive ricord
+SITE2-000256 MIDRC-RICORD-1C-SITE2-000256-91590-0.png positive ricord
+SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-05251-0.png positive ricord
+SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-29985-0.png positive ricord
+SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-71395-1.png positive ricord
+SITE2-000261 MIDRC-RICORD-1C-SITE2-000261-47108-0.png positive ricord
+SITE2-000266 MIDRC-RICORD-1C-SITE2-000266-56664-0.png positive ricord
+SITE2-000267 MIDRC-RICORD-1C-SITE2-000267-56889-0.png positive ricord
+SITE2-000267 MIDRC-RICORD-1C-SITE2-000267-81231-0.png positive ricord
+SITE2-000268 MIDRC-RICORD-1C-SITE2-000268-55273-0.png positive ricord
+SITE2-000268 MIDRC-RICORD-1C-SITE2-000268-84734-0.png positive ricord
+SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-06010-0.png positive ricord
+SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-13468-0.png positive ricord
+SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-36236-0.png positive ricord
+SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-37787-0.png positive ricord
+SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-98564-0.png positive ricord
+SITE2-000274 MIDRC-RICORD-1C-SITE2-000274-41440-0.png positive ricord
+SITE2-000276 MIDRC-RICORD-1C-SITE2-000276-53536-0.png positive ricord
+SITE2-000276 MIDRC-RICORD-1C-SITE2-000276-76604-0.png positive ricord
+SITE2-000285 MIDRC-RICORD-1C-SITE2-000285-50266-0.png positive ricord
+SITE2-000292 MIDRC-RICORD-1C-SITE2-000292-04064-0.png positive ricord
+SITE2-000292 MIDRC-RICORD-1C-SITE2-000292-85151-0.png positive ricord
+SITE2-000293 MIDRC-RICORD-1C-SITE2-000293-00096-0.png positive ricord
+SITE2-000293 MIDRC-RICORD-1C-SITE2-000293-08892-0.png positive ricord
+419639-000214 MIDRC-RICORD-1C-419639-000214-19164-0.png positive ricord
+419639-000214 MIDRC-RICORD-1C-419639-000214-86868-0.png positive ricord
+419639-000215 MIDRC-RICORD-1C-419639-000215-90049-0.png positive ricord
+419639-000215 MIDRC-RICORD-1C-419639-000215-98988-0.png positive ricord
+419639-000238 MIDRC-RICORD-1C-419639-000238-46556-0.png positive ricord
+419639-000303 MIDRC-RICORD-1C-419639-000303-38640-0.png positive ricord
+419639-000303 MIDRC-RICORD-1C-419639-000303-38640-1.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-00089-1.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-05011-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-19142-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-19142-1.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-20532-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-39281-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-42010-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-50611-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-53452-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-64221-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-64221-1.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-64221-2.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-66524-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-70020-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-72301-0.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-72301-1.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-72301-2.png positive ricord
+419639-000331 MIDRC-RICORD-1C-419639-000331-97850-0.png positive ricord
+419639-000361 MIDRC-RICORD-1C-419639-000361-08073-0.png positive ricord
+419639-000361 MIDRC-RICORD-1C-419639-000361-08073-1.png positive ricord
+419639-000361 MIDRC-RICORD-1C-419639-000361-36671-0.png positive ricord
+419639-000361 MIDRC-RICORD-1C-419639-000361-36671-1.png positive ricord
+419639-000361 MIDRC-RICORD-1C-419639-000361-44832-0.png positive ricord
+419639-000361 MIDRC-RICORD-1C-419639-000361-45412-0.png positive ricord
+419639-000361 MIDRC-RICORD-1C-419639-000361-65584-0.png positive ricord
+419639-000361 MIDRC-RICORD-1C-419639-000361-80204-0.png positive ricord
+419639-000361 MIDRC-RICORD-1C-419639-000361-88993-0.png positive ricord
+419639-000361 MIDRC-RICORD-1C-419639-000361-96664-0.png positive ricord
+419639-000399 MIDRC-RICORD-1C-419639-000399-46074-0.png positive ricord
+419639-000399 MIDRC-RICORD-1C-419639-000399-99232-0.png positive ricord
+419639-000418 MIDRC-RICORD-1C-419639-000418-34513-0.png positive ricord
+419639-000481 MIDRC-RICORD-1C-419639-000481-89988-0.png positive ricord
+419639-000484 MIDRC-RICORD-1C-419639-000484-18850-0.png positive ricord
+419639-000484 MIDRC-RICORD-1C-419639-000484-18850-1.png positive ricord
+419639-000484 MIDRC-RICORD-1C-419639-000484-56426-0.png positive ricord
+419639-000484 MIDRC-RICORD-1C-419639-000484-86694-0.png positive ricord
+419639-000613 MIDRC-RICORD-1C-419639-000613-26607-0.png positive ricord
+419639-000613 MIDRC-RICORD-1C-419639-000613-26607-1.png positive ricord
+419639-000613 MIDRC-RICORD-1C-419639-000613-76359-0.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-13795-0.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-17560-0.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-27539-0.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-27539-1.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-68609-0.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-68844-0.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-68844-2.png positive ricord
+419639-000758 MIDRC-RICORD-1C-419639-000758-98256-0.png positive ricord
+419639-000766 MIDRC-RICORD-1C-419639-000766-39157-0.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-14788-0.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-24000-0.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-25636-0.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-33725-0.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-34252-0.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-54827-0.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-67048-0.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-67048-1.png positive ricord
+419639-000771 MIDRC-RICORD-1C-419639-000771-79868-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-00397-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-04262-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-04262-1.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-10878-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-10878-1.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-27114-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-34589-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-34589-1.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-36774-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-36774-1.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-40610-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-41397-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-52294-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-52294-1.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-57587-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-57587-1.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-62251-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-62949-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-62949-1.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-65933-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-85841-0.png positive ricord
+419639-000800 MIDRC-RICORD-1C-419639-000800-93064-0.png positive ricord
+419639-000831 MIDRC-RICORD-1C-419639-000831-98678-0.png positive ricord
+419639-000831 MIDRC-RICORD-1C-419639-000831-98678-1.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-03183-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-03183-1.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-03919-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-03919-1.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-04484-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-04484-1.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-04505-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-04505-1.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-14379-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-14379-1.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-18706-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-18706-1.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-33256-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-33256-1.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-33603-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-35468-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-39490-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-39490-1.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-51788-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-51814-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-63294-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-63294-1.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-82807-0.png positive ricord
+419639-000906 MIDRC-RICORD-1C-419639-000906-90377-0.png positive ricord
+419639-000959 MIDRC-RICORD-1C-419639-000959-13337-0.png positive ricord
+419639-000959 MIDRC-RICORD-1C-419639-000959-34033-0.png positive ricord
+419639-000959 MIDRC-RICORD-1C-419639-000959-36969-0.png positive ricord
+419639-000959 MIDRC-RICORD-1C-419639-000959-36969-1.png positive ricord
+419639-000959 MIDRC-RICORD-1C-419639-000959-65337-0.png positive ricord
+419639-001012 MIDRC-RICORD-1C-419639-001012-17560-0.png positive ricord
+419639-001012 MIDRC-RICORD-1C-419639-001012-17560-1.png positive ricord
+419639-001012 MIDRC-RICORD-1C-419639-001012-17560-2.png positive ricord
+419639-001012 MIDRC-RICORD-1C-419639-001012-18323-0.png positive ricord
+419639-001012 MIDRC-RICORD-1C-419639-001012-18323-1.png positive ricord
+419639-001012 MIDRC-RICORD-1C-419639-001012-29087-0.png positive ricord
+419639-001012 MIDRC-RICORD-1C-419639-001012-56926-0.png positive ricord
+419639-001012 MIDRC-RICORD-1C-419639-001012-56926-1.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-07287-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-07696-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-18837-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-23657-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-23657-1.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-41534-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-41534-1.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-61597-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-70737-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-70737-1.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-71052-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-78754-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-79425-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-82590-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-88542-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-88542-1.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-90730-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-91778-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-91778-1.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-96124-0.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-96124-1.png positive ricord
+419639-001021 MIDRC-RICORD-1C-419639-001021-99551-0.png positive ricord
+419639-001060 MIDRC-RICORD-1C-419639-001060-58106-0.png positive ricord
+419639-001094 MIDRC-RICORD-1C-419639-001094-12424-0.png positive ricord
+419639-001094 MIDRC-RICORD-1C-419639-001094-12424-1.png positive ricord
+419639-001094 MIDRC-RICORD-1C-419639-001094-24082-0.png positive ricord
+419639-001094 MIDRC-RICORD-1C-419639-001094-24082-1.png positive ricord
+419639-001094 MIDRC-RICORD-1C-419639-001094-41321-0.png positive ricord
+419639-001094 MIDRC-RICORD-1C-419639-001094-75438-0.png positive ricord
+419639-001094 MIDRC-RICORD-1C-419639-001094-92274-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-08120-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-08120-1.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-11349-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-32326-1.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-33498-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-40057-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-40057-1.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-44476-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-44476-1.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-48791-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-51290-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-51290-1.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-66099-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-78273-0.png positive ricord
+419639-001122 MIDRC-RICORD-1C-419639-001122-78273-1.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-05111-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-05111-1.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-05119-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-08999-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-08999-1.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-36509-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-41531-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-44743-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-46973-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-48150-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-48150-1.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-75105-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-75105-1.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-88068-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-89985-0.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-89985-1.png positive ricord
+419639-001214 MIDRC-RICORD-1C-419639-001214-96330-0.png positive ricord
+419639-001245 MIDRC-RICORD-1C-419639-001245-74987-0.png positive ricord
+419639-001245 MIDRC-RICORD-1C-419639-001245-99926-0.png positive ricord
+419639-001285 MIDRC-RICORD-1C-419639-001285-10633-0.png positive ricord
+419639-001285 MIDRC-RICORD-1C-419639-001285-19619-0.png positive ricord
+419639-001285 MIDRC-RICORD-1C-419639-001285-20222-0.png positive ricord
+419639-001285 MIDRC-RICORD-1C-419639-001285-20222-1.png positive ricord
+419639-001285 MIDRC-RICORD-1C-419639-001285-78358-0.png positive ricord
+419639-001285 MIDRC-RICORD-1C-419639-001285-89136-0.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-01617-0.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-03716-0.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-07436-0.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-43772-0.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-67327-0.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-69627-0.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-69627-1.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-76924-0.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-76924-1.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-83365-0.png positive ricord
+419639-001336 MIDRC-RICORD-1C-419639-001336-83365-1.png positive ricord
+419639-001369 MIDRC-RICORD-1C-419639-001369-38749-0.png positive ricord
+419639-001369 MIDRC-RICORD-1C-419639-001369-43263-0.png positive ricord
+419639-001446 MIDRC-RICORD-1C-419639-001446-19964-0.png positive ricord
+419639-001446 MIDRC-RICORD-1C-419639-001446-25559-0.png positive ricord
+419639-001446 MIDRC-RICORD-1C-419639-001446-46934-0.png positive ricord
+419639-001476 MIDRC-RICORD-1C-419639-001476-88764-0.png positive ricord
+419639-001476 MIDRC-RICORD-1C-419639-001476-90402-0.png positive ricord
+419639-001555 MIDRC-RICORD-1C-419639-001555-00521-0.png positive ricord
+419639-001555 MIDRC-RICORD-1C-419639-001555-00521-1.png positive ricord
+419639-001569 MIDRC-RICORD-1C-419639-001569-25826-0.png positive ricord
+419639-001569 MIDRC-RICORD-1C-419639-001569-87963-0.png positive ricord
+419639-001596 MIDRC-RICORD-1C-419639-001596-22539-0.png positive ricord
+419639-001596 MIDRC-RICORD-1C-419639-001596-79963-0.png positive ricord
+419639-001634 MIDRC-RICORD-1C-419639-001634-16722-2.png positive ricord
+419639-001634 MIDRC-RICORD-1C-419639-001634-57955-0.png positive ricord
+419639-001634 MIDRC-RICORD-1C-419639-001634-66286-0.png positive ricord
+419639-001634 MIDRC-RICORD-1C-419639-001634-66286-1.png positive ricord
+419639-001634 MIDRC-RICORD-1C-419639-001634-99561-0.png positive ricord
+419639-001646 MIDRC-RICORD-1C-419639-001646-15061-0.png positive ricord
+419639-001647 MIDRC-RICORD-1C-419639-001647-89457-0.png positive ricord
+419639-001647 MIDRC-RICORD-1C-419639-001647-89457-1.png positive ricord
+419639-001686 MIDRC-RICORD-1C-419639-001686-47369-0.png positive ricord
+419639-001687 MIDRC-RICORD-1C-419639-001687-45786-0.png positive ricord
+419639-001687 MIDRC-RICORD-1C-419639-001687-67578-0.png positive ricord
+419639-001729 MIDRC-RICORD-1C-419639-001729-17227-0.png positive ricord
+419639-001729 MIDRC-RICORD-1C-419639-001729-29855-0.png positive ricord
+419639-001863 MIDRC-RICORD-1C-419639-001863-27599-0.png positive ricord
+419639-001863 MIDRC-RICORD-1C-419639-001863-49330-0.png positive ricord
+419639-001863 MIDRC-RICORD-1C-419639-001863-67434-0.png positive ricord
+419639-001863 MIDRC-RICORD-1C-419639-001863-85162-0.png positive ricord
+419639-001863 MIDRC-RICORD-1C-419639-001863-90674-0.png positive ricord
+419639-001863 MIDRC-RICORD-1C-419639-001863-90674-1.png positive ricord
+419639-001975 MIDRC-RICORD-1C-419639-001975-40168-0.png positive ricord
+419639-001975 MIDRC-RICORD-1C-419639-001975-83056-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-18032-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-19182-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-40903-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-40903-1.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-56133-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-80301-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-83709-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-84578-0.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-84578-1.png positive ricord
+419639-002079 MIDRC-RICORD-1C-419639-002079-90573-0.png positive ricord
+419639-002190 MIDRC-RICORD-1C-419639-002190-57254-0.png positive ricord
+419639-002195 MIDRC-RICORD-1C-419639-002195-88297-0.png positive ricord
+419639-002261 MIDRC-RICORD-1C-419639-002261-70507-0.png positive ricord
+419639-002267 MIDRC-RICORD-1C-419639-002267-92296-0.png positive ricord
+419639-002267 MIDRC-RICORD-1C-419639-002267-98558-0.png positive ricord
+419639-002372 MIDRC-RICORD-1C-419639-002372-32466-0.png positive ricord
+419639-002372 MIDRC-RICORD-1C-419639-002372-32466-1.png positive ricord
+419639-002592 MIDRC-RICORD-1C-419639-002592-18536-1.png positive ricord
+419639-002592 MIDRC-RICORD-1C-419639-002592-25226-0.png positive ricord
+419639-002649 MIDRC-RICORD-1C-419639-002649-34990-0.png positive ricord
+419639-002649 MIDRC-RICORD-1C-419639-002649-41013-0.png positive ricord
+419639-002649 MIDRC-RICORD-1C-419639-002649-44232-0.png positive ricord
+419639-002773 MIDRC-RICORD-1C-419639-002773-33746-0.png positive ricord
+419639-002773 MIDRC-RICORD-1C-419639-002773-62578-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-17571-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-21752-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-32461-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-32461-1.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-34378-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-34378-1.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-37114-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-43115-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-44148-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-44651-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-44651-1.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-49366-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-55120-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-55120-1.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-64618-0.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-64618-1.png positive ricord
+419639-002798 MIDRC-RICORD-1C-419639-002798-70806-0.png positive ricord
+419639-002825 MIDRC-RICORD-1C-419639-002825-47714-0.png positive ricord
+419639-002825 MIDRC-RICORD-1C-419639-002825-85192-0.png positive ricord
+419639-002844 MIDRC-RICORD-1C-419639-002844-31673-0.png positive ricord
+419639-002844 MIDRC-RICORD-1C-419639-002844-97546-0.png positive ricord
+419639-002863 MIDRC-RICORD-1C-419639-002863-17388-0.png positive ricord
+419639-002863 MIDRC-RICORD-1C-419639-002863-46522-0.png positive ricord
+419639-002863 MIDRC-RICORD-1C-419639-002863-46522-1.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-04199-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-13325-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-28746-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-43808-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-43808-1.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-47300-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-63532-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-63532-1.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-67077-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-88181-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-88181-1.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-99317-0.png positive ricord
+419639-002884 MIDRC-RICORD-1C-419639-002884-99369-0.png positive ricord
+419639-002887 MIDRC-RICORD-1C-419639-002887-10221-0.png positive ricord
+419639-002887 MIDRC-RICORD-1C-419639-002887-24181-0.png positive ricord
+419639-002887 MIDRC-RICORD-1C-419639-002887-77016-0.png positive ricord
+419639-002887 MIDRC-RICORD-1C-419639-002887-89073-0.png positive ricord
+419639-002904 MIDRC-RICORD-1C-419639-002904-61924-0.png positive ricord
+419639-002904 MIDRC-RICORD-1C-419639-002904-61924-1.png positive ricord
+419639-002911 MIDRC-RICORD-1C-419639-002911-25035-0.png positive ricord
+419639-002911 MIDRC-RICORD-1C-419639-002911-31907-0.png positive ricord
+419639-002911 MIDRC-RICORD-1C-419639-002911-31907-1.png positive ricord
+419639-002972 MIDRC-RICORD-1C-419639-002972-32291-0.png positive ricord
+419639-002972 MIDRC-RICORD-1C-419639-002972-53337-0.png positive ricord
+419639-002972 MIDRC-RICORD-1C-419639-002972-53927-0.png positive ricord
+419639-002972 MIDRC-RICORD-1C-419639-002972-97415-0.png positive ricord
+419639-002972 MIDRC-RICORD-1C-419639-002972-98539-0.png positive ricord
+419639-003003 MIDRC-RICORD-1C-419639-003003-16582-0.png positive ricord
+419639-003003 MIDRC-RICORD-1C-419639-003003-17992-0.png positive ricord
+419639-003003 MIDRC-RICORD-1C-419639-003003-29750-0.png positive ricord
+419639-003003 MIDRC-RICORD-1C-419639-003003-54383-0.png positive ricord
+419639-003003 MIDRC-RICORD-1C-419639-003003-86404-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-19767-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-21691-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-21691-1.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-42080-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-42080-1.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-66797-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-66797-1.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-66797-2.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-73430-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-75738-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-75738-1.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-83633-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-88049-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-88049-1.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-88396-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-92180-0.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-92180-1.png positive ricord
+419639-003013 MIDRC-RICORD-1C-419639-003013-92180-2.png positive ricord
+419639-003029 MIDRC-RICORD-1C-419639-003029-48005-0.png positive ricord
+419639-003029 MIDRC-RICORD-1C-419639-003029-68072-0.png positive ricord
+419639-003029 MIDRC-RICORD-1C-419639-003029-68072-1.png positive ricord
+419639-003087 MIDRC-RICORD-1C-419639-003087-04860-0.png positive ricord
+419639-003087 MIDRC-RICORD-1C-419639-003087-04860-1.png positive ricord
+419639-003089 MIDRC-RICORD-1C-419639-003089-37417-0.png positive ricord
+419639-003089 MIDRC-RICORD-1C-419639-003089-54764-0.png positive ricord
+419639-003094 MIDRC-RICORD-1C-419639-003094-61633-0.png positive ricord
+419639-003094 MIDRC-RICORD-1C-419639-003094-64848-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-00480-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-00480-1.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-17041-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-17041-1.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-18199-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-27341-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-32348-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-48985-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-56119-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-56119-1.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-60777-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-60777-1.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-67193-0.png positive ricord
+419639-003112 MIDRC-RICORD-1C-419639-003112-70800-0.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-07283-0.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-35008-0.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-35008-1.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-35008-2.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-35008-3.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-35008-4.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-35008-5.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-35008-6.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-69327-0.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-71369-0.png positive ricord
+419639-003154 MIDRC-RICORD-1C-419639-003154-73840-0.png positive ricord
+419639-003185 MIDRC-RICORD-1C-419639-003185-64353-0.png positive ricord
+419639-003210 MIDRC-RICORD-1C-419639-003210-91810-0.png positive ricord
+419639-003220 MIDRC-RICORD-1C-419639-003220-02012-0.png positive ricord
+419639-003220 MIDRC-RICORD-1C-419639-003220-02012-1.png positive ricord
+419639-003220 MIDRC-RICORD-1C-419639-003220-05014-0.png positive ricord
+419639-003220 MIDRC-RICORD-1C-419639-003220-05014-1.png positive ricord
+419639-003220 MIDRC-RICORD-1C-419639-003220-45514-0.png positive ricord
+419639-003220 MIDRC-RICORD-1C-419639-003220-45514-1.png positive ricord
+419639-003220 MIDRC-RICORD-1C-419639-003220-65243-0.png positive ricord
+419639-003220 MIDRC-RICORD-1C-419639-003220-70154-0.png positive ricord
+419639-003220 MIDRC-RICORD-1C-419639-003220-99668-0.png positive ricord
+419639-003235 MIDRC-RICORD-1C-419639-003235-44504-0.png positive ricord
+419639-003235 MIDRC-RICORD-1C-419639-003235-85590-0.png positive ricord
+419639-003235 MIDRC-RICORD-1C-419639-003235-85590-1.png positive ricord
+419639-003260 MIDRC-RICORD-1C-419639-003260-57806-0.png positive ricord
+419639-003260 MIDRC-RICORD-1C-419639-003260-57806-1.png positive ricord
+419639-003269 MIDRC-RICORD-1C-419639-003269-12522-0.png positive ricord
+419639-003269 MIDRC-RICORD-1C-419639-003269-25176-0.png positive ricord
+419639-003269 MIDRC-RICORD-1C-419639-003269-34317-0.png positive ricord
+419639-003269 MIDRC-RICORD-1C-419639-003269-57505-0.png positive ricord
+419639-003269 MIDRC-RICORD-1C-419639-003269-57505-1.png positive ricord
+419639-003269 MIDRC-RICORD-1C-419639-003269-78603-0.png positive ricord
+419639-003269 MIDRC-RICORD-1C-419639-003269-78603-1.png positive ricord
+419639-003302 MIDRC-RICORD-1C-419639-003302-48061-0.png positive ricord
+419639-003302 MIDRC-RICORD-1C-419639-003302-48061-1.png positive ricord
+419639-003302 MIDRC-RICORD-1C-419639-003302-51043-0.png positive ricord
+419639-003307 MIDRC-RICORD-1C-419639-003307-43105-0.png positive ricord
+419639-003307 MIDRC-RICORD-1C-419639-003307-62875-0.png positive ricord
+419639-003307 MIDRC-RICORD-1C-419639-003307-62875-1.png positive ricord
+419639-003307 MIDRC-RICORD-1C-419639-003307-98046-0.png positive ricord
+440808-000001 MIDRC-RICORD-1C-440808-000001-8.137-0.png positive ricord
+440808-000001 MIDRC-RICORD-1C-440808-000001-8.230-0.png positive ricord
+440808-000002 MIDRC-RICORD-1C-440808-000002-08.58-0.png positive ricord
+440808-000002 MIDRC-RICORD-1C-440808-000002-8.107-0.png positive ricord
+440808-000002 MIDRC-RICORD-1C-440808-000002-8.116-0.png positive ricord
+440808-000002 MIDRC-RICORD-1C-440808-000002-8.379-0.png positive ricord
+440808-000003 MIDRC-RICORD-1C-440808-000003-08.10-0.png positive ricord
+440808-000004 MIDRC-RICORD-1C-440808-000004-08.19-0.png positive ricord
+440808-000004 MIDRC-RICORD-1C-440808-000004-08.55-0.png positive ricord
+440808-000004 MIDRC-RICORD-1C-440808-000004-8.110-0.png positive ricord
+440808-000004 MIDRC-RICORD-1C-440808-000004-8.143-0.png positive ricord
+440808-000005 MIDRC-RICORD-1C-440808-000005-08.27-0.png positive ricord
+440808-000005 MIDRC-RICORD-1C-440808-000005-8.244-0.png positive ricord
+440808-000005 MIDRC-RICORD-1C-440808-000005-8.371-0.png positive ricord
+440808-000005 MIDRC-RICORD-1C-440808-000005-8.430-0.png positive ricord
+440808-000008 MIDRC-RICORD-1C-440808-000008-08.50-0.png positive ricord
+440808-000008 MIDRC-RICORD-1C-440808-000008-8.187-0.png positive ricord
+440808-000008 MIDRC-RICORD-1C-440808-000008-8.284-0.png positive ricord
+440808-000008 MIDRC-RICORD-1C-440808-000008-8.330-0.png positive ricord
+440808-000010 MIDRC-RICORD-1C-440808-000010-8.125-0.png positive ricord
+440808-000010 MIDRC-RICORD-1C-440808-000010-8.158-0.png positive ricord
+440808-000010 MIDRC-RICORD-1C-440808-000010-8.224-0.png positive ricord
+440808-000011 MIDRC-RICORD-1C-440808-000011-8.388-0.png positive ricord
+440808-000012 MIDRC-RICORD-1C-440808-000012-8.169-0.png positive ricord
+440808-000012 MIDRC-RICORD-1C-440808-000012-8.221-0.png positive ricord
+440808-000012 MIDRC-RICORD-1C-440808-000012-8.235-0.png positive ricord
+440808-000012 MIDRC-RICORD-1C-440808-000012-8.252-0.png positive ricord
+440808-000012 MIDRC-RICORD-1C-440808-000012-8.400-0.png positive ricord
+440808-000012 MIDRC-RICORD-1C-440808-000012-8.406-0.png positive ricord
+440808-000012 MIDRC-RICORD-1C-440808-000012-8.470-0.png positive ricord
+440808-000014 MIDRC-RICORD-1C-440808-000014-8.201-0.png positive ricord
+440808-000014 MIDRC-RICORD-1C-440808-000014-8.241-0.png positive ricord
+440808-000014 MIDRC-RICORD-1C-440808-000014-8.278-0.png positive ricord
+440808-000014 MIDRC-RICORD-1C-440808-000014-8.345-0.png positive ricord
+440808-000015 MIDRC-RICORD-1C-440808-000015-8.238-0.png positive ricord
+440808-000015 MIDRC-RICORD-1C-440808-000015-8.336-0.png positive ricord
+440808-000015 MIDRC-RICORD-1C-440808-000015-8.355-0.png positive ricord
+440808-000017 MIDRC-RICORD-1C-440808-000017-8.325-0.png positive ricord
+440808-000017 MIDRC-RICORD-1C-440808-000017-8.421-0.png positive ricord
+440808-000018 MIDRC-RICORD-1C-440808-000018-8.365-0.png positive ricord
+440808-000018 MIDRC-RICORD-1C-440808-000018-8.403-0.png positive ricord
+440808-000018 MIDRC-RICORD-1C-440808-000018-8.424-0.png positive ricord
+SITE2-000012 MIDRC-RICORD-1C-SITE2-000012-09172-0.png positive ricord
+SITE2-000012 MIDRC-RICORD-1C-SITE2-000012-67069-0.png positive ricord
+SITE2-000013 MIDRC-RICORD-1C-SITE2-000013-40554-0.png positive ricord
+SITE2-000021 MIDRC-RICORD-1C-SITE2-000021-95898-0.png positive ricord
+SITE2-000022 MIDRC-RICORD-1C-SITE2-000022-11669-0.png positive ricord
+SITE2-000022 MIDRC-RICORD-1C-SITE2-000022-11669-1.png positive ricord
+SITE2-000026 MIDRC-RICORD-1C-SITE2-000026-16420-0.png positive ricord
+SITE2-000026 MIDRC-RICORD-1C-SITE2-000026-22525-0.png positive ricord
+SITE2-000036 MIDRC-RICORD-1C-SITE2-000036-54047-0.png positive ricord
+SITE2-000046 MIDRC-RICORD-1C-SITE2-000046-62756-1.png positive ricord
+SITE2-000046 MIDRC-RICORD-1C-SITE2-000046-88354-0.png positive ricord
+SITE2-000047 MIDRC-RICORD-1C-SITE2-000047-79407-0.png positive ricord
+SITE2-000052 MIDRC-RICORD-1C-SITE2-000052-51315-0.png positive ricord
+SITE2-000057 MIDRC-RICORD-1C-SITE2-000057-48953-0.png positive ricord
+SITE2-000057 MIDRC-RICORD-1C-SITE2-000057-93381-0.png positive ricord
+SITE2-000061 MIDRC-RICORD-1C-SITE2-000061-79468-0.png positive ricord
+SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-12368-0.png positive ricord
+SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-34159-0.png positive ricord
+SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-85716-0.png positive ricord
+SITE2-000078 MIDRC-RICORD-1C-SITE2-000078-37750-0.png positive ricord
+SITE2-000080 MIDRC-RICORD-1C-SITE2-000080-79272-0.png positive ricord
+SITE2-000080 MIDRC-RICORD-1C-SITE2-000080-96343-0.png positive ricord
+SITE2-000082 MIDRC-RICORD-1C-SITE2-000082-03688-0.png positive ricord
+SITE2-000082 MIDRC-RICORD-1C-SITE2-000082-50711-0.png positive ricord
+SITE2-000082 MIDRC-RICORD-1C-SITE2-000082-76500-0.png positive ricord
+SITE2-000084 MIDRC-RICORD-1C-SITE2-000084-71242-1.png positive ricord
+SITE2-000085 MIDRC-RICORD-1C-SITE2-000085-83466-0.png positive ricord
+SITE2-000085 MIDRC-RICORD-1C-SITE2-000085-83466-1.png positive ricord
+SITE2-000086 MIDRC-RICORD-1C-SITE2-000086-62343-0.png positive ricord
+SITE2-000087 MIDRC-RICORD-1C-SITE2-000087-31880-0.png positive ricord
+SITE2-000087 MIDRC-RICORD-1C-SITE2-000087-31880-1.png positive ricord
+SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-06573-0.png positive ricord
+SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-11126-0.png positive ricord
+SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-25470-0.png positive ricord
+SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-88967-0.png positive ricord
+SITE2-000090 MIDRC-RICORD-1C-SITE2-000090-64738-0.png positive ricord
+SITE2-000104 MIDRC-RICORD-1C-SITE2-000104-14246-0.png positive ricord
+SITE2-000104 MIDRC-RICORD-1C-SITE2-000104-14246-1.png positive ricord
+SITE2-000107 MIDRC-RICORD-1C-SITE2-000107-25118-0.png positive ricord
+SITE2-000112 MIDRC-RICORD-1C-SITE2-000112-86965-0.png positive ricord
+SITE2-000118 MIDRC-RICORD-1C-SITE2-000118-82253-0.png positive ricord
+SITE2-000123 MIDRC-RICORD-1C-SITE2-000123-76427-0.png positive ricord
+SITE2-000123 MIDRC-RICORD-1C-SITE2-000123-76427-1.png positive ricord
+SITE2-000123 MIDRC-RICORD-1C-SITE2-000123-77283-0.png positive ricord
+SITE2-000126 MIDRC-RICORD-1C-SITE2-000126-47389-0.png positive ricord
+SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-21335-0.png positive ricord
+SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-24249-0.png positive ricord
+SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-37059-0.png positive ricord
+SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-51771-0.png positive ricord
+SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-60930-0.png positive ricord
+SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-74142-0.png positive ricord
+SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-76298-0.png positive ricord
+SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-93176-0.png positive ricord
+SITE2-000137 MIDRC-RICORD-1C-SITE2-000137-87199-0.png positive ricord
+SITE2-000148 MIDRC-RICORD-1C-SITE2-000148-03262-0.png positive ricord
+SITE2-000163 MIDRC-RICORD-1C-SITE2-000163-34110-0.png positive ricord
+SITE2-000163 MIDRC-RICORD-1C-SITE2-000163-64983-0.png positive ricord
+SITE2-000172 MIDRC-RICORD-1C-SITE2-000172-50026-0.png positive ricord
+SITE2-000172 MIDRC-RICORD-1C-SITE2-000172-80464-0.png positive ricord
+SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-47335-0.png positive ricord
+SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-83380-0.png positive ricord
+SITE2-000177 MIDRC-RICORD-1C-SITE2-000177-25312-0.png positive ricord
+SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-16779-0.png positive ricord
+SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-45784-0.png positive ricord
+SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-70034-0.png positive ricord
+SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-70364-0.png positive ricord
+SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-83158-0.png positive ricord
+SITE2-000186 MIDRC-RICORD-1C-SITE2-000186-87445-0.png positive ricord
+SITE2-000190 MIDRC-RICORD-1C-SITE2-000190-19302-0.png positive ricord
+SITE2-000191 MIDRC-RICORD-1C-SITE2-000191-37969-0.png positive ricord
+SITE2-000196 MIDRC-RICORD-1C-SITE2-000196-91950-1.png positive ricord
+SITE2-000197 MIDRC-RICORD-1C-SITE2-000197-74400-0.png positive ricord
+SITE2-000198 MIDRC-RICORD-1C-SITE2-000198-10532-0.png positive ricord
+SITE2-000198 MIDRC-RICORD-1C-SITE2-000198-45577-0.png positive ricord
+SITE2-000198 MIDRC-RICORD-1C-SITE2-000198-50564-0.png positive ricord
+SITE2-000198 MIDRC-RICORD-1C-SITE2-000198-82409-1.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-01952-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-24703-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-31568-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-48430-1.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-54181-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-55266-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-55518-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-65258-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-89105-0.png positive ricord
+SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-91718-0.png positive ricord
+SITE2-000205 MIDRC-RICORD-1C-SITE2-000205-14473-0.png positive ricord
+SITE2-000212 MIDRC-RICORD-1C-SITE2-000212-05191-0.png positive ricord
+SITE2-000216 MIDRC-RICORD-1C-SITE2-000216-11627-0.png positive ricord
+SITE2-000216 MIDRC-RICORD-1C-SITE2-000216-21074-0.png positive ricord
+SITE2-000216 MIDRC-RICORD-1C-SITE2-000216-94016-0.png positive ricord
+SITE2-000216 MIDRC-RICORD-1C-SITE2-000216-94016-1.png positive ricord
+SITE2-000219 MIDRC-RICORD-1C-SITE2-000219-00321-0.png positive ricord
+SITE2-000219 MIDRC-RICORD-1C-SITE2-000219-20644-0.png positive ricord
+SITE2-000219 MIDRC-RICORD-1C-SITE2-000219-34485-0.png positive ricord
+SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-37661-0.png positive ricord
+SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-50442-0.png positive ricord
+SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-57902-0.png positive ricord
+SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-63778-0.png positive ricord
+SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-64684-0.png positive ricord
+SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-15545-0.png positive ricord
+SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-15577-0.png positive ricord
+SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-34883-0.png positive ricord
+SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-70367-0.png positive ricord
+SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-91261-0.png positive ricord
+SITE2-000242 MIDRC-RICORD-1C-SITE2-000242-58400-0.png positive ricord
+SITE2-000248 MIDRC-RICORD-1C-SITE2-000248-98712-0.png positive ricord
+SITE2-000249 MIDRC-RICORD-1C-SITE2-000249-02237-0.png positive ricord
+SITE2-000249 MIDRC-RICORD-1C-SITE2-000249-35888-0.png positive ricord
+SITE2-000249 MIDRC-RICORD-1C-SITE2-000249-49234-0.png positive ricord
+SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-18814-0.png positive ricord
+SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-31668-0.png positive ricord
+SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-58048-0.png positive ricord
+SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-96070-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-13708-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-17161-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-17651-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-20342-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-23889-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-32327-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-32327-1.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-32495-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-48311-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-54768-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-66168-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-71453-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-71651-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-73144-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-87588-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-94218-0.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-94218-1.png positive ricord
+SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-98900-0.png positive ricord
+SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-53016-0.png positive ricord
+SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-66449-0.png positive ricord
+SITE2-000254 MIDRC-RICORD-1C-SITE2-000254-17761-0.png positive ricord
+SITE2-000254 MIDRC-RICORD-1C-SITE2-000254-54684-0.png positive ricord
+SITE2-000254 MIDRC-RICORD-1C-SITE2-000254-54684-1.png positive ricord
+SITE2-000255 MIDRC-RICORD-1C-SITE2-000255-11322-0.png positive ricord
+SITE2-000256 MIDRC-RICORD-1C-SITE2-000256-98463-0.png positive ricord
+SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-30166-0.png positive ricord
+SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-54753-0.png positive ricord
+SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-58063-0.png positive ricord
+SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-69929-0.png positive ricord
+SITE2-000261 MIDRC-RICORD-1C-SITE2-000261-61845-0.png positive ricord
+SITE2-000261 MIDRC-RICORD-1C-SITE2-000261-86202-0.png positive ricord
+SITE2-000262 MIDRC-RICORD-1C-SITE2-000262-15649-0.png positive ricord
+SITE2-000262 MIDRC-RICORD-1C-SITE2-000262-41467-0.png positive ricord
+SITE2-000266 MIDRC-RICORD-1C-SITE2-000266-04519-0.png positive ricord
+SITE2-000266 MIDRC-RICORD-1C-SITE2-000266-49750-0.png positive ricord
+SITE2-000268 MIDRC-RICORD-1C-SITE2-000268-51175-0.png positive ricord
+SITE2-000268 MIDRC-RICORD-1C-SITE2-000268-67528-0.png positive ricord
+SITE2-000268 MIDRC-RICORD-1C-SITE2-000268-72371-0.png positive ricord
+SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-15753-0.png positive ricord
+SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-62955-0.png positive ricord
+SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-64461-0.png positive ricord
+SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-67549-0.png positive ricord
+SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-71352-0.png positive ricord
+SITE2-000274 MIDRC-RICORD-1C-SITE2-000274-89058-0.png positive ricord
+SITE2-000285 MIDRC-RICORD-1C-SITE2-000285-32471-0.png positive ricord
+SITE2-000292 MIDRC-RICORD-1C-SITE2-000292-03023-0.png positive ricord
+SITE2-000292 MIDRC-RICORD-1C-SITE2-000292-96206-0.png positive ricord
+SITE2-000293 MIDRC-RICORD-1C-SITE2-000293-40361-0.png positive ricord
 003d8fa0-6bf1-40ed-b54c-ac657f8495c5 003d8fa0-6bf1-40ed-b54c-ac657f8495c5.png negative rsna
 009eb222-eabc-4150-8121-d5a6d06b8ebf 009eb222-eabc-4150-8121-d5a6d06b8ebf.png negative rsna
 01027bc3-dc40-4165-a6c3-d6be2cb7ca34 01027bc3-dc40-4165-a6c3-d6be2cb7ca34.png negative rsna
@@ -15462,899 +15950,3 @@ c1cddf32-b957-4753-acaa-472ab1447e86 c1cddf32-b957-4753-acaa-472ab1447e86.png ne
 c1e73a4e-7afe-4ec5-8af6-ce8315d7a2f2 c1e73a4e-7afe-4ec5-8af6-ce8315d7a2f2.png negative rsna
 c1ec14ff-f6d7-4b38-b0cb-fe07041cbdc8 c1ec14ff-f6d7-4b38-b0cb-fe07041cbdc8.png negative rsna
 c1f7889a-9ea9-4acb-b64c-b737c929599a c1f7889a-9ea9-4acb-b64c-b737c929599a.png negative rsna
-SITE2-000061 MIDRC-RICORD-1C-SITE2-000061-54700-0.png positive ricord
-419639-002887 MIDRC-RICORD-1C-419639-002887-10221-0.png positive ricord
-440808-000008 MIDRC-RICORD-1C-440808-000008-8.267-0.png positive ricord
-419639-002267 MIDRC-RICORD-1C-419639-002267-92296-0.png positive ricord
-SITE2-000292 MIDRC-RICORD-1C-SITE2-000292-85151-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-63532-1.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-00480-0.png positive ricord
-SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-36236-0.png positive ricord
-SITE2-000191 MIDRC-RICORD-1C-SITE2-000191-59223-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-51814-0.png positive ricord
-419639-001863 MIDRC-RICORD-1C-419639-001863-27599-0.png positive ricord
-419639-003302 MIDRC-RICORD-1C-419639-003302-48061-1.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-73430-0.png positive ricord
-SITE2-000267 MIDRC-RICORD-1C-SITE2-000267-56889-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-54768-0.png positive ricord
-419639-003307 MIDRC-RICORD-1C-419639-003307-43105-0.png positive ricord
-SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-51771-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-50657-1.png positive ricord
-SITE2-000205 MIDRC-RICORD-1C-SITE2-000205-44961-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-60777-1.png positive ricord
-419639-003269 MIDRC-RICORD-1C-419639-003269-25176-0.png positive ricord
-419639-000959 MIDRC-RICORD-1C-419639-000959-34033-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-62826-0.png positive ricord
-419639-001446 MIDRC-RICORD-1C-419639-001446-46934-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-32326-0.png positive ricord
-440808-000006 MIDRC-RICORD-1C-440808-000006-08.64-0.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-35008-1.png positive ricord
-SITE2-000261 MIDRC-RICORD-1C-SITE2-000261-61845-0.png positive ricord
-440808-000001 MIDRC-RICORD-1C-440808-000001-8.230-0.png positive ricord
-SITE2-000065 MIDRC-RICORD-1C-SITE2-000065-17848-1.png positive ricord
-419639-001687 MIDRC-RICORD-1C-419639-001687-11077-0.png positive ricord
-419639-001569 MIDRC-RICORD-1C-419639-001569-87963-0.png positive ricord
-SITE2-000186 MIDRC-RICORD-1C-SITE2-000186-47380-1.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-41397-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-49883-1.png positive ricord
-419639-001863 MIDRC-RICORD-1C-419639-001863-85162-0.png positive ricord
-SITE2-000101 MIDRC-RICORD-1C-SITE2-000101-62268-1.png positive ricord
-419639-002773 MIDRC-RICORD-1C-419639-002773-33746-0.png positive ricord
-419639-002825 MIDRC-RICORD-1C-419639-002825-85192-0.png positive ricord
-SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-57902-0.png positive ricord
-SITE2-000216 MIDRC-RICORD-1C-SITE2-000216-21074-0.png positive ricord
-419639-001446 MIDRC-RICORD-1C-419639-001446-25559-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-33151-0.png positive ricord
-SITE2-000255 MIDRC-RICORD-1C-SITE2-000255-24179-0.png positive ricord
-419639-003003 MIDRC-RICORD-1C-419639-003003-22541-0.png positive ricord
-440808-000002 MIDRC-RICORD-1C-440808-000002-8.107-0.png positive ricord
-419639-002825 MIDRC-RICORD-1C-419639-002825-47714-0.png positive ricord
-SITE2-000268 MIDRC-RICORD-1C-SITE2-000268-72371-0.png positive ricord
-419639-002649 MIDRC-RICORD-1C-419639-002649-34990-0.png positive ricord
-419639-001446 MIDRC-RICORD-1C-419639-001446-18929-0.png positive ricord
-419639-003220 MIDRC-RICORD-1C-419639-003220-70154-0.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-35008-4.png positive ricord
-SITE2-000262 MIDRC-RICORD-1C-SITE2-000262-15649-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-21752-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-43115-0.png positive ricord
-419639-002190 MIDRC-RICORD-1C-419639-002190-57254-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-01952-0.png positive ricord
-419639-003269 MIDRC-RICORD-1C-419639-003269-78603-1.png positive ricord
-419639-000831 MIDRC-RICORD-1C-419639-000831-98678-1.png positive ricord
-SITE2-000247 MIDRC-RICORD-1C-SITE2-000247-48450-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-71188-0.png positive ricord
-419639-002649 MIDRC-RICORD-1C-419639-002649-91958-1.png positive ricord
-419639-001555 MIDRC-RICORD-1C-419639-001555-00521-1.png positive ricord
-SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-69929-0.png positive ricord
-440808-000015 MIDRC-RICORD-1C-440808-000015-8.238-0.png positive ricord
-SITE2-000107 MIDRC-RICORD-1C-SITE2-000107-25118-0.png positive ricord
-SITE2-000163 MIDRC-RICORD-1C-SITE2-000163-04510-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-39281-0.png positive ricord
-419639-001729 MIDRC-RICORD-1C-419639-001729-17227-0.png positive ricord
-419639-001245 MIDRC-RICORD-1C-419639-001245-99926-0.png positive ricord
-440808-000003 MIDRC-RICORD-1C-440808-000003-08.24-0.png positive ricord
-SITE2-000249 MIDRC-RICORD-1C-SITE2-000249-02237-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-13708-0.png positive ricord
-SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-37787-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-55120-0.png positive ricord
-419639-002972 MIDRC-RICORD-1C-419639-002972-97415-0.png positive ricord
-SITE2-000219 MIDRC-RICORD-1C-SITE2-000219-20644-0.png positive ricord
-419639-002773 MIDRC-RICORD-1C-419639-002773-62578-0.png positive ricord
-SITE2-000123 MIDRC-RICORD-1C-SITE2-000123-76427-0.png positive ricord
-440808-000002 MIDRC-RICORD-1C-440808-000002-8.379-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-32327-1.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-28098-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-33347-0.png positive ricord
-SITE2-000026 MIDRC-RICORD-1C-SITE2-000026-29087-0.png positive ricord
-SITE2-000219 MIDRC-RICORD-1C-SITE2-000219-40295-0.png positive ricord
-419639-002592 MIDRC-RICORD-1C-419639-002592-18536-1.png positive ricord
-SITE2-000085 MIDRC-RICORD-1C-SITE2-000085-83466-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-83633-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-21691-1.png positive ricord
-SITE2-000145 MIDRC-RICORD-1C-SITE2-000145-03730-0.png positive ricord
-SITE2-000126 MIDRC-RICORD-1C-SITE2-000126-79949-0.png positive ricord
-419639-001012 MIDRC-RICORD-1C-419639-001012-18323-0.png positive ricord
-SITE2-000172 MIDRC-RICORD-1C-SITE2-000172-80464-0.png positive ricord
-419639-003220 MIDRC-RICORD-1C-419639-003220-45514-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-23889-0.png positive ricord
-419639-001060 MIDRC-RICORD-1C-419639-001060-58106-0.png positive ricord
-440808-000008 MIDRC-RICORD-1C-440808-000008-8.394-0.png positive ricord
-SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-06573-0.png positive ricord
-419639-000361 MIDRC-RICORD-1C-419639-000361-08073-0.png positive ricord
-419639-000361 MIDRC-RICORD-1C-419639-000361-36671-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-50611-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-19142-1.png positive ricord
-SITE2-000216 MIDRC-RICORD-1C-SITE2-000216-94016-1.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-61597-0.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-35008-6.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-07696-0.png positive ricord
-SITE2-000190 MIDRC-RICORD-1C-SITE2-000190-19302-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-55518-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-82593-0.png positive ricord
-440808-000017 MIDRC-RICORD-1C-440808-000017-8.325-0.png positive ricord
-440808-000017 MIDRC-RICORD-1C-440808-000017-8.360-0.png positive ricord
-SITE2-000256 MIDRC-RICORD-1C-SITE2-000256-98463-0.png positive ricord
-419639-000238 MIDRC-RICORD-1C-419639-000238-46556-0.png positive ricord
-SITE2-000087 MIDRC-RICORD-1C-SITE2-000087-31880-1.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-43772-0.png positive ricord
-SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-76378-0.png positive ricord
-440808-000015 MIDRC-RICORD-1C-440808-000015-8.227-0.png positive ricord
-419639-003089 MIDRC-RICORD-1C-419639-003089-54764-0.png positive ricord
-419639-001285 MIDRC-RICORD-1C-419639-001285-19619-0.png positive ricord
-SITE2-000026 MIDRC-RICORD-1C-SITE2-000026-16420-0.png positive ricord
-419639-000418 MIDRC-RICORD-1C-419639-000418-49559-0.png positive ricord
-440808-000006 MIDRC-RICORD-1C-440808-000006-08.39-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-33256-1.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-56133-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-05862-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-94218-1.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-65699-0.png positive ricord
-419639-001369 MIDRC-RICORD-1C-419639-001369-43263-0.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-93895-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-33256-0.png positive ricord
-SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-25470-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-52138-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-47300-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-32495-0.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-35008-3.png positive ricord
-SITE2-000198 MIDRC-RICORD-1C-SITE2-000198-50564-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-63532-0.png positive ricord
-SITE2-000086 MIDRC-RICORD-1C-SITE2-000086-62343-0.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-33725-0.png positive ricord
-419639-001863 MIDRC-RICORD-1C-419639-001863-67434-0.png positive ricord
-SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-64684-0.png positive ricord
-419639-000613 MIDRC-RICORD-1C-419639-000613-76359-0.png positive ricord
-SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-96797-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-99317-0.png positive ricord
-SITE2-000082 MIDRC-RICORD-1C-SITE2-000082-76500-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-91778-0.png positive ricord
-419639-000613 MIDRC-RICORD-1C-419639-000613-26607-1.png positive ricord
-SITE2-000198 MIDRC-RICORD-1C-SITE2-000198-82409-1.png positive ricord
-SITE2-000196 MIDRC-RICORD-1C-SITE2-000196-91950-1.png positive ricord
-SITE2-000104 MIDRC-RICORD-1C-SITE2-000104-14246-1.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-05011-0.png positive ricord
-440808-000003 MIDRC-RICORD-1C-440808-000003-08.10-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-03510-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-88542-1.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-90573-0.png positive ricord
-440808-000008 MIDRC-RICORD-1C-440808-000008-8.187-0.png positive ricord
-419639-001012 MIDRC-RICORD-1C-419639-001012-17560-1.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-88542-0.png positive ricord
-419639-000361 MIDRC-RICORD-1C-419639-000361-36671-1.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-58569-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-71052-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-82807-0.png positive ricord
-419639-002649 MIDRC-RICORD-1C-419639-002649-91958-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-70737-1.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-72301-2.png positive ricord
-SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-67549-0.png positive ricord
-SITE2-000197 MIDRC-RICORD-1C-SITE2-000197-41761-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-73144-0.png positive ricord
-419639-003307 MIDRC-RICORD-1C-419639-003307-98046-0.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-79868-0.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-69627-1.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-65933-0.png positive ricord
-440808-000005 MIDRC-RICORD-1C-440808-000005-8.430-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-94218-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-88181-0.png positive ricord
-SITE2-000042 MIDRC-RICORD-1C-SITE2-000042-35509-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-72301-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-84578-0.png positive ricord
-SITE2-000022 MIDRC-RICORD-1C-SITE2-000022-11669-1.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-86129-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-04484-1.png positive ricord
-SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-83556-1.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-64221-0.png positive ricord
-SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-01666-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-75198-0.png positive ricord
-SITE2-000216 MIDRC-RICORD-1C-SITE2-000216-99559-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-96330-0.png positive ricord
-SITE2-000036 MIDRC-RICORD-1C-SITE2-000036-54047-0.png positive ricord
-419639-001634 MIDRC-RICORD-1C-419639-001634-16722-2.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-92778-0.png positive ricord
-419639-001975 MIDRC-RICORD-1C-419639-001975-83056-0.png positive ricord
-SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-06010-0.png positive ricord
-440808-000010 MIDRC-RICORD-1C-440808-000010-8.224-0.png positive ricord
-SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-18814-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-66524-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-52294-1.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-04481-0.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-67048-0.png positive ricord
-SITE2-000012 MIDRC-RICORD-1C-SITE2-000012-09172-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-88049-1.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-66099-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-41531-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-56119-1.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-25636-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-89985-1.png positive ricord
-SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-70034-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-62251-0.png positive ricord
-SITE2-000065 MIDRC-RICORD-1C-SITE2-000065-08617-0.png positive ricord
-440808-000010 MIDRC-RICORD-1C-440808-000010-8.125-0.png positive ricord
-SITE2-000006 MIDRC-RICORD-1C-SITE2-000006-73865-0.png positive ricord
-440808-000003 MIDRC-RICORD-1C-440808-000003-8.397-0.png positive ricord
-SITE2-000247 MIDRC-RICORD-1C-SITE2-000247-48957-0.png positive ricord
-SITE2-000022 MIDRC-RICORD-1C-SITE2-000022-11669-0.png positive ricord
-SITE2-000261 MIDRC-RICORD-1C-SITE2-000261-47108-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-89985-0.png positive ricord
-SITE2-000266 MIDRC-RICORD-1C-SITE2-000266-56664-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-75105-1.png positive ricord
-SITE2-000274 MIDRC-RICORD-1C-SITE2-000274-89058-0.png positive ricord
-419639-002887 MIDRC-RICORD-1C-419639-002887-24181-0.png positive ricord
-419639-002592 MIDRC-RICORD-1C-419639-002592-18536-0.png positive ricord
-SITE2-000047 MIDRC-RICORD-1C-SITE2-000047-43639-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-71453-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-17041-0.png positive ricord
-SITE2-000216 MIDRC-RICORD-1C-SITE2-000216-94016-0.png positive ricord
-SITE2-000197 MIDRC-RICORD-1C-SITE2-000197-89069-0.png positive ricord
-SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-37059-0.png positive ricord
-SITE2-000196 MIDRC-RICORD-1C-SITE2-000196-49001-0.png positive ricord
-SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-12368-0.png positive ricord
-SITE2-000085 MIDRC-RICORD-1C-SITE2-000085-83466-1.png positive ricord
-SITE2-000190 MIDRC-RICORD-1C-SITE2-000190-46535-0.png positive ricord
-440808-000003 MIDRC-RICORD-1C-440808-000003-08.13-0.png positive ricord
-SITE2-000107 MIDRC-RICORD-1C-SITE2-000107-91580-0.png positive ricord
-SITE2-000139 MIDRC-RICORD-1C-SITE2-000139-03122-0.png positive ricord
-SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-01812-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-85841-0.png positive ricord
-SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-70752-0.png positive ricord
-419639-002911 MIDRC-RICORD-1C-419639-002911-31907-0.png positive ricord
-SITE2-000198 MIDRC-RICORD-1C-SITE2-000198-45577-0.png positive ricord
-419639-000418 MIDRC-RICORD-1C-419639-000418-35885-0.png positive ricord
-SITE2-000065 MIDRC-RICORD-1C-SITE2-000065-17848-0.png positive ricord
-SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-77545-0.png positive ricord
-SITE2-000026 MIDRC-RICORD-1C-SITE2-000026-22525-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-40610-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-19767-0.png positive ricord
-SITE2-000242 MIDRC-RICORD-1C-SITE2-000242-58400-0.png positive ricord
-419639-002972 MIDRC-RICORD-1C-419639-002972-49732-0.png positive ricord
-419639-003185 MIDRC-RICORD-1C-419639-003185-64353-1.png positive ricord
-SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-58048-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-28746-0.png positive ricord
-SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-96070-0.png positive ricord
-SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-66449-0.png positive ricord
-419639-000959 MIDRC-RICORD-1C-419639-000959-65337-0.png positive ricord
-SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-95812-0.png positive ricord
-419639-003269 MIDRC-RICORD-1C-419639-003269-78603-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-24572-0.png positive ricord
-419639-003269 MIDRC-RICORD-1C-419639-003269-12522-0.png positive ricord
-SITE2-000216 MIDRC-RICORD-1C-SITE2-000216-11627-0.png positive ricord
-419639-003269 MIDRC-RICORD-1C-419639-003269-27033-1.png positive ricord
-419639-001634 MIDRC-RICORD-1C-419639-001634-66286-1.png positive ricord
-419639-002195 MIDRC-RICORD-1C-419639-002195-26590-0.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-43112-0.png positive ricord
-SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-93176-0.png positive ricord
-SITE2-000129 MIDRC-RICORD-1C-SITE2-000129-92135-0.png positive ricord
-419639-003210 MIDRC-RICORD-1C-419639-003210-36118-1.png positive ricord
-419639-001094 MIDRC-RICORD-1C-419639-001094-41321-0.png positive ricord
-SITE2-000148 MIDRC-RICORD-1C-SITE2-000148-44042-0.png positive ricord
-419639-000361 MIDRC-RICORD-1C-419639-000361-65584-0.png positive ricord
-SITE2-000118 MIDRC-RICORD-1C-SITE2-000118-82253-0.png positive ricord
-SITE2-000061 MIDRC-RICORD-1C-SITE2-000061-86515-0.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-92171-0.png positive ricord
-419639-001647 MIDRC-RICORD-1C-419639-001647-89457-1.png positive ricord
-419639-001634 MIDRC-RICORD-1C-419639-001634-66286-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-04262-0.png positive ricord
-419639-003269 MIDRC-RICORD-1C-419639-003269-57505-1.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-44148-0.png positive ricord
-419639-000766 MIDRC-RICORD-1C-419639-000766-96128-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-35392-0.png positive ricord
-SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-88967-0.png positive ricord
-SITE2-000197 MIDRC-RICORD-1C-SITE2-000197-77046-0.png positive ricord
-SITE2-000219 MIDRC-RICORD-1C-SITE2-000219-34485-0.png positive ricord
-SITE2-000090 MIDRC-RICORD-1C-SITE2-000090-64738-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-85508-0.png positive ricord
-419639-002904 MIDRC-RICORD-1C-419639-002904-61924-0.png positive ricord
-SITE2-000078 MIDRC-RICORD-1C-SITE2-000078-42484-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-43808-0.png positive ricord
-SITE2-000292 MIDRC-RICORD-1C-SITE2-000292-96206-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-70800-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-83709-0.png positive ricord
-SITE2-000046 MIDRC-RICORD-1C-SITE2-000046-62756-1.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-99369-0.png positive ricord
-SITE2-000163 MIDRC-RICORD-1C-SITE2-000163-34110-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-93011-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-33603-0.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-35008-2.png positive ricord
-419639-002592 MIDRC-RICORD-1C-419639-002592-25226-0.png positive ricord
-SITE2-000163 MIDRC-RICORD-1C-SITE2-000163-92724-0.png positive ricord
-419639-000361 MIDRC-RICORD-1C-419639-000361-08073-1.png positive ricord
-419639-000484 MIDRC-RICORD-1C-419639-000484-56426-0.png positive ricord
-SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-83556-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-10878-1.png positive ricord
-SITE2-000205 MIDRC-RICORD-1C-SITE2-000205-14473-0.png positive ricord
-SITE2-000025 MIDRC-RICORD-1C-SITE2-000025-83262-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-78273-1.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-90045-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-05111-1.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-44743-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-48150-1.png positive ricord
-SITE2-000254 MIDRC-RICORD-1C-SITE2-000254-54684-0.png positive ricord
-SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-71352-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-92180-0.png positive ricord
-SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-83380-0.png positive ricord
-SITE2-000262 MIDRC-RICORD-1C-SITE2-000262-41467-0.png positive ricord
-SITE2-000276 MIDRC-RICORD-1C-SITE2-000276-76604-0.png positive ricord
-SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-47335-0.png positive ricord
-419639-002887 MIDRC-RICORD-1C-419639-002887-77016-0.png positive ricord
-419639-000484 MIDRC-RICORD-1C-419639-000484-18850-1.png positive ricord
-419639-002261 MIDRC-RICORD-1C-419639-002261-70507-0.png positive ricord
-419639-000238 MIDRC-RICORD-1C-419639-000238-46556-1.png positive ricord
-419639-003235 MIDRC-RICORD-1C-419639-003235-44504-0.png positive ricord
-SITE2-000191 MIDRC-RICORD-1C-SITE2-000191-62544-0.png positive ricord
-419639-001863 MIDRC-RICORD-1C-419639-001863-90674-1.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-36149-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-08120-1.png positive ricord
-SITE2-000198 MIDRC-RICORD-1C-SITE2-000198-10532-0.png positive ricord
-419639-002972 MIDRC-RICORD-1C-419639-002972-12730-1.png positive ricord
-419639-001245 MIDRC-RICORD-1C-419639-001245-74987-0.png positive ricord
-419639-001476 MIDRC-RICORD-1C-419639-001476-88764-0.png positive ricord
-440808-000012 MIDRC-RICORD-1C-440808-000012-8.470-0.png positive ricord
-SITE2-000255 MIDRC-RICORD-1C-SITE2-000255-11322-0.png positive ricord
-SITE2-000148 MIDRC-RICORD-1C-SITE2-000148-03262-0.png positive ricord
-419639-001369 MIDRC-RICORD-1C-419639-001369-38749-0.png positive ricord
-SITE2-000047 MIDRC-RICORD-1C-SITE2-000047-43901-0.png positive ricord
-SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-05251-0.png positive ricord
-419639-003220 MIDRC-RICORD-1C-419639-003220-47550-0.png positive ricord
-419639-001686 MIDRC-RICORD-1C-419639-001686-47369-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-64618-1.png positive ricord
-SITE2-000248 MIDRC-RICORD-1C-SITE2-000248-12609-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-30106-0.png positive ricord
-SITE2-000026 MIDRC-RICORD-1C-SITE2-000026-03208-0.png positive ricord
-419639-001569 MIDRC-RICORD-1C-419639-001569-25826-0.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-07283-0.png positive ricord
-419639-003269 MIDRC-RICORD-1C-419639-003269-57505-0.png positive ricord
-419639-002649 MIDRC-RICORD-1C-419639-002649-44232-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-84578-1.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-99551-0.png positive ricord
-419639-000481 MIDRC-RICORD-1C-419639-000481-89988-0.png positive ricord
-SITE2-000112 MIDRC-RICORD-1C-SITE2-000112-19566-0.png positive ricord
-419639-003029 MIDRC-RICORD-1C-419639-003029-68072-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-05111-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-40903-1.png positive ricord
-SITE2-000057 MIDRC-RICORD-1C-SITE2-000057-91334-0.png positive ricord
-SITE2-000261 MIDRC-RICORD-1C-SITE2-000261-86202-0.png positive ricord
-419639-000214 MIDRC-RICORD-1C-419639-000214-19164-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-65258-0.png positive ricord
-440808-000010 MIDRC-RICORD-1C-440808-000010-8.184-0.png positive ricord
-SITE2-000057 MIDRC-RICORD-1C-SITE2-000057-48953-0.png positive ricord
-SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-06573-1.png positive ricord
-419639-002260 MIDRC-RICORD-1C-419639-002260-26595-0.png positive ricord
-SITE2-000078 MIDRC-RICORD-1C-SITE2-000078-37750-0.png positive ricord
-440808-000002 MIDRC-RICORD-1C-440808-000002-8.116-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-37966-0.png positive ricord
-440808-000004 MIDRC-RICORD-1C-440808-000004-8.143-0.png positive ricord
-SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-85716-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-48311-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-71188-1.png positive ricord
-SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-92322-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-75738-1.png positive ricord
-SITE2-000266 MIDRC-RICORD-1C-SITE2-000266-04519-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-27341-0.png positive ricord
-SITE2-000254 MIDRC-RICORD-1C-SITE2-000254-54684-1.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-67327-0.png positive ricord
-419639-002911 MIDRC-RICORD-1C-419639-002911-31907-1.png positive ricord
-419639-003235 MIDRC-RICORD-1C-419639-003235-85590-1.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-70020-0.png positive ricord
-419639-002972 MIDRC-RICORD-1C-419639-002972-98539-0.png positive ricord
-SITE2-000243 MIDRC-RICORD-1C-SITE2-000243-97534-0.png positive ricord
-440808-000008 MIDRC-RICORD-1C-440808-000008-8.330-0.png positive ricord
-419639-003094 MIDRC-RICORD-1C-419639-003094-61633-0.png positive ricord
-SITE2-000042 MIDRC-RICORD-1C-SITE2-000042-47842-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-48791-0.png positive ricord
-SITE2-000177 MIDRC-RICORD-1C-SITE2-000177-12711-0.png positive ricord
-440808-000012 MIDRC-RICORD-1C-440808-000012-8.400-0.png positive ricord
-419639-003003 MIDRC-RICORD-1C-419639-003003-51385-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-32327-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-04262-1.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-14788-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-51788-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-60777-0.png positive ricord
-419639-000215 MIDRC-RICORD-1C-419639-000215-90049-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-18706-0.png positive ricord
-419639-002904 MIDRC-RICORD-1C-419639-002904-84203-0.png positive ricord
-SITE2-000087 MIDRC-RICORD-1C-SITE2-000087-31880-0.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-01617-0.png positive ricord
-419639-001060 MIDRC-RICORD-1C-419639-001060-86381-0.png positive ricord
-419639-001012 MIDRC-RICORD-1C-419639-001012-56926-0.png positive ricord
-419639-001596 MIDRC-RICORD-1C-419639-001596-79963-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-62949-1.png positive ricord
-SITE2-000126 MIDRC-RICORD-1C-SITE2-000126-47389-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-14379-1.png positive ricord
-SITE2-000248 MIDRC-RICORD-1C-SITE2-000248-26347-0.png positive ricord
-419639-003087 MIDRC-RICORD-1C-419639-003087-04860-1.png positive ricord
-SITE2-000245 MIDRC-RICORD-1C-SITE2-000245-67988-0.png positive ricord
-419639-000361 MIDRC-RICORD-1C-419639-000361-44832-0.png positive ricord
-SITE2-000102 MIDRC-RICORD-1C-SITE2-000102-72341-0.png positive ricord
-419639-001729 MIDRC-RICORD-1C-419639-001729-29855-0.png positive ricord
-419639-003185 MIDRC-RICORD-1C-419639-003185-64353-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-20342-0.png positive ricord
-SITE2-000186 MIDRC-RICORD-1C-SITE2-000186-87445-0.png positive ricord
-419639-001094 MIDRC-RICORD-1C-419639-001094-24082-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-49366-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-44651-1.png positive ricord
-419639-000303 MIDRC-RICORD-1C-419639-000303-38640-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-03919-1.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-19142-0.png positive ricord
-SITE2-000293 MIDRC-RICORD-1C-SITE2-000293-00096-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-71651-0.png positive ricord
-SITE2-000080 MIDRC-RICORD-1C-SITE2-000080-27875-0.png positive ricord
-440808-000012 MIDRC-RICORD-1C-440808-000012-8.406-0.png positive ricord
-SITE2-000167 MIDRC-RICORD-1C-SITE2-000167-20021-0.png positive ricord
-SITE2-000255 MIDRC-RICORD-1C-SITE2-000255-89235-0.png positive ricord
-SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-62955-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-67193-0.png positive ricord
-SITE2-000101 MIDRC-RICORD-1C-SITE2-000101-62268-0.png positive ricord
-SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-70367-0.png positive ricord
-419639-000361 MIDRC-RICORD-1C-419639-000361-88993-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-19989-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-66797-1.png positive ricord
-SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-05244-0.png positive ricord
-SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-37661-0.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-68844-0.png positive ricord
-SITE2-000139 MIDRC-RICORD-1C-SITE2-000139-44010-0.png positive ricord
-SITE2-000052 MIDRC-RICORD-1C-SITE2-000052-51315-0.png positive ricord
-SITE2-000243 MIDRC-RICORD-1C-SITE2-000243-71385-0.png positive ricord
-SITE2-000285 MIDRC-RICORD-1C-SITE2-000285-32471-0.png positive ricord
-419639-001012 MIDRC-RICORD-1C-419639-001012-18323-1.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-60630-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-97850-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-18199-0.png positive ricord
-419639-001646 MIDRC-RICORD-1C-419639-001646-41990-0.png positive ricord
-SITE2-000065 MIDRC-RICORD-1C-SITE2-000065-90156-0.png positive ricord
-SITE2-000101 MIDRC-RICORD-1C-SITE2-000101-36965-0.png positive ricord
-419639-003220 MIDRC-RICORD-1C-419639-003220-45514-1.png positive ricord
-SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-21335-0.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-41183-0.png positive ricord
-419639-001285 MIDRC-RICORD-1C-419639-001285-20222-1.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-34378-1.png positive ricord
-419639-001647 MIDRC-RICORD-1C-419639-001647-89457-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-00089-1.png positive ricord
-419639-002887 MIDRC-RICORD-1C-419639-002887-89073-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-17651-0.png positive ricord
-419639-002260 MIDRC-RICORD-1C-419639-002260-26595-1.png positive ricord
-419639-003003 MIDRC-RICORD-1C-419639-003003-86404-0.png positive ricord
-440808-000018 MIDRC-RICORD-1C-440808-000018-8.461-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-03183-1.png positive ricord
-SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-47140-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-64618-0.png positive ricord
-SITE2-000292 MIDRC-RICORD-1C-SITE2-000292-03023-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-70152-0.png positive ricord
-440808-000008 MIDRC-RICORD-1C-440808-000008-8.153-0.png positive ricord
-SITE2-000102 MIDRC-RICORD-1C-SITE2-000102-72341-1.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-56119-0.png positive ricord
-SITE2-000245 MIDRC-RICORD-1C-SITE2-000245-40352-0.png positive ricord
-SITE2-000190 MIDRC-RICORD-1C-SITE2-000190-27714-0.png positive ricord
-419639-002372 MIDRC-RICORD-1C-419639-002372-32466-0.png positive ricord
-440808-000014 MIDRC-RICORD-1C-440808-000014-8.345-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-21053-0.png positive ricord
-419639-002190 MIDRC-RICORD-1C-419639-002190-57058-0.png positive ricord
-419639-000484 MIDRC-RICORD-1C-419639-000484-18850-0.png positive ricord
-SITE2-000042 MIDRC-RICORD-1C-SITE2-000042-17058-0.png positive ricord
-SITE2-000118 MIDRC-RICORD-1C-SITE2-000118-31156-0.png positive ricord
-SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-05630-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-39490-0.png positive ricord
-419639-003302 MIDRC-RICORD-1C-419639-003302-51043-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-08999-1.png positive ricord
-SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-13468-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-48150-0.png positive ricord
-419639-000399 MIDRC-RICORD-1C-419639-000399-99232-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-37114-0.png positive ricord
-SITE2-000293 MIDRC-RICORD-1C-SITE2-000293-08892-0.png positive ricord
-SITE2-000163 MIDRC-RICORD-1C-SITE2-000163-65449-0.png positive ricord
-SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-24249-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-98900-0.png positive ricord
-440808-000008 MIDRC-RICORD-1C-440808-000008-08.67-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-78754-0.png positive ricord
-SITE2-000013 MIDRC-RICORD-1C-SITE2-000013-10106-0.png positive ricord
-SITE2-000177 MIDRC-RICORD-1C-SITE2-000177-25312-0.png positive ricord
-SITE2-000057 MIDRC-RICORD-1C-SITE2-000057-93381-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-50657-2.png positive ricord
-SITE2-000139 MIDRC-RICORD-1C-SITE2-000139-58251-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-54181-0.png positive ricord
-419639-000831 MIDRC-RICORD-1C-419639-000831-98678-0.png positive ricord
-SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-16779-0.png positive ricord
-SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-53016-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-48430-1.png positive ricord
-440808-000017 MIDRC-RICORD-1C-440808-000017-8.382-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-67077-0.png positive ricord
-440808-000001 MIDRC-RICORD-1C-440808-000001-8.275-0.png positive ricord
-SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-76298-0.png positive ricord
-419639-002863 MIDRC-RICORD-1C-419639-002863-17388-0.png positive ricord
-SITE2-000212 MIDRC-RICORD-1C-SITE2-000212-05191-0.png positive ricord
-SITE2-000249 MIDRC-RICORD-1C-SITE2-000249-35888-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-80301-0.png positive ricord
-SITE2-000163 MIDRC-RICORD-1C-SITE2-000163-64983-0.png positive ricord
-419639-000959 MIDRC-RICORD-1C-419639-000959-36969-0.png positive ricord
-419639-003302 MIDRC-RICORD-1C-419639-003302-96347-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-23657-1.png positive ricord
-440808-000011 MIDRC-RICORD-1C-440808-000011-8.122-0.png positive ricord
-SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-54753-0.png positive ricord
-419639-002863 MIDRC-RICORD-1C-419639-002863-46522-0.png positive ricord
-419639-003210 MIDRC-RICORD-1C-419639-003210-91810-0.png positive ricord
-440808-000005 MIDRC-RICORD-1C-440808-000005-08.27-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-18032-0.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-71369-0.png positive ricord
-440808-000005 MIDRC-RICORD-1C-440808-000005-8.385-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-31568-0.png positive ricord
-SITE2-000082 MIDRC-RICORD-1C-SITE2-000082-94103-0.png positive ricord
-SITE2-000118 MIDRC-RICORD-1C-SITE2-000118-60279-0.png positive ricord
-419639-000361 MIDRC-RICORD-1C-419639-000361-80204-0.png positive ricord
-SITE2-000145 MIDRC-RICORD-1C-SITE2-000145-53338-0.png positive ricord
-SITE2-000256 MIDRC-RICORD-1C-SITE2-000256-10534-0.png positive ricord
-SITE2-000080 MIDRC-RICORD-1C-SITE2-000080-79272-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-17041-1.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-33501-0.png positive ricord
-SITE2-000276 MIDRC-RICORD-1C-SITE2-000276-53536-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-20903-0.png positive ricord
-419639-003302 MIDRC-RICORD-1C-419639-003302-48061-0.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-35008-5.png positive ricord
-419639-001285 MIDRC-RICORD-1C-419639-001285-20222-0.png positive ricord
-419639-001012 MIDRC-RICORD-1C-419639-001012-17560-2.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-35798-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-00480-1.png positive ricord
-419639-002195 MIDRC-RICORD-1C-419639-002195-88297-0.png positive ricord
-SITE2-000245 MIDRC-RICORD-1C-SITE2-000245-50475-0.png positive ricord
-419639-003003 MIDRC-RICORD-1C-419639-003003-16582-0.png positive ricord
-SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-92860-0.png positive ricord
-419639-001094 MIDRC-RICORD-1C-419639-001094-12424-1.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-46973-0.png positive ricord
-SITE2-000248 MIDRC-RICORD-1C-SITE2-000248-98712-0.png positive ricord
-419639-001476 MIDRC-RICORD-1C-419639-001476-90402-0.png positive ricord
-419639-002972 MIDRC-RICORD-1C-419639-002972-32291-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-96124-0.png positive ricord
-440808-000010 MIDRC-RICORD-1C-440808-000010-8.158-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-70282-0.png positive ricord
-SITE2-000243 MIDRC-RICORD-1C-SITE2-000243-15589-0.png positive ricord
-419639-002972 MIDRC-RICORD-1C-419639-002972-23173-0.png positive ricord
-419639-003220 MIDRC-RICORD-1C-419639-003220-02012-1.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-69627-0.png positive ricord
-SITE2-000172 MIDRC-RICORD-1C-SITE2-000172-50026-0.png positive ricord
-SITE2-000046 MIDRC-RICORD-1C-SITE2-000046-95298-0.png positive ricord
-SITE2-000191 MIDRC-RICORD-1C-SITE2-000191-37969-0.png positive ricord
-440808-000014 MIDRC-RICORD-1C-440808-000014-8.264-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-40057-0.png positive ricord
-SITE2-000021 MIDRC-RICORD-1C-SITE2-000021-46890-0.png positive ricord
-419639-001975 MIDRC-RICORD-1C-419639-001975-40168-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-33498-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-82590-0.png positive ricord
-419639-001060 MIDRC-RICORD-1C-419639-001060-15510-0.png positive ricord
-419639-003003 MIDRC-RICORD-1C-419639-003003-54383-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-34024-0.png positive ricord
-419639-003220 MIDRC-RICORD-1C-419639-003220-65243-0.png positive ricord
-440808-000018 MIDRC-RICORD-1C-440808-000018-8.365-0.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-34252-0.png positive ricord
-440808-000012 MIDRC-RICORD-1C-440808-000012-8.221-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-45945-0.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-76924-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-40057-1.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-73840-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-63294-1.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-07436-0.png positive ricord
-SITE2-000101 MIDRC-RICORD-1C-SITE2-000101-72147-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-70737-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-36509-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-00397-0.png positive ricord
-419639-003029 MIDRC-RICORD-1C-419639-003029-48005-0.png positive ricord
-440808-000015 MIDRC-RICORD-1C-440808-000015-8.355-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-32348-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-57587-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-44476-1.png positive ricord
-SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-87628-0.png positive ricord
-SITE2-000012 MIDRC-RICORD-1C-SITE2-000012-67069-0.png positive ricord
-440808-000012 MIDRC-RICORD-1C-440808-000012-8.235-0.png positive ricord
-SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-10263-0.png positive ricord
-SITE2-000025 MIDRC-RICORD-1C-SITE2-000025-81457-0.png positive ricord
-419639-000303 MIDRC-RICORD-1C-419639-000303-38640-1.png positive ricord
-SITE2-000268 MIDRC-RICORD-1C-SITE2-000268-55273-0.png positive ricord
-SITE2-000268 MIDRC-RICORD-1C-SITE2-000268-67528-0.png positive ricord
-419639-002904 MIDRC-RICORD-1C-419639-002904-36016-0.png positive ricord
-440808-000018 MIDRC-RICORD-1C-440808-000018-8.448-0.png positive ricord
-419639-000613 MIDRC-RICORD-1C-419639-000613-26607-0.png positive ricord
-SITE2-000145 MIDRC-RICORD-1C-SITE2-000145-08212-0.png positive ricord
-419639-001634 MIDRC-RICORD-1C-419639-001634-57955-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-51290-0.png positive ricord
-419639-003094 MIDRC-RICORD-1C-419639-003094-64848-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-92180-1.png positive ricord
-419639-003220 MIDRC-RICORD-1C-419639-003220-02012-0.png positive ricord
-SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-18979-0.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-68844-2.png positive ricord
-419639-002649 MIDRC-RICORD-1C-419639-002649-41013-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-42010-1.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-27539-0.png positive ricord
-SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-24698-0.png positive ricord
-419639-001285 MIDRC-RICORD-1C-419639-001285-78358-0.png positive ricord
-419639-003260 MIDRC-RICORD-1C-419639-003260-57806-1.png positive ricord
-419639-001863 MIDRC-RICORD-1C-419639-001863-49330-0.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-24000-0.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-69327-0.png positive ricord
-SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-64461-0.png positive ricord
-SITE2-000212 MIDRC-RICORD-1C-SITE2-000212-36422-0.png positive ricord
-419639-001446 MIDRC-RICORD-1C-419639-001446-19964-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-72301-1.png positive ricord
-SITE2-000112 MIDRC-RICORD-1C-SITE2-000112-77926-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-32461-0.png positive ricord
-SITE2-000253 MIDRC-RICORD-1C-SITE2-000253-45928-0.png positive ricord
-419639-002904 MIDRC-RICORD-1C-419639-002904-44945-0.png positive ricord
-440808-000014 MIDRC-RICORD-1C-440808-000014-8.201-0.png positive ricord
-440808-000012 MIDRC-RICORD-1C-440808-000012-8.415-0.png positive ricord
-SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-83158-0.png positive ricord
-419639-003220 MIDRC-RICORD-1C-419639-003220-05014-1.png positive ricord
-SITE2-000198 MIDRC-RICORD-1C-SITE2-000198-99794-1.png positive ricord
-419639-003269 MIDRC-RICORD-1C-419639-003269-34317-0.png positive ricord
-SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-69094-0.png positive ricord
-SITE2-000052 MIDRC-RICORD-1C-SITE2-000052-92077-0.png positive ricord
-SITE2-000137 MIDRC-RICORD-1C-SITE2-000137-44937-0.png positive ricord
-SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-58063-0.png positive ricord
-419639-000361 MIDRC-RICORD-1C-419639-000361-45412-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-07287-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-19182-0.png positive ricord
-440808-000005 MIDRC-RICORD-1C-440808-000005-8.301-0.png positive ricord
-SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-71395-1.png positive ricord
-SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-13955-0.png positive ricord
-419639-003220 MIDRC-RICORD-1C-419639-003220-05014-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-32326-1.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-90730-0.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-41183-1.png positive ricord
-419639-001285 MIDRC-RICORD-1C-419639-001285-89136-0.png positive ricord
-440808-000014 MIDRC-RICORD-1C-440808-000014-8.241-0.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-83365-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-14379-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-88396-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-90377-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-18706-1.png positive ricord
-SITE2-000065 MIDRC-RICORD-1C-SITE2-000065-62836-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-08120-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-41534-1.png positive ricord
-SITE2-000036 MIDRC-RICORD-1C-SITE2-000036-23357-1.png positive ricord
-SITE2-000080 MIDRC-RICORD-1C-SITE2-000080-96343-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-32461-1.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-53452-0.png positive ricord
-SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-15545-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-04484-0.png positive ricord
-SITE2-000145 MIDRC-RICORD-1C-SITE2-000145-44375-0.png positive ricord
-SITE2-000268 MIDRC-RICORD-1C-SITE2-000268-84734-0.png positive ricord
-440808-000012 MIDRC-RICORD-1C-440808-000012-8.252-0.png positive ricord
-440808-000018 MIDRC-RICORD-1C-440808-000018-8.467-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-64221-1.png positive ricord
-440808-000017 MIDRC-RICORD-1C-440808-000017-8.412-0.png positive ricord
-419639-002863 MIDRC-RICORD-1C-419639-002863-46522-1.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-44651-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-40730-0.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-83365-1.png positive ricord
-440808-000001 MIDRC-RICORD-1C-440808-000001-8.137-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-66168-0.png positive ricord
-419639-000214 MIDRC-RICORD-1C-419639-000214-86868-0.png positive ricord
-419639-001569 MIDRC-RICORD-1C-419639-001569-43268-0.png positive ricord
-419639-000481 MIDRC-RICORD-1C-419639-000481-91439-0.png positive ricord
-SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-07030-0.png positive ricord
-SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-45143-0.png positive ricord
-SITE2-000052 MIDRC-RICORD-1C-SITE2-000052-84213-0.png positive ricord
-419639-003269 MIDRC-RICORD-1C-419639-003269-27033-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-05119-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-27382-0.png positive ricord
-419639-001060 MIDRC-RICORD-1C-419639-001060-92092-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-88049-0.png positive ricord
-SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-15577-0.png positive ricord
-SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-30166-0.png positive ricord
-440808-000004 MIDRC-RICORD-1C-440808-000004-08.73-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-34589-0.png positive ricord
-SITE2-000259 MIDRC-RICORD-1C-SITE2-000259-29985-0.png positive ricord
-SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-34159-0.png positive ricord
-419639-001094 MIDRC-RICORD-1C-419639-001094-75438-0.png positive ricord
-419639-003307 MIDRC-RICORD-1C-419639-003307-62875-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-11349-0.png positive ricord
-419639-003029 MIDRC-RICORD-1C-419639-003029-68072-1.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-41534-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-55266-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-88068-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-52294-0.png positive ricord
-419639-002863 MIDRC-RICORD-1C-419639-002863-91811-0.png positive ricord
-419639-002904 MIDRC-RICORD-1C-419639-002904-84203-1.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-47409-0.png positive ricord
-SITE2-000292 MIDRC-RICORD-1C-SITE2-000292-04064-0.png positive ricord
-419639-001646 MIDRC-RICORD-1C-419639-001646-15061-0.png positive ricord
-SITE2-000274 MIDRC-RICORD-1C-SITE2-000274-41440-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-10878-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-43808-1.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-17560-0.png positive ricord
-419639-001012 MIDRC-RICORD-1C-419639-001012-29087-0.png positive ricord
-SITE2-000167 MIDRC-RICORD-1C-SITE2-000167-57517-0.png positive ricord
-440808-000018 MIDRC-RICORD-1C-440808-000018-8.403-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-89105-0.png positive ricord
-SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-85763-1.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-27539-1.png positive ricord
-SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-98564-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-49883-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-66797-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-62949-0.png positive ricord
-SITE2-000052 MIDRC-RICORD-1C-SITE2-000052-97543-1.png positive ricord
-419639-003220 MIDRC-RICORD-1C-419639-003220-99668-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-78273-0.png positive ricord
-SITE2-000268 MIDRC-RICORD-1C-SITE2-000268-51175-0.png positive ricord
-419639-001634 MIDRC-RICORD-1C-419639-001634-99561-0.png positive ricord
-419639-003089 MIDRC-RICORD-1C-419639-003089-37417-0.png positive ricord
-SITE2-000266 MIDRC-RICORD-1C-SITE2-000266-49750-0.png positive ricord
-419639-002972 MIDRC-RICORD-1C-419639-002972-53337-0.png positive ricord
-SITE2-000082 MIDRC-RICORD-1C-SITE2-000082-50711-0.png positive ricord
-SITE2-000046 MIDRC-RICORD-1C-SITE2-000046-88354-0.png positive ricord
-SITE2-000129 MIDRC-RICORD-1C-SITE2-000129-13478-0.png positive ricord
-440808-000017 MIDRC-RICORD-1C-440808-000017-8.421-0.png positive ricord
-419639-002972 MIDRC-RICORD-1C-419639-002972-53927-0.png positive ricord
-419639-001012 MIDRC-RICORD-1C-419639-001012-17560-0.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-03716-0.png positive ricord
-440808-000011 MIDRC-RICORD-1C-440808-000011-8.388-0.png positive ricord
-440808-000014 MIDRC-RICORD-1C-440808-000014-8.278-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-79425-0.png positive ricord
-SITE2-000219 MIDRC-RICORD-1C-SITE2-000219-00321-0.png positive ricord
-440808-000005 MIDRC-RICORD-1C-440808-000005-8.371-0.png positive ricord
-SITE2-000082 MIDRC-RICORD-1C-SITE2-000082-03688-0.png positive ricord
-SITE2-000021 MIDRC-RICORD-1C-SITE2-000021-95898-0.png positive ricord
-SITE2-000086 MIDRC-RICORD-1C-SITE2-000086-01931-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-64221-2.png positive ricord
-419639-001596 MIDRC-RICORD-1C-419639-001596-22539-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-03919-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-91778-1.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-75105-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-13325-0.png positive ricord
-440808-000004 MIDRC-RICORD-1C-440808-000004-08.19-0.png positive ricord
-419639-002911 MIDRC-RICORD-1C-419639-002911-25035-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-23657-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-70806-0.png positive ricord
-419639-000418 MIDRC-RICORD-1C-419639-000418-34513-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-51290-1.png positive ricord
-SITE2-000103 MIDRC-RICORD-1C-SITE2-000103-58285-0.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-54827-0.png positive ricord
-SITE2-000013 MIDRC-RICORD-1C-SITE2-000013-40554-0.png positive ricord
-SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-70364-0.png positive ricord
-419639-000361 MIDRC-RICORD-1C-419639-000361-96664-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-36774-1.png positive ricord
-440808-000004 MIDRC-RICORD-1C-440808-000004-08.55-0.png positive ricord
-SITE2-000090 MIDRC-RICORD-1C-SITE2-000090-56799-0.png positive ricord
-SITE2-000089 MIDRC-RICORD-1C-SITE2-000089-11126-0.png positive ricord
-419639-003003 MIDRC-RICORD-1C-419639-003003-29750-0.png positive ricord
-419639-001094 MIDRC-RICORD-1C-419639-001094-12424-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-35468-0.png positive ricord
-SITE2-000107 MIDRC-RICORD-1C-SITE2-000107-80284-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-27114-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-17161-0.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-68609-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-57587-1.png positive ricord
-440808-000004 MIDRC-RICORD-1C-440808-000004-8.110-0.png positive ricord
-SITE2-000061 MIDRC-RICORD-1C-SITE2-000061-61434-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-55120-1.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-53260-0.png positive ricord
-419639-003112 MIDRC-RICORD-1C-419639-003112-48985-0.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-76924-1.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-42080-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-21175-0.png positive ricord
-SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-50442-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-36774-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-17571-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-06111-0.png positive ricord
-440808-000011 MIDRC-RICORD-1C-440808-000011-8.427-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-24703-0.png positive ricord
-SITE2-000042 MIDRC-RICORD-1C-SITE2-000042-90941-0.png positive ricord
-SITE2-000103 MIDRC-RICORD-1C-SITE2-000103-05522-0.png positive ricord
-SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-91261-0.png positive ricord
-419639-001555 MIDRC-RICORD-1C-419639-001555-00521-0.png positive ricord
-SITE2-000248 MIDRC-RICORD-1C-SITE2-000248-77857-0.png positive ricord
-SITE2-000104 MIDRC-RICORD-1C-SITE2-000104-14246-0.png positive ricord
-419639-003260 MIDRC-RICORD-1C-419639-003260-57806-0.png positive ricord
-SITE2-000047 MIDRC-RICORD-1C-SITE2-000047-79407-0.png positive ricord
-419639-003235 MIDRC-RICORD-1C-419639-003235-85590-0.png positive ricord
-419639-001687 MIDRC-RICORD-1C-419639-001687-67578-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-66797-2.png positive ricord
-SITE2-000197 MIDRC-RICORD-1C-SITE2-000197-74400-0.png positive ricord
-SITE2-000186 MIDRC-RICORD-1C-SITE2-000186-51802-0.png positive ricord
-SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-45784-0.png positive ricord
-419639-001863 MIDRC-RICORD-1C-419639-001863-90674-0.png positive ricord
-440808-000004 MIDRC-RICORD-1C-440808-000004-8.270-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-21691-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-34589-1.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-04505-1.png positive ricord
-419639-000771 MIDRC-RICORD-1C-419639-000771-67048-1.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-61255-0.png positive ricord
-419639-001729 MIDRC-RICORD-1C-419639-001729-71729-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-20532-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-75738-0.png positive ricord
-SITE2-000084 MIDRC-RICORD-1C-SITE2-000084-71242-1.png positive ricord
-SITE2-000123 MIDRC-RICORD-1C-SITE2-000123-76427-1.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-40903-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-88181-1.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-65699-1.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-37996-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-89050-0.png positive ricord
-419639-001336 MIDRC-RICORD-1C-419639-001336-74424-0.png positive ricord
-SITE2-000175 MIDRC-RICORD-1C-SITE2-000175-01747-0.png positive ricord
-419639-001122 MIDRC-RICORD-1C-419639-001122-44476-0.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-98256-0.png positive ricord
-419639-003003 MIDRC-RICORD-1C-419639-003003-17992-0.png positive ricord
-419639-002844 MIDRC-RICORD-1C-419639-002844-97546-0.png positive ricord
-SITE2-000243 MIDRC-RICORD-1C-SITE2-000243-64468-0.png positive ricord
-419639-002904 MIDRC-RICORD-1C-419639-002904-61924-1.png positive ricord
-440808-000018 MIDRC-RICORD-1C-440808-000018-8.464-0.png positive ricord
-419639-000484 MIDRC-RICORD-1C-419639-000484-86694-0.png positive ricord
-419639-002267 MIDRC-RICORD-1C-419639-002267-98558-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-63294-0.png positive ricord
-SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-63778-0.png positive ricord
-SITE2-000137 MIDRC-RICORD-1C-SITE2-000137-87199-0.png positive ricord
-419639-003307 MIDRC-RICORD-1C-419639-003307-62875-1.png positive ricord
-SITE2-000129 MIDRC-RICORD-1C-SITE2-000129-45395-0.png positive ricord
-419639-003087 MIDRC-RICORD-1C-419639-003087-04860-0.png positive ricord
-419639-002844 MIDRC-RICORD-1C-419639-002844-31673-0.png positive ricord
-419639-000959 MIDRC-RICORD-1C-419639-000959-36969-1.png positive ricord
-419639-000399 MIDRC-RICORD-1C-419639-000399-46074-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-39490-1.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-42080-1.png positive ricord
-SITE2-000224 MIDRC-RICORD-1C-SITE2-000224-40858-0.png positive ricord
-419639-000215 MIDRC-RICORD-1C-419639-000215-98988-0.png positive ricord
-SITE2-000082 MIDRC-RICORD-1C-SITE2-000082-45376-0.png positive ricord
-SITE2-000293 MIDRC-RICORD-1C-SITE2-000293-40361-0.png positive ricord
-419639-001634 MIDRC-RICORD-1C-419639-001634-85920-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-18837-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-03183-0.png positive ricord
-440808-000008 MIDRC-RICORD-1C-440808-000008-8.284-0.png positive ricord
-440808-000015 MIDRC-RICORD-1C-440808-000015-8.336-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-34024-1.png positive ricord
-419639-000959 MIDRC-RICORD-1C-419639-000959-13337-0.png positive ricord
-SITE2-000006 MIDRC-RICORD-1C-SITE2-000006-20879-0.png positive ricord
-SITE2-000269 MIDRC-RICORD-1C-SITE2-000269-15753-0.png positive ricord
-419639-001021 MIDRC-RICORD-1C-419639-001021-96124-1.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-83540-0.png positive ricord
-SITE2-000184 MIDRC-RICORD-1C-SITE2-000184-35618-0.png positive ricord
-419639-003013 MIDRC-RICORD-1C-419639-003013-92180-2.png positive ricord
-SITE2-000129 MIDRC-RICORD-1C-SITE2-000129-45776-0.png positive ricord
-440808-000012 MIDRC-RICORD-1C-440808-000012-8.169-0.png positive ricord
-419639-001687 MIDRC-RICORD-1C-419639-001687-45786-0.png positive ricord
-440808-000002 MIDRC-RICORD-1C-440808-000002-08.58-0.png positive ricord
-SITE2-000247 MIDRC-RICORD-1C-SITE2-000247-25535-0.png positive ricord
-SITE2-000241 MIDRC-RICORD-1C-SITE2-000241-34883-0.png positive ricord
-SITE2-000256 MIDRC-RICORD-1C-SITE2-000256-91590-0.png positive ricord
-419639-000331 MIDRC-RICORD-1C-419639-000331-42010-0.png positive ricord
-419639-001060 MIDRC-RICORD-1C-419639-001060-64097-0.png positive ricord
-419639-002884 MIDRC-RICORD-1C-419639-002884-04199-0.png positive ricord
-SITE2-000249 MIDRC-RICORD-1C-SITE2-000249-49234-0.png positive ricord
-419639-001094 MIDRC-RICORD-1C-419639-001094-24082-1.png positive ricord
-SITE2-000242 MIDRC-RICORD-1C-SITE2-000242-07550-0.png positive ricord
-419639-001012 MIDRC-RICORD-1C-419639-001012-56926-1.png positive ricord
-440808-000018 MIDRC-RICORD-1C-440808-000018-8.424-0.png positive ricord
-SITE2-000062 MIDRC-RICORD-1C-SITE2-000062-06327-0.png positive ricord
-SITE2-000219 MIDRC-RICORD-1C-SITE2-000219-84254-0.png positive ricord
-419639-003154 MIDRC-RICORD-1C-419639-003154-35008-0.png positive ricord
-SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-31668-0.png positive ricord
-440808-000005 MIDRC-RICORD-1C-440808-000005-8.445-0.png positive ricord
-SITE2-000252 MIDRC-RICORD-1C-SITE2-000252-87588-0.png positive ricord
-419639-001214 MIDRC-RICORD-1C-419639-001214-08999-0.png positive ricord
-SITE2-000084 MIDRC-RICORD-1C-SITE2-000084-71242-0.png positive ricord
-419639-001094 MIDRC-RICORD-1C-419639-001094-92274-0.png positive ricord
-440808-000002 MIDRC-RICORD-1C-440808-000002-8.442-0.png positive ricord
-419639-000758 MIDRC-RICORD-1C-419639-000758-13795-0.png positive ricord
-419639-002798 MIDRC-RICORD-1C-419639-002798-34378-0.png positive ricord
-SITE2-000254 MIDRC-RICORD-1C-SITE2-000254-17761-0.png positive ricord
-SITE2-000199 MIDRC-RICORD-1C-SITE2-000199-91718-0.png positive ricord
-419639-001686 MIDRC-RICORD-1C-419639-001686-60394-1.png positive ricord
-SITE2-000251 MIDRC-RICORD-1C-SITE2-000251-74806-0.png positive ricord
-419639-000906 MIDRC-RICORD-1C-419639-000906-04505-0.png positive ricord
-SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-60930-0.png positive ricord
-SITE2-000256 MIDRC-RICORD-1C-SITE2-000256-41172-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-28098-1.png positive ricord
-SITE2-000112 MIDRC-RICORD-1C-SITE2-000112-86965-0.png positive ricord
-SITE2-000196 MIDRC-RICORD-1C-SITE2-000196-12076-0.png positive ricord
-419639-002372 MIDRC-RICORD-1C-419639-002372-32466-1.png positive ricord
-SITE2-000123 MIDRC-RICORD-1C-SITE2-000123-77283-0.png positive ricord
-419639-001285 MIDRC-RICORD-1C-419639-001285-10633-0.png positive ricord
-SITE2-000061 MIDRC-RICORD-1C-SITE2-000061-79468-0.png positive ricord
-419639-002079 MIDRC-RICORD-1C-419639-002079-50657-0.png positive ricord
-440808-000005 MIDRC-RICORD-1C-440808-000005-8.244-0.png positive ricord
-419639-000800 MIDRC-RICORD-1C-419639-000800-93064-0.png positive ricord
-SITE2-000123 MIDRC-RICORD-1C-SITE2-000123-83242-0.png positive ricord
-SITE2-000172 MIDRC-RICORD-1C-SITE2-000172-38954-0.png positive ricord
-SITE2-000118 MIDRC-RICORD-1C-SITE2-000118-93390-0.png positive ricord
-SITE2-000133 MIDRC-RICORD-1C-SITE2-000133-74142-0.png positive ricord
-SITE2-000267 MIDRC-RICORD-1C-SITE2-000267-81231-0.png positive ricord
-419639-002261 MIDRC-RICORD-1C-419639-002261-70507-1.png positive ricord
-440808-000008 MIDRC-RICORD-1C-440808-000008-08.50-0.png positive ricord
-419639-000766 MIDRC-RICORD-1C-419639-000766-39157-0.png positive ricord
-SITE2-000285 MIDRC-RICORD-1C-SITE2-000285-50266-0.png positive ricord
-440808-000002 MIDRC-RICORD-1C-440808-000002-8.148-0.png positive ricord

@@ -1,5 +1,5 @@
 # COVIDx Dataset
-**Update 03/19/2021:Released new datasets with 16,560 CXR images from a multinational cohort of 15,528 patients from at least 51 countries. The dataset contains over 2,700 positive COVID-19 images from over 1,800 patients. The COVIDx V8A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V8B dataset is for COVID-19 positive/negative detection.**\
+**Update 03/19/2021:Released new datasets with over 16,352 CXR images from a multinational cohort of 15,528 patients from at least 51 countries. The dataset contains over 2,300 positive COVID-19 images from over 1,800 patients. The COVIDx V8A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V8B dataset is for COVID-19 positive/negative detection.**\
 **Update 01/28/2021:Released new datasets with over 15600 CXR images and over 1700 positive COVID-19 images. The COVIDx V7A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V7B dataset is for COVID-19 positive/negative detection.**\
 **Update 01/05/2021: Released new dataset for binary classification (COVID-19 positive or COVID-19 negative). Train dataset contains 517 positive and 13794 negative samples. Test dataset contains 100 positive and 100 negative samples.**\
 **Update 10/30/2020: Released new dataset containing 517 COVID-19 train samples. Test dataset remains the same for consistency.**\
@@ -39,7 +39,7 @@ COVIDx V8B
 Chest radiography images distribution
 |  Type | COVID-19 Negative | COVID-19 Positive | Total |
 |:-----:|:-----------------:|:-----------------:|:-----:|
-| train |       13794       |        2566       | 16360 |
+| train |       13794       |        2158       | 15952 |
 |  test |        200        |        200        |  400  |
 
 Patients distribution
@@ -53,7 +53,7 @@ COVIDx V7A
 Chest radiography images distribution
 |  Type | Normal | Pneumonia | COVID-19 | Total |
 |:-----:|:------:|:---------:|:--------:|:-----:|
-| train |  7966  |    5475   |   2566   | 16007 |
+| train |  7966  |    5475   |   2158   | 15599 |
 |  test |   100  |     100   |   200    |   400 |
 
 Patients distribution
