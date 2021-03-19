@@ -39,7 +39,7 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='COVID-Net Evaluation')
-    parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to output folder, defaults to \'models/COVIDNet-CXR-2\'')
+    parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to model files, defaults to \'models/COVIDNet-CXR-2\'')
     parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
     parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
     parser.add_argument('--n_classes', default=2, type=int, help='Number of detected classes, defaults to 2')
