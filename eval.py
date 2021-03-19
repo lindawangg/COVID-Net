@@ -32,14 +32,14 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     #class_acc = np.array(cm_norm.diagonal())
     class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
 
-    mapping_keys = list(mapping.keys())
-    print('Sens', ' '.join(mapping_keys[i].capitalize() + ': ' + str(class_acc[i]) + ' ' for i in range(len(mapping))))
+    print('Sens', ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
     ppvs = [matrix[i,i]/np.sum(matrix[:,i]) if np.sum(matrix[:,i]) else 0 for i in range(len(matrix))]
-    print('PPV', ' '.join(mapping_keys[i].capitalize() + ': ' + str(ppvs[i]) + ' ' for i in range(len(mapping))))
+    print('PPV', ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='COVID-Net Evaluation')
-    parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to output folder')
+    parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to output folder, defaults to \'models/COVIDNet-CXR-2\'')
     parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
     parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
     parser.add_argument('--n_classes', default=2, type=int, help='Number of detected classes, defaults to 2')

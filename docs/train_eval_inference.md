@@ -23,6 +23,8 @@ python train_tf.py \
     --n_classes 2 \
     --trainfile train_COVIDx8B.txt \
     --testfile test_COVIDx8B.txt \
+    --out_tensorname norm_dense_2/Softmax:0 \
+    --logit_tensorname norm_dense_2/MatMul:0
 ```
 4. For more options and information, `python train_tf.py --help`
 
@@ -37,7 +39,8 @@ python eval.py \
     --metaname model.meta \
     --ckptname model \
     --n_classes 2 \
-    --testfile test_COVIDx8B.txt
+    --testfile test_COVIDx8B.txt \
+    --out_tensorname norm_dense_2/Softmax:0
 ```
 4. For more options and information, `python eval.py --help`
 
@@ -53,7 +56,8 @@ python inference.py \
     --metaname model.meta \
     --ckptname model \
     --n_classes 2 \
-    --imagepath assets/ex-covid.jpeg
+    --imagepath assets/ex-covid.jpeg \
+    --out_tensorname norm_dense_2/Softmax:0
 ```
 4. For more options and information, `python inference.py --help`
 
@@ -81,6 +85,8 @@ python train_tf.py \
     --n_classes 3 \
     --trainfile train_COVIDx5.txt \
     --testfile test_COVIDx5.txt \
+    --out_tensorname norm_dense_1/Softmax:0 \
+    --logit_tensorname norm_dense_1/MatMul:0
 ```
 4. For more options and information, `python train_tf.py --help`
 
@@ -95,7 +101,8 @@ python eval.py \
     --metaname model.meta \
     --ckptname model-18540 \
     --n_classes 3 \
-    --testfile test_COVIDx7A.txt
+    --testfile test_COVIDx7A.txt \
+    --out_tensorname norm_dense_1/Softmax:0
 ```
 4. For more options and information, `python eval.py --help`
 
@@ -111,7 +118,8 @@ python inference.py \
     --metaname model.meta \
     --ckptname model-18540 \
     --n_classes 3 \
-    --imagepath assets/ex-covid.jpeg
+    --imagepath assets/ex-covid.jpeg \
+    --out_tensorname norm_dense_1/Softmax:0
 ```
 4. For more options and information, `python inference.py --help`
 
