@@ -6,24 +6,29 @@ import os, argparse, pathlib
 from eval import eval
 from data import BalanceCovidDataset
 
+# To remove TF Warnings
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
-parser.add_argument('--epochs', default=10, type=int, help='Number of epochs')
+parser.add_argument('--epochs', default=100, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
-parser.add_argument('--weightspath', default='models/COVIDNet-CXR4-A', type=str, help='Path to output folder')
+parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to model files, defaults to \'models/COVIDNet-CXR-2\'')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='model-18540', type=str, help='Name of model ckpts')
-parser.add_argument('--trainfile', default='labels/train_COVIDx5.txt', type=str, help='Path to train file')
-parser.add_argument('--testfile', default='labels/test_COVIDx5.txt', type=str, help='Path to test file')
+parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
+parser.add_argument('--n_classes', default=2, type=int, help='Number of detected classes, defaults to 2')
+parser.add_argument('--trainfile', default='labels/train_COVIDx8B.txt', type=str, help='Path to train file')
+parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='data', type=str, help='Path to data folder')
-parser.add_argument('--covid_weight', default=4., type=float, help='Class weighting for covid')
-parser.add_argument('--covid_percent', default=0.3, type=float, help='Percentage of covid samples in batch')
+parser.add_argument('--covid_weight', default=1., type=float, help='Class weighting for covid')
+parser.add_argument('--covid_percent', default=0.5, type=float, help='Percentage of covid samples in batch')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
-parser.add_argument('--out_tensorname', default='norm_dense_1/Softmax:0', type=str, help='Name of output tensor from graph')
-parser.add_argument('--logit_tensorname', default='norm_dense_1/MatMul:0', type=str, help='Name of logit tensor for loss')
+parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str, help='Name of output tensor from graph')
+parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str, help='Name of logit tensor for loss')
 parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str, help='Name of label tensor for loss')
 parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
 
@@ -47,12 +52,33 @@ with open(args.trainfile) as f:
 with open(args.testfile) as f:
     testfiles = f.readlines()
 
+if args.n_classes == 2:
+    # For COVID-19 positive/negative detection
+    mapping = {
+        'negative': 0,
+        'positive': 1,
+    }
+    class_weights = [1., args.covid_weight]
+elif args.n_classes == 3:
+    # For detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia
+    mapping = {
+        'normal': 0,
+        'pneumonia': 1,
+        'COVID-19': 2
+    }
+    class_weights = [1., 1., args.covid_weight]
+else:
+    raise Exception('''COVID-Net currently only supports 2 class COVID-19 positive/negative detection
+        or 3 class detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia''')
+
 generator = BalanceCovidDataset(data_dir=args.datadir,
                                 csv_file=args.trainfile,
                                 batch_size=batch_size,
                                 input_shape=(args.input_size, args.input_size),
+                                n_classes=args.n_classes,
+                                mapping=mapping,
                                 covid_percent=args.covid_percent,
-                                class_weights=[1., 1., args.covid_weight],
+                                class_weights=class_weights,
                                 top_percent=args.top_percent)
 
 with tf.Session() as sess:
@@ -88,7 +114,7 @@ with tf.Session() as sess:
     print('Saved baseline checkpoint')
     print('Baseline eval:')
     eval(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-         args.in_tensorname, args.out_tensorname, args.input_size)
+         args.in_tensorname, args.out_tensorname, args.input_size, mapping)
 
     # Training cycle
     print('Training started')
@@ -110,7 +136,7 @@ with tf.Session() as sess:
                                                 sample_weights: weights})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             eval(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-                 args.in_tensorname, args.out_tensorname, args.input_size)
+                 args.in_tensorname, args.out_tensorname, args.input_size, mapping)
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
