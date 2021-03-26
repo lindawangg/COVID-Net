@@ -4,7 +4,7 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
-**Update 03/20/2021:** We released a new COVID-Net CXR-2 [model](docs/models.md) for COVID-19 positive/negative detection which was trained on the new COVIDx8B dataset with 16,352 CXR images from a multinational cohort of 14,979 patients from at least 51 countries. The test results are based on the new COVIDx8B test set of 200 COVID-19 positive and 200 negative CXR images.\
+**Update 03/20/2021:** We released a new COVID-Net CXR-2 [model](docs/models.md) for COVID-19 positive/negative detection which was trained on the new COVIDx8B dataset with 16,352 CXR images from a multinational cohort of 15,346 patients from at least 51 countries. The test results are based on the new COVIDx8B test set of 200 COVID-19 positive and 200 negative CXR images.\
 **Update 03/19/2021:** We released updated datasets and dataset curation scripts. The COVIDx V8A dataset and create_COVIDx.ipynb are for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V8B dataset and create_COVIDx_binary.ipynb are for COVID-19 positive/negative detection. Both datasets contain over 16000 CXR images with over 2300 positive COVID-19 images.\
 **Update 01/28/2021:** We released updated datasets and dataset curation scripts. The COVIDx V7A dataset and create_COVIDx.ipynb are for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V7B dataset and create_COVIDx_binary.ipynb are for COVID-19 positive/negative detection. Both datasets contain over 15600 CXR images with over 1700 positive COVID-19 images.\
 **Update 01/05/2021:** We released a new COVIDx6 dataset for binary classification (COVID-19 positive or COVID-19 negative) with over 14500 CXR images and 617 positive COVID-19 images.\
@@ -139,7 +139,7 @@ These are the final results for the COVIDNet models.
     <td class="tg-7btt">Positive</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">96.5</td>
+    <td class="tg-c3ow">97.0</td>
     <td class="tg-c3ow">95.5</td>
   </tr>
 </table></div>
@@ -153,8 +153,8 @@ These are the final results for the COVIDNet models.
     <td class="tg-7btt">Positive</td>
   </tr>
   <tr>
-    <td class="tg-c3ow">95.5</td>
-    <td class="tg-c3ow">96.5</td>
+    <td class="tg-c3ow">95.6</td>
+    <td class="tg-c3ow">97.0</td>
   </tr>
 </table></div>
 
