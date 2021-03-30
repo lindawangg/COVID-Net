@@ -223,7 +223,7 @@ a7aef71b-0fc8-4837-be79-4ced56e03439 a7aef71b-0fc8-4837-be79-4ced56e03439.png ne
 dfa57c1f-01fb-4417-a1b5-0641a9b4bb84 dfa57c1f-01fb-4417-a1b5-0641a9b4bb84.png negative rsna
 5eb932e2-3455-40fe-93db-ae44f897d9e0 5eb932e2-3455-40fe-93db-ae44f897d9e0.png negative rsna
 e8485b0f-293d-4ca8-8b71-92db61c8ee3e e8485b0f-293d-4ca8-8b71-92db61c8ee3e.png negative rsna
-35cda03a-0898-4f8b-92d3-6f263aed23ff 35cda03a-0898-4f8b-92d3-6f263aed23ff.png negative rsna 
+35cda03a-0898-4f8b-92d3-6f263aed23ff 35cda03a-0898-4f8b-92d3-6f263aed23ff.png negative rsna
 d82e5841-2f43-4eab-ac17-e98a2d90c51b d82e5841-2f43-4eab-ac17-e98a2d90c51b.png negative rsna
 af1d168c-4850-41e1-85b8-ff8fc645e671 af1d168c-4850-41e1-85b8-ff8fc645e671.png negative rsna
 585f5059-8938-4885-accb-d7d0b1097c60 585f5059-8938-4885-accb-d7d0b1097c60.png negative rsna
@@ -312,7 +312,7 @@ b021293c-4dd0-450c-b1a4-2d72cedab0a2 b021293c-4dd0-450c-b1a4-2d72cedab0a2.png ne
 05d3817a-5535-4e77-8dda-d4412e496c81 05d3817a-5535-4e77-8dda-d4412e496c81.png negative rsna
 c21157da-1f74-4966-ba4e-c144d8f5da2d c21157da-1f74-4966-ba4e-c144d8f5da2d.png negative rsna
 5acc56a4-1b6e-4394-9364-9772047d583f 5acc56a4-1b6e-4394-9364-9772047d583f.png negative rsna
-8 SARS-10.1148rg.242035193-g04mr34g05x-Fig5-day9.jpeg negative rsna
+dd4d6a4c-1e67-4911-bda2-7d8af75b1b19 dd4d6a4c-1e67-4911-bda2-7d8af75b1b19.png negative rsna
 f0ba0019-718f-4677-a723-05c27dba2f3e f0ba0019-718f-4677-a723-05c27dba2f3e.png negative rsna
 cc3177c8-6570-497c-aef3-6fbddef692f6 cc3177c8-6570-497c-aef3-6fbddef692f6.png negative rsna
 0e03c2d7-9cea-4dc7-8e91-794a8b3ff58d 0e03c2d7-9cea-4dc7-8e91-794a8b3ff58d.png negative rsna
