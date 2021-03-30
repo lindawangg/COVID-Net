@@ -82,7 +82,7 @@ pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.20
 pydicom==2.1.2
-Pygments==2.7.1
+Pygments==2.7.4
 pylibjpeg==1.1.1
 pylibjpeg-libjpeg==1.1.0
 pylibjpeg-openjpeg==1.0.1
