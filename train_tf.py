@@ -74,6 +74,7 @@ with tf.Session() as sess:
     model_semantic.load_weights("./model/trained_model.hdf5")
     labels_tensor=tf.placeholder(tf.float32)
     sample_weights = tf.placeholder(tf.float32)
+    image_tensor = tf.placeholder(tf.float32)
 
     model_main= ResnetBuilder.build_resnet_50(input_shape=(2,1,args.input_size, args.input_size),num_outputs=2,model_semantic=model_semantic)
     graph = tf.get_default_graph()
