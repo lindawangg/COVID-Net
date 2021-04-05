@@ -4,9 +4,10 @@ import tensorflow as tf
 import os, argparse, pathlib
 import datetime
 
+from model.resnet import ResnetBuilder
 from eval import eval
 from data import BalanceCovidDataset
-
+from model.build_model import build_UNet2D_4L
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=200, type=int, help='Number of epochs')
@@ -64,16 +65,19 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
 
 with tf.Session() as sess:
     tf.get_default_graph()
-    saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
-    saver = tf.train.Saver(max_to_keep=1000)
+    saver = tf.train.Saver(max_to_keep=10)
 
+    #First we load the semantic model:
+    height_semantic = 256 #do not change unless train a new semantic model
+    width_semantic = 256
+    model_semantic = build_UNet2D_4L((height_semantic, width_semantic, 1))
+    model_semantic.load_weights("./model/trained_model.hdf5")
+    labels_tensor=tf.placeholder(tf.float32)
+    sample_weights = tf.placeholder(tf.float32)
+
+    model_main= ResnetBuilder.build_resnet_50(input_shape=(2,1,args.input_size, args.input_size),num_outputs=2,model_semantic=model_semantic)
     graph = tf.get_default_graph()
-
-    image_tensor = graph.get_tensor_by_name(args.in_tensorname)
-    labels_tensor = graph.get_tensor_by_name(args.label_tensorname)
-    sample_weights = graph.get_tensor_by_name(args.weights_tensorname)
-    pred_tensor = graph.get_tensor_by_name(args.logit_tensorname)
-    # loss expects unscaled logits since it performs a softmax on logits internally for efficiency
+    pred_tensor = graph.get_tensor_by_name("final_output")
 
     # Define loss and optimizer
     loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(
