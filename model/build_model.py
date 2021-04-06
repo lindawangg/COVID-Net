@@ -1,6 +1,6 @@
-from keras.models import Model
-from keras.layers.merge import concatenate
-from keras.layers import Input, Convolution2D, MaxPooling2D, UpSampling2D
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import concatenate
+from tensorflow.keras.layers import Input, Convolution2D, MaxPooling2D, UpSampling2D
 
 
 def build_UNet2D_4L(inp_shape, k_size=3):

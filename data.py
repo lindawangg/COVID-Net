@@ -1,5 +1,7 @@
 from tensorflow import keras
+import tensorflow as tf
 import pandas as pd
+from load_data import loadDataJSRT, loadDataJSRTSingle
 import numpy as np
 import os
 import cv2
@@ -92,7 +94,8 @@ class BalanceCovidDataset(keras.utils.Sequence):
             class_weights=[1., 1., 6.],
             top_percent=0.08,
             col_name=[],
-            target_name=""
+            target_name="",
+            width_semantic=256
     ):
         'Initialization'
 
@@ -112,6 +115,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.n = 0
         self.augmentation = augmentation
         self.top_percent = top_percent
+        self.width_semantic=width_semantic
         self.datasets = []
         self.mapping={}
         self.classes_data=[]
@@ -166,7 +170,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
 
     def __getitem__(self, idx):
         batch_x, batch_y = np.zeros(
-            (self.batch_size, *self.input_shape,
+            (self.batch_size,2, *self.input_shape,
              self.num_channels)), np.zeros(self.batch_size)
         samples=self.create_balance_batch(self.batch_size)
 
@@ -175,6 +179,9 @@ class BalanceCovidDataset(keras.utils.Sequence):
                                    self.top_percent,
                                    self.input_shape[0])
 
+            x1= loadDataJSRTSingle(os.path.join(self.datadir, sample[0]),
+                                   (self.width_semantic,self.width_semantic))
+
             if self.is_training and hasattr(self, 'augmentation'):
                 x = self.augmentation(x)
 
@@ -182,10 +189,11 @@ class BalanceCovidDataset(keras.utils.Sequence):
             x = x.astype('float32') / 255.0
             y = self.mapping[sample[1]]
 
-            batch_x[i] = x
+            batch_x[i][0] = x
+            batch_x[i][1][:self.width_semantic,:self.width_semantic,:1]= x1
             batch_y[i] = y
 
         class_weights = self.class_weights
         weights = np.take(class_weights, batch_y.astype('int64'))
 
-        return batch_x, keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights
+        return tf.cast(batch_x,tf.float32), keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights

@@ -1,22 +1,23 @@
 from __future__ import division
 
+import tensorflow as tf
 import six
-from keras.models import Model
-from keras.layers import (
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import (
     Input,
     Activation,
     Dense,
     Flatten
 )
-from keras.layers.convolutional import (
+from tensorflow.keras.layers import (
     Conv2D,
     MaxPooling2D,
     AveragePooling2D
 )
-from keras.layers.merge import add
-from keras.layers.normalization import BatchNormalization
-from keras.regularizers import l2
-from keras import backend as K
+from tensorflow.keras.layers import add
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras import backend as K
 
 
 def _bn_relu(input):
@@ -163,7 +164,7 @@ def _handle_dim_ordering():
     global ROW_AXIS
     global COL_AXIS
     global CHANNEL_AXIS
-    if K.image_dim_ordering() == 'tf':
+    if K.image_data_format() == 'channels_last':
         ROW_AXIS = 1
         COL_AXIS = 2
         CHANNEL_AXIS = 3
@@ -181,10 +182,14 @@ def _get_block(identifier):
         return res
     return identifier
 
+#This function maps the output semantic to the output of main network
+def set_attention(output_semantic,input_main):
+    pass
+
 
 class ResnetBuilder(object):
     @staticmethod
-    def build(input_shape, num_outputs, model_semantic, block_fn, repetitions):
+    def build(input_shape, width_semantic,num_outputs, model_semantic, block_fn, repetitions):
         """Builds a custom ResNet like architecture.
         Args:
             input_shape: The input shape in the form (nb_channels, nb_rows, nb_cols)
@@ -201,17 +206,21 @@ class ResnetBuilder(object):
             raise Exception("Input shape should be a tuple (input_num,nb_channels, nb_rows, nb_cols)")
 
         # Permute dimension order if necessary
-        if K.image_dim_ordering() == 'tf':
+        if K.image_data_format() == 'channels_last':
             input_shape = (input_shape[0], input_shape[2], input_shape[3], input_shape[1])
 
         # Load function from str if needed.
         block_fn = _get_block(block_fn)
 
         input = Input(shape=input_shape)
-        conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input[0])
-        output_s=model_semantic(input[1])
-        conv01 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(output_s)
-        pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same")(conv1 + conv01)
+        print(input.shape)
+        print(input[0].shape)
+        print(input[:,0].shape)
+        print(input[:,1,:width_semantic,:width_semantic,:1].shape)
+        conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input[:,0])
+        output_s= model_semantic(input[:,1,:width_semantic,:width_semantic,:1])
+        atten_map_1=set_attention(output_s,conv1.shape[1:])
+        pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same")(conv1 + atten_map_1)
 
         block = pool1
         filters = 64
@@ -234,21 +243,21 @@ class ResnetBuilder(object):
         return model
 
     @staticmethod
-    def build_resnet_18(input_shape, num_outputs, model_semantic):
-        return ResnetBuilder.build(input_shape, num_outputs, model_semantic, basic_block, [2, 2, 2, 2])
+    def build_resnet_18(input_shape, width_semantic,num_outputs, model_semantic):
+        return ResnetBuilder.build(input_shape, width_semantic,num_outputs, model_semantic, basic_block, [2, 2, 2, 2])
 
     @staticmethod
-    def build_resnet_34(input_shape, num_outputs, model_semantic):
-        return ResnetBuilder.build(input_shape, num_outputs, model_semantic, basic_block, [3, 4, 6, 3])
+    def build_resnet_34(input_shape, width_semantic,num_outputs, model_semantic):
+        return ResnetBuilder.build(input_shape, width_semantic,num_outputs, model_semantic, basic_block, [3, 4, 6, 3])
 
     @staticmethod
-    def build_resnet_50(input_shape, num_outputs, model_semantic):
-        return ResnetBuilder.build(input_shape, num_outputs, model_semantic, bottleneck, [3, 4, 6, 3])
+    def build_resnet_50(input_shape, width_semantic,num_outputs, model_semantic):
+        return ResnetBuilder.build(input_shape, width_semantic,num_outputs, model_semantic, bottleneck, [3, 4, 6, 3])
 
     @staticmethod
-    def build_resnet_101(input_shape, num_outputs, model_semantic):
-        return ResnetBuilder.build(input_shape, num_outputs, model_semantic, bottleneck, [3, 4, 23, 3])
+    def build_resnet_101(input_shape, width_semantic,num_outputs, model_semantic):
+        return ResnetBuilder.build(input_shape, width_semantic,num_outputs, model_semantic, bottleneck, [3, 4, 23, 3])
 
     @staticmethod
-    def build_resnet_152(input_shape, num_outputs, model_semantic):
-        return ResnetBuilder.build(input_shape, num_outputs, model_semantic, bottleneck, [3, 8, 36, 3])
+    def build_resnet_152(input_shape, width_semantic,num_outputs, model_semantic):
+        return ResnetBuilder.build(input_shape, width_semantic,num_outputs, model_semantic, bottleneck, [3, 8, 36, 3])
