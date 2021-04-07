@@ -3,7 +3,7 @@ import pandas as pd
 import tensorflow as tf
 import os, argparse, pathlib
 import datetime
-import numpy as np
+import numpy as np #for debugging
 from tensorflow.keras import backend as K
 
 from model.resnet import ResnetBuilder
@@ -136,7 +136,8 @@ with tf.Session() as sess:
             pred = sess.run(model_main, feed_dict={image_tensor: batch_x})
             loss = sess.run(loss_op, feed_dict={pred_tensor: pred,
                                                 labels_tensor: batch_y,
-                                                sample_weights: weights})
+                                                sample_weights: weights,
+                                                K.learning_phase(): 1})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print('Output: ' + runPath)
             eval(sess, graph, testfiles_frame, args.datadir,
