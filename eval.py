@@ -6,22 +6,30 @@ import os, argparse
 import cv2
 
 from data import process_image_file
+from load_data import loadDataJSRTSingle
 
 
-def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,mapping=None):
-    image_tensor = tf.placeholder(tf.float32)
+def fix_input_image(path_image,input_size,width_semantic,top_percent=0.08,num_channel=3):
+    x=np.zeros(( 2,input_size,input_size,num_channel))
+    x[0] = process_image_file(path_image, top_percent, input_size)
+    x[0] = x[0] / 255.0
+    x[1][:width_semantic,:width_semantic,:1]=loadDataJSRTSingle(path_image,
+                                   (width_semantic,width_semantic))
+    return x.astype('float32')
+
+def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,width_semantic,mapping=None):
+    input_2 = tf.placeholder(tf.float32)
     pred_tensor = output_tensor
-
+    print("hooray")
     y_test = []
     pred = []
     for i in range(testfile.shape[0]):
         line = testfile[i]
         if(line[2] == "None"):
             continue
-        x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
-        x = x.astype('float32') / 255.0
+        x = fix_input_image(os.path.join(testfolder, line[1]), input_size, width_semantic,0.08)
         y_test.append(mapping[line[2]])
-        pred.append(np.array(sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})).argmax(axis=1))
+        pred.append(np.array(sess.run(pred_tensor, feed_dict={input_2: np.expand_dims(x, axis=0)})).argmax(axis=1))
     y_test = np.array(y_test)
     pred = np.array(pred)
 

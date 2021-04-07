@@ -215,7 +215,7 @@ class ResnetBuilder(object):
 
         # Load function from str if needed.
         block_fn = _get_block(block_fn)
-
+        print(input_shape)
         input = Input(shape=input_shape)
         print(input.shape)
         print(input[0].shape)
@@ -244,7 +244,7 @@ class ResnetBuilder(object):
                       activation="softmax",name="final_output")(flatten1)
 
         model = Model(inputs=input, outputs=dense)
-        return model
+        return dense, model
 
     @staticmethod
     def build_resnet_18(input_shape, width_semantic,num_outputs, model_semantic):

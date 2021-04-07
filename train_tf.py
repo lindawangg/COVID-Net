@@ -4,6 +4,7 @@ import tensorflow as tf
 import os, argparse, pathlib
 import datetime
 import numpy as np
+from tensorflow.keras import backend as K
 
 from model.resnet import ResnetBuilder
 from eval import eval
@@ -76,23 +77,25 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
 batch_x, batch_y, weights = next(generator)
 
 with tf.Session() as sess:
+    K.set_session(sess)
     # First we load the semantic model:
     model_semantic = build_UNet2D_4L((height_semantic, width_semantic, 1))
     model_semantic.load_weights("./model/trained_model.hdf5")
     labels_tensor =  tf.placeholder(tf.float32)
     sample_weights = tf.placeholder(tf.float32)
     image_tensor = tf.placeholder(tf.float32)
+    pred_tensor = tf.placeholder(tf.float32)
 
-    model_main = ResnetBuilder.build_resnet_50(input_shape=(2, 3, args.input_size, args.input_size),
+    dense_layer,model_main = ResnetBuilder.build_resnet_50(input_shape=(2, 3, args.input_size, args.input_size),
                                                width_semantic=width_semantic, num_outputs=2,
                                                model_semantic=model_semantic)
-    pred_tensor = model_main(batch_x)
+    # pred_tensor = model_main(batch_x)
     graph = tf.get_default_graph()
     saver = tf.train.Saver(max_to_keep=10)
 
     # Define loss and optimizer
     loss_op = tf.reduce_mean(
-        tf.keras.backend.categorical_crossentropy(target=labels_tensor, output=pred_tensor, from_logits=True))
+        tf.keras.backend.categorical_crossentropy(target=labels_tensor, output=dense_layer, from_logits=True))
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss_op)
     print(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))
@@ -112,8 +115,8 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    # eval(sess, graph, testfiles_frame, args.datadir,
-    #      args.in_tensorname, pred_tensor, args.input_size, mapping=generator.mapping)
+    eval(sess, graph, testfiles_frame, args.datadir,
+         args.in_tensorname, dense_layer, args.input_size, width_semantic,mapping=generator.mapping)
 
     # Training cycle
     print('Training started')
@@ -129,7 +132,7 @@ with tf.Session() as sess:
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
-            pred = sess.run(pred_tensor, feed_dict={image_tensor: batch_x})
+            pred = sess.run(model_main, feed_dict={image_tensor: batch_x})
             loss = sess.run(loss_op, feed_dict={pred_tensor: pred,
                                                 labels_tensor: batch_y,
                                                 sample_weights: weights})
