@@ -244,7 +244,7 @@ class ResnetBuilder(object):
                       activation="softmax",name="final_output")(flatten1)
 
         model = Model(inputs=input, outputs=dense)
-        return dense, model
+        return model
 
     @staticmethod
     def build_resnet_18(input_shape, width_semantic,num_outputs, model_semantic):

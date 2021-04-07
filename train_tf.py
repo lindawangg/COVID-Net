@@ -83,19 +83,20 @@ with tf.Session() as sess:
     model_semantic.load_weights("./model/trained_model.hdf5")
     labels_tensor =  tf.placeholder(tf.float32)
     sample_weights = tf.placeholder(tf.float32)
-    image_tensor = tf.placeholder(tf.float32)
-    pred_tensor = tf.placeholder(tf.float32)
 
-    dense_layer,model_main = ResnetBuilder.build_resnet_50(input_shape=(2, 3, args.input_size, args.input_size),
+
+    model_main = ResnetBuilder.build_resnet_50(input_shape=(2, 3, args.input_size, args.input_size),
                                                width_semantic=width_semantic, num_outputs=2,
                                                model_semantic=model_semantic)
+    pred_tensor = model_main.output
+    image_tensor = model_main.input
     # pred_tensor = model_main(batch_x)
     graph = tf.get_default_graph()
     saver = tf.train.Saver(max_to_keep=10)
 
     # Define loss and optimizer
     loss_op = tf.reduce_mean(
-        tf.keras.backend.categorical_crossentropy(target=labels_tensor, output=dense_layer, from_logits=True))
+        tf.keras.backend.categorical_crossentropy(target=labels_tensor, output=pred_tensor, from_logits=True))
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss_op)
     print(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))
@@ -116,7 +117,7 @@ with tf.Session() as sess:
     print('Saved baseline checkpoint')
     print('Baseline eval:')
     eval(sess, graph, testfiles_frame, args.datadir,
-         args.in_tensorname, dense_layer, args.input_size, width_semantic,mapping=generator.mapping)
+         image_tensor, pred_tensor, args.input_size, width_semantic,mapping=generator.mapping)
 
     # Training cycle
     print('Training started')

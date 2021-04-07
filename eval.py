@@ -18,7 +18,7 @@ def fix_input_image(path_image,input_size,width_semantic,top_percent=0.08,num_ch
     return x.astype('float32')
 
 def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,width_semantic,mapping=None):
-    input_2 = tf.placeholder(tf.float32)
+    input_2 = input_tensor
     pred_tensor = output_tensor
     print("hooray")
     y_test = []
