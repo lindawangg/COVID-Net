@@ -129,7 +129,8 @@ with tf.Session() as sess:
             batch_x, batch_y, weights = next(generator)
             sess.run(train_op, feed_dict={image_tensor: batch_x.eval(session=sess),
                                           labels_tensor: batch_y,
-                                          sample_weights: weights})
+                                          sample_weights: weights,
+                                          K.learning_phase(): 1})
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
@@ -137,7 +138,7 @@ with tf.Session() as sess:
             loss = sess.run(loss_op, feed_dict={pred_tensor: pred,
                                                 labels_tensor: batch_y,
                                                 sample_weights: weights,
-                                                K.learning_phase(): 1})
+                                                K.learning_phase(): 0})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print('Output: ' + runPath)
             eval(sess, graph, testfiles_frame, args.datadir,
