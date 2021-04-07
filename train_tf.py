@@ -3,6 +3,7 @@ import pandas as pd
 import tensorflow as tf
 import os, argparse, pathlib
 import datetime
+import numpy as np
 
 from model.resnet import ResnetBuilder
 from eval import eval
@@ -78,11 +79,11 @@ with tf.Session() as sess:
     # First we load the semantic model:
     model_semantic = build_UNet2D_4L((height_semantic, width_semantic, 1))
     model_semantic.load_weights("./model/trained_model.hdf5")
-    labels_tensor = batch_y
+    labels_tensor =  tf.placeholder(tf.float32)
     sample_weights = tf.placeholder(tf.float32)
     image_tensor = tf.placeholder(tf.float32)
 
-    model_main = ResnetBuilder.build_resnet_50(input_shape=(2, 1, args.input_size, args.input_size),
+    model_main = ResnetBuilder.build_resnet_50(input_shape=(2, 3, args.input_size, args.input_size),
                                                width_semantic=width_semantic, num_outputs=2,
                                                model_semantic=model_semantic)
     pred_tensor = model_main(batch_x)
@@ -111,8 +112,8 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    eval(sess, graph, testfiles_frame, args.datadir,
-         args.in_tensorname, args.out_tensorname, args.input_size, mapping=generator.mapping)
+    # eval(sess, graph, testfiles_frame, args.datadir,
+    #      args.in_tensorname, args.out_tensorname, args.input_size, mapping=generator.mapping)
 
     # Training cycle
     print('Training started')

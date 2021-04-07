@@ -183,8 +183,12 @@ def _get_block(identifier):
     return identifier
 
 #This function maps the output semantic to the output of main network
-def set_attention(output_semantic,input_main):
-    pass
+def set_attention(output_semantic,output_main):
+    fixed_image=tf.image.resize(output_semantic, output_main.shape[1:-1])
+    return Conv2D(filters=output_main.shape[-1], kernel_size=(7, 7),
+                      strides=(1, 1), padding="same",
+                      kernel_initializer="he_normal",
+                      kernel_regularizer=l2(1e-4))(fixed_image)
 
 
 class ResnetBuilder(object):
@@ -219,8 +223,8 @@ class ResnetBuilder(object):
         print(input[:,1,:width_semantic,:width_semantic,:1].shape)
         conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input[:,0])
         output_s= model_semantic(input[:,1,:width_semantic,:width_semantic,:1])
-        atten_map_1=set_attention(output_s,conv1.shape[1:])
-        pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same")(conv1 + atten_map_1)
+        atten_map_1=set_attention(output_s,conv1)
+        pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same")(conv1 + conv1*atten_map_1)
 
         block = pool1
         filters = 64
