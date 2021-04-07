@@ -113,7 +113,7 @@ with tf.Session() as sess:
     print('Saved baseline checkpoint')
     print('Baseline eval:')
     # eval(sess, graph, testfiles_frame, args.datadir,
-    #      args.in_tensorname, args.out_tensorname, args.input_size, mapping=generator.mapping)
+    #      args.in_tensorname, pred_tensor, args.input_size, mapping=generator.mapping)
 
     # Training cycle
     print('Training started')

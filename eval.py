@@ -9,8 +9,8 @@ from data import process_image_file
 
 
 def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,mapping=None):
-    image_tensor = graph.get_tensor_by_name(input_tensor)
-    pred_tensor = graph.get_tensor_by_name(output_tensor)
+    image_tensor = tf.placeholder(tf.float32)
+    pred_tensor = output_tensor
 
     y_test = []
     pred = []
