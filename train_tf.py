@@ -14,7 +14,8 @@ parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=100, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
-parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to model files, defaults to \'models/COVIDNet-CXR-2\'')
+parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str,
+                    help='Path to model files, defaults to \'models/COVIDNet-CXR-2\'')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
 parser.add_argument('--n_classes', default=2, type=int, help='Number of detected classes, defaults to 2')
@@ -27,11 +28,16 @@ parser.add_argument('--covid_percent', default=0.5, type=float, help='Percentage
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
-parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str, help='Name of output tensor from graph')
-parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str, help='Name of logit tensor for loss')
-parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str, help='Name of label tensor for loss')
-parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
-
+parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str,
+                    help='Name of output tensor from graph')
+parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str,
+                    help='Name of logit tensor for loss')
+parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str,
+                    help='Name of label tensor for loss')
+parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str,
+                    help='Name of sample weights tensor for loss')
+parser.add_argument('--training_tensorname', default='keras_learning_phase:0', type=str,
+                    help='Name of training placeholder tensor')
 
 args = parser.parse_args()
 
@@ -91,6 +97,7 @@ with tf.Session() as sess:
     labels_tensor = graph.get_tensor_by_name(args.label_tensorname)
     sample_weights = graph.get_tensor_by_name(args.weights_tensorname)
     pred_tensor = graph.get_tensor_by_name(args.logit_tensorname)
+    is_training = graph.get_tensor_by_name(args.training_tensorname)
     # loss expects unscaled logits since it performs a softmax on logits internally for efficiency
 
     # Define loss and optimizer
@@ -126,7 +133,8 @@ with tf.Session() as sess:
             batch_x, batch_y, weights = next(generator)
             sess.run(train_op, feed_dict={image_tensor: batch_x,
                                           labels_tensor: batch_y,
-                                          sample_weights: weights})
+                                          sample_weights: weights,
+                                          is_training: True})
             progbar.update(i+1)
 
         if epoch % display_step == 0:
