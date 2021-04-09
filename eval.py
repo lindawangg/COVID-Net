@@ -25,7 +25,7 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     y_test = np.array(y_test)
     pred = np.array(pred)
 
-    matrix = confusion_matrix(y_test, pred)
+    matrix = confusion_matrix(y_test, pred, labels=(0,1))
     matrix = matrix.astype('float')
     #cm_norm = matrix / matrix.sum(axis=1)[:, np.newaxis]
     print(matrix)
