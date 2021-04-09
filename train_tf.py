@@ -93,7 +93,7 @@ with tf.Session() as sess:
     pred_tensor = model_main.output
     image_tensor = model_main.input
     # pred_tensor = model_main(batch_x)
-    semantic_embeded_index=[j for j,i in enumerate(model_main.layers) if i.name=="model"][0]
+    sem_embed_index=[j for j, i in enumerate(model_main.layers) if i.name == "model"][0]
     graph = tf.get_default_graph()
     saver = tf.train.Saver(max_to_keep=10)
 
@@ -127,10 +127,10 @@ with tf.Session() as sess:
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
-        if(i<args.in_sem):
-            model_semantic[semantic_embeded_index].trainable= False
+        if(epoch<args.in_sem):
+            model_main.layers[sem_embed_index].trainable= False
         else:
-            model_semantic[semantic_embeded_index].trainable = True
+            model_main.layers[sem_embed_index].trainable = True
         for i in range(total_batch):
             # Run optimization
             batch_x, batch_y, weights = next(generator)
