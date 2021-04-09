@@ -119,16 +119,18 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    eval(sess, graph, testfiles_frame, args.datadir,
-         image_tensor, pred_tensor, args.input_size, width_semantic,mapping=generator.mapping)
+    # eval(sess, graph, testfiles_frame, args.datadir,
+    #      image_tensor, pred_tensor, args.input_size, width_semantic,mapping=generator.mapping)
 
     # Training cycle
     print('Training started')
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
+        print("num trains before:"+str(len(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))))
         if(epoch<args.in_sem):
             model_main.layers[sem_embed_index].trainable= False
+            print("num trains after:" + str(len(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))))
         else:
             model_main.layers[sem_embed_index].trainable = True
         for i in range(total_batch):
