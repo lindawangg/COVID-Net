@@ -20,6 +20,7 @@ def central_crop(img):
     return img[offset_h:offset_h + size, offset_w:offset_w + size]
 
 def process_image_file(filepath, top_percent, size):
+    print(filepath)
     img = cv2.imread(filepath)
     img = crop_top(img, percent=top_percent)
     img = central_crop(img)
@@ -87,7 +88,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             is_training=True,
             batch_size=8,
             input_shape=(224, 224),
-            n_classes=3,
+            n_classes=2,
             num_channels=3,
             shuffle=True,
             augmentation=apply_augmentation,
@@ -96,7 +97,8 @@ class BalanceCovidDataset(keras.utils.Sequence):
             top_percent=0.08,
             col_name=[],
             target_name="",
-            width_semantic=256
+            width_semantic=256,
+            mapping={'negative':0, 'positive':1}
     ):
         'Initialization'
 
@@ -106,9 +108,9 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.batch_size = batch_size
         self.N = len(self.dataset)
         self.input_shape = input_shape
-        self.n_classes = 0
+        self.n_classes = 2
         self.num_channels = num_channels
-        self.mapping = {}
+        self.mapping = mapping
         self.shuffle = True
         self.covid_percent = covid_percent
         self.class_weights = class_weights
@@ -116,6 +118,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.n = 0
         self.augmentation = augmentation
         self.top_percent = top_percent
+        self.width_semantic = width_semantic
         datasets = {}
         for key in self.mapping.keys():
             datasets[key] = []
@@ -195,11 +198,11 @@ class BalanceCovidDataset(keras.utils.Sequence):
             else:
                 folder = 'test'
 
-            x = process_image_file(os.path.join(self.datadir, sample[1]),
+            x = process_image_file(os.path.join(self.datadir, folder, sample[1]),
                                    self.top_percent,
                                    self.input_shape[0])
 
-            x1= loadDataJSRTSingle(os.path.join(self.datadir, sample[1]),
+            x1= loadDataJSRTSingle(os.path.join(self.datadir, folder, sample[1]),
                                    (self.width_semantic,self.width_semantic))
 
             if self.is_training and hasattr(self, 'augmentation'):
@@ -216,4 +219,4 @@ class BalanceCovidDataset(keras.utils.Sequence):
         class_weights = self.class_weights
         weights = np.take(class_weights, batch_y.astype('int64'))
 
-        return tf.cast(batch_x,tf.float32), keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights
+        return batch_x.astype('float32'), keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights

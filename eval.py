@@ -17,18 +17,16 @@ def fix_input_image(path_image,input_size,width_semantic,top_percent=0.08,num_ch
                                    (width_semantic,width_semantic))
     return x.astype('float32')
 
-def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,width_semantic,mapping=None):
+def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,width_semantic,mapping=None, training_tensor='keras_learning_phase:0'):
     input_2 = input_tensor
     pred_tensor = output_tensor
     y_test = []
     pred = []
-    for i in range(testfile.shape[0]):
-        line = testfile[i]
-        if(line[2] == "None"):
-            continue
+    for i in range(len(testfile)):
+        line = testfile[i].split()
         x = fix_input_image(os.path.join(testfolder, line[1]), input_size, width_semantic,0.08)
         y_test.append(mapping[line[2]])
-        pred.append(np.array(sess.run(pred_tensor, feed_dict={input_2: np.expand_dims(x, axis=0)})).argmax(axis=1))
+        pred.append(np.array(sess.run(pred_tensor, feed_dict={input_2: np.expand_dims(x, axis=0), training_tensor: 0})).argmax(axis=1))
     y_test = np.array(y_test)
     pred = np.array(pred)
 
