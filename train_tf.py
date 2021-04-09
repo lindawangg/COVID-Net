@@ -29,6 +29,8 @@ parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/final
                     help='Path to data folder')
 parser.add_argument('--covid_weight', default=4., type=float, help='Class weighting for covid')
 parser.add_argument('--covid_percent', default=0.3, type=float, help='Percentage of covid samples in batch')
+parser.add_argument('--in_sem', default=50, type=int,
+                    help='initial_itrs until training semantic')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
@@ -91,6 +93,7 @@ with tf.Session() as sess:
     pred_tensor = model_main.output
     image_tensor = model_main.input
     # pred_tensor = model_main(batch_x)
+    semantic_embeded_index=[j for j,i in enumerate(model_main.layers) if i.name=="model"][0]
     graph = tf.get_default_graph()
     saver = tf.train.Saver(max_to_keep=10)
 
@@ -124,6 +127,10 @@ with tf.Session() as sess:
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
+        if(i<args.in_sem):
+            model_semantic[semantic_embeded_index].trainable= False
+        else:
+            model_semantic[semantic_embeded_index].trainable = True
         for i in range(total_batch):
             # Run optimization
             batch_x, batch_y, weights = next(generator)

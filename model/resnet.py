@@ -222,8 +222,8 @@ class ResnetBuilder(object):
         print(input[0].shape)
         print(input[:, 0].shape)
         print(input[:, 1, :width_semantic, :width_semantic, :1].shape)
-        conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input[:, 0])
         output_s = model_semantic(input[:, 1, :width_semantic, :width_semantic, :1])
+        conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input[:, 0])
         atten_map_1 = set_attention(output_s, conv1)
         pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same")(conv1 + conv1 * atten_map_1)
 
