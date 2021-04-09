@@ -20,7 +20,6 @@ def fix_input_image(path_image,input_size,width_semantic,top_percent=0.08,num_ch
 def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,width_semantic,mapping=None):
     input_2 = input_tensor
     pred_tensor = output_tensor
-    print("hooray")
     y_test = []
     pred = []
     for i in range(testfile.shape[0]):
@@ -39,70 +38,6 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     print(matrix)
     #class_acc = np.array(cm_norm.diagonal())
     class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
-    try:
-        print('class_acc: {}: {}, {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],class_acc[0],
-                                                              list(mapping.keys())[list(mapping.values()).index(1)],class_acc[1],
-                                                              list(mapping.keys())[list(mapping.values()).index(2)],class_acc[2],
-                                                              list(mapping.keys())[list(mapping.values()).index(3)],class_acc[3]))
-    except:
-        try:
-            print('class_acc: {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],
-                                                                 class_acc[0],
-                                                                 list(mapping.keys())[list(mapping.values()).index(1)],
-                                                                 class_acc[1],
-                                                                 list(mapping.keys())[list(mapping.values()).index(2)],
-                                                                 class_acc[2]))
-        except:
-            print('class_acc: {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],
-                                                             class_acc[0],
-                                                             list(mapping.keys())[list(mapping.values()).index(1)],
-                                                             class_acc[1]))
-
-
-    ppvs = [matrix[i,i]/np.sum(matrix[:,i]) if np.sum(matrix[:,i]) else 0 for i in range(len(matrix))]
-    try:
-        print('ppvs: {}: {}, {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)], ppvs[0],
-                                                  list(mapping.keys())[list(mapping.values()).index(1)], ppvs[1],
-                                                  list(mapping.keys())[list(mapping.values()).index(2)], ppvs[2],
-                                                  list(mapping.keys())[list(mapping.values()).index(3)], ppvs[3]))
-    except:
-        try:
-            print('ppvs: {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],
-                                                            ppvs[0],
-                                                            list(mapping.keys())[list(mapping.values()).index(1)],
-                                                            ppvs[1],
-                                                            list(mapping.keys())[list(mapping.values()).index(2)],
-                                                            ppvs[2]))
-        except:
-            print('ppvs: {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],
-                                                        ppvs[0],
-                                                        list(mapping.keys())[list(mapping.values()).index(1)],
-                                                        ppvs[1]))
-
-
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='COVID-Net Evaluation')
-    parser.add_argument('--weightspath', default='models/COVIDNet-CXR4-A', type=str, help='Path to output folder')
-    parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
-    parser.add_argument('--ckptname', default='model-18540', type=str, help='Name of model ckpts')
-    parser.add_argument('--testfile', default='test_COVIDx5.txt', type=str, help='Name of testfile')
-    parser.add_argument('--testfolder', default='data/test', type=str, help='Folder where test data is located')
-    parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
-    parser.add_argument('--out_tensorname', default='norm_dense_1/Softmax:0', type=str, help='Name of output tensor from graph')
-    parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
-
-    args = parser.parse_args()
-
-    sess = tf.Session()
-    tf.get_default_graph()
-    saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
-    saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
-
-    graph = tf.get_default_graph()
-
-    file = open(args.testfile, 'r')
-    testfile = file.readlines()
-
-    eval(sess, graph, testfile, args.testfolder, args.in_tensorname, args.out_tensorname, args.input_size)
+    print('Sens', ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
+    ppvs = [matrix[i, i] / np.sum(matrix[:, i]) if np.sum(matrix[:, i]) else 0 for i in range(len(matrix))]
+    print('PPV', ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))
