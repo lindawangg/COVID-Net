@@ -116,25 +116,31 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.n = 0
         self.augmentation = augmentation
         self.top_percent = top_percent
-        self.width_semantic=width_semantic
-        self.datasets = []
-        self.mapping={}
-        self.classes_data=[]
-        df = pd.read_csv(csv_file, delimiter=" ",names=col_name)
-        result=df[target_name].value_counts()
-        for element in list(df[target_name].unique()):
-            if element not in ["None"]:
-                self.datasets.extend(df.loc[df[target_name] == element][["img_path",target_name]].values)
-                self.mapping[element]=self.n_classes
-                self.classes_data.append(df.loc[df[target_name] == element][["img_path",target_name]].values)
-                if(flag_empty_weight):
-                    self.class_weights.append(1-result[element]/sum(result))
-                if(element=="Mild"):
-                    self.class_weights[self.n_classes]=2
-                self.n_classes+=1
-        self.datasets=np.array(self.datasets)
+        datasets = {}
+        for key in self.mapping.keys():
+            datasets[key] = []
+
+        for l in self.dataset:
+            if l.split()[-1] == 'sirm':
+                datasets[l.split()[3]].append(l)
+            else:
+                datasets[l.split()[2]].append(l)
+
+        if self.n_classes == 2:
+            self.datasets = [
+                datasets['negative'], datasets['positive']
+            ]
+        elif self.n_classes == 3:
+            self.datasets = [
+                datasets['normal'] + datasets['pneumonia'],
+                datasets['COVID-19'],
+            ]
+        else:
+            raise Exception('Only binary or 3 class classification currently supported.')
+        print(len(self.datasets[0]), len(self.datasets[1]))
+
         self.on_epoch_end()
-        print(self.mapping)
+
 
     def __next__(self):
         # Get one batch of data
@@ -155,32 +161,45 @@ class BalanceCovidDataset(keras.utils.Sequence):
     def on_epoch_end(self):
         'Updates indexes after each epoch'
         if self.shuffle == True:
-            np.random.shuffle(self.datasets)
-            for element in self.classes_data:
-                np.random.shuffle(element)
-
-    def create_balance_batch(self,size):
-        sample_per_class=np.floor(size/len(self.classes_data))
-        samples=[]
-        for i in range(len(self.classes_data)):
-            samples.extend(list(self.classes_data[i][np.random.choice((self.classes_data[i]).shape[0], int(sample_per_class), replace=False)]))
-        if(len(samples)<size):
-            samples.extend(list(self.datasets[np.random.choice(self.datasets.shape[0], size-len(samples), replace=False)]))
-        return samples
-
+            for v in self.datasets:
+                np.random.shuffle(v)
 
     def __getitem__(self, idx):
         batch_x, batch_y = np.zeros(
             (self.batch_size,2, *self.input_shape,
              self.num_channels)), np.zeros(self.batch_size)
-        samples=self.create_balance_batch(self.batch_size)
 
-        for i,sample in enumerate(samples):
-            x = process_image_file(os.path.join(self.datadir, sample[0]),
+        batch_files = self.datasets[0][idx * self.batch_size:(idx + 1) *
+                                                             self.batch_size]
+
+        # upsample covid cases
+        covid_size = max(int(len(batch_files) * self.covid_percent), 1)
+        covid_inds = np.random.choice(np.arange(len(batch_files)),
+                                      size=covid_size,
+                                      replace=False)
+        covid_files = np.random.choice(self.datasets[1],
+                                       size=covid_size,
+                                       replace=False)
+        for i in range(covid_size):
+            batch_files[covid_inds[i]] = covid_files[i]
+
+        for i in range(len(batch_files)):
+            sample = batch_files[i].split()
+
+            # Remove first item from sirm samples for proper indexing as a result of spacing in file name
+            if sample[-1] == 'sirm':
+                sample.pop(0)
+
+            if self.is_training:
+                folder = 'train'
+            else:
+                folder = 'test'
+
+            x = process_image_file(os.path.join(self.datadir, sample[1]),
                                    self.top_percent,
                                    self.input_shape[0])
 
-            x1= loadDataJSRTSingle(os.path.join(self.datadir, sample[0]),
+            x1= loadDataJSRTSingle(os.path.join(self.datadir, sample[1]),
                                    (self.width_semantic,self.width_semantic))
 
             if self.is_training and hasattr(self, 'augmentation'):
@@ -188,7 +207,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
 
 
             x = x.astype('float32') / 255.0
-            y = self.mapping[sample[1]]
+            y = self.mapping[sample[2]]
 
             batch_x[i][0] = x
             batch_x[i][1][:self.width_semantic,:self.width_semantic,:1]= x1
