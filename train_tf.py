@@ -48,6 +48,8 @@ parser.add_argument('--load_weight', action='store_true',
 height_semantic = 256  # do not change unless train a new semantic model
 width_semantic = 256
 
+switcher=3
+
 args = parser.parse_args()
 os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
 
@@ -101,7 +103,6 @@ with tf.Session() as sess:
     loss_op = tf.reduce_mean(
         tf.keras.backend.categorical_crossentropy(target=labels_tensor, output=pred_tensor, from_logits=True))
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
-    train_op = optimizer.minimize(loss_op)
     print(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))
 
     # Initialize the variables
@@ -127,15 +128,18 @@ with tf.Session() as sess:
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
-        print("num trains before:"+str(len(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))))
-        if(epoch<args.in_sem):
+        train_vars=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+        print("num trains before:"+str(len(train_vars)))
+        if(epoch<args.in_sem or epoch%switcher!=0):
             model_main.layers[sem_embed_index].trainable= False
-            print("num trains after:" + str(len(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))))
+            train_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
+            print("num trains after:" +str(len(train_vars)))
         else:
-            model_main.layers[sem_embed_index].trainable = True
+            train_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES,"sem*")
         for i in range(total_batch):
             # Run optimization
             batch_x, batch_y, weights = next(generator)
+            train_op = optimizer.minimize(loss_op, var_list=train_vars)
             sess.run(train_op, feed_dict={image_tensor: batch_x.eval(session=sess),
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
