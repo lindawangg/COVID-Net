@@ -139,12 +139,17 @@ with tf.Session() as sess:
             train_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES,"sem*")
         for i in range(total_batch):
             # Run optimization
+            cur_time = datetime.datetime.now()
             batch_x, batch_y, weights = next(generator)
+            next_time1=datetime.datetime.now()
+            print("time to get batch: {}".format(str(next_time1-cur_time)))
             train_op = optimizer.minimize(loss_op, var_list=train_vars)
+
             sess.run(train_op, feed_dict={image_tensor: batch_x.eval(session=sess),
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})
+            print("time to process tf model: {}".format(str(datetime.datetime.now()-next_time1)))
             progbar.update(i + 1)
 
         if epoch % display_step == 0:

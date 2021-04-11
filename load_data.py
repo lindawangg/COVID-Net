@@ -1,5 +1,6 @@
 import numpy as np
 import glob
+import cv2
 import os
 from skimage import transform, io, img_as_float, exposure
 
@@ -31,12 +32,13 @@ def loadDataJSRT(img_dir, im_shape):
 def loadDataJSRTSingle(img_dir, im_shape):
     """This function loads data preprocessed with `preprocess_JSRT.py`"""
     X= []
-    img = io.imread(img_dir,as_gray=True)
-    img = transform.resize(img, im_shape)
+    img = cv2.imread(img_dir, cv2.IMREAD_GRAYSCALE)
+    img = cv2.resize(img, im_shape)
     img = np.expand_dims(img, -1)
     X.append(img)
 
     X = np.array(X)
+    X=X.astype('float64')
     X -= X.mean()
     X /= X.std()
     return X[0]
