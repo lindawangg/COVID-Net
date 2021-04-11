@@ -25,7 +25,7 @@ parser.add_argument('--trainfile', default='labels/train_COVIDx8B.txt', type=str
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
 parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
-parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/final_pngs', type=str,
+parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/data', type=str,
                     help='Path to data folder')
 parser.add_argument('--in_sem', default=50, type=int,
                     help='initial_itrs until training semantic')
