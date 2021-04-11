@@ -21,7 +21,7 @@ parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=50, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
-parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to model files, defaults to \'models/COVIDNet-CXR-2\'')
+parser.add_argument('--weightspath', default='/home/maya.pavlova/covidnet-orig/models/COVIDNet-CXR-2', type=str, help='Path to model files, defaults to \'models/COVIDNet-CXR-2\'')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
 parser.add_argument('--n_classes', default=2, type=int, help='Number of detected classes, defaults to 2')
@@ -67,7 +67,7 @@ else:
 
 # Set up folds
 files = _process_csv_file(args.file)
-kf = KFold(n_splits=10, random_state=42, shuffle=True)
+kf = KFold(n_splits=5, random_state=42, shuffle=True)
 
 with tf.Session() as sess:
     tf.get_default_graph()
