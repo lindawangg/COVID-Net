@@ -18,15 +18,21 @@ def fix_input_image(path_image,input_size,width_semantic,top_percent=0.08,num_ch
     return x.astype('float32')
 
 def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,width_semantic,mapping=None, training_tensor='keras_learning_phase:0'):
+    counter_invalid_images=0
     input_2 = input_tensor
     pred_tensor = output_tensor
     y_test = []
     pred = []
     for i in range(len(testfile)):
         line = testfile[i].split()
-        x = fix_input_image(os.path.join(testfolder, line[1]), input_size, width_semantic,0.08)
+        try:
+            x = fix_input_image(os.path.join(testfolder, line[1]), input_size, width_semantic,0.08)
+        except:
+            counter_invalid_images+=1
+            continue
         y_test.append(mapping[line[2]])
         pred.append(np.array(sess.run(pred_tensor, feed_dict={input_2: np.expand_dims(x, axis=0), training_tensor: 0})).argmax(axis=1))
+    print("Number of invalid images in test: {}".format(str(counter_invalid_images)))
     y_test = np.array(y_test)
     pred = np.array(pred)
 
@@ -36,6 +42,7 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     print(matrix)
     #class_acc = np.array(cm_norm.diagonal())
     class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
+    print(class_acc)
     print('Sens', ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
     ppvs = [matrix[i, i] / np.sum(matrix[:, i]) if np.sum(matrix[:, i]) else 0 for i in range(len(matrix))]
     print('PPV', ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))

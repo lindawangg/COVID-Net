@@ -150,14 +150,14 @@ with tf.Session() as sess:
             # Run optimization
             batch_x, batch_y, weights = next(generator)
             train_op = optimizer.minimize(loss_op, var_list=train_vars)
-            sess.run(train_op, feed_dict={image_tensor: batch_x.eval(session=sess),
+            sess.run(train_op, feed_dict={image_tensor: batch_x,
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
-            pred = sess.run(model_main, feed_dict={image_tensor: batch_x})
+            pred = model_main(batch_x).eval(session=sess)
             loss = sess.run(loss_op, feed_dict={pred_tensor: pred,
                                                 labels_tensor: batch_y,
                                                 sample_weights: weights,
