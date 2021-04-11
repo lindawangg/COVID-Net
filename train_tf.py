@@ -17,15 +17,15 @@ parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path", "class"])
 parser.add_argument('--target_name', type=str, default="class")
-parser.add_argument('--weightspath', default='/home/maya.pavlova/covidnet-orig/output/sev_models/covidnet-cxr-2',
+parser.add_argument('--weightspath', default='output/sev_models/covidnet-cxr-2',
                     type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model_train.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model-1705', type=str, help='Name of model ckpts')
-parser.add_argument('--trainfile', default='labels/sev_adg_train_binary.txt', type=str, help='Path to train file')
+parser.add_argument('--trainfile', default='labels/train_COVIDx8B.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
-parser.add_argument('--testfile', default='labels/sev_adg_test_binary.txt', type=str, help='Path to test file')
+parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
-parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/final_pngs', type=str,
+parser.add_argument('--datadir', default='data', type=str,
                     help='Path to data folder')
 parser.add_argument('--in_sem', default=50, type=int,
                     help='initial_itrs until training semantic')
@@ -44,6 +44,8 @@ parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights
                     help='Name of sample weights tensor for loss')
 parser.add_argument('--load_weight', action='store_true',
                     help='default False')
+parser.add_argument('--training_tensorname', default='keras_learning_phase:0', type=str,
+                    help='Name of training placeholder tensor')
 
 height_semantic = 256  # do not change unless train a new semantic model
 width_semantic = 256
@@ -65,7 +67,9 @@ runPath = outputPath + runID
 pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
 print('Output: ' + runPath)
 
-testfiles_frame = pd.read_csv(args.testfile, delimiter=" ", names=args.col_name).values
+# testfiles_frame = pd.read_csv(args.testfile, delimiter=" ", names=args.col_name).values
+with open(args.testfile) as f:
+    testfiles = f.readlines()
 
 generator = BalanceCovidDataset(data_dir=args.datadir,
                                 csv_file=args.trainfile,
@@ -94,9 +98,13 @@ with tf.Session() as sess:
     pred_tensor = model_main.output
     image_tensor = model_main.input
     # pred_tensor = model_main(batch_x)
+
     graph = tf.get_default_graph()
     sem_embed_index = [j for j, i in enumerate(model_main.layers) if i.name == "model"][0]
     saver = tf.train.Saver(max_to_keep=10)
+
+    # Get training placeholder tensor
+    is_training = graph.get_tensor_by_name(args.training_tensorname)
 
     # Define loss and optimizer
     loss_op = tf.reduce_mean(
@@ -120,8 +128,10 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    eval(sess, graph, testfiles_frame, args.datadir,
-         image_tensor, pred_tensor, args.input_size, width_semantic,mapping=generator.mapping)
+    eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
+         image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+
+
 
     # Training cycle
     print('Training started')
