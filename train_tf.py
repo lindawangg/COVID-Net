@@ -27,6 +27,8 @@ parser.add_argument('--testfile', default='labels/sev_adg_test_binary.txt', type
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/final_pngs', type=str,
                     help='Path to data folder')
+parser.add_argument('--in_sem', default=50, type=int,
+                    help='initial_itrs until training semantic')
 parser.add_argument('--covid_weight', default=4., type=float, help='Class weighting for covid')
 parser.add_argument('--covid_percent', default=0.3, type=float, help='Percentage of covid samples in batch')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
@@ -45,6 +47,7 @@ parser.add_argument('--load_weight', action='store_true',
 
 height_semantic = 256  # do not change unless train a new semantic model
 width_semantic = 256
+switcher=3
 
 args = parser.parse_args()
 os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
@@ -92,6 +95,7 @@ with tf.Session() as sess:
     image_tensor = model_main.input
     # pred_tensor = model_main(batch_x)
     graph = tf.get_default_graph()
+    sem_embed_index = [j for j, i in enumerate(model_main.layers) if i.name == "model"][0]
     saver = tf.train.Saver(max_to_keep=10)
 
     # Define loss and optimizer
@@ -124,6 +128,14 @@ with tf.Session() as sess:
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
+        train_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+        print("num trains before:" + str(len(train_vars)))
+        if (epoch < args.in_sem or epoch % switcher != 0):
+            model_main.layers[sem_embed_index].trainable = False
+            train_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
+            print("num trains after:" + str(len(train_vars)))
+        else:
+            train_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
         for i in range(total_batch):
             # Run optimization
             batch_x, batch_y, weights = next(generator)
@@ -142,7 +154,7 @@ with tf.Session() as sess:
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print('Output: ' + runPath)
             eval(sess, graph, testfiles_frame, args.datadir,
-                 args.in_tensorname, args.out_tensorname, args.input_size, mapping=generator.mapping)
+                 image_tensor, pred_tensor, args.input_size, width_semantic,mapping=generator.mapping)
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
