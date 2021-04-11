@@ -103,6 +103,7 @@ with tf.Session() as sess:
     loss_op = tf.reduce_mean(
         tf.keras.backend.categorical_crossentropy(target=labels_tensor, output=pred_tensor, from_logits=True))
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+    train_op = optimizer.minimize(loss_op)
     print(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))
 
     # Initialize the variables
