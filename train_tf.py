@@ -149,6 +149,7 @@ with tf.Session() as sess:
         for i in range(total_batch):
             # Run optimization
             batch_x, batch_y, weights = next(generator)
+            train_op = optimizer.minimize(loss_op, var_list=train_vars)
             sess.run(train_op, feed_dict={image_tensor: batch_x.eval(session=sess),
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
