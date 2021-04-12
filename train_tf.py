@@ -18,7 +18,7 @@ from model.build_model import build_UNet2D_4L
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=200, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
-parser.add_argument('--bs', default=8, type=int, help='Batch size')
+parser.add_argument('--bs', default=16, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path", "class"])
 parser.add_argument('--target_name', type=str, default="class")
 parser.add_argument('--weightspath', default='output/sev_models/covidnet-cxr-2',
@@ -160,7 +160,8 @@ with tf.Session() as sess:
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
-            pred = model_main(batch_x).eval(session=sess)
+            semantic_output=model_semantic(batch_sem_x.astype('float32')).eval(session=sess)
+            pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
             loss = sess.run(loss_op, feed_dict={pred_tensor: pred,
                                                 labels_tensor: batch_y,
                                                 sample_weights: weights,
