@@ -42,8 +42,8 @@ def random_ratio_resize(img, prob=0.3, delta=0.1):
     dw = img.shape[1] - size[0]
     left, right = dw // 2, dw - dw // 2
 
-    if size[0] > 480 or size[1] > 480:
-        print(img.shape, size, ratio)
+    # if size[0] > 480 or size[1] > 480:
+    #     print(img.shape, size, ratio)
 
     img = cv2.resize(img, size)
     img = cv2.copyMakeBorder(img, top, bot, left, right, cv2.BORDER_CONSTANT,
