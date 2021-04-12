@@ -6,6 +6,10 @@ import datetime
 import numpy as np #for debugging
 from tensorflow.keras import backend as K
 
+# To remove TF Warnings
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 from model.resnet import ResnetBuilder
 from eval import eval
 from data import BalanceCovidDataset
@@ -111,7 +115,6 @@ with tf.Session() as sess:
         tf.keras.backend.categorical_crossentropy(target=labels_tensor, output=pred_tensor, from_logits=True))
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss_op)
-    print(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES))
 
     # Initialize the variables
     init = tf.global_variables_initializer()

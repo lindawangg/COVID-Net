@@ -20,7 +20,6 @@ def central_crop(img):
     return img[offset_h:offset_h + size, offset_w:offset_w + size]
 
 def process_image_file(filepath, top_percent, size):
-    print(filepath)
     img = cv2.imread(filepath)
     img = crop_top(img, percent=top_percent)
     img = central_crop(img)
@@ -159,7 +158,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         return batch_x, batch_y, weights
 
     def __len__(self):
-        return int(np.ceil(len(self.datasets) / float(self.batch_size)))
+        return int(np.ceil(len(self.datasets[0]) / float(self.batch_size)))
 
     def on_epoch_end(self):
         'Updates indexes after each epoch'
