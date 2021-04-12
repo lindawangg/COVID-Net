@@ -35,14 +35,14 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     print("Number of invalid images in test: {}".format(str(counter_invalid_images)))
     y_test = np.array(y_test)
     pred = np.array(pred)
-
+    # print("y_test: "+str(y_test))
+    # print("pred: " + str(pred))
     matrix = confusion_matrix(y_test, pred)
     matrix = matrix.astype('float')
     #cm_norm = matrix / matrix.sum(axis=1)[:, np.newaxis]
     print(matrix)
     #class_acc = np.array(cm_norm.diagonal())
     class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
-    print(class_acc)
     print('Sens', ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
     ppvs = [matrix[i, i] / np.sum(matrix[:, i]) if np.sum(matrix[:, i]) else 0 for i in range(len(matrix))]
     print('PPV', ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))

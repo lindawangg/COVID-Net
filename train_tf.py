@@ -164,8 +164,8 @@ with tf.Session() as sess:
                                                 K.learning_phase(): 0})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print('Output: ' + runPath)
-            eval(sess, graph, testfiles, args.datadir,
-                 image_tensor, pred_tensor, args.input_size, width_semantic,mapping=generator.mapping)
+            eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
+                 image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
