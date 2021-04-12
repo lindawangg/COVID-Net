@@ -207,23 +207,23 @@ class ResnetBuilder(object):
             The keras `Model`.
         """
         _handle_dim_ordering()
-        if len(input_shape) != 4:
-            raise Exception("Input shape should be a tuple (input_num,nb_channels, nb_rows, nb_cols)")
+        if len(input_shape) != 3:
+            raise Exception("Input shape should be a tuple (nb_channels, nb_rows, nb_cols)")
 
         # Permute dimension order if necessary
         if K.image_data_format() == 'channels_last':
-            input_shape = (input_shape[0], input_shape[2], input_shape[3], input_shape[1])
+            input_shape = (input_shape[1], input_shape[2], input_shape[0])
 
         # Load function from str if needed.
         block_fn = _get_block(block_fn)
         print(input_shape)
         input = Input(shape=input_shape)
         print(input.shape)
-        print(input[0].shape)
-        print(input[:, 0].shape)
-        print(input[:, 1, :width_semantic, :width_semantic, :1].shape)
-        conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input[:, 0])
-        output_s = model_semantic(input[:, 1, :width_semantic, :width_semantic, :1])
+        # print(input[0].shape)
+        # print(input[:, 0].shape)
+        # print(input[:, 1, :width_semantic, :width_semantic, :1].shape)
+        conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input)
+        output_s = model_semantic.output
         atten_map_1 = set_attention(output_s, conv1)
         pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same")(conv1 + conv1 * atten_map_1)
 
@@ -246,7 +246,7 @@ class ResnetBuilder(object):
         dense = Dense(units=num_outputs, kernel_initializer="he_normal",
                       activation="softmax", name="final_output")(flatten1)
 
-        model = Model(inputs=input, outputs=dense)
+        model = Model(inputs=(input, model_semantic.input), outputs=dense)
         return model
 
     @staticmethod

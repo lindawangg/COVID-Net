@@ -84,8 +84,7 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
                                 top_percent=args.top_percent,
                                 col_name=args.col_name,
                                 target_name=args.target_name,
-                                width_semantic=width_semantic)
-batch_x, batch_y, weights = next(generator)
+                                semantic_input_shape=(width_semantic, width_semantic))
 
 with tf.Session() as sess:
     K.set_session(sess)
@@ -96,15 +95,16 @@ with tf.Session() as sess:
     sample_weights = tf.placeholder(tf.float32)
 
 
-    model_main = ResnetBuilder.build_resnet_50(input_shape=(2, 3, args.input_size, args.input_size),
+    model_main = ResnetBuilder.build_resnet_50(input_shape=(3, args.input_size, args.input_size),
                                                width_semantic=width_semantic, num_outputs=2,
                                                model_semantic=model_semantic)
     pred_tensor = model_main.output
-    image_tensor = model_main.input
+    print('semantic model output: ', model_semantic.output)
+    image_tensor = model_main.input[0] # The model.input is a tuple of (input_2:0, and input_1:0)
+    semantic_image_tensor = model_semantic.input
     # pred_tensor = model_main(batch_x)
 
     graph = tf.get_default_graph()
-    sem_embed_index = [j for j, i in enumerate(model_main.layers) if i.name == "model"][0]
     saver = tf.train.Saver(max_to_keep=10)
 
     # Get training placeholder tensor
@@ -114,7 +114,13 @@ with tf.Session() as sess:
     loss_op = tf.reduce_mean(
         tf.keras.backend.categorical_crossentropy(target=labels_tensor, output=pred_tensor, from_logits=True))
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
-    train_op = optimizer.minimize(loss_op)
+    train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
+    train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
+    train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
+    train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
+    print('All train vars: ', len(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)))
+    print('Train vars resnet: ', len(train_vars_resnet))
+    print('Train vars semantic: ', len(train_vars_sem))
 
     # Initialize the variables
     init = tf.global_variables_initializer()
@@ -131,29 +137,23 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
-         image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
-
-
+    # eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
+    #      image_tensor, semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
 
     # Training cycle
     print('Training started')
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
-        train_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-        print("num trains before:" + str(len(train_vars)))
         if (epoch < args.in_sem or epoch % switcher != 0):
-            model_main.layers[sem_embed_index].trainable = False
-            train_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
-            print("num trains after:" + str(len(train_vars)))
+            train_op = train_op_resnet 
         else:
-            train_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
+            train_op = train_op_sem
         for i in range(total_batch):
             # Run optimization
-            batch_x, batch_y, weights = next(generator)
-            train_op = optimizer.minimize(loss_op, var_list=train_vars)
+            batch_x, batch_sem_x, batch_y, weights = next(generator)
             sess.run(train_op, feed_dict={image_tensor: batch_x,
+                                          semantic_image_tensor: batch_sem_x,
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})
@@ -168,7 +168,7 @@ with tf.Session() as sess:
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print('Output: ' + runPath)
             eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
-                 image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+                 image_tensor, semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 

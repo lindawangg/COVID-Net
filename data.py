@@ -96,7 +96,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             top_percent=0.08,
             col_name=[],
             target_name="",
-            width_semantic=256,
+            semantic_input_shape=(256, 256),
             mapping={'negative':0, 'positive':1}
     ):
         'Initialization'
@@ -117,7 +117,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.n = 0
         self.augmentation = augmentation
         self.top_percent = top_percent
-        self.width_semantic = width_semantic
+        self.semantic_input_shape = semantic_input_shape
         datasets = {}
         for key in self.mapping.keys():
             datasets[key] = []
@@ -146,7 +146,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
 
     def __next__(self):
         # Get one batch of data
-        batch_x, batch_y, weights = self.__getitem__(self.n)
+        batch_x, batch_sem_x, batch_y, weights = self.__getitem__(self.n)
         # Batch index
         self.n += 1
 
@@ -155,7 +155,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             self.on_epoch_end()
             self.n = 0
 
-        return batch_x, batch_y, weights
+        return batch_x, batch_sem_x, batch_y, weights
 
     def __len__(self):
         return int(np.ceil(len(self.datasets[0]) / float(self.batch_size)))
@@ -167,9 +167,10 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 np.random.shuffle(v)
 
     def __getitem__(self, idx):
-        batch_x, batch_y = np.zeros(
-            (self.batch_size,2, *self.input_shape,
-             self.num_channels)), np.zeros(self.batch_size)
+        batch_x, batch_y, batch_sem_x = np.zeros(
+            (self.batch_size, *self.input_shape,
+             self.num_channels)), np.zeros(self.batch_size), np.zeros(
+            (self.batch_size, *self.semantic_input_shape, 1))
 
         batch_files = self.datasets[0][idx * self.batch_size:(idx + 1) *
                                                              self.batch_size]
@@ -201,8 +202,9 @@ class BalanceCovidDataset(keras.utils.Sequence):
                                    self.top_percent,
                                    self.input_shape[0])
 
-            x1= loadDataJSRTSingle(os.path.join(self.datadir, folder, sample[1]),
-                                   (self.width_semantic,self.width_semantic))
+            x1 = loadDataJSRTSingle(os.path.join(self.datadir, folder, sample[1]),
+                                   self.semantic_input_shape)
+            x1 = x1.astype('float32')
 
             if self.is_training and hasattr(self, 'augmentation'):
                 x = self.augmentation(x)
@@ -211,11 +213,11 @@ class BalanceCovidDataset(keras.utils.Sequence):
             x = x.astype('float32') / 255.0
             y = self.mapping[sample[2]]
 
-            batch_x[i][0] = x
-            batch_x[i][1][:self.width_semantic,:self.width_semantic,:1]= x1
+            batch_x[i] = x
+            batch_sem_x[i] = x1
             batch_y[i] = y
 
         class_weights = self.class_weights
         weights = np.take(class_weights, batch_y.astype('int64'))
 
-        return batch_x.astype('float32'), keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights
+        return batch_x, batch_sem_x, keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights
