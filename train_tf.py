@@ -31,7 +31,7 @@ parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, 
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/data', type=str,
                     help='Path to data folder')
-parser.add_argument('--in_sem', default=50, type=int,
+parser.add_argument('--in_sem', default=200, type=int,
                     help='initial_itrs until training semantic')
 parser.add_argument('--covid_weight', default=4., type=float, help='Class weighting for covid')
 parser.add_argument('--covid_percent', default=0.3, type=float, help='Percentage of covid samples in batch')

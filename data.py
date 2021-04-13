@@ -205,6 +205,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             x1 = loadDataJSRTSingle(os.path.join(self.datadir, folder, sample[1]),
                                    self.semantic_input_shape)
             x1 = x1.astype('float32')
+            x1=x1*0
 
             if self.is_training and hasattr(self, 'augmentation'):
                 x = self.augmentation(x)

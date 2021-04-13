@@ -189,7 +189,7 @@ def set_attention(output_semantic, output_main):
     return Conv2D(filters=output_main.shape[-1], kernel_size=(7, 7),
                   strides=(1, 1), padding="same",
                   kernel_initializer="he_normal",
-                  kernel_regularizer=l2(1e-4))(fixed_image)
+                  kernel_regularizer=l2(1e-4), name="sem")(fixed_image)
 
 
 class ResnetBuilder(object):
@@ -232,7 +232,7 @@ class ResnetBuilder(object):
         for i, r in enumerate(repetitions):
             block = _residual_block(block_fn, filters=filters, repetitions=r, is_first_layer=(i == 0))(block)
             atten_map_1 = set_attention(output_s, block)
-            block=block + block * atten_map_1
+            block = block + block * atten_map_1
             filters *= 2
 
         # Last activation
