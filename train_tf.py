@@ -33,8 +33,8 @@ parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/data'
                     help='Path to data folder')
 parser.add_argument('--in_sem', default=200, type=int,
                     help='initial_itrs until training semantic')
-parser.add_argument('--covid_weight', default=4., type=float, help='Class weighting for covid')
-parser.add_argument('--covid_percent', default=0.3, type=float, help='Percentage of covid samples in batch')
+parser.add_argument('--covid_weight', default=1, type=float, help='Class weighting for covid')
+parser.add_argument('--covid_percent', default=0.5, type=float, help='Percentage of covid samples in batch')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
@@ -111,8 +111,7 @@ with tf.Session() as sess:
     is_training = graph.get_tensor_by_name(args.training_tensorname)
 
     # Define loss and optimizer
-    loss_op = tf.reduce_mean(
-        tf.keras.backend.categorical_crossentropy(target=labels_tensor, output=pred_tensor, from_logits=True))
+    loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=pred_tensor, labels=labels_tensor)*sample_weights)
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
