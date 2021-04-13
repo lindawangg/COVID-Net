@@ -184,15 +184,16 @@ def _get_block(identifier):
 
 
 # This function maps the output semantic to the output of main network
-def set_attention(output_semantic, output_main):
+def set_attention(output_semantic, output_main,counter):
     fixed_image = tf.image.resize(output_semantic, output_main.shape[1:-1])
     return Conv2D(filters=output_main.shape[-1], kernel_size=(7, 7),
                   strides=(1, 1), padding="same",
                   kernel_initializer="he_normal",
-                  kernel_regularizer=l2(1e-4), name="sem")(fixed_image)
+                  kernel_regularizer=l2(1e-4), name="sem/"+str(counter))(fixed_image)
 
 
 class ResnetBuilder(object):
+
     @staticmethod
     def build(input_shape, width_semantic, num_outputs, model_semantic, block_fn, repetitions):
         """Builds a custom ResNet like architecture.
@@ -206,6 +207,7 @@ class ResnetBuilder(object):
         Returns:
             The keras `Model`.
         """
+        counter = 600
         _handle_dim_ordering()
         if len(input_shape) != 3:
             raise Exception("Input shape should be a tuple (nb_channels, nb_rows, nb_cols)")
@@ -224,14 +226,16 @@ class ResnetBuilder(object):
         # print(input[:, 1, :width_semantic, :width_semantic, :1].shape)
         conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input)
         output_s = model_semantic.output
-        atten_map_1 = set_attention(output_s, conv1)
+        atten_map_1 = set_attention(output_s, conv1,counter)
+        counter += 1
         pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same")(conv1 + conv1 * atten_map_1)
 
         block = pool1
         filters = 64
         for i, r in enumerate(repetitions):
             block = _residual_block(block_fn, filters=filters, repetitions=r, is_first_layer=(i == 0))(block)
-            atten_map_1 = set_attention(output_s, block)
+            atten_map_1 = set_attention(output_s, block,counter)
+            counter += 1
             block = block + block * atten_map_1
             filters *= 2
 
