@@ -38,6 +38,8 @@ parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights
                     help='Name of sample weights tensor for loss')
 parser.add_argument('--training_tensorname', default='keras_learning_phase:0', type=str,
                     help='Name of training placeholder tensor')
+parser.add_argument('--is_severity_model', dest='feature', action='store_false', 
+                    help='Add flag to indicate whether training COVIDNet CXR-S')
 
 args = parser.parse_args()
 
@@ -58,7 +60,16 @@ with open(args.trainfile) as f:
 with open(args.testfile) as f:
     testfiles = f.readlines()
 
-if args.n_classes == 2:
+if args.is_severity_model:
+    # For COVIDNet CXR-S severity level 1 and 2 detection using COVIDxSev dataset
+    mapping = {
+        'level2': 0,
+        'level1': 1 
+    }
+    # For COVIDxSev use a 50/50 balanced batch with 1:1 sample weights
+    class_weights = [1., 1.]
+    args.covid_percent = 0.5  
+elif args.n_classes == 2:
     # For COVID-19 positive/negative detection
     mapping = {
         'negative': 0,
@@ -85,7 +96,8 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
                                 mapping=mapping,
                                 covid_percent=args.covid_percent,
                                 class_weights=class_weights,
-                                top_percent=args.top_percent)
+                                top_percent=args.top_percent,
+                                is_severity_model=args.is_severity_model)
 
 with tf.Session() as sess:
     tf.get_default_graph()

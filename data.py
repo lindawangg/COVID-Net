@@ -99,7 +99,8 @@ class BalanceCovidDataset(keras.utils.Sequence):
             augmentation=apply_augmentation,
             covid_percent=0.5,
             class_weights=[1., 1.],
-            top_percent=0.08
+            top_percent=0.08,
+            is_severity_model=False
     ):
         'Initialization'
         self.datadir = data_dir
@@ -117,6 +118,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.n = 0
         self.augmentation = augmentation
         self.top_percent = top_percent
+        self.is_severity_model = is_severity_model
 
         datasets = {}
         for key in self.mapping.keys():
@@ -128,7 +130,12 @@ class BalanceCovidDataset(keras.utils.Sequence):
             else:
                 datasets[l.split()[2]].append(l)
         
-        if self.n_classes == 2:
+        if self.is_severity_model:
+            # For COVIDNet CXR-S upsample the severity level 1 cases to create balanced 50/50 batches
+            self.datasets = [
+                datasets['level2'], datasets['level1']
+            ]
+        elif self.n_classes == 2:
             self.datasets = [
                 datasets['negative'], datasets['positive']
             ]
