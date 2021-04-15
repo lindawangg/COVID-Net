@@ -7,10 +7,6 @@ import cv2
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-# To remove TF Warnings
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
 def crop_top(img, percent=0.15):
     offset = int(img.shape[0] * percent)
     return img[offset:]
@@ -131,7 +127,6 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 datasets[l.split()[2]].append(l)
         
         if self.is_severity_model:
-            # For COVIDNet CXR-S upsample the severity level 1 cases to create balanced 50/50 batches
             self.datasets = [
                 datasets['level2'], datasets['level1']
             ]

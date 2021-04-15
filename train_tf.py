@@ -1,5 +1,4 @@
 from __future__ import print_function
-
 import tensorflow as tf
 import os, argparse, pathlib
 
@@ -38,8 +37,8 @@ parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights
                     help='Name of sample weights tensor for loss')
 parser.add_argument('--training_tensorname', default='keras_learning_phase:0', type=str,
                     help='Name of training placeholder tensor')
-parser.add_argument('--is_severity_model', dest='feature', action='store_false', 
-                    help='Add flag to indicate whether training COVIDNet CXR-S')
+parser.add_argument('--is_severity_model', action='store_true', 
+                    help='Add flag if training COVIDNet CXR-S model')
 
 args = parser.parse_args()
 

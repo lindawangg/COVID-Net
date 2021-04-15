@@ -1,5 +1,6 @@
 .ipynb_checkpoints
 data
+data_sev
 .DS_Store
 *.zip
 __pycache__
