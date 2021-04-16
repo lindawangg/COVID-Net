@@ -98,13 +98,13 @@ with tf.Session() as sess:
     model_main = ResnetBuilder.build_resnet_50(input_shape=(3, args.input_size, args.input_size),
                                                width_semantic=width_semantic, num_outputs=2,
                                                model_semantic=model_semantic)
-    pred_tensor = model_main.output
     print('semantic model output: ', model_semantic.output)
     image_tensor = model_main.input[0] # The model.input is a tuple of (input_2:0, and input_1:0)
     semantic_image_tensor = model_semantic.input
     # pred_tensor = model_main(batch_x)
 
     graph = tf.get_default_graph()
+    pred_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
     saver = tf.train.Saver(max_to_keep=10)
 
     # Get training placeholder tensor
@@ -114,6 +114,7 @@ with tf.Session() as sess:
     loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=pred_tensor, labels=labels_tensor)*sample_weights)
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
+    print(train_vars_resnet)
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
     train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
     train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
