@@ -104,7 +104,7 @@ with tf.Session() as sess:
     # pred_tensor = model_main(batch_x)
 
     graph = tf.get_default_graph()
-    pred_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
+    pred_tensor=model_main.output
     saver = tf.train.Saver(max_to_keep=10)
 
     logit_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
@@ -145,7 +145,6 @@ with tf.Session() as sess:
     # Training cycle
     print('Training started')
     total_batch = len(generator)
-    total_batch = 1
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
         if (epoch < args.in_sem or epoch % switcher != 0):
