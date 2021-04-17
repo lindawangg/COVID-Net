@@ -163,8 +163,8 @@ with tf.Session() as sess:
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})
-            print('semantic results:')
-            print(semantic_output)
+            # print('semantic results:')
+            # print(semantic_output)
             # print('pred results')
             # print(pred)
             progbar.update(i + 1)
@@ -178,7 +178,6 @@ with tf.Session() as sess:
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})
-            print(K.learning_phase())
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
             eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
