@@ -105,7 +105,7 @@ with tf.Session() as sess:
 
     graph = tf.get_default_graph()
     pred_tensor=model_main.output
-    saver = tf.train.Saver(max_to_keep=10)
+    saver = tf.train.Saver(max_to_keep=100)
 
     logit_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
 
@@ -145,6 +145,7 @@ with tf.Session() as sess:
     # Training cycle
     print('Training started')
     total_batch = len(generator)
+    total_batch=1
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
         if (epoch < args.in_sem or epoch % switcher != 0):
@@ -156,11 +157,15 @@ with tf.Session() as sess:
             batch_x, batch_sem_x, batch_y, weights = next(generator)
             # print('labels: ', batch_y)
             # print('weights: ', weights)
-            _, pred = sess.run((train_op, pred_tensor), feed_dict={image_tensor: batch_x,
+            _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic.output),
+                                          feed_dict={image_tensor: batch_x,
                                           semantic_image_tensor: batch_sem_x,
+                                          model_semantic.output: batch_sem_x,
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})
+            print('semantic results:')
+            print(semantic_output)
             # print('pred results')
             # print(pred)
             progbar.update(i + 1)
@@ -170,15 +175,18 @@ with tf.Session() as sess:
             # pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
             loss = sess.run(loss_op, feed_dict={image_tensor: batch_x,
                                           semantic_image_tensor: batch_sem_x,
+                                          model_semantic.output: batch_sem_x,
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
-                                          K.learning_phase(): 0})
+                                          K.learning_phase(): 1})
+            print(K.learning_phase())
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
-            print('Output: ' + runPath)
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
             eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
                  image_tensor, semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
-            saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
+            # saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
+            model_main.save_weights(runPath+"_"+str(epoch))
+            print('Output: ' + runPath+"_"+str(epoch))
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
 print("Optimization Finished!")
