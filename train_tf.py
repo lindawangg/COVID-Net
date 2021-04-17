@@ -180,7 +180,7 @@ with tf.Session() as sess:
                                           K.learning_phase(): 1})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
-            eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
+            eval(sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'),
                  image_tensor, semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
             # saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
             model_main.save_weights(runPath+"_"+str(epoch))
