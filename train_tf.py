@@ -17,7 +17,7 @@ from model.build_model import build_UNet2D_4L
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=200, type=int, help='Number of epochs')
-parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
+parser.add_argument('--lr', default=0.0001, type=float, help='Learning rate')
 parser.add_argument('--bs', default=16, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path", "class"])
 parser.add_argument('--target_name', type=str, default="class")
@@ -98,7 +98,8 @@ with tf.Session() as sess:
     model_main = ResnetBuilder.build_resnet_50(input_shape=(3, args.input_size, args.input_size),
                                                width_semantic=width_semantic, num_outputs=2,
                                                model_semantic=model_semantic)
-    print('semantic model output: ', model_semantic.output)
+    pred_tensor = model_main.output
+    # print('semantic model output: ', model_semantic.output)
     image_tensor = model_main.input[0] # The model.input is a tuple of (input_2:0, and input_1:0)
     semantic_image_tensor = model_semantic.input
     # pred_tensor = model_main(batch_x)
@@ -107,18 +108,20 @@ with tf.Session() as sess:
     pred_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
     saver = tf.train.Saver(max_to_keep=10)
 
+    logit_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
+
     # Get training placeholder tensor
     is_training = graph.get_tensor_by_name(args.training_tensorname)
 
     # Define loss and optimizer
-    loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=pred_tensor, labels=labels_tensor)*sample_weights)
+    loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor)*sample_weights)
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
-    print(train_vars_resnet)
+    # print(train_vars_resnet)
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
     train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
     train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
-    print('All train vars: ', len(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)))
+    # print('All train vars: ', len(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)))
     print('Train vars resnet: ', len(train_vars_resnet))
     print('Train vars semantic: ', len(train_vars_sem))
 
@@ -143,6 +146,7 @@ with tf.Session() as sess:
     # Training cycle
     print('Training started')
     total_batch = len(generator)
+    total_batch = 1
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
         if (epoch < args.in_sem or epoch % switcher != 0):
@@ -152,26 +156,31 @@ with tf.Session() as sess:
         for i in range(total_batch):
             # Run optimization
             batch_x, batch_sem_x, batch_y, weights = next(generator)
-            sess.run(train_op, feed_dict={image_tensor: batch_x,
+            # print('labels: ', batch_y)
+            # print('weights: ', weights)
+            _, pred = sess.run((train_op, pred_tensor), feed_dict={image_tensor: batch_x,
                                           semantic_image_tensor: batch_sem_x,
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})
+            # print('pred results')
+            # print(pred)
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
-            semantic_output=model_semantic(batch_sem_x.astype('float32')).eval(session=sess)
-            pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
-            loss = sess.run(loss_op, feed_dict={pred_tensor: pred,
-                                                labels_tensor: batch_y,
-                                                sample_weights: weights,
-                                                K.learning_phase(): 0})
+            # semantic_output=model_semantic(batch_x.astype('float32')).eval(session=sess)
+            # pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
+            loss = sess.run(loss_op, feed_dict={image_tensor: batch_x,
+                                          semantic_image_tensor: batch_sem_x,
+                                          labels_tensor: batch_y,
+                                          sample_weights: weights,
+                                          K.learning_phase(): 0})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print('Output: ' + runPath)
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
-            eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
-                 image_tensor, semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
-            saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
+            # eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
+            #      image_tensor, semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+            # saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
 print("Optimization Finished!")
