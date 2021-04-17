@@ -98,7 +98,6 @@ with tf.Session() as sess:
     model_main = ResnetBuilder.build_resnet_50(input_shape=(3, args.input_size, args.input_size),
                                                width_semantic=width_semantic, num_outputs=2,
                                                model_semantic=model_semantic)
-    pred_tensor = model_main.output
     # print('semantic model output: ', model_semantic.output)
     image_tensor = model_main.input[0] # The model.input is a tuple of (input_2:0, and input_1:0)
     semantic_image_tensor = model_semantic.input
@@ -178,9 +177,9 @@ with tf.Session() as sess:
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print('Output: ' + runPath)
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
-            # eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
-            #      image_tensor, semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
-            # saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
+            eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
+                 image_tensor, semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+            saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
 print("Optimization Finished!")
