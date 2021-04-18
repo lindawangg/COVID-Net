@@ -96,6 +96,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 'negative': 0,
                 'positive': 1,
             },
+            neg_files=[],
             shuffle=True,
             augmentation=apply_augmentation,
             covid_percent=0.5,
@@ -113,6 +114,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.n_classes = n_classes
         self.num_channels = num_channels
         self.mapping = mapping
+        self.neg_files=neg_files
         self.shuffle = shuffle
         self.covid_percent = covid_percent
         self.class_weights = class_weights
@@ -129,7 +131,13 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 datasets[l.split()[3]].append(l)
             else:
                 datasets[l.split()[2]].append(l)
-        
+
+        for l in self.neg_files:
+            if l.split()[-1] == 'sirm':
+                datasets[l.split()[3]].append(l)
+            else:
+                datasets[l.split()[2]].append(l)
+
         self.datasets = [datasets['negative'] + datasets['positive'], [0]]
         print('Length of dataset is {}, {}'.format(len(self.datasets[0]), len(self.datasets[1])))
 
@@ -164,17 +172,17 @@ class BalanceCovidDataset(keras.utils.Sequence):
 
         batch_files = self.datasets[0][idx * self.batch_size:(idx + 1) *
                                        self.batch_size]
-        # if self.is_training:
-        #     # upsample covid cases
-        #     covid_size = max(int(len(batch_files) * self.covid_percent), 1)
-        #     covid_inds = np.random.choice(np.arange(len(batch_files)),
-        #                                 size=covid_size,
-        #                                 replace=False)
-        #     covid_files = np.random.choice(self.datasets[1],
-        #                                 size=covid_size,
-        #                                 replace=False)
-        #     for i in range(covid_size):
-        #         batch_files[covid_inds[i]] = covid_files[i]
+        if self.is_training:
+            # upsample covid cases
+            neg_size = max(int(len(batch_files) * self.covid_percent), 1)
+            neg_inds = np.random.choice(np.arange(len(batch_files)),
+                                        size=neg_size,
+                                        replace=False)
+            neg_selected_files = np.random.choice(self.neg_files,
+                                        size=neg_size,
+                                        replace=False)
+            for i in range(neg_size):
+                batch_files[neg_inds[i]] = neg_selected_files[i]
 
         for i in range(len(batch_files)):
             sample = batch_files[i].split()

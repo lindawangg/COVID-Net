@@ -30,7 +30,7 @@ parser.add_argument('--file', default='/home/maya.pavlova/covidnet-orig/hospital
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/hospital_images', type=str, help='Path to data folder')
 parser.add_argument('--covid_weight', default=1., type=float, help='Class weighting for covid')
-parser.add_argument('--covid_percent', default=0.5, type=float, help='Percentage of covid samples in batch')
+parser.add_argument('--covid_percent', default=0.3, type=float, help='Percentage of covid samples in batch')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
@@ -67,25 +67,31 @@ else:
         or 3 class detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia''')
 
 # Set up folds
-files = _process_csv_file(args.file)
+fold_number=5
+files = list(_process_csv_file(args.file))
 classes=[element.split(" ")[-1][:-1] for element in files]
-preserved_neg=[]
-print("hooray")
+
+
+print("creating balanced negative percentage")
 list_negative=[]
+preserved_neg=[]
 for i in range(len(classes)):
     if(classes[i]=="negative"):
         list_negative.append(i)
 print(list_negative)
 list_negative.sort(reverse=True)
 for index in list_negative:
-    preserved_neg.append(classes[index])
+    preserved_neg.append(files[index])
     del classes[index]
     del files[index]
 random.shuffle(list_negative)
+step_size=int(np.floor(len(preserved_neg)/fold_number))
+chunks_neg = [preserved_neg[x:x + step_size] for x in range(0, len(preserved_neg), step_size)]
+if(len(chunks_neg)>fold_number):
+    chunks_neg[-1]= chunks_neg[-1] + chunks_neg[-2]
+    del chunks_neg[-2]
 
-fold_number=5
 kf = KFold(n_splits=fold_number, random_state=42, shuffle=True)
-step_size=np.floor(len(preserved_neg)/fold_number)
 
 with tf.Session() as sess:
     tf.get_default_graph()
@@ -119,11 +125,12 @@ with tf.Session() as sess:
         runPath = outputPath + runID
         pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
         print('Output: ' + runPath)
-        neg_images=list_negative[fold_num*step_size:fold_num*step_size+step_size]
-        trainfiles = files[train_i]
-        testfiles = files[test_i]
+        trainfiles = np.array(files)[train_i]
+        trainfiles_neg = chunks_neg[fold_num][1:]
+        testfiles = np.concatenate((np.array(files)[test_i],np.array(chunks_neg[fold_num][:1])))
         generator = BalanceCovidDataset(data_dir=args.datadir,
                                         files=trainfiles,
+                                        neg_files=trainfiles_neg,
                                         batch_size=batch_size,
                                         input_shape=(args.input_size, args.input_size),
                                         n_classes=args.n_classes,
