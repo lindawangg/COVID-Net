@@ -6,7 +6,7 @@ import os, argparse, pathlib
 
 from eval import eval
 from data_cross_val import BalanceCovidDataset
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, StratifiedKFold
 
 def _process_csv_file(file):
     with open(file, 'r') as fr:
@@ -67,7 +67,9 @@ else:
 
 # Set up folds
 files = _process_csv_file(args.file)
-kf = KFold(n_splits=5, random_state=42, shuffle=True)
+classes=[element.split(" ")[-1][:-1] for element in files]
+
+kf = StratifiedKFold(n_splits=5, random_state=42, shuffle=True)
 
 with tf.Session() as sess:
     tf.get_default_graph()
@@ -88,7 +90,7 @@ with tf.Session() as sess:
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss_op)
 
-    for fold_num, (train_i, test_i) in enumerate(kf.split(files)):
+    for fold_num, (train_i, test_i) in enumerate(kf.split(files,classes)):
         print('Training fold number: ', fold_num)
         print('Length of train files: {}, Length of test files: {}'.format(len(train_i), len(test_i)))
         print('Train indexes: ', train_i)
