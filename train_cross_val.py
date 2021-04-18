@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import random
 import tensorflow as tf
 import numpy as np
 import os, argparse, pathlib
@@ -68,8 +69,23 @@ else:
 # Set up folds
 files = _process_csv_file(args.file)
 classes=[element.split(" ")[-1][:-1] for element in files]
+preserved_neg=[]
+print("hooray")
+list_negative=[]
+for i in range(len(classes)):
+    if(classes[i]=="negative"):
+        list_negative.append(i)
+print(list_negative)
+list_negative.sort(reverse=True)
+for index in list_negative:
+    preserved_neg.append(classes[index])
+    del classes[index]
+    del files[index]
+random.shuffle(list_negative)
 
-kf = StratifiedKFold(n_splits=5, random_state=42, shuffle=True)
+fold_number=5
+kf = KFold(n_splits=fold_number, random_state=42, shuffle=True)
+step_size=np.floor(len(preserved_neg)/fold_number)
 
 with tf.Session() as sess:
     tf.get_default_graph()
@@ -90,7 +106,7 @@ with tf.Session() as sess:
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss_op)
 
-    for fold_num, (train_i, test_i) in enumerate(kf.split(files,classes)):
+    for fold_num, (train_i, test_i) in enumerate(kf.split(files)):
         print('Training fold number: ', fold_num)
         print('Length of train files: {}, Length of test files: {}'.format(len(train_i), len(test_i)))
         print('Train indexes: ', train_i)
@@ -103,7 +119,7 @@ with tf.Session() as sess:
         runPath = outputPath + runID
         pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
         print('Output: ' + runPath)
-
+        neg_images=list_negative[fold_num*step_size:fold_num*step_size+step_size]
         trainfiles = files[train_i]
         testfiles = files[test_i]
         generator = BalanceCovidDataset(data_dir=args.datadir,
