@@ -147,7 +147,6 @@ with tf.Session() as sess:
     # Training cycle
     print('Training started')
     total_batch = len(generator)
-    total_batch=1
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
         if (epoch < args.in_sem or epoch % switcher != 0):
