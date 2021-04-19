@@ -11,6 +11,7 @@ tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 from model.resnet import ResnetBuilder
+from model.resnet2 import ResNet50
 from eval import eval
 from data import BalanceCovidDataset
 from model.build_model import build_UNet2D_4L
@@ -94,10 +95,13 @@ with tf.Session() as sess:
     labels_tensor =  tf.placeholder(tf.float32)
     sample_weights = tf.placeholder(tf.float32)
 
+    batch_x, batch_sem_x, batch_y, weights = next(generator)
+    # model_main = ResnetBuilder.build_resnet_50(input_shape=( args.input_size, args.input_size,3),
+    #                                            width_semantic=width_semantic, num_outputs=2,
+    #                                            model_semantic=model_semantic)
+    resnet_5=ResNet50(classes=2, model_semantic=model_semantic)
+    model_main=resnet_5.call(input_shape=( args.input_size, args.input_size,3))
 
-    model_main = ResnetBuilder.build_resnet_50(input_shape=(3, args.input_size, args.input_size),
-                                               width_semantic=width_semantic, num_outputs=2,
-                                               model_semantic=model_semantic)
     # print('semantic model output: ', model_semantic.output)
     image_tensor = model_main.input[0] # The model.input is a tuple of (input_2:0, and input_1:0)
     semantic_image_tensor = model_semantic.input
@@ -107,10 +111,8 @@ with tf.Session() as sess:
     pred_tensor=model_main.output
     saver = tf.train.Saver(max_to_keep=100)
 
-    logit_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
-
-    # Get training placeholder tensor
-    is_training = graph.get_tensor_by_name(args.training_tensorname)
+    # logit_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
+    logit_tensor = model_main.layers[-2]
 
     # Define loss and optimizer
     loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor)*sample_weights)
@@ -145,6 +147,7 @@ with tf.Session() as sess:
     # Training cycle
     print('Training started')
     total_batch = len(generator)
+    total_batch=1
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
         if (epoch < args.in_sem or epoch % switcher != 0):
