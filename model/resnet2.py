@@ -279,8 +279,8 @@ class ResNet50(tf.keras.Model):
 
         if self.include_top:
             self.flatten = layers.Flatten(name="flatten_last")
-            self.fc1000 = layers.Dense(classes, name='dense_last')
-            self.soft = layers.Softmax(name="final_output")
+            self.fc1000 = layers.Dense(classes, name='final_output')
+            self.soft = layers.Softmax()
         else:
             reduction_indices = [1, 2] if data_format == 'channels_last' else [2, 3]
             reduction_indices = tf.constant(reduction_indices)

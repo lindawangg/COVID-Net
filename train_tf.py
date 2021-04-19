@@ -111,8 +111,8 @@ with tf.Session() as sess:
     pred_tensor=model_main.output
     saver = tf.train.Saver(max_to_keep=100)
 
-    # logit_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
-    logit_tensor = model_main.layers[-2]
+    logit_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
+
 
     # Define loss and optimizer
     loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor)*sample_weights)
