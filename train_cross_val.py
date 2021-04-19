@@ -38,10 +38,11 @@ parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=s
 parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str, help='Name of logit tensor for loss')
 parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str, help='Name of label tensor for loss')
 parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
+parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
 
 
 args = parser.parse_args()
-
+os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
 # Parameters
 learning_rate = args.lr
 batch_size = args.bs
