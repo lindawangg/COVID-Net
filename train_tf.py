@@ -179,7 +179,7 @@ with tf.Session() as sess:
                                           model_semantic.output: batch_sem_x,
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
-                                          K.learning_phase(): 1})
+                                          K.learning_phase(): 0})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
             eval(sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'),
