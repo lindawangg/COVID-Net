@@ -1,5 +1,5 @@
 # COVIDx Dataset
-**Update 04/16/2021:Released COVIDxSev, a new airspace severity grading dataset for COVID-19 positive patients for COVIDNet CXR-S model.**\
+**Update 04/21/2021:Released COVIDxSev, a new airspace severity grading dataset for COVID-19 positive patients for COVIDNet CXR-S model.**\
 **Update 03/19/2021:Released new datasets with both over 16,000 CXR images from a multinational cohort of over 15,100 patients from at least 51 countries. The dataset contains over 2,300 positive COVID-19 images from over 1,500 patients. The COVIDx V8A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V8B dataset is for COVID-19 positive/negative detection.**\
 **Update 01/28/2021:Released new datasets with over 15600 CXR images and over 1700 positive COVID-19 images. The COVIDx V7A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V7B dataset is for COVID-19 positive/negative detection.**\
 **Update 01/05/2021: Released new dataset for binary classification (COVID-19 positive or COVID-19 negative). Train dataset contains 517 positive and 13794 negative samples. Test dataset contains 100 positive and 100 negative samples.**\

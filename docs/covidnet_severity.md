@@ -14,11 +14,11 @@ If using the TF checkpoints, here are some useful tensors:
 ### Steps for training
 To train the model the COVIDxSev dataset is required, to create the dataset please run [create_COVIDxSev.ipynb](../create_COVIDxSev.ipynb).
 TF training script from a pretrained model:
-1. We provide you with the tensorflow evaluation script, [train_tf.py](../train_tf.py)
+1. We provide you with the tensorflow training script, [train_tf.py](../train_tf.py)
 2. Locate the tensorflow checkpoint files (location of pretrained model)
 3. To train from the COVIDNet-CXR-S pretrained model:
 ```
-python3 train_tf.py \
+python train_tf.py \
     --weightspath models/COVIDNet-CXR-S \
     --metaname model.meta \
     --ckptname model \

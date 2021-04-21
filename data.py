@@ -215,3 +215,4 @@ class BalanceCovidDataset(keras.utils.Sequence):
         weights = np.take(class_weights, batch_y.astype('int64'))
 
         return batch_x, keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights
+        
