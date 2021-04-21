@@ -48,6 +48,7 @@ if __name__ == '__main__':
     parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
     parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str, help='Name of output tensor from graph')
     parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
+    parser.add_argument('--is_severity_model', action='store_true', help='Add flag if training COVIDNet CXR-S model')
 
     args = parser.parse_args()
 
@@ -61,7 +62,13 @@ if __name__ == '__main__':
     file = open(args.testfile, 'r')
     testfile = file.readlines()
 
-    if args.n_classes == 2:
+    if args.is_severity_model:
+        # For COVIDNet CXR-S training with COVIDxSev level 1 and level 2 air space seveirty grading
+        mapping = {
+            'level2': 0,
+            'level1': 1
+        }
+    elif args.n_classes == 2:
         # For COVID-19 positive/negative detection
         mapping = {
             'negative': 0,

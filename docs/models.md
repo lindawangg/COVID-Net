@@ -13,6 +13,11 @@
 |  ckpt |      224x224     |   87.1 (on 31 test)  |   92.6   |     117.4    |   2.26   |[COVIDNet-CXR Small](https://bit.ly/CovidNet-CXR-Small)|
 |  ckpt |      224x224     |   96.8 (on 31 test)  |   94.4   |     127.4    |   3.59   |[COVIDNet-CXR Large](https://bit.ly/CovidNet-CXR-Large)|
 
+## COVIDNet Airspace Severity Grading for COVID-19 Patients
+|  Type | Input Resolution | Accuracy | # Params (M) | MACs (G) |        Model        |
+|:-----:|:----------------:|:--------:|:------------:|:--------:|:-------------------:|
+|  ckpt |      480x480     |   92.7   |      8.8     |  5.55    |[COVIDNet-CXR-S](https://bit.ly/COVIDNet-CXR-S)|
+
 ## COVIDNet Lung Severity Scoring
 |  Type | Input Resolution |        Model        |
 |:-----:|:----------------:|:-------------------:|

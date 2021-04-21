@@ -1,4 +1,5 @@
 # COVIDx Dataset
+**Update 04/21/2021:Released COVIDxSev, a new airspace severity grading dataset for COVID-19 positive patients for COVIDNet CXR-S model.**\
 **Update 03/19/2021:Released new datasets with both over 16,000 CXR images from a multinational cohort of over 15,100 patients from at least 51 countries. The dataset contains over 2,300 positive COVID-19 images from over 1,500 patients. The COVIDx V8A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V8B dataset is for COVID-19 positive/negative detection.**\
 **Update 01/28/2021:Released new datasets with over 15600 CXR images and over 1700 positive COVID-19 images. The COVIDx V7A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V7B dataset is for COVID-19 positive/negative detection.**\
 **Update 01/05/2021: Released new dataset for binary classification (COVID-19 positive or COVID-19 negative). Train dataset contains 517 positive and 13794 negative samples. Test dataset contains 100 positive and 100 negative samples.**\
@@ -24,7 +25,7 @@ The current COVIDx dataset is constructed by the following open source chest rad
  * `git clone https://github.com/agchung/Actualmed-COVID-chestxray-dataset.git`
  * go to this [link](https://www.kaggle.com/tawsifurrahman/covid19-radiography-database/version/3) to download the COVID-19 Radiography database. Only the COVID-19 image folder and metadata file is required. The overlaps between covid-chestxray-dataset are handled in the dataset curation scripts. **Note:** for COVIDx versions 8 & 7 please use Version 3 of the dataset, and for versions COVIDx6 and below please use Version 1.
  * go to this [link](https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data) to download the RSNA pneumonia dataset
- * go to this [link] (https://wiki.cancerimagingarchive.net/pages/viewpage.action?pageId=70230281) to download the RICORD COVID-19 dataset and clinical data csv
+ * go to this [link] (https://wiki.cancerimagingarchive.net/pages/viewpage.action?pageId=70230281) to download the RICORD COVID-19 dataset, clinical data csv, and annotations
 2. Create a `data` directory and within the data directory, create a `train` and `test` directory
 3. Use [create\_ricord\_dataset\\create\_ricord\_dataset.ipynb](../create_ricord_dataset/create_ricord_dataset.ipynb) to pre-process the RICORD dataset before handling.
 3. Use [create\_COVIDx\_binary.ipynb](../create_COVIDx_binary.ipynb) to combine the three datasets to create COVIDx for binary classification. Make sure to remember to change the file paths. Use [create\_COVIDx.ipynb](../create_COVIDx.ipynb) for datasets compatible with COVIDx5 and earlier models (not binary classification).

@@ -7,10 +7,6 @@ import cv2
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-# To remove TF Warnings
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
 def crop_top(img, percent=0.15):
     offset = int(img.shape[0] * percent)
     return img[offset:]
@@ -99,7 +95,8 @@ class BalanceCovidDataset(keras.utils.Sequence):
             augmentation=apply_augmentation,
             covid_percent=0.5,
             class_weights=[1., 1.],
-            top_percent=0.08
+            top_percent=0.08,
+            is_severity_model=False
     ):
         'Initialization'
         self.datadir = data_dir
@@ -117,6 +114,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.n = 0
         self.augmentation = augmentation
         self.top_percent = top_percent
+        self.is_severity_model = is_severity_model
 
         datasets = {}
         for key in self.mapping.keys():
@@ -128,7 +126,11 @@ class BalanceCovidDataset(keras.utils.Sequence):
             else:
                 datasets[l.split()[2]].append(l)
         
-        if self.n_classes == 2:
+        if self.is_severity_model:
+            self.datasets = [
+                datasets['level2'], datasets['level1']
+            ]
+        elif self.n_classes == 2:
             self.datasets = [
                 datasets['negative'], datasets['positive']
             ]
@@ -213,3 +215,4 @@ class BalanceCovidDataset(keras.utils.Sequence):
         weights = np.take(class_weights, batch_y.astype('int64'))
 
         return batch_x, keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights
+        
