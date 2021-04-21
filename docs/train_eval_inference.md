@@ -21,8 +21,8 @@ python train_tf.py \
     --metaname model.meta \
     --ckptname model \
     --n_classes 2 \
-    --trainfile train_COVIDx8B.txt \
-    --testfile test_COVIDx8B.txt \
+    --trainfile labels/train_COVIDx8B.txt \
+    --testfile labels/test_COVIDx8B.txt \
     --out_tensorname norm_dense_2/Softmax:0 \
     --logit_tensorname norm_dense_2/MatMul:0
 ```
@@ -39,7 +39,7 @@ python eval.py \
     --metaname model.meta \
     --ckptname model \
     --n_classes 2 \
-    --testfile test_COVIDx8B.txt \
+    --testfile labels/test_COVIDx8B.txt \
     --out_tensorname norm_dense_2/Softmax:0
 ```
 4. For more options and information, `python eval.py --help`
@@ -83,8 +83,8 @@ python train_tf.py \
     --metaname model.meta \
     --ckptname model-18540 \
     --n_classes 3 \
-    --trainfile train_COVIDx5.txt \
-    --testfile test_COVIDx5.txt \
+    --trainfile labels/train_COVIDx8A.txt \
+    --testfile labels/test_COVIDx8A.txt \
     --out_tensorname norm_dense_1/Softmax:0 \
     --logit_tensorname norm_dense_1/MatMul:0
 ```
@@ -101,7 +101,7 @@ python eval.py \
     --metaname model.meta \
     --ckptname model-18540 \
     --n_classes 3 \
-    --testfile test_COVIDx7A.txt \
+    --testfile labels/test_COVIDx8A.txt \
     --out_tensorname norm_dense_1/Softmax:0
 ```
 4. For more options and information, `python eval.py --help`
