@@ -92,6 +92,20 @@ if(len(chunks_neg)>fold_number):
     chunks_neg[-1]= chunks_neg[-1] + chunks_neg[-2]
     del chunks_neg[-2]
 
+print('length of all files (which should be just positive here): ', len(files))
+print('what chunks_neg is each fold')
+for i in range(5):
+    print('fold ', i)
+    print(' test files len: ', len(chunks_neg[i]))
+    print(chunks_neg[i])
+    temp = []
+    for fold in range(fold_number):
+        if fold != i:
+            temp += chunks_neg[fold]
+    print('train files len: ', len(temp))
+    print(temp)
+    print()
+
 kf = KFold(n_splits=fold_number, random_state=42, shuffle=True)
 
 with tf.Session() as sess:
@@ -115,7 +129,7 @@ with tf.Session() as sess:
 
     for fold_num, (train_i, test_i) in enumerate(kf.split(files)):
         print('Training fold number: ', fold_num)
-        print('Length of train files: {}, Length of test files: {}'.format(len(train_i), len(test_i)))
+        print('Length of positive train files: {}, Length of test files: {}'.format(len(train_i), len(test_i)))
         print('Train indexes: ', train_i)
         print()
         print('Test indexes: ', test_i)
@@ -127,8 +141,14 @@ with tf.Session() as sess:
         pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
         print('Output: ' + runPath)
         trainfiles = np.array(files)[train_i]
-        trainfiles_neg = chunks_neg[fold_num][1:]
-        testfiles = np.concatenate((np.array(files)[test_i],np.array(chunks_neg[fold_num][:1])))
+        print('len of ')
+        # To get train files for negative, concatenate all other folds together
+        trainfiles_neg = []
+        for j in range(fold_number):
+            if j != fold_num:
+                trainfiles_neg += chunks_neg[j]
+        print('Length of negative training files: {} and test files {}'.format(len(trainfiles_neg), len(chunks_neg[fold_num])))
+        testfiles = np.concatenate((np.array(files)[test_i],np.array(chunks_neg[fold_num])))
         generator = BalanceCovidDataset(data_dir=args.datadir,
                                         files=trainfiles,
                                         neg_files=trainfiles_neg,
