@@ -1,5 +1,5 @@
 from __future__ import print_function
-
+from random import sample
 import random
 import tensorflow as tf
 import numpy as np
@@ -47,7 +47,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
 learning_rate = args.lr
 batch_size = args.bs
 display_step = 1
-
+n_MCarlo=10
 if args.n_classes == 2:
     # For COVID-19 positive/negative detection
     mapping = {
@@ -86,6 +86,7 @@ for index in list_negative:
     del classes[index]
     del files[index]
 random.shuffle(list_negative)
+random.shuffle(preserved_neg)
 step_size=int(np.floor(len(preserved_neg)/fold_number))
 chunks_neg = [preserved_neg[x:x + step_size] for x in range(0, len(preserved_neg), step_size)]
 if(len(chunks_neg)>fold_number):
@@ -140,15 +141,25 @@ with tf.Session() as sess:
         runPath = outputPath + runID
         pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
         print('Output: ' + runPath)
-        trainfiles = np.array(files)[train_i]
-        print('len of ')
+
+        # For K-fold normal:
+        # trainfiles = np.array(files)[train_i]
+        # print('len of ')
         # To get train files for negative, concatenate all other folds together
-        trainfiles_neg = []
-        for j in range(fold_number):
-            if j != fold_num:
-                trainfiles_neg += chunks_neg[j]
-        print('Length of negative training files: {} and test files {}'.format(len(trainfiles_neg), len(chunks_neg[fold_num])))
-        testfiles = np.concatenate((np.array(files)[test_i],np.array(chunks_neg[fold_num])))
+        # trainfiles_neg = []
+        # for j in range(fold_number):
+        #     if j != fold_num:
+        #         trainfiles_neg += chunks_neg[j]
+        # print('Length of negative training files: {} and test files {}'.format(len(trainfiles_neg), len(chunks_neg[fold_num])))
+        # testfiles = np.concatenate((np.array(files)[test_i],np.array(chunks_neg[fold_num])))
+
+        #For Monte Carlo:
+        test_neg_MCarlo=sample(preserved_neg,n_MCarlo)
+        test_pos_McCarlo=sample(files,n_MCarlo)
+        testfiles= np.concatenate((np.array(test_neg_MCarlo),np.array(test_pos_McCarlo)))
+        trainfiles=np.array([element for element in files if element not in test_pos_McCarlo])
+        trainfiles_neg=[element for element in preserved_neg if element not in test_neg_MCarlo]
+
         generator = BalanceCovidDataset(data_dir=args.datadir,
                                         files=trainfiles,
                                         neg_files=trainfiles_neg,
