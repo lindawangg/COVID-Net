@@ -18,7 +18,7 @@ from data import BalanceCovidDataset
 from model.build_model import build_UNet2D_4L
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
-parser.add_argument('--epochs', default=40, type=int, help='Number of epochs')
+parser.add_argument('--epochs', default=200, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.0001, type=float, help='Learning rate')
 parser.add_argument('--bs', default=16, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path", "class"])
