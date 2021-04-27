@@ -1,5 +1,6 @@
 from __future__ import print_function
 import pandas as pd
+import matplotlib.pyplot as plt
 import tensorflow as tf
 import os, argparse, pathlib
 import datetime
@@ -69,7 +70,12 @@ current_time = (str(datetime.datetime.now()).replace(" ", "#")).replace(":", "-"
 outputPath = './output/' + current_time
 runID = args.name + '-lr' + str(learning_rate)
 runPath = outputPath + runID
+path_images_train=os.path.join(runPath,"images/train")
+path_images_test=os.path.join(runPath,"images/test")
 pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
+pathlib.Path(path_images_train).mkdir(parents=True, exist_ok=True)
+pathlib.Path(path_images_test).mkdir(parents=True, exist_ok=True)
+
 print('Output: ' + runPath)
 
 # testfiles_frame = pd.read_csv(args.testfile, delimiter=" ", names=args.col_name).values
@@ -157,8 +163,6 @@ with tf.Session() as sess:
         for i in range(total_batch):
             # Run optimization
             batch_x, batch_sem_x, batch_y, weights = next(generator)
-            # print('labels: ', batch_y)
-            # print('weights: ', weights)
             _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic.output),
                                           feed_dict={image_tensor: batch_x,
                                           semantic_image_tensor: batch_sem_x,
@@ -166,13 +170,14 @@ with tf.Session() as sess:
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})
-
-            # print('semantic results:')
-            # print(semantic_output)
-            # print('pred results')
-            # print(pred)
             if(i==0):
-                pass
+                for index in range(semantic_output.shape[0]):
+                    output=semantic_output[index,:,:]
+                    plt.subplot(121)
+                    plt.imshow(batch_x[index,:,:], cmap='gray')
+                    plt.subplot(122)
+                    plt.imshow(output * 256, cmap='gray')
+                    plt.savefig(os.path.join(path_images_train,str(index)+".png"))
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
