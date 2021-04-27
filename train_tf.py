@@ -22,10 +22,10 @@ parser.add_argument('--lr', default=0.0001, type=float, help='Learning rate')
 parser.add_argument('--bs', default=16, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path", "class"])
 parser.add_argument('--target_name', type=str, default="class")
-parser.add_argument('--weightspath', default='output/sev_models/covidnet-cxr-2',
+parser.add_argument('--weightspath', default='2021-04-19#20-45-39.065397COVIDNet-lr0.01_25',
                     type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model_train.meta', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='model-1705', type=str, help='Name of model ckpts')
+parser.add_argument('--ckptname', default='/home/hossein.aboutalebi/data/sem/2021-04-19#20-45-39.065397COVIDNet-lr0.01_25', type=str, help='Name of model ckpts')
 parser.add_argument('--trainfile', default='labels/train_COVIDx8B.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
 parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, help='Path to test file')
@@ -135,6 +135,7 @@ with tf.Session() as sess:
     # load weights
     if (args.load_weight):
         saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
+    model_semantic.load_weights("./model/trained_model.hdf5")
     # saver.restore(sess, tf.train.latest_checkpoint(args.weightspath))
 
     # save base model
@@ -161,14 +162,17 @@ with tf.Session() as sess:
             _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic.output),
                                           feed_dict={image_tensor: batch_x,
                                           semantic_image_tensor: batch_sem_x,
-                                          model_semantic.output: batch_sem_x,
+                                          # model_semantic.output: batch_sem_x,
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})
+
             # print('semantic results:')
             # print(semantic_output)
             # print('pred results')
             # print(pred)
+            if(i==0):
+                pass
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
@@ -176,7 +180,7 @@ with tf.Session() as sess:
             # pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
             loss = sess.run(loss_op, feed_dict={image_tensor: batch_x,
                                           semantic_image_tensor: batch_sem_x,
-                                          model_semantic.output: batch_sem_x,
+                                          # model_semantic.output: batch_sem_x,
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})

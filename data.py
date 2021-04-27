@@ -202,9 +202,9 @@ class BalanceCovidDataset(keras.utils.Sequence):
                                    self.top_percent,
                                    self.input_shape[0])
 
-            # x1 = loadDataJSRTSingle(os.path.join(self.datadir, folder, sample[1]),
-            #                        self.semantic_input_shape)
-            x1 = np.zeros((256,256,1)).astype('float32')
+            x1 = loadDataJSRTSingle(os.path.join(self.datadir, folder, sample[1]),
+                                   self.semantic_input_shape)
+            # x1 = np.zeros((256,256,1)).astype('float32')
 
 
             if self.is_training and hasattr(self, 'augmentation'):
