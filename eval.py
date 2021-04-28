@@ -17,7 +17,9 @@ def fix_input_image(path_image,input_size,width_semantic,top_percent=0.08,num_ch
                                    (width_semantic,width_semantic))
     return x.astype('float32')
 
-def eval(sess, model_semantic, testfile, testfolder, input_tensor, input_semantic_tensor, pred_tensor, input_size, width_semantic, mapping=None, training_tensor='keras_learning_phase:0'):
+
+def eval(sess, model_semantic, testfile, testfolder, input_tensor, input_semantic_tensor,
+         pred_tensor, input_size, width_semantic, mapping=None, training_tensor='keras_learning_phase:0'):
     y_test = []
     pred = []
     for i in range(len(testfile)):
@@ -25,23 +27,33 @@ def eval(sess, model_semantic, testfile, testfolder, input_tensor, input_semanti
         x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
         x = x.astype('float32') / 255.0
 
-        # x1 = loadDataJSRTSingle(os.path.join(testfolder, line[1]), (width_semantic,width_semantic))
-        x1= np.zeros((256,256,1)).astype('float32')
+        x1 = loadDataJSRTSingle(os.path.join(testfolder, line[1]), (width_semantic, width_semantic))
+        # x1= np.zeros((256,256,1)).astype('float32')
         y_test.append(mapping[line[2]])
         pred_values = sess.run(pred_tensor, feed_dict={input_tensor: np.expand_dims(x, axis=0), 
                                                        input_semantic_tensor: np.expand_dims(x1, axis=0),
-                                                       model_semantic.output: np.expand_dims(x1, axis=0),
-                                                       training_tensor: 0})
+                                                       training_tensor: False})
         pred.append(np.array(pred_values).argmax(axis=1))
     y_test = np.array(y_test)
     pred = np.array(pred)
 
+    # Create confusion matrix
     matrix = confusion_matrix(y_test, pred)
     matrix = matrix.astype('float')
-    #cm_norm = matrix / matrix.sum(axis=1)[:, np.newaxis]
     print(matrix)
-    #class_acc = np.array(cm_norm.diagonal())
-    class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
-    print('Sens', ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
-    ppvs = [matrix[i, i] / np.sum(matrix[:, i]) if np.sum(matrix[:, i]) else 0 for i in range(len(matrix))]
-    print('PPV', ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))
+
+    # Compute accuracy, sensitivity, and PPV
+    diag = np.diag(matrix)
+    acc = diag.sum()/max(matrix.sum(), 1)
+    sens = diag/np.maximum(matrix.sum(axis=1), 1)
+    ppv = diag/np.maximum(matrix.sum(axis=0), 1)
+    print('Accuracy -', '{:.3f}'.format(acc))
+    print('Sens -', ', '.join('{}: {:.3f}'.format(cls.capitalize(), sens[i]) for cls, i in mapping.items()))
+    print('PPV -', ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppv[i]) for cls, i in mapping.items()))
+
+    # Store results in dict
+    metrics = {'sens_' + cls: sens[i] for cls, i in mapping.items()}
+    metrics.update({'ppv_' + cls: ppv[i] for cls, i in mapping.items()})
+    metrics['accuracy'] = acc
+
+    return metrics

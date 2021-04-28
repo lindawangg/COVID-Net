@@ -17,16 +17,38 @@ from eval import eval
 from data import BalanceCovidDataset
 from model.build_model import build_UNet2D_4L
 
+
+def seg_summary_op(name, image_tsr, mask_tsr, max_outputs=5):
+    """Makes an image summary op for an input image and output mask"""
+    # Undo normalization and convert to uint8
+    tsr_min = tf.reduce_min(image_tsr)
+    tsr_max = tf.reduce_max(image_tsr)
+    image_uint8 = tf.cast(
+        255.*(image_tsr - tsr_min)/(tsr_max - tsr_min), tf.uint8)  # z-score -> [0, 255]
+    mask_uint8 = tf.cast(127.5*(mask_tsr + 1.), tf.uint8)          # [-1, 1] -> [0, 255]
+
+    # Concatenate vertically and make summary op
+    log_tsr = tf.concat([image_uint8, mask_uint8], axis=1)
+    summary_op = tf.summary.image(name, log_tsr, max_outputs=max_outputs)
+    return summary_op
+
+
+def scalar_summary(tag_to_value, tag_prefix=''):
+    """Summary object for a dict of scalars"""
+    return tf.Summary(value=[tf.Summary.Value(tag=tag_prefix + tag, simple_value=value)
+                             for tag, value in tag_to_value.items() if isinstance(value, (int, float))])
+
+
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=200, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.0001, type=float, help='Learning rate')
 parser.add_argument('--bs', default=16, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path", "class"])
 parser.add_argument('--target_name', type=str, default="class")
-parser.add_argument('--weightspath', default='2021-04-19#20-45-39.065397COVIDNet-lr0.01_25',
-                    type=str, help='Path to output folder')
-parser.add_argument('--metaname', default='model_train.meta', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='/home/hossein.aboutalebi/data/sem/2021-04-19#20-45-39.065397COVIDNet-lr0.01_25', type=str, help='Name of model ckpts')
+parser.add_argument('--weightspath', default='model/sem', type=str, help='Path to output folder')
+# parser.add_argument('--metaname', default='model_train.meta', type=str, help='Name of ckpt meta file')
+parser.add_argument('--ckptname', default='2021-04-19#20-45-39.065397COVIDNet-lr0.01_25',
+                    type=str, help='Name of model ckpts')
 parser.add_argument('--trainfile', default='labels/train_COVIDx8B.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
 parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, help='Path to test file')
@@ -55,7 +77,7 @@ parser.add_argument('--training_tensorname', default='keras_learning_phase:0', t
 
 height_semantic = 256  # do not change unless train a new semantic model
 width_semantic = 256
-switcher=3
+switcher = 3
 
 args = parser.parse_args()
 os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
@@ -63,25 +85,28 @@ os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
 # Parameters
 learning_rate = args.lr
 batch_size = args.bs
-display_step = 1
+display_step = 1    # evaluation interval in epochs
+log_interval = 100  # image and loss log interval in steps (batches)
 
-# output path
+# Make output paths
 current_time = (str(datetime.datetime.now()).replace(" ", "#")).replace(":", "-")
 outputPath = './output/' + current_time
 runID = args.name + '-lr' + str(learning_rate)
 runPath = outputPath + runID
-path_images_train=os.path.join(runPath,"images/train")
-path_images_test=os.path.join(runPath,"images/test")
+# path_images_train=os.path.join(runPath,"images/train")
+# path_images_test=os.path.join(runPath,"images/test")
 pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
-pathlib.Path(path_images_train).mkdir(parents=True, exist_ok=True)
-pathlib.Path(path_images_test).mkdir(parents=True, exist_ok=True)
+# pathlib.Path(path_images_train).mkdir(parents=True, exist_ok=True)
+# pathlib.Path(path_images_test).mkdir(parents=True, exist_ok=True)
 
 print('Output: ' + runPath)
 
+# Load list of test files
 # testfiles_frame = pd.read_csv(args.testfile, delimiter=" ", names=args.col_name).values
 with open(args.testfile) as f:
     testfiles = f.readlines()
 
+# Create dataset
 generator = BalanceCovidDataset(data_dir=args.datadir,
                                 csv_file=args.trainfile,
                                 batch_size=batch_size,
@@ -97,8 +122,7 @@ with tf.Session() as sess:
     K.set_session(sess)
     # First we load the semantic model:
     model_semantic = build_UNet2D_4L((height_semantic, width_semantic, 1))
-    model_semantic.load_weights("./model/trained_model.hdf5")
-    labels_tensor =  tf.placeholder(tf.float32)
+    labels_tensor = tf.placeholder(tf.float32)
     sample_weights = tf.placeholder(tf.float32)
 
     batch_x, batch_sem_x, batch_y, weights = next(generator)
@@ -108,91 +132,110 @@ with tf.Session() as sess:
     resnet_50=ResNet50(classes=2, model_semantic=model_semantic)
     model_main=resnet_50.call(input_shape=(args.input_size, args.input_size, 3))
 
-    # print('semantic model output: ', model_semantic.output)
-    image_tensor = model_main.input[0] # The model.input is a tuple of (input_2:0, and input_1:0)
+    image_tensor = model_main.input[0]  # The model.input is a tuple of (input_2:0, and input_1:0)
     semantic_image_tensor = model_semantic.input
-    # pred_tensor = model_main(batch_x)
 
     graph = tf.get_default_graph()
-    pred_tensor=model_main.output
+    pred_tensor = model_main.output
     saver = tf.train.Saver(max_to_keep=100)
 
     logit_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
-
 
     # Define loss and optimizer
     loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor)*sample_weights)
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
-    # print(train_vars_resnet)
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
     train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
     train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
-    # print('All train vars: ', len(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)))
     print('Train vars resnet: ', len(train_vars_resnet))
     print('Train vars semantic: ', len(train_vars_sem))
 
-    # Initialize the variables
-    init = tf.global_variables_initializer()
-
     # Run the initializer
-    sess.run(init)
+    sess.run(tf.global_variables_initializer())
 
-    # load weights
-    if (args.load_weight):
+    # Make summary ops and writer
+    loss_summary = tf.summary.scalar('train/loss', loss_op)
+    image_summary = seg_summary_op('train/semantic',
+                                   model_semantic.input, model_semantic.output, max_outputs=5)
+    summary_op = tf.summary.merge([loss_summary, image_summary])
+    summary_writer = tf.summary.FileWriter(os.path.join(runPath, 'events'), graph)
+
+    # Load weights
+    if args.load_weight:
         saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
     model_semantic.load_weights("./model/trained_model.hdf5")
     # saver.restore(sess, tf.train.latest_checkpoint(args.weightspath))
 
-    # save base model
+    # Save base model and run baseline eval
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    # eval(sess, graph, testfiles, os.path.join(args.datadir, 'test'),
-    #      image_tensor, semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+    # metrics = eval(
+    #     sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
+    #     semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+    # summary_writer.add_summary(scalar_summary(metrics, 'val/'), 0)
 
     # Training cycle
     print('Training started')
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
     for epoch in range(args.epochs):
-        if (epoch < args.in_sem or epoch % switcher != 0):
+        # Select train op depending on training stage
+        if epoch < args.in_sem or epoch % switcher != 0:
             train_op = train_op_resnet 
         else:
             train_op = train_op_sem
+
+        # Run optimization for one epoch
         for i in range(total_batch):
-            # Run optimization
             batch_x, batch_sem_x, batch_y, weights = next(generator)
-            _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic.output),
-                                          feed_dict={image_tensor: batch_x,
-                                          semantic_image_tensor: batch_sem_x,
-                                          # model_semantic.output: batch_sem_x,
-                                          labels_tensor: batch_y,
-                                          sample_weights: weights,
-                                          K.learning_phase(): 1})
-            if(i==0):
-                for index in range(semantic_output.shape[0]):
-                    output=semantic_output[index,:,:]
-                    plt.subplot(121)
-                    plt.imshow(batch_x[index,:,:], cmap='gray')
-                    plt.subplot(122)
-                    plt.imshow(output * 256, cmap='gray')
-                    plt.savefig(os.path.join(path_images_train,str(index)+".png"))
+            total_steps = epoch*total_batch + i
+            if not (total_steps % log_interval):  # run summary op for batch
+                _, pred, semantic_output, summary = sess.run(
+                    (train_op, pred_tensor, model_semantic.output, summary_op),
+                    feed_dict={image_tensor: batch_x,
+                               semantic_image_tensor: batch_sem_x,
+                               labels_tensor: batch_y,
+                               sample_weights: weights,
+                               K.learning_phase(): 1})
+                summary_writer.add_summary(summary, total_steps)
+            else:  # run without summary op
+                _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic.output),
+                                                    feed_dict={image_tensor: batch_x,
+                                                               semantic_image_tensor: batch_sem_x,
+                                                               labels_tensor: batch_y,
+                                                               sample_weights: weights,
+                                                               K.learning_phase(): 1})
+            # if(i==0):
+            #     for index in range(semantic_output.shape[0]):
+            #         output=semantic_output[index,:,:]
+            #         plt.subplot(121)
+            #         plt.imshow(batch_x[index,:,:], cmap='gray')
+            #         plt.subplot(122)
+            #         plt.imshow(output.squeeze() * 256, cmap='gray')
+            #         plt.savefig(os.path.join(path_images_train,str(index)+".png"))
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
+            # Print minibatch loss and lr
             # semantic_output=model_semantic(batch_x.astype('float32')).eval(session=sess)
             # pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
             loss = sess.run(loss_op, feed_dict={image_tensor: batch_x,
                                           semantic_image_tensor: batch_sem_x,
-                                          # model_semantic.output: batch_sem_x,
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
                                           K.learning_phase(): 1})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
-            eval(sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'),
-                 image_tensor, semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+
+            # Run eval and log results to tensorboard
+            metrics = eval(
+                sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
+                semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+            summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
+
+            # Save checkpoint
             # saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
             model_main.save_weights(runPath+"_"+str(epoch))
             print('Output: ' + runPath+"_"+str(epoch))
