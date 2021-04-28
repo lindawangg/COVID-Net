@@ -113,14 +113,17 @@ with open('labels/logged_images.txt') as f:
     log_images = f.readlines()
 
 # Get stack of images to log
-log_semantic_images = []
+log_positive, log_negative = [], []
 for i in range(len(log_images)):
     line = log_images[i].split()
     # image = process_image_file(os.path.join(args.datadir, 'test', line[1]), 0.08, args.input_size)
     # image = image.astype('float32') / 255.0
     sem_image = loadDataJSRTSingle(os.path.join(args.datadir, 'test', line[1]), (width_semantic, width_semantic))
-    log_semantic_images.append(sem_image)
-log_semantic_images = np.array(log_semantic_images)
+    if line[2] == 'positive':
+        log_positive.append(sem_image)
+    elif line[2] == 'negative':
+        log_negative.append(sem_image)
+log_positive, log_negative = np.array(log_positive), np.array(log_negative)
 
 generator = BalanceCovidDataset(data_dir=args.datadir,
                                 csv_file=args.trainfile,
@@ -174,7 +177,9 @@ with tf.Session() as sess:
     loss_summary = tf.summary.scalar('train/loss', loss_op)
     image_summary = seg_summary_op('train/semantic',
                                    model_semantic.input, model_semantic.output, max_outputs=5)
-    test_image_summary = seg_summary_op('test/semantic',
+    test_image_summary_pos = seg_summary_op('test/semantic/positive',
+                                   model_semantic.input, model_semantic.output, max_outputs=len(log_images))
+    test_image_summary_neg = seg_summary_op('test/semantic/negative',
                                    model_semantic.input, model_semantic.output, max_outputs=len(log_images))
     summary_op = tf.summary.merge([loss_summary, image_summary])
     summary_writer = tf.summary.FileWriter(os.path.join(runPath, 'events'), graph)
@@ -207,10 +212,14 @@ with tf.Session() as sess:
             train_op = train_op_sem
 
         # Log images and semantic output
-        semantic_output, summary = sess.run((model_semantic.output, test_image_summary), 
-                                        feed_dict={semantic_image_tensor: log_semantic_images,
+        semantic_output, summary_pos = sess.run((model_semantic.output, test_image_summary_pos), 
+                                        feed_dict={semantic_image_tensor: log_positive,
                                                     K.learning_phase(): 0})
-        summary_writer.add_summary(summary, epoch)
+        semantic_output, summary_neg = sess.run((model_semantic.output, test_image_summary_neg), 
+                                        feed_dict={semantic_image_tensor: log_positive,
+                                                    K.learning_phase(): 0})
+        summary_writer.add_summary(summary_pos, epoch)
+        summary_writer.add_summary(summary_neg, epoch)
 
         for i in range(total_batch):
             batch_x, batch_sem_x, batch_y, weights = next(generator)
