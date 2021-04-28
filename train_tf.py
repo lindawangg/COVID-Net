@@ -26,7 +26,7 @@ def seg_summary_op(name, image_tsr, mask_tsr, max_outputs=5):
     tsr_max = tf.reduce_max(image_tsr)
     image_uint8 = tf.cast(
         255.*(image_tsr - tsr_min)/(tsr_max - tsr_min), tf.uint8)  # z-score -> [0, 255]
-    mask_uint8 = tf.cast(127.5*(mask_tsr + 1.), tf.uint8)          # [-1, 1] -> [0, 255]
+    mask_uint8 = tf.cast(255*(mask_tsr), tf.uint8)          # [-1, 1] -> [0, 255]
 
     # Concatenate vertically and make summary op
     log_tsr = tf.concat([image_uint8, mask_uint8], axis=1)
