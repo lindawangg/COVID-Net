@@ -145,7 +145,8 @@ with tf.Session() as sess:
     #                                            width_semantic=width_semantic, num_outputs=2,
     #                                            model_semantic=model_semantic)
     resnet_50=ResNet50(classes=2, model_semantic=model_semantic)
-    model_main=resnet_50.call(input_shape=(args.input_size, args.input_size, 3))
+    training_ph = K.learning_phase()
+    model_main=resnet_50.call(input_shape=(args.input_size, args.input_size, 3), training=training_ph)
 
     image_tensor = model_main.input[0]  # The model.input is a tuple of (input_2:0, and input_1:0)
     semantic_image_tensor = model_semantic.input
