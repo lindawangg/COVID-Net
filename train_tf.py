@@ -14,8 +14,9 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from model.resnet import ResnetBuilder
 from model.resnet2 import ResNet50
 from eval import eval
-from data import BalanceCovidDataset
+from data import BalanceCovidDataset, process_image_file
 from model.build_model import build_UNet2D_4L
+from load_data import loadDataJSRTSingle
 
 
 def seg_summary_op(name, image_tsr, mask_tsr, max_outputs=5):
@@ -74,13 +75,14 @@ parser.add_argument('--load_weight', action='store_true',
                     help='default False')
 parser.add_argument('--training_tensorname', default='keras_learning_phase:0', type=str,
                     help='Name of training placeholder tensor')
+    
 
 height_semantic = 256  # do not change unless train a new semantic model
 width_semantic = 256
 switcher = 3
 
 args = parser.parse_args()
-os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
+# os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
 
 # Parameters
 learning_rate = args.lr
@@ -106,7 +108,20 @@ print('Output: ' + runPath)
 with open(args.testfile) as f:
     testfiles = f.readlines()
 
-# Create dataset
+# Get image file names to log throughout training
+with open('labels/logged_images.txt') as f:
+    log_images = f.readlines()
+
+# Get stack of images to log
+log_semantic_images = []
+for i in range(len(log_images)):
+    line = log_images[i].split()
+    # image = process_image_file(os.path.join(args.datadir, 'test', line[1]), 0.08, args.input_size)
+    # image = image.astype('float32') / 255.0
+    sem_image = loadDataJSRTSingle(os.path.join(args.datadir, 'test', line[1]), (width_semantic, width_semantic))
+    log_semantic_images.append(sem_image)
+log_semantic_images = np.array(log_semantic_images)
+
 generator = BalanceCovidDataset(data_dir=args.datadir,
                                 csv_file=args.trainfile,
                                 batch_size=batch_size,
@@ -158,6 +173,8 @@ with tf.Session() as sess:
     loss_summary = tf.summary.scalar('train/loss', loss_op)
     image_summary = seg_summary_op('train/semantic',
                                    model_semantic.input, model_semantic.output, max_outputs=5)
+    test_image_summary = seg_summary_op('test/semantic',
+                                   model_semantic.input, model_semantic.output, max_outputs=len(log_images))
     summary_op = tf.summary.merge([loss_summary, image_summary])
     summary_writer = tf.summary.FileWriter(os.path.join(runPath, 'events'), graph)
 
@@ -180,6 +197,7 @@ with tf.Session() as sess:
     print('Training started')
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
+
     for epoch in range(args.epochs):
         # Select train op depending on training stage
         if epoch < args.in_sem or epoch % switcher != 0:
@@ -187,7 +205,12 @@ with tf.Session() as sess:
         else:
             train_op = train_op_sem
 
-        # Run optimization for one epoch
+        # Log images and semantic output
+        semantic_output, summary = sess.run((model_semantic.output, test_image_summary), 
+                                        feed_dict={semantic_image_tensor: log_semantic_images,
+                                                    K.learning_phase(): 0})
+        summary_writer.add_summary(summary, epoch)
+
         for i in range(total_batch):
             batch_x, batch_sem_x, batch_y, weights = next(generator)
             total_steps = epoch*total_batch + i
@@ -203,10 +226,10 @@ with tf.Session() as sess:
             else:  # run without summary op
                 _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic.output),
                                                     feed_dict={image_tensor: batch_x,
-                                                               semantic_image_tensor: batch_sem_x,
-                                                               labels_tensor: batch_y,
-                                                               sample_weights: weights,
-                                                               K.learning_phase(): 1})
+                                                                semantic_image_tensor: batch_sem_x,
+                                                                labels_tensor: batch_y,
+                                                                sample_weights: weights,
+                                                                K.learning_phase(): 1})
             # if(i==0):
             #     for index in range(semantic_output.shape[0]):
             #         output=semantic_output[index,:,:]
