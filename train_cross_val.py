@@ -150,7 +150,7 @@ with tf.Session() as sess:
             logging.info('Repetition number: {}'.format(fold_rep))
 
             # output path
-            fold_run_path = runPath + '-file_num-' + str(fold_num) + 'rep-' + str(fold_rep)
+            fold_run_path = runPath + '/file_num-' + str(fold_num) + 'rep-' + str(fold_rep)
             pathlib.Path(fold_run_path).mkdir(parents=True, exist_ok=True)
             print('Output fold number file path: ' + runPath)
 
