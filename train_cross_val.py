@@ -200,7 +200,7 @@ with tf.Session() as sess:
             acc, class_acc, ppvs = eval(sess, graph, testfiles, args.datadir,
                 args.in_tensorname, args.out_tensorname, args.input_size, mapping)
             if acc > max_acc:
-                logging.info('fold number: {}, repetition: {}, epoch: {}'.format(fold_num, fold_rep, epoch + 1))
+                logging.info('fold number: {}, repetition: {}, epoch: {}'.format(fold_num, fold_rep, 'baseline'))
                 logging.info('accuracy: {}'.format(acc))
                 logging.info('Sens' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
                 logging.info('PPV' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))
