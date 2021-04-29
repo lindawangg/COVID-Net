@@ -54,7 +54,7 @@ pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
 print('Output: ' + runPath)
 
 # Set up logger
-logging.basicConfig(filename=os.path.join(runPath, 'performance.log'), filemode='w')
+logging.basicConfig(filename=os.path.join(runPath, 'performance.log'), level=logging.INFO, format='%(message)s')
 
 # Parameters
 learning_rate = args.lr
