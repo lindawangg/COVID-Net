@@ -31,10 +31,13 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     print(matrix)
     #class_acc = np.array(cm_norm.diagonal())
     class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
+    acc = np.sum(matrix.diagonal()) / np.sum(matrix)
+    print('Accuracy: ', acc)
 
     print('Sens', ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
     ppvs = [matrix[i,i]/np.sum(matrix[:,i]) if np.sum(matrix[:,i]) else 0 for i in range(len(matrix))]
     print('PPV', ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))
+    return acc, class_acc, ppvs
 
 
 if __name__ == '__main__':
