@@ -39,6 +39,33 @@ def scalar_summary(tag_to_value, tag_prefix=''):
     return tf.Summary(value=[tf.Summary.Value(tag=tag_prefix + tag, simple_value=value)
                              for tag, value in tag_to_value.items() if isinstance(value, (int, float))])
 
+def init_keras_collections(graph, keras_model):
+    """
+    Creates missing collections in a tf.Graph using keras model attributes
+    Args:
+        graph (tf.Graph): Tensorflow graph with missing collections
+        keras_model (keras.Model): Keras model with desired attributes
+    """
+    try:
+        # Use exception handling in case the model was not compiled and does not
+        # contain metrics as an attribute
+        for metric in keras_model.metrics:
+            for update_op in metric.updates:
+                graph.add_to_collection(tf.GraphKeys.UPDATE_OPS, update_op)
+            for weight in metric._non_trainable_weights:
+                graph.add_to_collection(tf.GraphKeys.METRIC_VARIABLES, weight)
+                graph.add_to_collection(tf.GraphKeys.LOCAL_VARIABLES, weight)
+    except:
+        print('skipped adding variables from metrics')
+        pass
+
+    for update_op in keras_model.updates:
+        graph.add_to_collection(tf.GraphKeys.UPDATE_OPS, update_op)
+
+    # Clear default trainable collection before adding tensors
+    graph.clear_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+    for trainable_layer in keras_model.trainable_weights:
+        graph.add_to_collection(tf.GraphKeys.TRAINABLE_VARIABLES, trainable_layer)
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=200, type=int, help='Number of epochs')
@@ -163,12 +190,21 @@ with tf.Session() as sess:
     # Define loss and optimizer
     loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor)*sample_weights)
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+
+    init_keras_collections(graph, model_main)
+    print('length with model_main: ', len(tf.get_collection(tf.GraphKeys.UPDATE_OPS)))
+    # init_keras_collections(graph, model_semantic)
+    # print('length with model_semantic: ', len(tf.get_collection(tf.GraphKeys.UPDATE_OPS)))
+
+
+    extra_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
-    train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
-    train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
-    print('Train vars resnet: ', len(train_vars_resnet))
-    print('Train vars semantic: ', len(train_vars_sem))
+    with tf.control_dependencies(extra_ops):
+        train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
+        train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
+        print('Train vars resnet: ', len(train_vars_resnet))
+        print('Train vars semantic: ', len(train_vars_sem))
 
     # Run the initializer
     sess.run(tf.global_variables_initializer())
