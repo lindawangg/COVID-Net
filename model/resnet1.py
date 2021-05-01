@@ -164,7 +164,7 @@ class _ConvBlock(tf.keras.Model):
 
 
 # pylint: disable=not-callable
-class ResNet50_2(tf.keras.Model):
+class ResNet50_1(tf.keras.Model):
     """Instantiates the ResNet50 architecture.
     Args:
       data_format: format for the image. Either 'channels_first' or
@@ -205,7 +205,7 @@ class ResNet50_2(tf.keras.Model):
                  gem_power=3.0,
                  embedding_layer=False,
                  embedding_layer_dim=2):
-        super(ResNet50_2, self).__init__(name=name)
+        super(ResNet50_1, self).__init__(name=name)
 
         valid_channel_values = ('channels_first', 'channels_last')
         if data_format not in valid_channel_values:
@@ -335,7 +335,7 @@ class ResNet50_2(tf.keras.Model):
         x = self.max_pool(x)
         if intermediates_dict is not None:
             intermediates_dict['block0mp'] = x
-        # counter,x=self.apply_attention(counter,output_s,x)
+        counter,x=self.apply_attention(counter,output_s,x)
 
         # Block 1 (equivalent to "conv2" in Resnet paper).
         x = self.l2a(x, training=training)
@@ -344,7 +344,7 @@ class ResNet50_2(tf.keras.Model):
         if intermediates_dict is not None:
             intermediates_dict['block1'] = x
 
-        # counter, x = self.apply_attention(counter, output_s, x)
+        counter, x = self.apply_attention(counter, output_s, x)
 
         # Block 2 (equivalent to "conv3" in Resnet paper).
         x = self.l3a(x, training=training)
@@ -353,7 +353,7 @@ class ResNet50_2(tf.keras.Model):
         x = self.l3d(x, training=training)
         if intermediates_dict is not None:
             intermediates_dict['block2'] = x
-        # counter,x=self.apply_attention(counter,output_s,x)
+        counter,x=self.apply_attention(counter,output_s,x)
 
         # Block 3 (equivalent to "conv4" in Resnet paper).
         x = self.l4a(x, training=training)

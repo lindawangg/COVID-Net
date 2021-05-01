@@ -8,11 +8,12 @@ import numpy as np #for debugging
 from tensorflow.keras import backend as K
 
 # To remove TF Warnings
+from utils.utility import select_resnet_type
+
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-from model.resnet import ResnetBuilder
-from model.resnet2 import ResNet50
+from model.resnet1 import ResNet50_1
 from eval import eval
 from data import BalanceCovidDataset, process_image_file
 from model.build_model import build_UNet2D_4L
@@ -100,6 +101,8 @@ parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights
                     help='Name of sample weights tensor for loss')
 parser.add_argument('--load_weight', action='store_true',
                     help='default False')
+parser.add_argument('--resnet_type', default='resnet1', type=str,
+                    help='type of resnet arch. Values can be: resnet1, resnet2')
 parser.add_argument('--training_tensorname', default='keras_learning_phase:0', type=str,
                     help='Name of training placeholder tensor')
     
@@ -171,10 +174,7 @@ with tf.Session() as sess:
     sample_weights = tf.placeholder(tf.float32)
 
     batch_x, batch_sem_x, batch_y, weights = next(generator)
-    # model_main = ResnetBuilder.build_resnet_50(input_shape=( args.input_size, args.input_size,3),
-    #                                            width_semantic=width_semantic, num_outputs=2,
-    #                                            model_semantic=model_semantic)
-    resnet_50=ResNet50(classes=2, model_semantic=model_semantic)
+    resnet_50=select_resnet_type(name=args.resnet_type,classes=2, model_semantic=model_semantic)
     training_ph = K.learning_phase()
     model_main=resnet_50.call(input_shape=(args.input_size, args.input_size, 3), training=training_ph)
 
@@ -276,14 +276,6 @@ with tf.Session() as sess:
                                                                 labels_tensor: batch_y,
                                                                 sample_weights: weights,
                                                                 K.learning_phase(): 1})
-            # if(i==0):
-            #     for index in range(semantic_output.shape[0]):
-            #         output=semantic_output[index,:,:]
-            #         plt.subplot(121)
-            #         plt.imshow(batch_x[index,:,:], cmap='gray')
-            #         plt.subplot(122)
-            #         plt.imshow(output.squeeze() * 256, cmap='gray')
-            #         plt.savefig(os.path.join(path_images_train,str(index)+".png"))
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
@@ -303,9 +295,6 @@ with tf.Session() as sess:
                 sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
                 semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
             summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
-
-            # Save checkpoint
-            # saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch + 1, write_meta_graph=False)
             model_main.save_weights(runPath+"_"+str(epoch))
             print('Output: ' + runPath+"_"+str(epoch))
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
