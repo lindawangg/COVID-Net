@@ -34,7 +34,7 @@ def eval(sess, model_semantic, testfile, testfolder, input_tensor, input_semanti
         pred_values = sess.run(pred_tensor, feed_dict={input_tensor: np.expand_dims(x, axis=0), 
                                                        input_semantic_tensor: np.expand_dims(x1, axis=0),
                                                        training_tensor: False,
-                                                       K.learning_phase(): 1})
+                                                       K.learning_phase(): 0})
         pred.append(np.array(pred_values).argmax(axis=1))
     y_test = np.array(y_test)
     pred = np.array(pred)
