@@ -20,18 +20,27 @@ from model.build_model import build_UNet2D_4L
 from load_data import loadDataJSRTSingle
 
 
-def seg_summary_op(name, image_tsr, mask_tsr, max_outputs=5):
+def seg_summary_op(name, image_tsr, mask_tsr, alpha=0.3, colour_channel=0, max_outputs=5):
     """Makes an image summary op for an input image and output mask"""
-    # Undo normalization and convert to uint8
+    # Convert image to [0, 1] range
     tsr_min = tf.reduce_min(image_tsr)
     tsr_max = tf.reduce_max(image_tsr)
-    image_uint8 = tf.cast(
-        255.*(image_tsr - tsr_min)/(tsr_max - tsr_min), tf.uint8)  # z-score -> [0, 255]
-    mask_uint8 = tf.cast(255*(mask_tsr), tf.uint8)          # [-1, 1] -> [0, 255]
+    image_tsr = (image_tsr - tsr_min)/(tsr_max - tsr_min)
 
-    # Concatenate vertically and make summary op
-    log_tsr = tf.concat([image_uint8, mask_uint8], axis=1)
-    summary_op = tf.summary.image(name, log_tsr, max_outputs=max_outputs)
+    # Make solid colour tensor
+    zeros = tf.zeros_like(mask_tsr)
+    channels = [zeros, zeros, zeros]
+    channels[colour_channel] = tf.ones_like(mask_tsr)
+    red_tsr = tf.concat(channels, axis=-1)
+
+    # Overlay mask onto image via alpha blending
+    alpha_mask = tf.concat([alpha*mask_tsr]*3, axis=-1)
+    overlay_tsr = alpha_mask*red_tsr + (1. - alpha_mask)*image_tsr
+    overlay_uint8 = tf.cast(255.*overlay_tsr, tf.uint8)
+
+    # Add summary op
+    summary_op = tf.summary.image(name, overlay_uint8, max_outputs=max_outputs)
+
     return summary_op
 
 
@@ -40,6 +49,7 @@ def scalar_summary(tag_to_value, tag_prefix=''):
     return tf.Summary(value=[tf.Summary.Value(tag=tag_prefix + tag, simple_value=value)
                              for tag, value in tag_to_value.items() if isinstance(value, (int, float))])
 
+
 def init_keras_collections(graph, keras_model):
     """
     Creates missing collections in a tf.Graph using keras model attributes
@@ -47,18 +57,15 @@ def init_keras_collections(graph, keras_model):
         graph (tf.Graph): Tensorflow graph with missing collections
         keras_model (keras.Model): Keras model with desired attributes
     """
-    try:
-        # Use exception handling in case the model was not compiled and does not
-        # contain metrics as an attribute
+    if hasattr(keras_model, 'metrics'):
         for metric in keras_model.metrics:
             for update_op in metric.updates:
                 graph.add_to_collection(tf.GraphKeys.UPDATE_OPS, update_op)
             for weight in metric._non_trainable_weights:
                 graph.add_to_collection(tf.GraphKeys.METRIC_VARIABLES, weight)
                 graph.add_to_collection(tf.GraphKeys.LOCAL_VARIABLES, weight)
-    except:
+    else:
         print('skipped adding variables from metrics')
-        pass
 
     for update_op in keras_model.updates:
         graph.add_to_collection(tf.GraphKeys.UPDATE_OPS, update_op)
@@ -67,6 +74,7 @@ def init_keras_collections(graph, keras_model):
     graph.clear_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
     for trainable_layer in keras_model.trainable_weights:
         graph.add_to_collection(tf.GraphKeys.TRAINABLE_VARIABLES, trainable_layer)
+
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=200, type=int, help='Number of epochs')
@@ -105,7 +113,7 @@ parser.add_argument('--resnet_type', default='resnet1', type=str,
                     help='type of resnet arch. Values can be: resnet1, resnet2')
 parser.add_argument('--training_tensorname', default='keras_learning_phase:0', type=str,
                     help='Name of training placeholder tensor')
-    
+
 
 height_semantic = 256  # do not change unless train a new semantic model
 width_semantic = 256
@@ -174,9 +182,9 @@ with tf.Session() as sess:
     sample_weights = tf.placeholder(tf.float32)
 
     batch_x, batch_sem_x, batch_y, weights = next(generator)
-    resnet_50=select_resnet_type(name=args.resnet_type,classes=2, model_semantic=model_semantic)
+    resnet_50 = select_resnet_type(name=args.resnet_type,classes=2, model_semantic=model_semantic)
     training_ph = K.learning_phase()
-    model_main=resnet_50.call(input_shape=(args.input_size, args.input_size, 3), training=training_ph)
+    model_main = resnet_50.call(input_shape=(args.input_size, args.input_size, 3), training=training_ph)
 
     image_tensor = model_main.input[0]  # The model.input is a tuple of (input_2:0, and input_1:0)
     semantic_image_tensor = model_semantic.input
@@ -191,12 +199,13 @@ with tf.Session() as sess:
     loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor)*sample_weights)
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
 
+    # Initialize update ops collection
     init_keras_collections(graph, model_main)
     print('length with model_main: ', len(tf.get_collection(tf.GraphKeys.UPDATE_OPS)))
     # init_keras_collections(graph, model_semantic)
     # print('length with model_semantic: ', len(tf.get_collection(tf.GraphKeys.UPDATE_OPS)))
 
-
+    # Create train ops
     extra_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
@@ -211,12 +220,12 @@ with tf.Session() as sess:
 
     # Make summary ops and writer
     loss_summary = tf.summary.scalar('train/loss', loss_op)
-    image_summary = seg_summary_op('train/semantic',
-                                   model_semantic.input, model_semantic.output, max_outputs=5)
-    test_image_summary_pos = seg_summary_op('test/semantic/positive',
-                                   model_semantic.input, model_semantic.output, max_outputs=len(log_images))
-    test_image_summary_neg = seg_summary_op('test/semantic/negative',
-                                   model_semantic.input, model_semantic.output, max_outputs=len(log_images))
+    image_summary = seg_summary_op(
+        'train/semantic', model_semantic.input, model_semantic.output, max_outputs=5)
+    test_image_summary_pos = seg_summary_op(
+        'test/semantic/positive', model_semantic.input, model_semantic.output, max_outputs=len(log_images))
+    test_image_summary_neg = seg_summary_op(
+        'test/semantic/negative', model_semantic.input, model_semantic.output, max_outputs=len(log_images))
     summary_op = tf.summary.merge([loss_summary, image_summary])
     summary_writer = tf.summary.FileWriter(os.path.join(runPath, 'events'), graph)
 
@@ -243,17 +252,17 @@ with tf.Session() as sess:
     for epoch in range(args.epochs):
         # Select train op depending on training stage
         if epoch < args.in_sem or epoch % switcher != 0:
-            train_op = train_op_resnet 
+            train_op = train_op_resnet
         else:
             train_op = train_op_sem
 
         # Log images and semantic output
-        semantic_output, summary_pos = sess.run((model_semantic.output, test_image_summary_pos), 
-                                        feed_dict={semantic_image_tensor: log_positive,
-                                                    K.learning_phase(): 0})
-        semantic_output, summary_neg = sess.run((model_semantic.output, test_image_summary_neg), 
-                                        feed_dict={semantic_image_tensor: log_positive,
-                                                    K.learning_phase(): 0})
+        summary_pos = sess.run(test_image_summary_pos,
+                               feed_dict={semantic_image_tensor: log_positive,
+                                          K.learning_phase(): 0})
+        summary_neg = sess.run(test_image_summary_neg,
+                               feed_dict={semantic_image_tensor: log_negative,
+                                          K.learning_phase(): 0})
         summary_writer.add_summary(summary_pos, epoch)
         summary_writer.add_summary(summary_neg, epoch)
 
