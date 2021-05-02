@@ -1,6 +1,7 @@
 from sklearn.metrics import confusion_matrix
 import pandas as pd
 import numpy as np
+from tensorflow.keras import backend as K
 import tensorflow as tf
 import os, argparse
 import cv2
@@ -32,7 +33,8 @@ def eval(sess, model_semantic, testfile, testfolder, input_tensor, input_semanti
         y_test.append(mapping[line[2]])
         pred_values = sess.run(pred_tensor, feed_dict={input_tensor: np.expand_dims(x, axis=0), 
                                                        input_semantic_tensor: np.expand_dims(x1, axis=0),
-                                                       training_tensor: False})
+                                                       training_tensor: False,
+                                                       K.learning_phase(): 1})
         pred.append(np.array(pred_values).argmax(axis=1))
     y_test = np.array(y_test)
     pred = np.array(pred)
