@@ -20,7 +20,7 @@ from model.build_model import build_UNet2D_4L
 from load_data import loadDataJSRTSingle
 
 
-def seg_summary_op(name, image_tsr, mask_tsr, alpha=0.3, colour_channel=0, max_outputs=5):
+def seg_summary_op(name, image_tsr, mask_tsr, alpha=0.2, colour_channel=0, max_outputs=5):
     """Makes an image summary op for an input image and output mask"""
     # Convert image to [0, 1] range
     tsr_min = tf.reduce_min(image_tsr)
