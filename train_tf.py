@@ -232,7 +232,8 @@ with tf.Session() as sess:
     # Load weights
     if args.load_weight:
         saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
-    model_semantic.load_weights("./model/trained_model.hdf5")
+    else:
+        model_semantic.load_weights("./model/trained_model.hdf5")
     # saver.restore(sess, tf.train.latest_checkpoint(args.weightspath))
 
     # Save base model and run baseline eval
