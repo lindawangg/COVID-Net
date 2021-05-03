@@ -1,53 +1,22 @@
 from __future__ import print_function
-import pandas as pd
-import matplotlib.pyplot as plt
 import tensorflow as tf
-import os, argparse, pathlib
+import os
+import argparse
+import pathlib
 import datetime
-import numpy as np #for debugging
+import numpy as np  # for debugging
 from tensorflow.keras import backend as K
 
-# To remove TF Warnings
-from utils.utility import select_resnet_type
-
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
-from model.resnet1 import ResNet50_1
 from eval import eval
 from data import BalanceCovidDataset, process_image_file
 from model.build_model import build_UNet2D_4L
 from load_data import loadDataJSRTSingle
+from utils.utility import select_resnet_type
+from utils.tensorboard import heatmap_overlay_summary_op, scalar_summary
 
-
-def seg_summary_op(name, image_tsr, mask_tsr, alpha=0.2, colour_channel=0, max_outputs=5):
-    """Makes an image summary op for an input image and output mask"""
-    # Convert image to [0, 1] range
-    tsr_min = tf.reduce_min(image_tsr)
-    tsr_max = tf.reduce_max(image_tsr)
-    image_tsr = (image_tsr - tsr_min)/(tsr_max - tsr_min)
-
-    # Make solid colour tensor
-    zeros = tf.zeros_like(mask_tsr)
-    channels = [zeros, zeros, zeros]
-    channels[colour_channel] = tf.ones_like(mask_tsr)
-    red_tsr = tf.concat(channels, axis=-1)
-
-    # Overlay mask onto image via alpha blending
-    alpha_mask = tf.concat([alpha*mask_tsr]*3, axis=-1)
-    overlay_tsr = alpha_mask*red_tsr + (1. - alpha_mask)*image_tsr
-    overlay_uint8 = tf.cast(255.*overlay_tsr, tf.uint8)
-
-    # Add summary op
-    summary_op = tf.summary.image(name, overlay_uint8, max_outputs=max_outputs)
-
-    return summary_op
-
-
-def scalar_summary(tag_to_value, tag_prefix=''):
-    """Summary object for a dict of scalars"""
-    return tf.Summary(value=[tf.Summary.Value(tag=tag_prefix + tag, simple_value=value)
-                             for tag, value in tag_to_value.items() if isinstance(value, (int, float))])
+# To remove TF Warnings
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 def init_keras_collections(graph, keras_model):
@@ -220,11 +189,11 @@ with tf.Session() as sess:
 
     # Make summary ops and writer
     loss_summary = tf.summary.scalar('train/loss', loss_op)
-    image_summary = seg_summary_op(
+    image_summary = heatmap_overlay_summary_op(
         'train/semantic', model_semantic.input, model_semantic.output, max_outputs=5)
-    test_image_summary_pos = seg_summary_op(
+    test_image_summary_pos = heatmap_overlay_summary_op(
         'test/semantic/positive', model_semantic.input, model_semantic.output, max_outputs=len(log_images))
-    test_image_summary_neg = seg_summary_op(
+    test_image_summary_neg = heatmap_overlay_summary_op(
         'test/semantic/negative', model_semantic.input, model_semantic.output, max_outputs=len(log_images))
     summary_op = tf.summary.merge([loss_summary, image_summary])
     summary_writer = tf.summary.FileWriter(os.path.join(runPath, 'events'), graph)
