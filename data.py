@@ -179,6 +179,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             covid_size = max(int(len(batch_files) * self.covid_percent), 1)
         else:
             covid_size=self.batch_size
+            batch_files=np.arange(self.batch_size)
         covid_inds = np.random.choice(np.arange(len(batch_files)),
                                       size=covid_size,
                                       replace=False)
