@@ -209,10 +209,10 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    # metrics = eval(
-    #     sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
-    #     semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
-    # summary_writer.add_summary(scalar_summary(metrics, 'val/'), 0)
+    metrics = eval(
+        sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
+        semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+    summary_writer.add_summary(scalar_summary(metrics, 'val/'), 0)
 
     # Training cycle
     print('Training started')
