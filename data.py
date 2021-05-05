@@ -171,12 +171,14 @@ class BalanceCovidDataset(keras.utils.Sequence):
             (self.batch_size, *self.input_shape,
              self.num_channels)), np.zeros(self.batch_size), np.zeros(
             (self.batch_size, *self.semantic_input_shape, 1))
-
-        batch_files = self.datasets[0][idx * self.batch_size:(idx + 1) *
+        if(len(self.datasets[0])!=0):
+            batch_files = self.datasets[0][idx * self.batch_size:(idx + 1) *
                                                              self.batch_size]
 
-        # upsample covid cases
-        covid_size = max(int(len(batch_files) * self.covid_percent), 1)
+            # upsample covid cases
+            covid_size = max(int(len(batch_files) * self.covid_percent), 1)
+        else:
+            covid_size=self.batch_size
         covid_inds = np.random.choice(np.arange(len(batch_files)),
                                       size=covid_size,
                                       replace=False)
