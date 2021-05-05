@@ -13,7 +13,7 @@ from data import BalanceCovidDataset, process_image_file
 from model.build_model import build_UNet2D_4L
 from load_data import loadDataJSRTSingle
 from utils.utility import select_resnet_type
-from utils.tensorboard import heatmap_overlay_summary_op, scalar_summary
+from utils.tensorboard import heatmap_overlay_summary_op, scalar_summary,log_tensorboard_images
 
 # To remove TF Warnings
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
@@ -212,6 +212,11 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
+    summary_pos, summary_neg = log_tensorboard_images(sess, K,test_image_summary_pos, semantic_image_tensor, log_positive,
+                                                      test_image_summary_neg, log_negative)
+    summary_writer.add_summary(summary_pos, 0)
+    summary_writer.add_summary(summary_neg, 0)
+    print("Finished tensorboard baseline")
     metrics = eval(
         sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
         semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
@@ -230,12 +235,7 @@ with tf.Session() as sess:
             train_op = train_op_sem
 
         # Log images and semantic output
-        summary_pos = sess.run(test_image_summary_pos,
-                               feed_dict={semantic_image_tensor: log_positive,
-                                          K.learning_phase(): 0})
-        summary_neg = sess.run(test_image_summary_neg,
-                               feed_dict={semantic_image_tensor: log_negative,
-                                          K.learning_phase(): 0})
+        summary_pos,summary_neg=log_tensorboard_images(sess,K,test_image_summary_pos,semantic_image_tensor,log_positive,test_image_summary_neg,log_negative)
         summary_writer.add_summary(summary_pos, epoch)
         summary_writer.add_summary(summary_neg, epoch)
 

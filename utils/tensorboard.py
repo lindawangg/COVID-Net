@@ -27,6 +27,20 @@ def normalize_minmax(tsr):
     tsr_normed = (tsr - tsr_min)/(tsr_max - tsr_min)
     return tsr_normed
 
+def log_tensorboard_images(sess,K,test_image_summary_pos, semantic_image_tensor, log_positive, test_image_summary_neg, log_negative):
+    # Log images and semantic output
+    summary_pos = sess.run(test_image_summary_pos,
+                           feed_dict={semantic_image_tensor: log_positive,
+                                      K.learning_phase(): 0})
+    if(len(log_negative.shape)!=1):
+        summary_neg = sess.run(test_image_summary_neg,
+                           feed_dict={semantic_image_tensor: log_negative,
+                                      K.learning_phase(): 0})
+    else:
+        summary_neg= summary_pos
+        print("There is no negative images! negative images are repeat of positive ones!")
+    return summary_pos,summary_neg
+
 
 def alpha_blend(image1_tsr, image2_tsr, alpha, mask_tsr=None):
     """Performs alpha blending of two image tensors"""
