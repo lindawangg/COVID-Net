@@ -40,7 +40,7 @@ COVIDx V8B
 Chest radiography images distribution
 |  Type | COVID-19 Negative | COVID-19 Positive | Total |
 |:-----:|:-----------------:|:-----------------:|:-----:|
-| train |       13794       |        2158       | 15952 |
+| train |       13793       |        2158       | 15951 |
 |  test |        200        |        200        |  400  |
 
 Patients distribution
