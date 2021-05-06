@@ -48,7 +48,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
 
 # Set up output paths
 outputPath = './output/'
-runID = args.name + '-cross_val-' + datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+runID = args.name + '-cross_val_2-' + datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
 runPath = outputPath + runID
 pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
 print('Output: ' + runPath)
@@ -81,8 +81,7 @@ else:
         or 3 class detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia''')
 
 # Set up folds
-fold_number = 5
-fold_repetition = 50
+fold_number = 50
 files = list(_process_csv_file(args.file))
 classes=[element.split(" ")[-1][:-1] for element in files]
 
@@ -101,27 +100,27 @@ for index in list_negative:
     del files[index]
 random.shuffle(list_negative)
 random.shuffle(preserved_neg)
-step_size=int(np.floor(len(preserved_neg)/fold_number))
-chunks_neg = [preserved_neg[x:x + step_size] for x in range(0, len(preserved_neg), step_size)]
-if(len(chunks_neg)>fold_number):
-    chunks_neg[-1]= chunks_neg[-1] + chunks_neg[-2]
-    del chunks_neg[-2]
+# step_size=int(np.floor(len(preserved_neg)/fold_number))
+# chunks_neg = [preserved_neg[x:x + step_size] for x in range(0, len(preserved_neg), step_size)]
+# if(len(chunks_neg)>fold_number):
+#     chunks_neg[-1]= chunks_neg[-1] + chunks_neg[-2]
+#     del chunks_neg[-2]
 
-print('length of all files (which should be just positive here): ', len(files))
-print('what chunks_neg is each fold')
-for i in range(5):
-    print('fold ', i)
-    print(' test files len: ', len(chunks_neg[i]))
-    print(chunks_neg[i])
-    temp = []
-    for fold in range(fold_number):
-        if fold != i:
-            temp += chunks_neg[fold]
-    print('train files len: ', len(temp))
-    print(temp)
-    print()
+# print('length of all files (which should be just positive here): ', len(files))
+# print('what chunks_neg is each fold')
+# for i in range(5):
+#     print('fold ', i)
+#     print(' test files len: ', len(chunks_neg[i]))
+#     print(chunks_neg[i])
+#     temp = []
+#     for fold in range(fold_number):
+#         if fold != i:
+#             temp += chunks_neg[fold]
+#     print('train files len: ', len(temp))
+#     print(temp)
+#     print()
 
-kf = KFold(n_splits=fold_number, random_state=42, shuffle=True)
+# kf = KFold(n_splits=fold_number, random_state=42, shuffle=True)
 
 with tf.Session() as sess:
     tf.get_default_graph()
@@ -142,101 +141,108 @@ with tf.Session() as sess:
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss_op)
 
-    for fold_num, (train_i, test_i) in enumerate(kf.split(files)):
+    for fold_num in range(50):
         logging.info('FOLD NUMBER: {}'.format(fold_num))
         min_loss, max_acc = float('inf'), 0
 
-        for fold_rep in range(fold_repetition):
-            logging.info('Repetition number: {}'.format(fold_rep))
+        # output path
+        fold_run_path = runPath + '/file_num-' + str(fold_num)
+        pathlib.Path(fold_run_path).mkdir(parents=True, exist_ok=True)
+        print('Output fold number file path: ' + runPath)
 
-            # output path
-            fold_run_path = runPath + '/file_num-' + str(fold_num) + 'rep-' + str(fold_rep)
-            pathlib.Path(fold_run_path).mkdir(parents=True, exist_ok=True)
-            print('Output fold number file path: ' + runPath)
+        # For K-fold normal:
+        # trainfiles = np.array(files)[train_i]
+        # print('len of ')
+        # To get train files for negative, concatenate all other folds together
+        # trainfiles_neg = []
+        # for j in range(fold_number):
+        #     if j != fold_num:
+        #         trainfiles_neg += chunks_neg[j]
+        # print('Length of negative training files: {} and test files {}'.format(len(trainfiles_neg), len(chunks_neg[fold_num])))
+        # testfiles = np.concatenate((np.array(files)[test_i],np.array(chunks_neg[fold_num])))
 
-            # For K-fold normal:
-            # trainfiles = np.array(files)[train_i]
-            # print('len of ')
-            # To get train files for negative, concatenate all other folds together
-            # trainfiles_neg = []
-            # for j in range(fold_number):
-            #     if j != fold_num:
-            #         trainfiles_neg += chunks_neg[j]
-            # print('Length of negative training files: {} and test files {}'.format(len(trainfiles_neg), len(chunks_neg[fold_num])))
-            # testfiles = np.concatenate((np.array(files)[test_i],np.array(chunks_neg[fold_num])))
+        #For Monte Carlo:
+        test_neg_MCarlo=sample(preserved_neg,n_MCarlo)
+        test_pos_McCarlo=sample(files,n_MCarlo)
+        testfiles= np.concatenate((np.array(test_neg_MCarlo),np.array(test_pos_McCarlo)))
+        trainfiles=np.array([element for element in files if element not in test_pos_McCarlo])
+        trainfiles_neg=[element for element in preserved_neg if element not in test_neg_MCarlo]
 
-            #For Monte Carlo:
-            test_neg_MCarlo=sample(preserved_neg,n_MCarlo)
-            test_pos_McCarlo=sample(files,n_MCarlo)
-            testfiles= np.concatenate((np.array(test_neg_MCarlo),np.array(test_pos_McCarlo)))
-            trainfiles=np.array([element for element in files if element not in test_pos_McCarlo])
-            trainfiles_neg=[element for element in preserved_neg if element not in test_neg_MCarlo]
+        generator = BalanceCovidDataset(data_dir=args.datadir,
+                                        files=trainfiles,
+                                        neg_files=trainfiles_neg,
+                                        batch_size=batch_size,
+                                        input_shape=(args.input_size, args.input_size),
+                                        n_classes=args.n_classes,
+                                        mapping=mapping,
+                                        covid_percent=args.covid_percent,
+                                        class_weights=class_weights,
+                                        top_percent=args.top_percent)
 
-            generator = BalanceCovidDataset(data_dir=args.datadir,
-                                            files=trainfiles,
-                                            neg_files=trainfiles_neg,
-                                            batch_size=batch_size,
-                                            input_shape=(args.input_size, args.input_size),
-                                            n_classes=args.n_classes,
-                                            mapping=mapping,
-                                            covid_percent=args.covid_percent,
-                                            class_weights=class_weights,
-                                            top_percent=args.top_percent)
+        # Initialize the variables
+        init = tf.global_variables_initializer()
 
-            # Initialize the variables
-            init = tf.global_variables_initializer()
+        # Run the initializer for every new k-fold run
+        sess.run(init)
 
-            # Run the initializer for every new k-fold run
-            sess.run(init)
+        # load weights
+        saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
+        #saver.restore(sess, tf.train.latest_checkpoint(args.weightspath))
 
-            # load weights
-            saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
-            #saver.restore(sess, tf.train.latest_checkpoint(args.weightspath))
+        # save base model
+        saver.save(sess, os.path.join(fold_run_path, 'model'))
+        print('Saved baseline checkpoint')
+        print('Baseline eval:')
+        acc, class_acc, ppvs = eval(sess, graph, testfiles, args.datadir,
+            args.in_tensorname, args.out_tensorname, args.input_size, mapping)
+        if acc > max_acc:
+            logging.info('Saved for higher accuracy')
+            logging.info('fold number: {}, epoch: {}'.format(fold_num, 'baseline'))
+            logging.info('accuracy: {}'.format(acc))
+            logging.info('Sens' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
+            logging.info('PPV' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))
+            max_acc = acc
 
-            # save base model
-            saver.save(sess, os.path.join(fold_run_path, 'model'))
-            print('Saved baseline checkpoint')
-            print('Baseline eval:')
-            acc, class_acc, ppvs = eval(sess, graph, testfiles, args.datadir,
-                args.in_tensorname, args.out_tensorname, args.input_size, mapping)
-            if acc > max_acc:
-                logging.info('fold number: {}, repetition: {}, epoch: {}'.format(fold_num, fold_rep, 'baseline'))
-                logging.info('accuracy: {}'.format(acc))
-                logging.info('Sens' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
-                logging.info('PPV' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))
-                max_acc = acc
+        # Training cycle
+        print('Training started')
+        total_batch = len(generator)
+        progbar = tf.keras.utils.Progbar(total_batch)
+        for epoch in range(args.epochs):
+            for i in range(total_batch):
+                # Run optimization
+                batch_x, batch_y, weights = next(generator)
+                sess.run(train_op, feed_dict={image_tensor: batch_x,
+                                            labels_tensor: batch_y,
+                                            sample_weights: weights})
+                progbar.update(i+1)
 
-            # Training cycle
-            print('Training started')
-            total_batch = len(generator)
-            progbar = tf.keras.utils.Progbar(total_batch)
-            for epoch in range(args.epochs):
-                for i in range(total_batch):
-                    # Run optimization
-                    batch_x, batch_y, weights = next(generator)
-                    sess.run(train_op, feed_dict={image_tensor: batch_x,
-                                                labels_tensor: batch_y,
-                                                sample_weights: weights})
-                    progbar.update(i+1)
+            if epoch % display_step == 0:
+                pred = sess.run(pred_tensor, feed_dict={image_tensor:batch_x})
+                loss = sess.run(loss_op, feed_dict={pred_tensor: pred,
+                                                    labels_tensor: batch_y,
+                                                    sample_weights: weights})
+                acc, class_acc, ppvs = eval(sess, graph, testfiles, args.datadir,
+                    args.in_tensorname, args.out_tensorname, args.input_size, mapping)
+                if loss < min_loss:
+                    logging.info('Saved for min loss')
+                    logging.info('fold number: {}, epoch: {}, minibatch loss: {}'.format(fold_num, epoch + 1, loss))
+                    logging.info('fold number: {}, epoch: {}'.format(fold_num, epoch + 1))
+                    logging.info('accuracy: {}'.format(acc))
+                    logging.info('Sens' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
+                    logging.info('PPV' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))
+                    min_loss = min(loss, min_loss)
+                elif acc > max_acc:
+                    logging.info('Saved for higher accuracy')
+                    logging.info('fold number: {}, epoch: {}, minibatch loss: {}'.format(fold_num, epoch + 1, loss))
+                    logging.info('fold number: {}, epoch: {}'.format(fold_num, epoch + 1))
+                    logging.info('accuracy: {}'.format(acc))
+                    logging.info('Sens' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
+                    logging.info('PPV' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))
+                    max_acc = max(acc, max_acc)
+                    
 
-                if epoch % display_step == 0:
-                    pred = sess.run(pred_tensor, feed_dict={image_tensor:batch_x})
-                    loss = sess.run(loss_op, feed_dict={pred_tensor: pred,
-                                                        labels_tensor: batch_y,
-                                                        sample_weights: weights})
-                    acc, class_acc, ppvs = eval(sess, graph, testfiles, args.datadir,
-                        args.in_tensorname, args.out_tensorname, args.input_size, mapping)
-                    if loss < min_loss or acc > max_acc:
-                        logging.info('fold number: {}, repetition: {}, epoch: {}, minibatch loss: {}'.format(fold_num, fold_rep, epoch + 1, loss))
-                        logging.info('fold number: {}, repetition: {}, epoch: {}'.format(fold_num, fold_rep, epoch + 1))
-                        logging.info('accuracy: {}'.format(acc))
-                        logging.info('Sens' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
-                        logging.info('PPV' + ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))
-                        max_acc = max(acc, max_acc)
-                        min_loss = min(loss, min_loss)
-
-                    saver.save(sess, os.path.join(fold_run_path, 'model'), global_step=epoch+1, write_meta_graph=False)
-                    print('Saving checkpoint at epoch {}'.format(epoch + 1))
+                saver.save(sess, os.path.join(fold_run_path, 'model'), global_step=epoch+1, write_meta_graph=False)
+                print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
 
 print("Optimization Finished!")
