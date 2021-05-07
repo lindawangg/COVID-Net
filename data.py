@@ -52,20 +52,20 @@ def random_ratio_resize(img, prob=0.3, delta=0.1):
     return img
 
 _augmentation_transform = ImageDataGenerator(
-    featurewise_center=False,
-    featurewise_std_normalization=False,
-    rotation_range=10,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
+    # featurewise_center=False,
+    # featurewise_std_normalization=False,
+    # rotation_range=10,
+    # width_shift_range=0.1,
+    # height_shift_range=0.1,
     horizontal_flip=True,
-    brightness_range=(0.9, 1.1),
-    zoom_range=(0.85, 1.15),
-    fill_mode='constant',
-    cval=0.,
+    # brightness_range=(0.9, 1.1),
+    # zoom_range=(0.85, 1.15),
+    # fill_mode='constant',
+    # cval=0.,
 )
 
 def apply_augmentation(img):
-    img = random_ratio_resize(img)
+    # img = random_ratio_resize(img)
     img = _augmentation_transform.random_transform(img)
     return img
 
@@ -132,7 +132,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             ]
         elif self.n_classes == 2:
             self.datasets = [
-                datasets['negative'], datasets['positive']
+                datasets['negative'] + datasets['positive'], [0]
             ]
         elif self.n_classes == 3:
             self.datasets = [
@@ -176,15 +176,15 @@ class BalanceCovidDataset(keras.utils.Sequence):
                                        self.batch_size]
 
         # upsample covid cases
-        covid_size = max(int(len(batch_files) * self.covid_percent), 1)
-        covid_inds = np.random.choice(np.arange(len(batch_files)),
-                                      size=covid_size,
-                                      replace=False)
-        covid_files = np.random.choice(self.datasets[1],
-                                       size=covid_size,
-                                       replace=False)
-        for i in range(covid_size):
-            batch_files[covid_inds[i]] = covid_files[i]
+        # covid_size = max(int(len(batch_files) * self.covid_percent), 1)
+        # covid_inds = np.random.choice(np.arange(len(batch_files)),
+        #                               size=covid_size,
+        #                               replace=False)
+        # covid_files = np.random.choice(self.datasets[1],
+        #                                size=covid_size,
+        #                                replace=False)
+        # for i in range(covid_size):
+        #     batch_files[covid_inds[i]] = covid_files[i]
 
         for i in range(len(batch_files)):
             sample = batch_files[i].split()
