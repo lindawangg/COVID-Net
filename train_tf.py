@@ -115,7 +115,11 @@ with tf.Session() as sess:
     loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(
         logits=pred_tensor, labels=labels_tensor)*sample_weights)
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
-    train_op = optimizer.minimize(loss_op)
+
+    extra_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+    print('Number of update ops: ', len(extra_ops))
+    with tf.control_dependencies(extra_ops):
+        train_op = optimizer.minimize(loss_op)
 
     # Initialize the variables
     init = tf.global_variables_initializer()

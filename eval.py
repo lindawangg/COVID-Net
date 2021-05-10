@@ -10,7 +10,7 @@ from data import process_image_file
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size, mapping):
+def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size, mapping, is_training='keras_learning_phase:0'):
     image_tensor = graph.get_tensor_by_name(input_tensor)
     pred_tensor = graph.get_tensor_by_name(output_tensor)
 
@@ -21,7 +21,7 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
         x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
         x = x.astype('float32') / 255.0
         y_test.append(mapping[line[2]])
-        pred.append(np.array(sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})).argmax(axis=1))
+        pred.append(np.array(sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0), is_training: False})).argmax(axis=1))
     y_test = np.array(y_test)
     pred = np.array(pred)
 
