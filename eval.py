@@ -19,24 +19,32 @@ def fix_input_image(path_image,input_size,width_semantic,top_percent=0.08,num_ch
     return x.astype('float32')
 
 
-def eval(sess, model_semantic, testfile, testfolder, input_tensor, input_semantic_tensor,
-         pred_tensor, input_size, width_semantic, mapping=None, training_tensor='keras_learning_phase:0'):
+def eval(sess, model_semantic, testfile, testfolder, input_tensor, input_semantic_tensor, pred_tensor,
+         input_size, width_semantic, batch_size=1, mapping=None, training_tensor='keras_learning_phase:0'):
     y_test = []
     pred = []
-    for i in range(len(testfile)):
-        line = testfile[i].split()
-        x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
-        x = x.astype('float32') / 255.0
+    num_batches = int(np.ceil(len(testfile)/batch_size))
+    for i in range(num_batches):
+        image_batch = []
+        sem_image_batch = []
+        for j, line in enumerate(testfile[i*batch_size:(i+1)*batch_size]):
+            line = line.split()
+            x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
+            x = x.astype('float32') / 255.0
+            x1 = loadDataJSRTSingle(os.path.join(testfolder, line[1]), (width_semantic, width_semantic))
 
-        x1 = loadDataJSRTSingle(os.path.join(testfolder, line[1]), (width_semantic, width_semantic))
-        # x1= np.zeros((256,256,1)).astype('float32')
-        y_test.append(mapping[line[2]])
-        pred_values = sess.run(pred_tensor, feed_dict={input_tensor: np.expand_dims(x, axis=0), 
-                                                       input_semantic_tensor: np.expand_dims(x1, axis=0),
+            image_batch.append(x)
+            sem_image_batch.append(x1)
+            y_test.append(mapping[line[2]])
+
+        image_batch = np.stack(image_batch, axis=0)
+        sem_image_batch = np.stack(sem_image_batch, axis=0)
+        pred_values = sess.run(pred_tensor, feed_dict={input_tensor: image_batch,
+                                                       input_semantic_tensor: sem_image_batch,
                                                        training_tensor: False})
-        pred.append(np.array(pred_values).argmax(axis=1))
+        pred.append(pred_values.argmax(axis=1))
     y_test = np.array(y_test)
-    pred = np.array(pred)
+    pred = np.concatenate(pred)
 
     # Create confusion matrix
     matrix = confusion_matrix(y_test, pred)

@@ -218,8 +218,8 @@ with tf.Session() as sess:
     summary_writer.add_summary(summary_neg, 0)
     print("Finished tensorboard baseline")
     metrics = eval(
-        sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
-        semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+        sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor, semantic_image_tensor,
+        pred_tensor, args.input_size, width_semantic, batch_size=batch_size, mapping=generator.mapping)
     summary_writer.add_summary(scalar_summary(metrics, 'val/'), 0)
 
     # Training cycle
