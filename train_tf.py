@@ -10,9 +10,8 @@ from tensorflow.keras import backend as K
 
 from eval import eval
 from data import BalanceCovidDataset, process_image_file
-from model.build_model import build_UNet2D_4L
+from model import build_UNet2D_4L, build_resnet_attn_model
 from load_data import loadDataJSRTSingle
-from utils.utility import select_resnet_type
 from utils.tensorboard import heatmap_overlay_summary_op, scalar_summary,log_tensorboard_images
 
 # To remove TF Warnings
@@ -82,7 +81,7 @@ parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights
 parser.add_argument('--load_weight', action='store_true',
                     help='default False')
 parser.add_argument('--resnet_type', default='resnet1', type=str,
-                    help='type of resnet arch. Values can be: resnet1, resnet2')
+                    help='type of resnet arch. Values can be: resnet0_M, resnet0_R, resnet1, resnet2')
 parser.add_argument('--training_tensorname', default='keras_learning_phase:0', type=str,
                     help='Name of training placeholder tensor')
 
@@ -154,7 +153,7 @@ with tf.Session() as sess:
     sample_weights = tf.placeholder(tf.float32)
 
     batch_x, batch_sem_x, batch_y, weights = next(generator)
-    resnet_50 = select_resnet_type(name=args.resnet_type,classes=2, model_semantic=model_semantic)
+    resnet_50 = build_resnet_attn_model(name=args.resnet_type, classes=2, model_semantic=model_semantic)
     training_ph = K.learning_phase()
     model_main = resnet_50.call(input_shape=(args.input_size, args.input_size, 3), training=training_ph)
 
@@ -183,7 +182,8 @@ with tf.Session() as sess:
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
     with tf.control_dependencies(extra_ops):
         train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
-        train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
+        if args.resnet_type[:7] != 'resnet0':
+            train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
         print('Train vars resnet: ', len(train_vars_resnet))
         print('Train vars semantic: ', len(train_vars_sem))
 
@@ -229,7 +229,7 @@ with tf.Session() as sess:
 
     for epoch in range(args.epochs):
         # Select train op depending on training stage
-        if epoch < args.in_sem or epoch % switcher != 0:
+        if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0':
             train_op = train_op_resnet
         else:
             train_op = train_op_sem
