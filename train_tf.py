@@ -9,7 +9,7 @@ import numpy as np  # for debugging
 from tensorflow.keras import backend as K
 
 from eval import eval
-from data import BalanceCovidDataset, process_image_file
+from data_tf import COVIDxDataset
 from model import build_UNet2D_4L, build_resnet_attn_model
 from load_data import loadDataJSRTSingle
 from utils.tensorboard import heatmap_overlay_summary_op, scalar_summary,log_tensorboard_images
@@ -76,8 +76,6 @@ parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=
                     help='Name of logit tensor for loss')
 parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str,
                     help='Name of label tensor for loss')
-parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str,
-                    help='Name of sample weights tensor for loss')
 parser.add_argument('--load_weight', action='store_true',
                     help='default False')
 parser.add_argument('--resnet_type', default='resnet1', type=str,
@@ -134,25 +132,16 @@ for i in range(len(log_images)):
         log_negative.append(sem_image)
 log_positive, log_negative = np.array(log_positive), np.array(log_negative)
 
-generator = BalanceCovidDataset(data_dir=args.datadir,
-                                csv_file=args.trainfile,
-                                batch_size=batch_size,
-                                input_shape=(args.input_size, args.input_size),
-                                covid_percent=args.covid_percent,
-                                class_weights=[1., 1.],
-                                top_percent=args.top_percent,
-                                col_name=args.col_name,
-                                target_name=args.target_name,
-                                semantic_input_shape=(width_semantic, width_semantic))
+dataset = COVIDxDataset(
+    args.datadir, num_classes=2, image_size=args.input_size, sem_image_size=width_semantic)
 
 with tf.Session() as sess:
     K.set_session(sess)
     # First we load the semantic model:
-    model_semantic = build_UNet2D_4L((height_semantic, width_semantic, 1))
+    model_semantic = build_UNet2D_4L(
+        (height_semantic, width_semantic, 1), trainable=(args.resnet_type[:7] != 'resnet0'))
     labels_tensor = tf.placeholder(tf.float32)
-    sample_weights = tf.placeholder(tf.float32)
 
-    batch_x, batch_sem_x, batch_y, weights = next(generator)
     resnet_50 = build_resnet_attn_model(name=args.resnet_type, classes=2, model_semantic=model_semantic)
     training_ph = K.learning_phase()
     model_main = resnet_50.call(input_shape=(args.input_size, args.input_size, 3), training=training_ph)
@@ -167,7 +156,7 @@ with tf.Session() as sess:
     logit_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
 
     # Define loss and optimizer
-    loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor)*sample_weights)
+    loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor))
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
 
     # Initialize update ops collection
@@ -219,12 +208,14 @@ with tf.Session() as sess:
     print("Finished tensorboard baseline")
     metrics = eval(
         sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor, semantic_image_tensor,
-        pred_tensor, args.input_size, width_semantic, batch_size=batch_size, mapping=generator.mapping)
+        pred_tensor, args.input_size, width_semantic, batch_size=batch_size, mapping=dataset.class_map)
     summary_writer.add_summary(scalar_summary(metrics, 'val/'), 0)
 
     # Training cycle
     print('Training started')
-    total_batch = len(generator)
+    train_dataset, count, batch_size = dataset.train_dataset(args.trainfile, batch_size)
+    data_next = train_dataset.make_one_shot_iterator().get_next()
+    total_batch = int(np.ceil(count/batch_size))
     progbar = tf.keras.utils.Progbar(total_batch)
 
     for epoch in range(args.epochs):
@@ -240,7 +231,12 @@ with tf.Session() as sess:
         summary_writer.add_summary(summary_neg, epoch)
 
         for i in range(total_batch):
-            batch_x, batch_sem_x, batch_y, weights = next(generator)
+            # Get batch of data
+            data = sess.run(data_next)
+            batch_x = data['image']
+            batch_sem_x = data['sem_image']
+            batch_y = data['label']
+
             total_steps = epoch*total_batch + i
             if not (total_steps % log_interval):  # run summary op for batch
                 _, pred, semantic_output, summary = sess.run(
@@ -248,7 +244,6 @@ with tf.Session() as sess:
                     feed_dict={image_tensor: batch_x,
                                semantic_image_tensor: batch_sem_x,
                                labels_tensor: batch_y,
-                               sample_weights: weights,
                                K.learning_phase(): 1})
                 summary_writer.add_summary(summary, total_steps)
             else:  # run without summary op
@@ -256,7 +251,6 @@ with tf.Session() as sess:
                                                     feed_dict={image_tensor: batch_x,
                                                                 semantic_image_tensor: batch_sem_x,
                                                                 labels_tensor: batch_y,
-                                                                sample_weights: weights,
                                                                 K.learning_phase(): 1})
             progbar.update(i + 1)
 
@@ -267,7 +261,6 @@ with tf.Session() as sess:
             loss = sess.run(loss_op, feed_dict={image_tensor: batch_x,
                                           semantic_image_tensor: batch_sem_x,
                                           labels_tensor: batch_y,
-                                          sample_weights: weights,
                                           K.learning_phase(): 1})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
@@ -275,7 +268,7 @@ with tf.Session() as sess:
             # Run eval and log results to tensorboard
             metrics = eval(
                 sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
-                semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=generator.mapping)
+                semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=dataset.class_map)
             summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
             model_main.save_weights(runPath+"_"+str(epoch))
             print('Output: ' + runPath+"_"+str(epoch))
