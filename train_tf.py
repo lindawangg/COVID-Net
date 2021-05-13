@@ -138,8 +138,7 @@ dataset = COVIDxDataset(
 with tf.Session() as sess:
     K.set_session(sess)
     # First we load the semantic model:
-    model_semantic = build_UNet2D_4L(
-        (height_semantic, width_semantic, 1), trainable=(args.resnet_type[:7] != 'resnet0'))
+    model_semantic = build_UNet2D_4L((height_semantic, width_semantic, 1))
     labels_tensor = tf.placeholder(tf.float32)
 
     resnet_50 = build_resnet_attn_model(name=args.resnet_type, classes=2, model_semantic=model_semantic)
