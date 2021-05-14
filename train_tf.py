@@ -82,6 +82,8 @@ parser.add_argument('--resnet_type', default='resnet1', type=str,
                     help='type of resnet arch. Values can be: resnet0_M, resnet0_R, resnet1, resnet2')
 parser.add_argument('--training_tensorname', default='keras_learning_phase:0', type=str,
                     help='Name of training placeholder tensor')
+parser.add_argument('--is_severity_model', action='store_true',
+                    help='Add flag if training COVIDNet CXR-S model')
 
 
 height_semantic = 256  # do not change unless train a new semantic model
