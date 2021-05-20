@@ -63,13 +63,13 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
                                 target_name=args.target_name)
 
 with tf.Session() as sess:
-    tf.get_default_graph()
+    # tf.get_default_graph()
     saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
     saver = tf.train.Saver(max_to_keep=1000)
 
     graph = tf.get_default_graph()
 
-    image_tensor = graph.get_tensor_by_name("input_2:0")
+    # image_tensor = graph.get_tensor_by_name("input_2:0")
     sem_tensor = graph.get_tensor_by_name("input_1:0")
     labels_tensor = graph.get_tensor_by_name("Placeholder:0")
     sample_weights = graph.get_tensor_by_name("Placeholder_1:0")
