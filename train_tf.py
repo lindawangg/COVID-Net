@@ -126,4 +126,5 @@ with tf.Session() as sess:
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
 
+print("uttuu")
 print("Optimization Finished!")
