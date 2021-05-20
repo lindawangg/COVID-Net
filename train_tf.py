@@ -69,10 +69,11 @@ with tf.Session() as sess:
 
     graph = tf.get_default_graph()
 
-    image_tensor = graph.get_tensor_by_name(args.in_tensorname)
-    labels_tensor = graph.get_tensor_by_name(args.label_tensorname)
-    sample_weights = graph.get_tensor_by_name(args.weights_tensorname)
-    pred_tensor = graph.get_tensor_by_name(args.logit_tensorname)
+    image_tensor = graph.get_tensor_by_name("input_2:0")
+    sem_tensor = graph.get_tensor_by_name("input_1:0")
+    labels_tensor = graph.get_tensor_by_name("Placeholder:0")
+    sample_weights = graph.get_tensor_by_name("Placeholder_1:0")
+    pred_tensor = graph.get_tensor_by_name("softmax/Softmax:0")
     # loss expects unscaled logits since it performs a softmax on logits internally for efficiency
 
     # Define loss and optimizer
