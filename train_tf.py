@@ -159,6 +159,11 @@ with tf.Session() as sess:
 
     image_tensor = model_main.input[0]  # The model.input is a tuple of (input_2:0, and input_1:0)
     semantic_image_tensor = model_semantic.input
+    print(image_tensor.name)
+    print(labels_tensor.name)
+    print(semantic_image_tensor.name)
+    print(model_main.output.name)
+    print(sample_weights.name)
 
     graph = tf.get_default_graph()
     pred_tensor = model_main.output
