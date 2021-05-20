@@ -183,16 +183,20 @@ with tf.Session() as sess:
 
     # Create train ops
     extra_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-    train_vars=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+    tvs=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
+    accum_vars = [tf.Variable(tf.zeros_like(tv.initialized_value()), trainable=False) for tv in tvs]
+    zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_vars]
     with tf.control_dependencies(extra_ops):
-        train_op_all = optimizer.minimize(loss_op, var_list=train_vars)
+        gvs = optimizer.compute_gradients(loss_op, tvs)
         train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
         if args.resnet_type[:7] != 'resnet0':
             train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
         print('Train vars resnet: ', len(train_vars_resnet))
         print('Train vars semantic: ', len(train_vars_sem))
+        accum_ops = [accum_vars[j].assign_add(gv[0]) for j, gv in enumerate(gvs)]
+        train_step_bacth = optimizer.apply_gradients([(accum_vars[i], gv[1]) for i, gv in enumerate(gvs)])
 
     # Run the initializer
     sess.run(tf.global_variables_initializer())
@@ -249,15 +253,19 @@ with tf.Session() as sess:
         for i in range(total_batch):
             batch_x, batch_sem_x, batch_y, weights = next(generator)
             total_steps = epoch*total_batch + i
-            if not (total_steps % log_interval):  # run summary op for batch
+            feed_dict = {image_tensor: batch_x,
+                         semantic_image_tensor: batch_sem_x,
+                         labels_tensor: batch_y,
+                         sample_weights: weights,
+                         K.learning_phase(): 1}
+            if not (total_steps % log_interval): # run summary op for batch
                 _, pred, semantic_output, summary = sess.run(
-                    (train_op, pred_tensor, model_semantic.output, summary_op),
-                    feed_dict={image_tensor: batch_x,
-                               semantic_image_tensor: batch_sem_x,
-                               labels_tensor: batch_y,
-                               sample_weights: weights,
-                               K.learning_phase(): 1})
+                    (accum_ops, pred_tensor, model_semantic.output, summary_op),
+                    feed_dict=feed_dict)
                 summary_writer.add_summary(summary, total_steps)
+                if(i%3==0):
+                    sess.run(train_step_bacth)
+                    sess.run(zero_ops)
             else:  # run without summary op
                 _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic.output),
                                                     feed_dict={image_tensor: batch_x,
@@ -265,6 +273,9 @@ with tf.Session() as sess:
                                                                 labels_tensor: batch_y,
                                                                 sample_weights: weights,
                                                                 K.learning_phase(): 1})
+                if (i % 3 == 0):
+                    sess.run(train_step_bacth)
+                    sess.run(zero_ops)
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
