@@ -1,100 +1,68 @@
 from sklearn.metrics import confusion_matrix
 import pandas as pd
 import numpy as np
+from tensorflow.keras import backend as K
 import tensorflow as tf
 import os, argparse
 import cv2
 
 from data import process_image_file
+from load_data import loadDataJSRTSingle
 
 
-def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,mapping=None):
-    image_tensor = graph.get_tensor_by_name(input_tensor)
-    pred_tensor = graph.get_tensor_by_name(output_tensor)
+def fix_input_image(path_image,input_size,width_semantic,top_percent=0.08,num_channel=3):
+    x=np.zeros(( 2,input_size,input_size,num_channel))
+    x[0] = process_image_file(path_image, top_percent, input_size)
+    x[0] = x[0] / 255.0
+    x[1][:width_semantic,:width_semantic,:1]=loadDataJSRTSingle(path_image,
+                                   (width_semantic,width_semantic))
+    return x.astype('float32')
 
+
+def eval(sess, model_semantic, testfile, testfolder, input_tensor, input_semantic_tensor, pred_tensor,
+         input_size, width_semantic, batch_size=1, mapping=None, training_tensor='keras_learning_phase:0'):
     y_test = []
     pred = []
-    for i in range(testfile.shape[0]):
-        line = testfile[i]
-        if(line[2] == "None"):
-            continue
-        x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
-        x = x.astype('float32') / 255.0
-        y_test.append(mapping[line[2]])
-        pred.append(np.array(sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})).argmax(axis=1))
-    y_test = np.array(y_test)
-    pred = np.array(pred)
+    num_batches = int(np.ceil(len(testfile)/batch_size))
+    for i in range(num_batches):
+        image_batch = []
+        sem_image_batch = []
+        for j, line in enumerate(testfile[i*batch_size:(i+1)*batch_size]):
+            line = line.split()
+            x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
+            x = x.astype('float32') / 255.0
+            x1 = loadDataJSRTSingle(os.path.join(testfolder, line[1]), (width_semantic, width_semantic))
 
+            image_batch.append(x)
+            sem_image_batch.append(x1)
+            y_test.append(mapping[line[2]])
+
+        image_batch = np.stack(image_batch, axis=0)
+        sem_image_batch = np.stack(sem_image_batch, axis=0)
+        pred_values = sess.run(pred_tensor, feed_dict={input_tensor: image_batch,
+                                                       input_semantic_tensor: sem_image_batch,
+                                                       training_tensor: False})
+        pred.append(pred_values.argmax(axis=1))
+    y_test = np.array(y_test)
+    pred = np.concatenate(pred)
+
+    # Create confusion matrix
     matrix = confusion_matrix(y_test, pred)
     matrix = matrix.astype('float')
-    #cm_norm = matrix / matrix.sum(axis=1)[:, np.newaxis]
     print(matrix)
-    #class_acc = np.array(cm_norm.diagonal())
-    class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
-    try:
-        print('class_acc: {}: {}, {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],class_acc[0],
-                                                              list(mapping.keys())[list(mapping.values()).index(1)],class_acc[1],
-                                                              list(mapping.keys())[list(mapping.values()).index(2)],class_acc[2],
-                                                              list(mapping.keys())[list(mapping.values()).index(3)],class_acc[3]))
-    except:
-        try:
-            print('class_acc: {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],
-                                                                 class_acc[0],
-                                                                 list(mapping.keys())[list(mapping.values()).index(1)],
-                                                                 class_acc[1],
-                                                                 list(mapping.keys())[list(mapping.values()).index(2)],
-                                                                 class_acc[2]))
-        except:
-            print('class_acc: {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],
-                                                             class_acc[0],
-                                                             list(mapping.keys())[list(mapping.values()).index(1)],
-                                                             class_acc[1]))
 
+    # Compute accuracy, sensitivity, and PPV
+    diag = np.diag(matrix)
+    acc = diag.sum()/max(matrix.sum(), 1)
+    sens = diag/np.maximum(matrix.sum(axis=1), 1)
+    ppv = diag/np.maximum(matrix.sum(axis=0), 1)
+    print('Accuracy -', '{:.3f}'.format(acc))
+    print('Sens -', ', '.join('{}: {:.3f}'.format(cls.capitalize(), sens[i]) for cls, i in mapping.items()))
+    print('PPV -', ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppv[i]) for cls, i in mapping.items()))
 
-    ppvs = [matrix[i,i]/np.sum(matrix[:,i]) if np.sum(matrix[:,i]) else 0 for i in range(len(matrix))]
-    try:
-        print('ppvs: {}: {}, {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)], ppvs[0],
-                                                  list(mapping.keys())[list(mapping.values()).index(1)], ppvs[1],
-                                                  list(mapping.keys())[list(mapping.values()).index(2)], ppvs[2],
-                                                  list(mapping.keys())[list(mapping.values()).index(3)], ppvs[3]))
-    except:
-        try:
-            print('ppvs: {}: {}, {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],
-                                                            ppvs[0],
-                                                            list(mapping.keys())[list(mapping.values()).index(1)],
-                                                            ppvs[1],
-                                                            list(mapping.keys())[list(mapping.values()).index(2)],
-                                                            ppvs[2]))
-        except:
-            print('ppvs: {}: {}, {}: {}'.format(list(mapping.keys())[list(mapping.values()).index(0)],
-                                                        ppvs[0],
-                                                        list(mapping.keys())[list(mapping.values()).index(1)],
-                                                        ppvs[1]))
+    # Store results in dict
+    metrics = {'sens_' + cls: sens[i] for cls, i in mapping.items()}
+    metrics.update({'ppv_' + cls: ppv[i] for cls, i in mapping.items()})
+    metrics['accuracy'] = acc
 
-
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='COVID-Net Evaluation')
-    parser.add_argument('--weightspath', default='models/COVIDNet-CXR4-A', type=str, help='Path to output folder')
-    parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
-    parser.add_argument('--ckptname', default='model-18540', type=str, help='Name of model ckpts')
-    parser.add_argument('--testfile', default='test_COVIDx5.txt', type=str, help='Name of testfile')
-    parser.add_argument('--testfolder', default='data/test', type=str, help='Folder where test data is located')
-    parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
-    parser.add_argument('--out_tensorname', default='norm_dense_1/Softmax:0', type=str, help='Name of output tensor from graph')
-    parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
-
-    args = parser.parse_args()
-
-    sess = tf.Session()
-    tf.get_default_graph()
-    saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
-    saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
-
-    graph = tf.get_default_graph()
-
-    file = open(args.testfile, 'r')
-    testfile = file.readlines()
-
-    eval(sess, graph, testfile, args.testfolder, args.in_tensorname, args.out_tensorname, args.input_size)
+    return metrics

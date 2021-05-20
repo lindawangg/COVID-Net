@@ -1,0 +1,12 @@
+S03260 sub-S03260_ses-E06427_run-1_bp-chest_vp-pa_dx-corrected.png positive
+S03260 sub-S03260_ses-E22264_run-1_bp-chest_vp-pa_dx-corrected.png positive
+S03260 sub-S03260_ses-E26657_run-1_bp-chest_vp-pa_dx-corrected.png positive
+S03262 sub-S03262_ses-E06432_run-1_bp-chest_vp-pa_dx-corrected.png positive
+S03263 sub-S03263_ses-E06433_run-1_bp-chest_vp-ap_dx-corrected.png positive
+S03263 sub-S03263_ses-E17267_run-1_bp-chest_vp-pa_dx-corrected.png positive
+S03268 sub-S03268_ses-E06442_run-1_bp-chest_vp-pa_dx-corrected.png positive
+S03268 sub-S03268_ses-E06559_run-1_bp-chest_vp-pa_dx-corrected.png positive
+S03277 sub-S03277_ses-E06456_run-1_bp-chest_vp-pa_dx-corrected.png positive
+S03278 sub-S03278_ses-E06457_run-1_bp-chest_vp-pa_dx-corrected.png positive
+S03279 sub-S03279_ses-E06458_run-1_bp-chest_vp-ap_dx-corrected.png positive
+S03284 sub-S03284_ses-E07155_run-1_bp-chest_vp-pa_dx-corrected.png positive
