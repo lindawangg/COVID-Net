@@ -178,9 +178,11 @@ with tf.Session() as sess:
 
     # Create train ops
     extra_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+    train_vars=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
     with tf.control_dependencies(extra_ops):
+        train_op_all = optimizer.minimize(loss_op, var_list=train_vars)
         train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
         if args.resnet_type[:7] != 'resnet0':
             train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
