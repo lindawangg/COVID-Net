@@ -183,7 +183,7 @@ with tf.Session() as sess:
 
     # Create train ops
     extra_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-    tvs=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+    tvs=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)[:-1]
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
     accum_vars = [tf.Variable(tf.zeros_like(tv.initialized_value()), trainable=False) for tv in tvs]
@@ -258,24 +258,28 @@ with tf.Session() as sess:
                          labels_tensor: batch_y,
                          sample_weights: weights,
                          K.learning_phase(): 1}
-            if not (total_steps % log_interval): # run summary op for batch
-                _, pred, semantic_output, summary = sess.run(
+            if not (total_steps % log_interval):
+                if (i % 3 == 0):
+                    sess.run(train_step_bacth, feed_dict=feed_dict)
+                    sess.run(zero_ops)
+                # run summary op for batch
+                else:
+                    _, pred, semantic_output, summary = sess.run(
                     (accum_ops, pred_tensor, model_semantic.output, summary_op),
                     feed_dict=feed_dict)
-                summary_writer.add_summary(summary, total_steps)
-                if(i%3==0):
-                    sess.run(train_step_bacth)
-                    sess.run(zero_ops)
+                    summary_writer.add_summary(summary, total_steps)
             else:  # run without summary op
-                _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic.output),
+                if (i % 3 == 0):
+                    sess.run(train_step_bacth,feed_dict=feed_dict)
+                    sess.run(zero_ops)
+                else:
+                    _, pred, semantic_output = sess.run((accum_ops, pred_tensor, model_semantic.output),
                                                     feed_dict={image_tensor: batch_x,
                                                                 semantic_image_tensor: batch_sem_x,
                                                                 labels_tensor: batch_y,
                                                                 sample_weights: weights,
                                                                 K.learning_phase(): 1})
-                if (i % 3 == 0):
-                    sess.run(train_step_bacth)
-                    sess.run(zero_ops)
+
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
