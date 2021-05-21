@@ -259,7 +259,7 @@ with tf.Session() as sess:
                          sample_weights: weights,
                          K.learning_phase(): 1}
             if not (total_steps % log_interval):
-                if (i % 3 == 0):
+                if (i % 4 == 0):
                     sess.run(train_step_bacth, feed_dict=feed_dict)
                     sess.run(zero_ops)
                 # run summary op for batch
@@ -269,7 +269,7 @@ with tf.Session() as sess:
                     feed_dict=feed_dict)
                     summary_writer.add_summary(summary, total_steps)
             else:  # run without summary op
-                if (i % 3 == 0):
+                if (i % 4 == 0):
                     sess.run(train_step_bacth,feed_dict=feed_dict)
                     sess.run(zero_ops)
                 else:
