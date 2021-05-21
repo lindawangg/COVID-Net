@@ -56,12 +56,12 @@ def random_ratio_resize(img, prob=0.3, delta=0.1):
 _augmentation_transform = ImageDataGenerator(
     featurewise_center=False,
     featurewise_std_normalization=False,
-    # rotation_range=10,
-    # width_shift_range=0.1,
-    # height_shift_range=0.1,
-    # horizontal_flip=True,
+    rotation_range=10,
+    width_shift_range=0.1,
+    height_shift_range=0.1,
+    horizontal_flip=True,
     brightness_range=(0.9, 1.1),
-    # zoom_range=(0.85, 1.15),
+    zoom_range=(0.85, 1.15),
     fill_mode='constant',
     cval=0.,
 )

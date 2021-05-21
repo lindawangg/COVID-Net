@@ -189,7 +189,7 @@ with tf.Session() as sess:
     accum_vars = [tf.Variable(tf.zeros_like(tv.initialized_value()), trainable=False) for tv in tvs]
     zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_vars]
     with tf.control_dependencies(extra_ops):
-        gvs = optimizer.compute_gradients(loss_op, tvs)
+        gvs = optimizer.compute_gradients(loss_op, train_vars_resnet)
         train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
         if args.resnet_type[:7] != 'resnet0':
             train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
