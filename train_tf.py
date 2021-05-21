@@ -51,9 +51,9 @@ parser.add_argument('--lr', default=0.0001, type=float, help='Learning rate')
 parser.add_argument('--bs', default=16, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path", "class"])
 parser.add_argument('--target_name', type=str, default="class")
-parser.add_argument('--weightspath', default='/home/hossein.aboutalebi/data/sem/0.983', type=str, help='Path to output folder')
+parser.add_argument('--weightspath', default='/home/hossein.aboutalebi/data/urgent_sev', type=str, help='Path to output folder')
 # parser.add_argument('--metaname', default='model_train.meta', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='2021-04-30#15-31-59.224643COVIDNet-lr8e-05_22',
+parser.add_argument('--ckptname', default='2021-05-20#22-55-55.055394COVIDNet-lr0.0005_102',
                     type=str, help='Name of model ckpts')
 parser.add_argument('--trainfile', default='labels/train_COVIDx8B.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
