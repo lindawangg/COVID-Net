@@ -221,7 +221,7 @@ with tf.Session() as sess:
 
     for epoch in range(args.epochs):
         # Select train op depending on training stage
-        if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0' or True:
+        if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0':
             train_op = train_op_resnet
         else:
             train_op = train_op_sem
