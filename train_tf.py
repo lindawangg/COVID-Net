@@ -263,23 +263,16 @@ with tf.Session() as sess:
                     sess.run(train_step_bacth, feed_dict=feed_dict)
                     sess.run(zero_ops)
                 # run summary op for batch
-                else:
-                    _, pred, semantic_output, summary = sess.run(
+                _, pred, semantic_output, summary = sess.run(
                     (accum_ops, pred_tensor, model_semantic.output, summary_op),
                     feed_dict=feed_dict)
-                    summary_writer.add_summary(summary, total_steps)
+                summary_writer.add_summary(summary, total_steps)
             else:  # run without summary op
                 if (i % 4 == 0):
                     sess.run(train_step_bacth,feed_dict=feed_dict)
                     sess.run(zero_ops)
-                else:
-                    _, pred, semantic_output = sess.run((accum_ops, pred_tensor, model_semantic.output),
-                                                    feed_dict={image_tensor: batch_x,
-                                                                semantic_image_tensor: batch_sem_x,
-                                                                labels_tensor: batch_y,
-                                                                sample_weights: weights,
-                                                                K.learning_phase(): 1})
-
+                _, pred, semantic_output = sess.run((accum_ops, pred_tensor, model_semantic.output),
+                                                    feed_dict=feed_dict)
             progbar.update(i + 1)
 
         if epoch % display_step == 0:
