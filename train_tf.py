@@ -248,6 +248,7 @@ with tf.Session() as sess:
                                labels_tensor: batch_y,
                                K.learning_phase(): 1}
             total_steps = epoch*total_batch + i
+
             if not (total_steps % log_interval):
                 # if (i % 4 == 0):
                 #     sess.run(train_step_bacth, feed_dict=feed_dict)
