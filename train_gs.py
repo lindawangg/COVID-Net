@@ -53,7 +53,7 @@ parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path",
 parser.add_argument('--target_name', type=str, default="class")
 parser.add_argument('--weightspath', default='/home/maya.pavlova/covidnet-orig/models/compressed_965', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='model-9149',
+parser.add_argument('--ckptname', default='model-7485',
                     type=str, help='Name of model ckpts')
 parser.add_argument('--trainfile', default='labels/train_COVIDx8B.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
