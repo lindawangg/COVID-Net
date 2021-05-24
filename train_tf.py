@@ -55,11 +55,11 @@ parser.add_argument('--weightspath', default='/home/hossein.aboutalebi/data/urge
 # parser.add_argument('--metaname', default='model_train.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='2021-05-21#18-16-44.464148COVIDNet-lr8e-05_27',
                     type=str, help='Name of model ckpts')
-parser.add_argument('--trainfile', default='labels/train_COVIDx8B.txt', type=str, help='Path to train file')
+parser.add_argument('--trainfile', default='labels/train_pnemunia.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
-parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, help='Path to test file')
+parser.add_argument('--testfile', default='labels/test_pnemunia.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
-parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/data', type=str,
+parser.add_argument('--datadir', default='/home/hossein.aboutalebi/data/pneumonia/images/', type=str,
                     help='Path to data folder')
 parser.add_argument('--in_sem', default=0, type=int,
                     help='initial_itrs until training semantic')
@@ -70,7 +70,7 @@ parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
 parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str,
                     help='Name of output tensor from graph')
-parser.add_argument('--logged_images', default='labels/logged_images.txt', type=str,
+parser.add_argument('--logged_images', default='labels/logged_p.txt', type=str,
                     help='Name of output tensor from graph')
 parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str,
                     help='Name of logit tensor for loss')
@@ -168,20 +168,20 @@ with tf.Session() as sess:
 
     # Create train ops
     extra_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-    tvs = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)[:-1]
-    train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")[:-1]
+    # tvs = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)[:-1]
+    train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
-    accum_vars = [tf.Variable(tf.zeros_like(tv.initialized_value()), trainable=False) for tv in train_vars_resnet]
-    zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_vars]
+    # accum_vars = [tf.Variable(tf.zeros_like(tv.initialized_value()), trainable=False) for tv in train_vars_resnet]
+    # zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_vars]
     with tf.control_dependencies(extra_ops):
-        gvs = optimizer.compute_gradients(loss_op, train_vars_resnet)
+        # gvs = optimizer.compute_gradients(loss_op, train_vars_resnet)
         train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
         if args.resnet_type[:7] != 'resnet0':
             train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
         print('Train vars resnet: ', len(train_vars_resnet))
         print('Train vars semantic: ', len(train_vars_sem))
-        accum_ops = [accum_vars[j].assign_add(gv[0]) for j, gv in enumerate(gvs)]
-        train_step_bacth = optimizer.apply_gradients([(accum_vars[i], gv[1]) for i, gv in enumerate(gvs)])
+        # accum_ops = [accum_vars[j].assign_add(gv[0]) for j, gv in enumerate(gvs)]
+        # train_step_bacth = optimizer.apply_gradients([(accum_vars[i], gv[1]) for i, gv in enumerate(gvs)])
 
     # Run the initializer
     sess.run(tf.global_variables_initializer())
@@ -227,7 +227,7 @@ with tf.Session() as sess:
 
     for epoch in range(args.epochs):
         # Select train op depending on training stage
-        if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0' or True:
+        if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0':
             train_op = train_op_resnet
         else:
             train_op = train_op_sem
@@ -249,19 +249,19 @@ with tf.Session() as sess:
                                K.learning_phase(): 1}
             total_steps = epoch*total_batch + i
             if not (total_steps % log_interval):
-                if (i % 4 == 0):
-                    sess.run(train_step_bacth, feed_dict=feed_dict)
-                    sess.run(zero_ops)
+                # if (i % 4 == 0):
+                #     sess.run(train_step_bacth, feed_dict=feed_dict)
+                #     sess.run(zero_ops)
                 # run summary op for batch
                 _, pred, semantic_output, summary = sess.run(
-                    (accum_ops, pred_tensor, model_semantic.output, summary_op),
+                    (train_op, pred_tensor, model_semantic.output, summary_op),
                     feed_dict=feed_dict)
                 summary_writer.add_summary(summary, total_steps)
             else:  # run without summary op
-                if (i % 4 == 0):
-                    sess.run(train_step_bacth, feed_dict=feed_dict)
-                    sess.run(zero_ops)
-                _, pred, semantic_output = sess.run((accum_ops, pred_tensor, model_semantic.output),
+                # if (i % 4 == 0):
+                #     sess.run(train_step_bacth, feed_dict=feed_dict)
+                #     sess.run(zero_ops)
+                _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic.output),
                                                     feed_dict=feed_dict)
             progbar.update(i + 1)
 
