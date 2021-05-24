@@ -193,16 +193,9 @@ with tf.Session() as sess:
     if var:
         tvs.pop(var)
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
-    
     var = var_index(train_vars_resnet, 'final_output/bias:0')
-    print('var in train_vars_resnet: ', var)
-    if var:
-        train_vars_resnet.pop(var)
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
-    accum_vars = [tf.Variable(tf.zeros_like(tv.initialized_value()), trainable=False) for tv in train_vars_resnet]
-    zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_vars]
     with tf.control_dependencies(extra_ops):
-        gvs = optimizer.compute_gradients(loss_op, train_vars_resnet)
         train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
         if args.resnet_type[:7] != 'resnet0':
             train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
@@ -216,9 +209,6 @@ with tf.Session() as sess:
         #         print('accum vars: ', accum_vars[j])
         #         print('gv: ', gv)
         #         print(j)
-        accum_ops = [accum_vars[j].assign_add(gv[0]) for j, gv in enumerate(gvs)]
-        train_step_bacth = optimizer.apply_gradients([(accum_vars[i], gv[1]) for i, gv in enumerate(gvs)])
-
     # Run the initializer
     sess.run(tf.global_variables_initializer())
 

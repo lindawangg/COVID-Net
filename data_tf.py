@@ -95,7 +95,7 @@ class COVIDxDataset:
             # Resize and Z-score normalize semantic image
             sem_image = tf.image.resize(base_image, [self.sem_image_size, self.sem_image_size])
             sem_image = (sem_image - tf.reduce_mean(sem_image))/tf.math.reduce_std(sem_image)
-
+            image=(image - tf.reduce_mean(image))/tf.math.reduce_std(image)
             # Convert label to one-hot encoded vector
             label = tf.one_hot(label, depth=self.num_classes)
 
