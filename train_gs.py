@@ -55,9 +55,9 @@ parser.add_argument('--weightspath', default='/home/maya.pavlova/covidnet-orig/m
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model-7485',
                     type=str, help='Name of model ckpts')
-parser.add_argument('--trainfile', default='labels/train_COVIDx8B.txt', type=str, help='Path to train file')
+parser.add_argument('--trainfile', default='labels/train_COVIDxSev.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
-parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, help='Path to test file')
+parser.add_argument('--testfile', default='labels/test_COVIDxSev..txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/data', type=str,
                     help='Path to data folder')
@@ -70,7 +70,7 @@ parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
 parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str,
                     help='Name of output tensor from graph')
-parser.add_argument('--logged_images', default='labels/logged_images.txt', type=str,
+parser.add_argument('--logged_images', default='labels/logged_images_s.txt', type=str,
                     help='Name of output tensor from graph')
 parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str,
                     help='Name of logit tensor for loss')
