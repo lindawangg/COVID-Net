@@ -8,7 +8,7 @@ import datetime
 import numpy as np  # for debugging
 from tensorflow.keras import backend as K
 
-from eval import eval
+from eval_tf import eval
 from data_tf import COVIDxDataset
 from model import build_UNet2D_4L, build_resnet_attn_model
 from load_data import loadDataJSRTSingle
