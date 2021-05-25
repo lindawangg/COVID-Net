@@ -156,7 +156,7 @@ with tf.Session() as sess:
 
     graph = tf.get_default_graph()
     pred_tensor = model_main.output
-    saver = tf.train.Saver(max_to_keep=100)
+    saver = tf.train.Saver(max_to_keep=1)
 
     logit_tensor = graph.get_tensor_by_name('final_output/BiasAdd:0')
 
@@ -287,7 +287,7 @@ with tf.Session() as sess:
             metrics = eval(sess, dataset, args.testfile, test_batch_size, image_tensor,
                            semantic_image_tensor, pred_tensor, dataset.class_map)
             summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
-            model_main.save_weights(runPath+"_"+str(epoch))
+            # model_main.save_weights(runPath+"_"+str(epoch))
             print('Output: ' + runPath+"_"+str(epoch))
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
