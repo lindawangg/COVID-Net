@@ -63,7 +63,7 @@ parser.add_argument('--datadir', default='/home/hossein.aboutalebi/data/pneumoni
                     help='Path to data folder')
 parser.add_argument('--in_sem', default=0, type=int,
                     help='initial_itrs until training semantic')
-parser.add_argument('--covid_weight', default=1, type=float, help='Class weighting for covid')
+parser.add_argument('--covid_weight', default=2, type=float, help='Class weighting for covid')
 parser.add_argument('--covid_percent', default=0.5, type=float, help='Percentage of covid samples in batch')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
