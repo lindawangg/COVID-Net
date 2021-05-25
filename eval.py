@@ -31,6 +31,7 @@ def eval(sess, model_semantic, testfile, testfolder, input_tensor, input_semanti
             line = line.split()
             x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
             x = x.astype('float32') / 255.0
+            x=(x-np.mean(x))/np.std(x)
             x1 = loadDataJSRTSingle(os.path.join(testfolder, line[1]), (width_semantic, width_semantic))
 
             image_batch.append(x)
