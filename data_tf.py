@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import tensorflow as tf
+import random
 
 import augmentations
 
@@ -118,7 +119,8 @@ class COVIDxDataset:
         image = augmentations.random_translation(image, self.max_translation)
         # image = augmentations.random_shift_and_scale(image, self.max_pixel_shift, self.max_pixel_scale_change)
         # image = tf.image.random_flip_left_right(image)
-        image= tf.image.random_brightness(image, 0.1, seed=None)
+        if(random.uniform(0,1)<0.5):
+            image= tf.image.random_brightness(image, 0.1, seed=None)
         return image
 
     def _get_files(self, split_file, is_training):
