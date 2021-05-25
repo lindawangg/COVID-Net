@@ -13,8 +13,9 @@ _CLASS_MAPS = {
 
 class COVIDxDataset:
     """COVIDx dataset class, which handles construction of train/test datasets"""
-    def __init__(self, data_dir, num_classes, image_size=480, sem_image_size=256, max_translation=20, max_rotation=10,
-                 max_shear=0.15, max_pixel_shift=10, max_pixel_scale_change=0.1, shuffle_buffer=10000):
+    def __init__(self, data_dir, num_classes, image_size=480, sem_image_size=256,
+                 max_translation=20, max_rotation=10, max_shear=0.15, max_pixel_shift=10,
+                 max_pixel_scale_change=0.1, class_weights=None, shuffle_buffer=10000):
         # General parameters
         self.data_dir = data_dir
         self.image_size = image_size
@@ -22,6 +23,7 @@ class COVIDxDataset:
         self.shuffle_buffer = shuffle_buffer
         self.num_classes = num_classes
         self.class_map = _CLASS_MAPS[num_classes]
+        self.class_weights = tf.constant(class_weights, dtype=tf.float32) if class_weights is not None else None
 
         # Augmentation parameters
         self.max_translation = max_translation
@@ -90,16 +92,22 @@ class COVIDxDataset:
             # Resize, stack to 3-channel, and scale to [0, 1]
             image = tf.image.resize(base_image, [self.image_size, self.image_size])
             image = tf.image.grayscale_to_rgb(image)
-            image = image / 255.0
+            # image = image / 255.0
 
             # Resize and Z-score normalize semantic image
             sem_image = tf.image.resize(base_image, [self.sem_image_size, self.sem_image_size])
             sem_image = (sem_image - tf.reduce_mean(sem_image))/tf.math.reduce_std(sem_image)
-            image=(image - tf.reduce_mean(image))/tf.math.reduce_std(image)
-            # Convert label to one-hot encoded vector
-            label = tf.one_hot(label, depth=self.num_classes)
+            image = (image - tf.reduce_mean(image))/tf.math.reduce_std(image)
 
-            return {'image': image, 'sem_image': sem_image, 'label': label}
+            # Convert label to one-hot encoded vector
+            oh_label = tf.one_hot(label, depth=self.num_classes)
+
+            # Get class weight
+            if self.class_weights is not None:
+                weight = tf.gather(self.class_weights, label)
+                return {'image': image, 'sem_image': sem_image, 'label': oh_label, 'weight': weight}
+
+            return {'image': image, 'sem_image': sem_image, 'label': oh_label}
 
         return load_and_process
 

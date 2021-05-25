@@ -99,6 +99,7 @@ batch_size = args.bs
 test_batch_size = 20
 display_step = 1    # evaluation interval in epochs
 log_interval = 100  # image and loss log interval in steps (batches)
+class_weights = [1., args.covid_weight]
 
 # Make output paths
 current_time = (str(datetime.datetime.now()).replace(" ", "#")).replace(":", "-")
@@ -136,13 +137,15 @@ for i in range(len(log_images)):
 log_positive, log_negative = np.array(log_positive), np.array(log_negative)
 
 dataset = COVIDxDataset(
-    args.datadir, num_classes=2, image_size=args.input_size, sem_image_size=width_semantic)
+    args.datadir, num_classes=2, image_size=args.input_size,
+    sem_image_size=width_semantic, class_weights=class_weights)
 
 with tf.Session() as sess:
     K.set_session(sess)
     # First we load the semantic model:
     model_semantic = build_UNet2D_4L((height_semantic, width_semantic, 1))
     labels_tensor = tf.placeholder(tf.float32)
+    sample_weights = tf.placeholder(tf.float32)
 
     resnet_50 = build_resnet_attn_model(name=args.resnet_type, classes=2, model_semantic=model_semantic)
     training_ph = K.learning_phase()
@@ -155,10 +158,11 @@ with tf.Session() as sess:
     pred_tensor = model_main.output
     saver = tf.train.Saver(max_to_keep=100)
 
-    logit_tensor = graph.get_tensor_by_name('final_output/MatMul:0')
+    logit_tensor = graph.get_tensor_by_name('final_output/BiasAdd:0')
 
     # Define loss and optimizer
-    loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor))
+    loss_op = tf.reduce_mean(
+        tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor)*sample_weights)
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
 
     # Initialize update ops collection
@@ -233,7 +237,9 @@ with tf.Session() as sess:
             train_op = train_op_sem
 
         # Log images and semantic output
-        summary_pos,summary_neg=log_tensorboard_images(sess,K,test_image_summary_pos,semantic_image_tensor,log_positive,test_image_summary_neg,log_negative)
+        summary_pos, summary_neg = log_tensorboard_images(
+            sess, K, test_image_summary_pos, semantic_image_tensor,
+            log_positive, test_image_summary_neg, log_negative)
         summary_writer.add_summary(summary_pos, epoch)
         summary_writer.add_summary(summary_neg, epoch)
 
@@ -243,10 +249,13 @@ with tf.Session() as sess:
             batch_x = data['image']
             batch_sem_x = data['sem_image']
             batch_y = data['label']
-            feed_dict={image_tensor: batch_x,
-                               semantic_image_tensor: batch_sem_x,
-                               labels_tensor: batch_y,
-                               K.learning_phase(): 1}
+            weights = data['weight']
+            feed_dict = {
+                image_tensor: batch_x,
+                semantic_image_tensor: batch_sem_x,
+                labels_tensor: batch_y,
+                sample_weights: weights,
+                K.learning_phase(): 1}
             total_steps = epoch*total_batch + i
 
             if not (total_steps % log_interval):
@@ -270,16 +279,13 @@ with tf.Session() as sess:
             # Print minibatch loss and lr
             # semantic_output=model_semantic(batch_x.astype('float32')).eval(session=sess)
             # pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
-            loss = sess.run(loss_op, feed_dict={image_tensor: batch_x,
-                                          semantic_image_tensor: batch_sem_x,
-                                          labels_tensor: batch_y,
-                                          K.learning_phase(): 1})
+            loss = sess.run(loss_op, feed_dict=feed_dict)
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
 
             # Run eval and log results to tensorboard
-            metrics = eval(sess, dataset, args.testfile, test_batch_size, image_tensor, semantic_image_tensor,
-                            pred_tensor, dataset.class_map)
+            metrics = eval(sess, dataset, args.testfile, test_batch_size, image_tensor,
+                           semantic_image_tensor, pred_tensor, dataset.class_map)
             summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
             model_main.save_weights(runPath+"_"+str(epoch))
             print('Output: ' + runPath+"_"+str(epoch))
