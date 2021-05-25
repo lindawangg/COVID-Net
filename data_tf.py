@@ -14,7 +14,7 @@ _CLASS_MAPS = {
 class COVIDxDataset:
     """COVIDx dataset class, which handles construction of train/test datasets"""
     def __init__(self, data_dir, num_classes, image_size=480, sem_image_size=256,
-                 max_translation=20, max_rotation=10, max_shear=0.15, max_pixel_shift=10,
+                 max_translation=20, max_rotation=5, max_shear=0.15, max_pixel_shift=10,
                  max_pixel_scale_change=0.1, class_weights=None, shuffle_buffer=10000):
         # General parameters
         self.data_dir = data_dir
@@ -116,8 +116,8 @@ class COVIDxDataset:
         image = augmentations.random_shear(image, self.max_shear)
         image = augmentations.random_rotation(image, self.max_rotation)
         image = augmentations.random_translation(image, self.max_translation)
-        image = augmentations.random_shift_and_scale(image, self.max_pixel_shift, self.max_pixel_scale_change)
-        image = tf.image.random_flip_left_right(image)
+        # image = augmentations.random_shift_and_scale(image, self.max_pixel_shift, self.max_pixel_scale_change)
+        # image = tf.image.random_flip_left_right(image)
         image= tf.image.random_brightness(image, 0.1, seed=None)
         return image
 
