@@ -96,6 +96,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
 # Parameters
 learning_rate = args.lr
 batch_size = args.bs
+test_batch_size = 20
 display_step = 1    # evaluation interval in epochs
 log_interval = 100  # image and loss log interval in steps (batches)
 
@@ -207,15 +208,14 @@ with tf.Session() as sess:
     # Save base model and run baseline eval
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
-    print('Baseline eval:')
     summary_pos, summary_neg = log_tensorboard_images(sess, K,test_image_summary_pos, semantic_image_tensor, log_positive,
                                                       test_image_summary_neg, log_negative)
     summary_writer.add_summary(summary_pos, 0)
     summary_writer.add_summary(summary_neg, 0)
     print("Finished tensorboard baseline")
     metrics = eval(
-        sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor, semantic_image_tensor,
-        pred_tensor, args.input_size, width_semantic, batch_size=batch_size, mapping=dataset.class_map)
+        sess, dataset, args.testfile, test_batch_size, image_tensor, semantic_image_tensor,
+        pred_tensor, dataset.class_map)
     summary_writer.add_summary(scalar_summary(metrics, 'val/'), 0)
 
     # Training cycle
@@ -278,9 +278,8 @@ with tf.Session() as sess:
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
 
             # Run eval and log results to tensorboard
-            metrics = eval(
-                sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
-                semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=dataset.class_map)
+            metrics = eval(sess, dataset, args.testfile, test_batch_size, image_tensor, semantic_image_tensor,
+                            pred_tensor, dataset.class_map)
             summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
             model_main.save_weights(runPath+"_"+str(epoch))
             print('Output: ' + runPath+"_"+str(epoch))
