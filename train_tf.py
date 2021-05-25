@@ -173,18 +173,19 @@ with tf.Session() as sess:
 
     # Create train ops
     extra_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+    train_vars_all=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
     # tvs = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)[:-1]
-    train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
-    train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
+    # train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
+    # train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
     # accum_vars = [tf.Variable(tf.zeros_like(tv.initialized_value()), trainable=False) for tv in train_vars_resnet]
     # zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_vars]
     with tf.control_dependencies(extra_ops):
         # gvs = optimizer.compute_gradients(loss_op, train_vars_resnet)
-        train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
+        train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_all)
         if args.resnet_type[:7] != 'resnet0':
-            train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
-        print('Train vars resnet: ', len(train_vars_resnet))
-        print('Train vars semantic: ', len(train_vars_sem))
+            train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_all)
+        # print('Train vars resnet: ', len(train_vars_resnet))
+        # print('Train vars semantic: ', len(train_vars_sem))
         # accum_ops = [accum_vars[j].assign_add(gv[0]) for j, gv in enumerate(gvs)]
         # train_step_bacth = optimizer.apply_gradients([(accum_vars[i], gv[1]) for i, gv in enumerate(gvs)])
 
