@@ -92,7 +92,7 @@ class COVIDxDataset:
             # Resize, stack to 3-channel, and scale to [0, 1]
             image = tf.image.resize(base_image, [self.image_size, self.image_size])
             image = tf.image.grayscale_to_rgb(image)
-            # image = image / 255.0
+            image = image / 255.0
 
             # Resize and Z-score normalize semantic image
             sem_image = tf.image.resize(base_image, [self.sem_image_size, self.sem_image_size])
