@@ -163,7 +163,7 @@ with tf.Session() as sess:
     # Define loss and optimizer
     loss_op = tf.reduce_mean(
         tf.nn.softmax_cross_entropy_with_logits_v2(logits=logit_tensor, labels=labels_tensor)*sample_weights)
-    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+    optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.9)
 
     # Initialize update ops collection
     init_keras_collections(graph, model_main)

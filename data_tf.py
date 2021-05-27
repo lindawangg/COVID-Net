@@ -116,10 +116,10 @@ class COVIDxDataset:
         image = augmentations.random_shear(image, self.max_shear)
         image = augmentations.random_rotation(image, self.max_rotation)
         image = augmentations.random_translation(image, self.max_translation)
-        # image = augmentations.random_shift_and_scale(image, self.max_pixel_shift, self.max_pixel_scale_change)
-        # image = tf.image.random_flip_left_right(image)
-        if(random.uniform(0,1)<0.5):
-            image= tf.image.random_brightness(image, 0.1, seed=None)
+        image = augmentations.random_shift_and_scale(image, self.max_pixel_shift, self.max_pixel_scale_change)
+        image = tf.image.random_flip_left_right(image)
+        # if(random.uniform(0,1)<0.5):
+        #     image= tf.image.random_brightness(image, 0.1, seed=None)
         return image
 
     def _get_files(self, split_file, is_training):
