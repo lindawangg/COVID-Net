@@ -8,7 +8,7 @@ import datetime
 import numpy as np  # for debugging
 from tensorflow.keras import backend as K
 
-from eval import eval
+from eval_tf import eval
 from data_tf import COVIDxDataset
 from model import build_UNet2D_4L, build_resnet_attn_model
 from load_data import loadDataJSRTSingle
@@ -96,8 +96,10 @@ os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
 # Parameters
 learning_rate = args.lr
 batch_size = args.bs
+test_batch_size = 20
 display_step = 1    # evaluation interval in epochs
 log_interval = 100  # image and loss log interval in steps (batches)
+class_weights = [1., args.covid_weight]
 
 # Make output paths
 current_time = (str(datetime.datetime.now()).replace(" ", "#")).replace(":", "-")
@@ -135,7 +137,8 @@ for i in range(len(log_images)):
 log_positive, log_negative = np.array(log_positive), np.array(log_negative)
 
 dataset = COVIDxDataset(
-    args.datadir, num_classes=2, image_size=args.input_size, sem_image_size=width_semantic)
+    args.datadir, num_classes=2, image_size=args.input_size,
+    sem_image_size=width_semantic)
 
 with tf.Session() as sess:
     tf.get_default_graph()
@@ -179,36 +182,22 @@ with tf.Session() as sess:
     # print('length with model_semantic: ', len(tf.get_collection(tf.GraphKeys.UPDATE_OPS)))
 
     # Create train ops
-    def var_index(list_tensors, key):
-        for x, tensor in enumerate(list_tensors):
-            if tensor.name == key:
-                return x
-        return None
-
     extra_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-    print('tvs last element: ', tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)[54].name)
-    tvs = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-    var = var_index(tvs, 'final_output/bias:0')
-    print('var in tvs: ', var)
-    if var:
-        tvs.pop(var)
+    train_vars_all=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+    # tvs = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)[:-1]
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
-    var = var_index(train_vars_resnet, 'final_output/bias:0')
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
+    # accum_vars = [tf.Variable(tf.zeros_like(tv.initialized_value()), trainable=False) for tv in train_vars_resnet]
+    # zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_vars]
     with tf.control_dependencies(extra_ops):
         train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
         if args.resnet_type[:7] != 'resnet0':
             train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
-        print('Train vars resnet: ', len(train_vars_resnet))
-        print('Train vars semantic: ', len(train_vars_sem))
-        # accum_ops = []
-        # for j, gv in enumerate(gvs):
-        #     try:
-        #         accum_ops.append(accum_vars[j].assign_add(gv[0]))
-        #     except:
-        #         print('accum vars: ', accum_vars[j])
-        #         print('gv: ', gv)
-        #         print(j)
+        # print('Train vars resnet: ', len(train_vars_resnet))
+        # print('Train vars semantic: ', len(train_vars_sem))
+        # accum_ops = [accum_vars[j].assign_add(gv[0]) for j, gv in enumerate(gvs)]
+        # train_step_bacth = optimizer.apply_gradients([(accum_vars[i], gv[1]) for i, gv in enumerate(gvs)])
+
     # Run the initializer
     sess.run(tf.global_variables_initializer())
 
@@ -254,13 +243,15 @@ with tf.Session() as sess:
 
     for epoch in range(args.epochs):
         # Select train op depending on training stage
-        if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0' or True:
+        if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0':
             train_op = train_op_resnet
         else:
             train_op = train_op_sem
 
         # Log images and semantic output
-        summary_pos,summary_neg=log_tensorboard_images(sess,K,test_image_summary_pos,semantic_image_tensor,log_positive,test_image_summary_neg,log_negative)
+        summary_pos, summary_neg = log_tensorboard_images(
+            sess, K, test_image_summary_pos, semantic_image_tensor,
+            log_positive, test_image_summary_neg, log_negative)
         summary_writer.add_summary(summary_pos, epoch)
         summary_writer.add_summary(summary_neg, epoch)
 
@@ -290,10 +281,7 @@ with tf.Session() as sess:
             # Print minibatch loss and lr
             # semantic_output=model_semantic(batch_x.astype('float32')).eval(session=sess)
             # pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
-            loss = sess.run(loss_op, feed_dict={image_tensor: batch_x,
-                                          semantic_image_tensor: batch_sem_x,
-                                          labels_tensor: batch_y,
-                                          K.learning_phase(): 1})
+            loss = sess.run(loss_op, feed_dict=feed_dict)
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
 
@@ -302,7 +290,7 @@ with tf.Session() as sess:
                 sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
                 semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=dataset.class_map)
             summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
-            saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
+            # model_main.save_weights(runPath+"_"+str(epoch))
             print('Output: ' + runPath+"_"+str(epoch))
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
