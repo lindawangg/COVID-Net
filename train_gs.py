@@ -276,19 +276,13 @@ with tf.Session() as sess:
                                K.learning_phase(): 1}
             total_steps = epoch*total_batch + i
             if not (total_steps % log_interval):
-                if (i % 4 == 0):
-                    sess.run(train_step_bacth, feed_dict=feed_dict)
-                    sess.run(zero_ops)
                 # run summary op for batch
                 _, pred, semantic_output, summary = sess.run(
-                    (accum_ops, pred_tensor, model_semantic_output, summary_op),
+                    (train_op, pred_tensor, model_semantic_output, summary_op),
                     feed_dict=feed_dict)
                 summary_writer.add_summary(summary, total_steps)
             else:  # run without summary op
-                if (i % 4 == 0):
-                    sess.run(train_step_bacth, feed_dict=feed_dict)
-                    sess.run(zero_ops)
-                _, pred, semantic_output = sess.run((accum_ops, pred_tensor, model_semantic_output),
+                _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic_output),
                                                     feed_dict=feed_dict)
             progbar.update(i + 1)
 
