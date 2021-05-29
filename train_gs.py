@@ -173,7 +173,9 @@ with tf.Session() as sess:
 
     # Create train ops
     extra_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+    print(len(extra_ops))
     train_vars_all=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+    print(len(train_vars_all))
     # tvs = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)[:-1]
     train_vars_resnet = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "^((?!sem).)*$")
     train_vars_sem = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "sem*")
