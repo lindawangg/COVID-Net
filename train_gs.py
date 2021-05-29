@@ -39,6 +39,7 @@ def init_keras_collections(graph, keras_model):
     for update_op in keras_model.updates:
         graph.add_to_collection(tf.GraphKeys.UPDATE_OPS, update_op)
 
+
     # Clear default trainable collection before adding tensors
     graph.clear_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
     for trainable_layer in keras_model.trainable_weights:
@@ -147,18 +148,7 @@ with tf.Session() as sess:
     graph = tf.get_default_graph()
     labels_tensor = graph.get_tensor_by_name('Placeholder:0')
     sample_weights = graph.get_tensor_by_name('Placeholder_1:0')
-
-    # K.set_session(sess)
-    # First we load the semantic model:
-    # model_semantic = build_UNet2D_4L((height_semantic, width_semantic, 1))
-    # labels_tensor = tf.placeholder(tf.float32)
-
-    # resnet_50 = build_resnet_attn_model(name=args.resnet_type, classes=2, model_semantic=model_semantic)
     training_ph = K.learning_phase()
-    # model_main = resnet_50.call(input_shape=(args.input_size, args.input_size, 3), training=training_ph)
-
-    # image_tensor = model_main.input[0]  # The model.input is a tuple of (input_2:0, and input_1:0)
-    # semantic_image_tensor = semantic_image_tensor
     image_tensor = graph.get_tensor_by_name('input_2:0')
     semantic_image_tensor = graph.get_tensor_by_name('input_1:0')
     model_semantic_output = graph.get_tensor_by_name('sem/34/Sigmoid:0')
@@ -190,14 +180,11 @@ with tf.Session() as sess:
     # accum_vars = [tf.Variable(tf.zeros_like(tv.initialized_value()), trainable=False) for tv in train_vars_resnet]
     # zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_vars]
     with tf.control_dependencies(extra_ops):
-        train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_resnet)
+        train_op_resnet = optimizer.minimize(loss_op, var_list=train_vars_all)
         if args.resnet_type[:7] != 'resnet0':
-            train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_sem)
+            train_op_sem = optimizer.minimize(loss_op, var_list=train_vars_all)
         # print('Train vars resnet: ', len(train_vars_resnet))
         # print('Train vars semantic: ', len(train_vars_sem))
-        # accum_ops = [accum_vars[j].assign_add(gv[0]) for j, gv in enumerate(gvs)]
-        # train_step_bacth = optimizer.apply_gradients([(accum_vars[i], gv[1]) for i, gv in enumerate(gvs)])
-
     # Run the initializer
     sess.run(tf.global_variables_initializer())
 
