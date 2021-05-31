@@ -43,7 +43,7 @@ parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
 parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str,
                     help='Name of output tensor from graph')
-parser.add_argument('--logged_images', default='labels/logged_images_p.txt', type=str,
+parser.add_argument('--logged_images', default='labels/logged_p.txt', type=str,
                     help='Name of output tensor from graph')
 parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str,
                     help='Name of logit tensor for loss')
