@@ -32,7 +32,7 @@ parser.add_argument('--trainfile', default='labels/train_pnemunia.txt', type=str
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
 parser.add_argument('--testfile', default='labels/test_pnemunia.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
-parser.add_argument('--datadir', default='/home/hossein.aboutalebi/data/pneumonia', type=str,
+parser.add_argument('--datadir', default='/home/hossein.aboutalebi/data/pneumonia/images', type=str,
                     help='Path to data folder')
 parser.add_argument('--in_sem', default=0, type=int,
                     help='initial_itrs until training semantic')
