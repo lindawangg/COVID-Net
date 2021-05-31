@@ -12,39 +12,12 @@ from eval import eval
 from data_tf import COVIDxDataset
 from model import build_UNet2D_4L, build_resnet_attn_model
 from load_data import loadDataJSRTSingle
-from utils.tensorboard import heatmap_overlay_summary_op, scalar_summary,log_tensorboard_images
+from utils.tensorboard import heatmap_overlay_summary_op, scalar_summary, log_tensorboard_images
+from train_tf import init_keras_collections
 
 # To remove TF Warnings
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
-
-def init_keras_collections(graph, keras_model):
-    """
-    Creates missing collections in a tf.Graph using keras model attributes
-    Args:
-        graph (tf.Graph): Tensorflow graph with missing collections
-        keras_model (keras.Model): Keras model with desired attributes
-    """
-    if hasattr(keras_model, 'metrics'):
-        for metric in keras_model.metrics:
-            for update_op in metric.updates:
-                graph.add_to_collection(tf.GraphKeys.UPDATE_OPS, update_op)
-            for weight in metric._non_trainable_weights:
-                graph.add_to_collection(tf.GraphKeys.METRIC_VARIABLES, weight)
-                graph.add_to_collection(tf.GraphKeys.LOCAL_VARIABLES, weight)
-    else:
-        print('skipped adding variables from metrics')
-
-    for update_op in keras_model.updates:
-        graph.add_to_collection(tf.GraphKeys.UPDATE_OPS, update_op)
-
-
-    # Clear default trainable collection before adding tensors
-    graph.clear_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-    for trainable_layer in keras_model.trainable_weights:
-        graph.add_to_collection(tf.GraphKeys.TRAINABLE_VARIABLES, trainable_layer)
-
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=200, type=int, help='Number of epochs')
@@ -148,7 +121,7 @@ with tf.Session() as sess:
     graph = tf.get_default_graph()
     labels_tensor = graph.get_tensor_by_name('Placeholder:0')
     sample_weights = graph.get_tensor_by_name('Placeholder_1:0')
-    training_ph = K.learning_phase()
+    training_ph = graph.get_tensor_by_name('keras_learning_phase:0')
     image_tensor = graph.get_tensor_by_name('input_2:0')
     semantic_image_tensor = graph.get_tensor_by_name('input_1:0')
     model_semantic_output = graph.get_tensor_by_name('sem/34/Sigmoid:0')
@@ -212,8 +185,8 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    summary_pos, summary_neg = log_tensorboard_images(sess, K,test_image_summary_pos, semantic_image_tensor, log_positive,
-                                                      test_image_summary_neg, log_negative)
+    summary_pos, summary_neg = log_tensorboard_images(sess, test_image_summary_pos, semantic_image_tensor, log_positive,
+                                                      test_image_summary_neg, log_negative, training_ph=training_ph)
     summary_writer.add_summary(summary_pos, 0)
     summary_writer.add_summary(summary_neg, 0)
     print("Finished tensorboard baseline")
@@ -224,63 +197,63 @@ with tf.Session() as sess:
     summary_writer.add_summary(scalar_summary(metrics, 'val/'), 0)
 
     # Training cycle
-    # print('Training started')
-    # train_dataset, count, batch_size = dataset.train_dataset(args.trainfile, batch_size)
-    # data_next = train_dataset.make_one_shot_iterator().get_next()
-    # total_batch = int(np.ceil(count/batch_size))
-    # progbar = tf.keras.utils.Progbar(total_batch)
+    print('Training started')
+    train_dataset, count, batch_size = dataset.train_dataset(args.trainfile, batch_size)
+    data_next = train_dataset.make_one_shot_iterator().get_next()
+    total_batch = int(np.ceil(count/batch_size))
+    progbar = tf.keras.utils.Progbar(total_batch)
 
-    # for epoch in range(args.epochs):
-    #     # Select train op depending on training stage
-    #     if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0':
-    #         train_op = train_op_resnet
-    #     else:
-    #         train_op = train_op_sem
+    for epoch in range(args.epochs):
+        # Select train op depending on training stage
+        if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0':
+            train_op = train_op_resnet
+        else:
+            train_op = train_op_sem
 
-    #     # Log images and semantic output
-    #     summary_pos, summary_neg = log_tensorboard_images(
-    #         sess, K, test_image_summary_pos, semantic_image_tensor,
-    #         log_positive, test_image_summary_neg, log_negative)
-    #     summary_writer.add_summary(summary_pos, epoch)
-    #     summary_writer.add_summary(summary_neg, epoch)
+        # Log images and semantic output
+        summary_pos, summary_neg = log_tensorboard_images(
+            sess, test_image_summary_pos, semantic_image_tensor,
+            log_positive, test_image_summary_neg, log_negative, training_ph=training_ph)
+        summary_writer.add_summary(summary_pos, epoch)
+        summary_writer.add_summary(summary_neg, epoch)
 
-    #     for i in range(total_batch):
-    #         # Get batch of data
-    #         data = sess.run(data_next)
-    #         batch_x = data['image']
-    #         batch_sem_x = data['sem_image']
-    #         batch_y = data['label']
-    #         feed_dict={image_tensor: batch_x,
-    #                            semantic_image_tensor: batch_sem_x,
-    #                            labels_tensor: batch_y,
-    #                            K.learning_phase(): 1}
-    #         total_steps = epoch*total_batch + i
-    #         if not (total_steps % log_interval):
-    #             # run summary op for batch
-    #             _, pred, semantic_output, summary = sess.run(
-    #                 (train_op, pred_tensor, model_semantic_output, summary_op),
-    #                 feed_dict=feed_dict)
-    #             summary_writer.add_summary(summary, total_steps)
-    #         else:  # run without summary op
-    #             _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic_output),
-    #                                                 feed_dict=feed_dict)
-    #         progbar.update(i + 1)
+        for i in range(total_batch):
+            # Get batch of data
+            data = sess.run(data_next)
+            batch_x = data['image']
+            batch_sem_x = data['sem_image']
+            batch_y = data['label']
+            feed_dict = {image_tensor: batch_x,
+                         semantic_image_tensor: batch_sem_x,
+                         labels_tensor: batch_y,
+                         training_ph: 1}
+            total_steps = epoch*total_batch + i
+            if not (total_steps % log_interval):
+                # run summary op for batch
+                _, pred, semantic_output, summary = sess.run(
+                    (train_op, pred_tensor, model_semantic_output, summary_op),
+                    feed_dict=feed_dict)
+                summary_writer.add_summary(summary, total_steps)
+            else:  # run without summary op
+                _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic_output),
+                                                    feed_dict=feed_dict)
+            progbar.update(i + 1)
 
-    #     if epoch % display_step == 0:
-    #         # Print minibatch loss and lr
-    #         # semantic_output=model_semantic(batch_x.astype('float32')).eval(session=sess)
-    #         # pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
-    #         loss = sess.run(loss_op, feed_dict=feed_dict)
-    #         print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
-    #         print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
+        if epoch % display_step == 0:
+            # Print minibatch loss and lr
+            # semantic_output=model_semantic(batch_x.astype('float32')).eval(session=sess)
+            # pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
+            loss = sess.run(loss_op, feed_dict=feed_dict)
+            print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
+            print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
 
-    #         # Run eval and log results to tensorboard
-    #         metrics = eval(
-    #             sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
-    #             semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=dataset.class_map)
-    #         summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
-    #         # model_main.save_weights(runPath+"_"+str(epoch))
-    #         print('Output: ' + runPath+"_"+str(epoch))
-    #         print('Saving checkpoint at epoch {}'.format(epoch + 1))
+            # Run eval and log results to tensorboard
+            metrics = eval(
+                sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
+                semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=dataset.class_map)
+            summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
+            # model_main.save_weights(runPath+"_"+str(epoch))
+            print('Output: ' + runPath+"_"+str(epoch))
+            print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
 print("Optimization Finished!")

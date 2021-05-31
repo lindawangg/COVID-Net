@@ -1,7 +1,6 @@
 import os
 import numpy as np
 import tensorflow as tf
-import random
 
 import augmentations
 
@@ -24,7 +23,7 @@ class COVIDxDataset:
         self.shuffle_buffer = shuffle_buffer
         self.num_classes = num_classes
         self.class_map = _CLASS_MAPS[num_classes]
-        self.class_weights = tf.constant(class_weights, dtype=tf.float32) if class_weights is not None else None
+        self.class_weights = class_weights if class_weights is not None else None
 
         # Augmentation parameters
         self.max_translation = max_translation
