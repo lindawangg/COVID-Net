@@ -28,15 +28,15 @@ parser.add_argument('--weightspath', default='/home/maya.pavlova/covidnet-orig/m
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model-7485',
                     type=str, help='Name of model ckpts')
-parser.add_argument('--trainfile', default='/home/gensynth/gensynth_deploy_scripts/gensynth-workspace/datasets/Pneumonia_Hossein/train_pneumonia.txt', type=str, help='Path to train file')
+parser.add_argument('--trainfile', default='label/train_pneumonia.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
-parser.add_argument('--testfile', default='/home/gensynth/gensynth_deploy_scripts/gensynth-workspace/datasets/Pneumonia_Hossein/test_pneumonia.txt', type=str, help='Path to test file')
+parser.add_argument('--testfile', default='label/test_pneumonia.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
-parser.add_argument('--datadir', default='/home/gensynth/gensynth_deploy_scripts/gensynth-workspace/datasets/Pneumonia_Hossein', type=str,
+parser.add_argument('--datadir', default='/home/hossein.aboutalebi/data/pneumonia', type=str,
                     help='Path to data folder')
 parser.add_argument('--in_sem', default=0, type=int,
                     help='initial_itrs until training semantic')
-parser.add_argument('--covid_weight', default=1, type=float, help='Class weighting for covid')
+parser.add_argument('--covid_weight', default=4, type=float, help='Class weighting for covid')
 parser.add_argument('--covid_percent', default=0.5, type=float, help='Percentage of covid samples in batch')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
