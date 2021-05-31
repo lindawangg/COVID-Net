@@ -8,7 +8,7 @@ import datetime
 import numpy as np  # for debugging
 from tensorflow.keras import backend as K
 
-from eval_no_norm import eval
+from eval import eval
 from data_tf import COVIDxDataset
 from model import build_UNet2D_4L, build_resnet_attn_model
 from load_data import loadDataJSRTSingle
@@ -48,19 +48,19 @@ def init_keras_collections(graph, keras_model):
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=200, type=int, help='Number of epochs')
-parser.add_argument('--lr', default=8e-5, type=float, help='Learning rate')
-parser.add_argument('--bs', default=50, type=int, help='Batch size')
+parser.add_argument('--lr', default=0.0001, type=float, help='Learning rate')
+parser.add_argument('--bs', default=16, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path", "class"])
 parser.add_argument('--target_name', type=str, default="class")
 parser.add_argument('--weightspath', default='/home/maya.pavlova/covidnet-orig/models/compressed_965', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model-7485',
                     type=str, help='Name of model ckpts')
-parser.add_argument('--trainfile', default='/home/gensynth/gensynth_deploy_scripts/gensynth-workspace/datasets/Pneumonia_Hossein/train_pneumonia.txt', type=str, help='Path to train file')
+parser.add_argument('--trainfile', default='labels/train_COVIDxSev.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
-parser.add_argument('--testfile', default='/home/gensynth/gensynth_deploy_scripts/gensynth-workspace/datasets/Pneumonia_Hossein/test_pneumonia.txt', type=str, help='Path to test file')
+parser.add_argument('--testfile', default='labels/test_COVIDxSev.txt', type=str, help='Path to test file')
 parser.add_argument('--name', default='COVIDNet', type=str, help='Name of folder to store training checkpoints')
-parser.add_argument('--datadir', default='/home/gensynth/gensynth_deploy_scripts/gensynth-workspace/datasets/Pneumonia_Hossein', type=str,
+parser.add_argument('--datadir', default='/home/maya.pavlova/covidnet-orig/data', type=str,
                     help='Path to data folder')
 parser.add_argument('--in_sem', default=0, type=int,
                     help='initial_itrs until training semantic')
@@ -71,7 +71,7 @@ parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
 parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str,
                     help='Name of output tensor from graph')
-parser.add_argument('--logged_images', default='labels/logged_images_p.txt', type=str,
+parser.add_argument('--logged_images', default='labels/logged_images_s.txt', type=str,
                     help='Name of output tensor from graph')
 parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str,
                     help='Name of logit tensor for loss')
@@ -97,7 +97,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
 # Parameters
 learning_rate = args.lr
 batch_size = args.bs
-test_batch_size = 50
+test_batch_size = 20
 display_step = 1    # evaluation interval in epochs
 log_interval = 100  # image and loss log interval in steps (batches)
 class_weights = [1., args.covid_weight]
@@ -128,6 +128,8 @@ with open(args.logged_images) as f:
 log_positive, log_negative = [], []
 for i in range(len(log_images)):
     line = log_images[i].split()
+    # image = process_image_file(os.path.join(args.datadir, 'test', line[1]), 0.08, args.input_size)
+    # image = image.astype('float32') / 255.0
     sem_image = loadDataJSRTSingle(os.path.join(args.datadir, 'test', line[1]), (width_semantic, width_semantic))
     if line[2] == 'positive':
         log_positive.append(sem_image)
@@ -218,68 +220,67 @@ with tf.Session() as sess:
     model_semantic = None
     metrics = eval(
         sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor, semantic_image_tensor,
-        pred_tensor, args.input_size, width_semantic, mapping=dataset.class_map, batch_size=test_batch_size)
+        pred_tensor, args.input_size, width_semantic, mapping=dataset.class_map)
     summary_writer.add_summary(scalar_summary(metrics, 'val/'), 0)
 
     # Training cycle
-    print('Training started')
-    train_dataset, count, batch_size = dataset.train_dataset(args.trainfile, batch_size)
-    data_next = train_dataset.make_one_shot_iterator().get_next()
-    total_batch = int(np.ceil(count/batch_size))
-    progbar = tf.keras.utils.Progbar(total_batch)
+    # print('Training started')
+    # train_dataset, count, batch_size = dataset.train_dataset(args.trainfile, batch_size)
+    # data_next = train_dataset.make_one_shot_iterator().get_next()
+    # total_batch = int(np.ceil(count/batch_size))
+    # progbar = tf.keras.utils.Progbar(total_batch)
 
-    for epoch in range(args.epochs):
-        # Select train op depending on training stage
-        if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0':
-            train_op = train_op_resnet
-        else:
-            train_op = train_op_sem
+    # for epoch in range(args.epochs):
+    #     # Select train op depending on training stage
+    #     if epoch < args.in_sem or epoch % switcher != 0 or args.resnet_type[:7] == 'resnet0':
+    #         train_op = train_op_resnet
+    #     else:
+    #         train_op = train_op_sem
 
-        # Log images and semantic output
-        summary_pos, summary_neg = log_tensorboard_images(
-            sess, K, test_image_summary_pos, semantic_image_tensor,
-            log_positive, test_image_summary_neg, log_negative)
-        summary_writer.add_summary(summary_pos, epoch)
-        summary_writer.add_summary(summary_neg, epoch)
+    #     # Log images and semantic output
+    #     summary_pos, summary_neg = log_tensorboard_images(
+    #         sess, K, test_image_summary_pos, semantic_image_tensor,
+    #         log_positive, test_image_summary_neg, log_negative)
+    #     summary_writer.add_summary(summary_pos, epoch)
+    #     summary_writer.add_summary(summary_neg, epoch)
 
-        for i in range(total_batch):
-            # Get batch of data
-            data = sess.run(data_next)
-            batch_x = data['image']
-            batch_sem_x = data['sem_image']
-            batch_y = data['label']
-            feed_dict={image_tensor: batch_x,
-                               semantic_image_tensor: batch_sem_x,
-                               labels_tensor: batch_y,
-                               K.learning_phase(): 1}
-            total_steps = epoch*total_batch + i
-            if not (total_steps % log_interval):
-                # run summary op for batch
-                _, pred, semantic_output, summary = sess.run(
-                    (train_op, pred_tensor, model_semantic_output, summary_op),
-                    feed_dict=feed_dict)
-                summary_writer.add_summary(summary, total_steps)
-            else:  # run without summary op
-                _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic_output),
-                                                    feed_dict=feed_dict)
-            progbar.update(i + 1)
+    #     for i in range(total_batch):
+    #         # Get batch of data
+    #         data = sess.run(data_next)
+    #         batch_x = data['image']
+    #         batch_sem_x = data['sem_image']
+    #         batch_y = data['label']
+    #         feed_dict={image_tensor: batch_x,
+    #                            semantic_image_tensor: batch_sem_x,
+    #                            labels_tensor: batch_y,
+    #                            K.learning_phase(): 1}
+    #         total_steps = epoch*total_batch + i
+    #         if not (total_steps % log_interval):
+    #             # run summary op for batch
+    #             _, pred, semantic_output, summary = sess.run(
+    #                 (train_op, pred_tensor, model_semantic_output, summary_op),
+    #                 feed_dict=feed_dict)
+    #             summary_writer.add_summary(summary, total_steps)
+    #         else:  # run without summary op
+    #             _, pred, semantic_output = sess.run((train_op, pred_tensor, model_semantic_output),
+    #                                                 feed_dict=feed_dict)
+    #         progbar.update(i + 1)
 
-        if epoch % display_step == 0:
-            # Print minibatch loss and lr
-            # semantic_output=model_semantic(batch_x.astype('float32')).eval(session=sess)
-            # pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
-            loss = sess.run(loss_op, feed_dict=feed_dict)
-            print()
-            print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
-            print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
+    #     if epoch % display_step == 0:
+    #         # Print minibatch loss and lr
+    #         # semantic_output=model_semantic(batch_x.astype('float32')).eval(session=sess)
+    #         # pred = model_main((batch_x.astype('float32'),semantic_output)).eval(session=sess)
+    #         loss = sess.run(loss_op, feed_dict=feed_dict)
+    #         print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
+    #         print("lr: {},  batch_size: {}".format(str(args.lr),str(args.bs)))
 
-            # Run eval and log results to tensorboard
-            metrics = eval(
-                sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
-                semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=dataset.class_map, batch_size=test_batch_size)
-            summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
-            # model_main.save_weights(runPath+"_"+str(epoch))
-            print('Output: ' + runPath+"_"+str(epoch))
-            print('Saving checkpoint at epoch {}'.format(epoch + 1))
+    #         # Run eval and log results to tensorboard
+    #         metrics = eval(
+    #             sess, model_semantic, testfiles, os.path.join(args.datadir, 'test'), image_tensor,
+    #             semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=dataset.class_map)
+    #         summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
+    #         # model_main.save_weights(runPath+"_"+str(epoch))
+    #         print('Output: ' + runPath+"_"+str(epoch))
+    #         print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
 print("Optimization Finished!")
