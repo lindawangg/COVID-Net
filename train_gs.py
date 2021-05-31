@@ -12,7 +12,6 @@ from data_tf import COVIDxDataset
 from model import build_UNet2D_4L, build_resnet_attn_model
 from load_data import loadDataJSRTSingle
 from utils.tensorboard import heatmap_overlay_summary_op, scalar_summary, log_tensorboard_images
-from train_tf import init_keras_collections
 
 # To remove TF Warnings
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
