@@ -252,7 +252,7 @@ with tf.Session() as sess:
                 semantic_image_tensor, pred_tensor, args.input_size, width_semantic, mapping=dataset.class_map)
             summary_writer.add_summary(scalar_summary(metrics, 'val/'), (epoch + 1)*total_batch)
             # model_main.save_weights(runPath+"_"+str(epoch))
-            print('Output: ' + runPath+"_"+str(epoch))
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
+            saver.save(sess, os.path.join(runPath, 'model-{}'.format(epoch + 1)))
 
 print("Optimization Finished!")
