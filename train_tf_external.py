@@ -61,6 +61,8 @@ width_semantic = 256
 switcher = 3
 
 args = parser.parse_args()
+os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_n
+
 
 # Parameters
 learning_rate = args.lr
