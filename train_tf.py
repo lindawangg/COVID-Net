@@ -213,7 +213,7 @@ with tf.Session() as sess:
     # Save base model and run baseline eval
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
-    summary_pos, summary_neg = log_tensorboard_images(sess, K,test_image_summary_pos, semantic_image_tensor, log_positive,
+    summary_pos, summary_neg = log_tensorboard_images(sess, test_image_summary_pos, semantic_image_tensor, log_positive,
                                                       test_image_summary_neg, log_negative)
     summary_writer.add_summary(summary_pos, 0)
     summary_writer.add_summary(summary_neg, 0)
@@ -239,7 +239,7 @@ with tf.Session() as sess:
 
         # Log images and semantic output
         summary_pos, summary_neg = log_tensorboard_images(
-            sess, K, test_image_summary_pos, semantic_image_tensor,
+            sess,  test_image_summary_pos, semantic_image_tensor,
             log_positive, test_image_summary_neg, log_negative)
         summary_writer.add_summary(summary_pos, epoch)
         summary_writer.add_summary(summary_neg, epoch)

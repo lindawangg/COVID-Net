@@ -25,7 +25,7 @@ parser.add_argument('--lr', default=0.0001, type=float, help='Learning rate')
 parser.add_argument('--bs', default=16, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path", "class"])
 parser.add_argument('--target_name', type=str, default="class")
-parser.add_argument('--weightspath', default='/home/hossein.aboutalebi/data/urgent_sev/0.85', type=str, help='Path to output folder')
+parser.add_argument('--weightspath', default=' /home/maya.pavlova/covidnet-orig/models/resnet56_cbam', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='2021-05-21#18-16-44.464148COVIDNet-lr8e-05_27',
                     type=str, help='Name of model ckpts')
