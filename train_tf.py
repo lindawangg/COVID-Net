@@ -51,9 +51,9 @@ parser.add_argument('--lr', default=0.0001, type=float, help='Learning rate')
 parser.add_argument('--bs', default=16, type=int, help='Batch size')
 parser.add_argument('--col_name', nargs='+', default=["folder_name", "img_path", "class"])
 parser.add_argument('--target_name', type=str, default="class")
-parser.add_argument('--weightspath', default='/home/hossein.aboutalebi/data/urgent_sev/0.85', type=str, help='Path to output folder')
+parser.add_argument('--weightspath', default='/home/hossein.aboutalebi/data/sem/0.983', type=str, help='Path to output folder')
 # parser.add_argument('--metaname', default='model_train.meta', type=str, help='Name of ckpt meta file')
-parser.add_argument('--ckptname', default='2021-05-21#18-16-44.464148COVIDNet-lr8e-05_27',
+parser.add_argument('--ckptname', default='2021-04-30#15-31-59.224643COVIDNet-lr8e-05_22',
                     type=str, help='Name of model ckpts')
 parser.add_argument('--trainfile', default='labels/train_pnemunia.txt', type=str, help='Path to train file')
 parser.add_argument('--cuda_n', type=str, default="0", help='cuda number')
@@ -70,7 +70,7 @@ parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top
 parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
 parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str,
                     help='Name of output tensor from graph')
-parser.add_argument('--logged_images', default='labels/logged_p.txt', type=str,
+parser.add_argument('--logged_images', default='labels/logged_images_p.txt', type=str,
                     help='Name of output tensor from graph')
 parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str,
                     help='Name of logit tensor for loss')
@@ -129,7 +129,7 @@ for i in range(len(log_images)):
     line = log_images[i].split()
     # image = process_image_file(os.path.join(args.datadir, 'test', line[1]), 0.08, args.input_size)
     # image = image.astype('float32') / 255.0
-    sem_image = loadDataJSRTSingle(os.path.join(args.datadir, 'test', line[1]), (width_semantic, width_semantic))
+    sem_image = loadDataJSRTSingle(os.path.join(args.datadir, 'train', line[1]), (width_semantic, width_semantic))
     if line[2] == 'positive':
         log_positive.append(sem_image)
     elif line[2] == 'negative':
