@@ -24,6 +24,14 @@ def process_image_file(filepath, top_percent, size):
     img = cv2.resize(img, (size, size))
     return img
 
+def process_image_file_semantic(filepath, size):
+    img = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
+    img = cv2.resize(img, (size, size))
+    img = img.astype('float64')
+    img -= img.mean()
+    img /= img.std()
+    return np.expand_dims(img, -1)
+
 def random_ratio_resize(img, prob=0.3, delta=0.1):
     if np.random.rand() >= prob:
         return img
@@ -84,7 +92,8 @@ class BalanceCovidDataset(keras.utils.Sequence):
             csv_file,
             is_training=True,
             batch_size=8,
-            input_shape=(224, 224),
+            semantic_input_shape=(256, 256),
+            input_shape=(480, 480),
             n_classes=2,
             num_channels=3,
             mapping={
@@ -96,7 +105,8 @@ class BalanceCovidDataset(keras.utils.Sequence):
             covid_percent=0.5,
             class_weights=[1., 1.],
             top_percent=0.08,
-            is_severity_model=False
+            is_severity_model=False,
+            is_medusa_backbone=True,
     ):
         'Initialization'
         self.datadir = data_dir
@@ -104,6 +114,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.is_training = is_training
         self.batch_size = batch_size
         self.N = len(self.dataset)
+        self.semantic_input_shape = semantic_input_shape
         self.input_shape = input_shape
         self.n_classes = n_classes
         self.num_channels = num_channels
@@ -115,6 +126,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.augmentation = augmentation
         self.top_percent = top_percent
         self.is_severity_model = is_severity_model
+        self.is_medusa_backbone = is_medusa_backbone
 
         datasets = {}
         for key in self.mapping.keys():
@@ -147,7 +159,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
 
     def __next__(self):
         # Get one batch of data
-        batch_x, batch_y, weights = self.__getitem__(self.n)
+        model_inputs = self.__getitem__(self.n)
         # Batch index
         self.n += 1
 
@@ -156,7 +168,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             self.on_epoch_end()
             self.n = 0
 
-        return batch_x, batch_y, weights
+        return model_inputs
 
     def __len__(self):
         return int(np.ceil(len(self.datasets[0]) / float(self.batch_size)))
@@ -168,12 +180,13 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 np.random.shuffle(v)
 
     def __getitem__(self, idx):
-        batch_x, batch_y = np.zeros(
-            (self.batch_size, *self.input_shape,
-             self.num_channels)), np.zeros(self.batch_size)
+        batch_x = np.zeros((self.batch_size, *self.input_shape, self.num_channels))
+        batch_y = np.zeros(self.batch_size)
 
-        batch_files = self.datasets[0][idx * self.batch_size:(idx + 1) *
-                                       self.batch_size]
+        if self.is_medusa_backbone:
+            batch_sem_x = np.zeros((self.batch_size, *self.semantic_input_shape, 1))
+
+        batch_files = self.datasets[0][idx * self.batch_size:(idx + 1) * self.batch_size]
 
         # upsample covid cases
         covid_size = max(int(len(batch_files) * self.covid_percent), 1)
@@ -198,7 +211,8 @@ class BalanceCovidDataset(keras.utils.Sequence):
             else:
                 folder = 'test'
 
-            x = process_image_file(os.path.join(self.datadir, folder, sample[1]),
+            image_file = os.path.join(self.datadir, folder, sample[1])
+            x = process_image_file(image_file,
                                    self.top_percent,
                                    self.input_shape[0])
 
@@ -206,13 +220,21 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 x = self.augmentation(x)
 
             x = x.astype('float32') / 255.0
+
+            if self.is_medusa_backbone:
+                sem_x = process_image_file_semantic(image_file, self.semantic_input_shape[0])
+                batch_sem_x[i] = sem_x
+            
             y = self.mapping[sample[2]]
 
             batch_x[i] = x
             batch_y[i] = y
 
-        class_weights = self.class_weights
-        weights = np.take(class_weights, batch_y.astype('int64'))
+        batch_y = keras.utils.to_categorical(batch_y, num_classes=self.n_classes)
+        weights = np.take(self.class_weights, batch_y.astype('int64'))
 
-        return batch_x, keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights
+        if self.is_medusa_backbone:
+            return [batch_sem_x, batch_x, batch_y, weights, self.is_training]
+        else:
+            return [batch_x, batch_y, weights, self.is_training]
         

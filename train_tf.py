@@ -13,8 +13,8 @@ parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=100, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
-parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str,
-                    help='Path to model files, defaults to \'models/COVIDNet-CXR-2\'')
+parser.add_argument('--weightspath', default='models/COVIDNet-CXR-3', type=str,
+                    help='Path to model files, defaults to \'models/COVIDNet-CXR-3\'')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
 parser.add_argument('--n_classes', default=2, type=int, help='Number of detected classes, defaults to 2')
@@ -25,20 +25,26 @@ parser.add_argument('--datadir', default='data', type=str, help='Path to data fo
 parser.add_argument('--covid_weight', default=1., type=float, help='Class weighting for covid')
 parser.add_argument('--covid_percent', default=0.5, type=float, help='Percentage of covid samples in batch')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
+parser.add_argument('--input_size_semantic', default=256, type=int, 
+                    help='Size of input to semantic graph (ex: if 256x256, --input_size 256)')
 parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
-parser.add_argument('--in_tensorname', default='input_1:0', type=str, help='Name of input tensor to graph')
-parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str,
+parser.add_argument('--in_tensorname', default='input_2:0', type=str, help='Name of input tensor to graph')
+parser.add_argument('--in_tensorname_semantic', default='input_1:0', type=str, 
+                    help='Name of input tensor to semantic graph for COVIDNet-CXR-3')
+parser.add_argument('--out_tensorname', default='softmax/Softmax:0', type=str,
                     help='Name of output tensor from graph')
-parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=str,
+parser.add_argument('--logit_tensorname', default='final_output/MatMul:0', type=str,
                     help='Name of logit tensor for loss')
-parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str,
+parser.add_argument('--label_tensorname', default='Placeholder:0', type=str,
                     help='Name of label tensor for loss')
-parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str,
+parser.add_argument('--weights_tensorname', default='Placeholder_1:0', type=str,
                     help='Name of sample weights tensor for loss')
 parser.add_argument('--training_tensorname', default='keras_learning_phase:0', type=str,
                     help='Name of training placeholder tensor')
 parser.add_argument('--is_severity_model', action='store_true', 
                     help='Add flag if training COVIDNet CXR-S model')
+parser.add_argument('--is_medusa_backbone', action='store_true', 
+                    help='Add flag if training COVIDNet CXR-3 model, do not include for other versions')
 
 args = parser.parse_args()
 
@@ -89,75 +95,111 @@ else:
 
 generator = BalanceCovidDataset(data_dir=args.datadir,
                                 csv_file=args.trainfile,
+                                is_training=True,
                                 batch_size=batch_size,
+                                semantic_input_shape=(args.input_size_semantic, args.input_size_semantic),
                                 input_shape=(args.input_size, args.input_size),
                                 n_classes=args.n_classes,
                                 mapping=mapping,
                                 covid_percent=args.covid_percent,
                                 class_weights=class_weights,
                                 top_percent=args.top_percent,
-                                is_severity_model=args.is_severity_model)
+                                is_severity_model=args.is_severity_model,
+                                is_medusa_backbone=args.is_medusa_backbone,
+                            )
+next(generator)
 
-with tf.Session() as sess:
-    tf.get_default_graph()
-    saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
+# with tf.Session() as sess:
+#     tf.get_default_graph()
+#     saver = tf.train.import_meta_graph(os.path.join(args.weightspath, args.metaname))
 
-    graph = tf.get_default_graph()
+#     graph = tf.get_default_graph()
 
-    image_tensor = graph.get_tensor_by_name(args.in_tensorname)
-    labels_tensor = graph.get_tensor_by_name(args.label_tensorname)
-    sample_weights = graph.get_tensor_by_name(args.weights_tensorname)
-    pred_tensor = graph.get_tensor_by_name(args.logit_tensorname)
-    is_training = graph.get_tensor_by_name(args.training_tensorname)
-    # loss expects unscaled logits since it performs a softmax on logits internally for efficiency
+#     image_tensor = graph.get_tensor_by_name(args.in_tensorname)
+#     labels_tensor = graph.get_tensor_by_name(args.label_tensorname)
+#     sample_weights = graph.get_tensor_by_name(args.weights_tensorname)
+#     pred_tensor = graph.get_tensor_by_name(args.logit_tensorname)
+#     is_training = graph.get_tensor_by_name(args.training_tensorname)
 
-    # Define loss and optimizer
-    loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(
-        logits=pred_tensor, labels=labels_tensor)*sample_weights)
-    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
-    train_op = optimizer.minimize(loss_op)
+#     # COVIDNet-CXR-3 requires additional input to semantic graph
+#     if args.is_medusa_backbone:
+#         semantic_image_tensor = graph.get_tensor_by_name(args.in_tensorname_semantic)
+#         feed_dict_keys = [
+#             semantic_image_tensor, 
+#             image_tensor, 
+#             labels_tensor, 
+#             sample_weights, 
+#             is_training,
+#         ]
+#     else:
+#         feed_dict_keys = [image_tensor, labels_tensor, sample_weights, is_training]
 
-    # Initialize the variables
-    init = tf.global_variables_initializer()
+#     # Define loss and optimizer
+#     # loss expects unscaled logits since it performs a softmax on logits internally for efficiency
+#     loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(
+#         logits=pred_tensor, labels=labels_tensor)*sample_weights)
+#     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+#     train_op = optimizer.minimize(loss_op)
 
-    # Run the initializer
-    sess.run(init)
+#     # Initialize the variables
+#     init = tf.global_variables_initializer()
 
-    # load weights
-    saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
-    #saver.restore(sess, tf.train.latest_checkpoint(args.weightspath))
+#     # Run the initializer
+#     sess.run(init)
 
-    # save base model
-    saver.save(sess, os.path.join(runPath, 'model'))
-    print('Saved baseline checkpoint')
-    print('Baseline eval:')
-    eval(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-         args.in_tensorname, args.out_tensorname, args.input_size, mapping)
+#     # Load the weights
+#     saver.restore(sess, os.path.join(args.weightspath, args.ckptname))
 
-    # Training cycle
-    print('Training started')
-    total_batch = len(generator)
-    progbar = tf.keras.utils.Progbar(total_batch)
-    for epoch in range(args.epochs):
-        for i in range(total_batch):
-            # Run optimization
-            batch_x, batch_y, weights = next(generator)
-            sess.run(train_op, feed_dict={image_tensor: batch_x,
-                                          labels_tensor: batch_y,
-                                          sample_weights: weights,
-                                          is_training: True})
-            progbar.update(i+1)
+#     # Save the base model
+#     saver.save(sess, os.path.join(runPath, 'model'))
+#     print('Saved baseline checkpoint')
 
-        if epoch % display_step == 0:
-            pred = sess.run(pred_tensor, feed_dict={image_tensor:batch_x})
-            loss = sess.run(loss_op, feed_dict={pred_tensor: pred,
-                                                labels_tensor: batch_y,
-                                                sample_weights: weights})
-            print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
-            eval(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-                 args.in_tensorname, args.out_tensorname, args.input_size, mapping)
-            saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
-            print('Saving checkpoint at epoch {}'.format(epoch + 1))
+#     print('Baseline eval:')
+#     eval(
+#         sess, 
+#         graph, 
+#         testfiles, 
+#         os.path.join(args.datadir,'test'), 
+#         args.in_tensorname_semantic, 
+#         args.in_tensorname, 
+#         args.out_tensorname, 
+#         args.semantic_input_size, 
+#         args.input_size, 
+#         mapping,
+#         args.is_medusa_backbone
+#     )
+
+#     # Training cycle
+#     print('Training started')
+#     total_batch = len(generator)
+#     progbar = tf.keras.utils.Progbar(total_batch)
+#     for epoch in range(args.epochs):
+#         for i in range(total_batch):
+#             # Run optimization
+#             feed_dict_input = next(generator)
+#             sess.run(train_op, feed_dict=dict(zip(feed_dict_keys, feed_dict_input)))
+#             progbar.update(i+1)
+
+#         if epoch % display_step == 0:
+#             loss = sess.run(loss_op, feed_dict=dict(zip(feed_dict_keys, feed_dict_input))
+#             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
+
+#             eval(
+#                 sess, 
+#                 graph, 
+#                 testfiles, 
+#                 os.path.join(args.datadir,'test'), 
+#                 args.in_tensorname_semantic, 
+#                 args.in_tensorname, 
+#                 args.out_tensorname, 
+#                 args.semantic_input_size, 
+#                 args.input_size, 
+#                 mapping,
+#                 args.is_medusa_backbone
+#             )
+
+#             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
+#             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
 
-print("Optimization Finished!")
+# print("Optimization Finished!")
