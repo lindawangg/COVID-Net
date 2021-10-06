@@ -96,7 +96,8 @@ class BalanceCovidDataset(keras.utils.Sequence):
             covid_percent=0.5,
             class_weights=[1., 1.],
             top_percent=0.08,
-            is_severity_model=False
+            is_severity_model=False,
+            is_regression=False,
     ):
         'Initialization'
         self.datadir = data_dir
@@ -115,32 +116,40 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.augmentation = augmentation
         self.top_percent = top_percent
         self.is_severity_model = is_severity_model
+        self.is_regression = is_regression
 
+        if self.is_regression:  # to keep consistency
+            self.mapping = {'regr':0}
         datasets = {}
         for key in self.mapping.keys():
             datasets[key] = []
 
-        for l in self.dataset:
-            if l.split()[-1] == 'sirm':
-                datasets[l.split()[3]].append(l)
-            else:
-                datasets[l.split()[2]].append(l)
-        
-        if self.is_severity_model:
-            self.datasets = [
-                datasets['level2'], datasets['level1']
-            ]
-        elif self.n_classes == 2:
-            self.datasets = [
-                datasets['negative'], datasets['positive']
-            ]
-        elif self.n_classes == 3:
-            self.datasets = [
-                datasets['normal'] + datasets['pneumonia'],
-                datasets['COVID-19'],
-            ]
+        if self.is_regression:
+            for l in self.dataset:
+                datasets['regr'].append(l)
+            self.datasets = [datasets['regr']]
         else:
-            raise Exception('Only binary or 3 class classification currently supported.')
+            for l in self.dataset:
+                if l.split()[-1] == 'sirm':
+                    datasets[l.split()[3]].append(l)
+                else:
+                    datasets[l.split()[2]].append(l)
+
+            if self.is_severity_model:
+                self.datasets = [
+                    datasets['level2'], datasets['level1']
+                ]
+            elif self.n_classes == 2:
+                self.datasets = [
+                    datasets['negative'], datasets['positive']
+                ]
+            elif self.n_classes == 3:
+                self.datasets = [
+                    datasets['normal'] + datasets['pneumonia'],
+                    datasets['COVID-19'],
+                ]
+            else:
+                raise Exception('Only binary or 3 class classification currently supported.')
         print(len(self.datasets[0]), len(self.datasets[1]))
 
         self.on_epoch_end()
@@ -171,9 +180,29 @@ class BalanceCovidDataset(keras.utils.Sequence):
         batch_x, batch_y = np.zeros(
             (self.batch_size, *self.input_shape,
              self.num_channels)), np.zeros(self.batch_size)
+        if self.is_regression:
+            # y contains 2 values (geo and opc)
+            batch_y = np.zeros((self.batch_size, 2))
 
         batch_files = self.datasets[0][idx * self.batch_size:(idx + 1) *
                                        self.batch_size]
+
+        if self.is_regression:
+            # do simplified processing since no upsampling needed in this case
+            for i in range(len(batch_files)):
+                sample = batch_files[i].split()
+                # assume training for now (eval.py load images itself)
+                x = process_image_file(os.path.join(self.datadir, 'train', sample[0]),
+                                       self.top_percent,
+                                       self.input_shape[0])
+                if self.is_training and hasattr(self, 'augmentation'):
+                    x = self.augmentation(x)
+                x = x.astype('float32') / 255.0
+                y = sample[2:] # get both geo and opc values
+                batch_x[i] = x
+                batch_y[i, :] = y
+                weights = np.ones(self.batch_size) # treat all samples equally (for now...)
+            return batch_x, batch_y, weights
 
         # upsample covid cases
         covid_size = max(int(len(batch_files) * self.covid_percent), 1)
@@ -214,5 +243,6 @@ class BalanceCovidDataset(keras.utils.Sequence):
         class_weights = self.class_weights
         weights = np.take(class_weights, batch_y.astype('int64'))
 
-        return batch_x, keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights
-        
+        # return batch_x, keras.utils.to_categorical(batch_y, num_classes=self.n_classes), weights
+        # leave batch_y as single values rather than one-hot encoding
+        return batch_x, batch_y, weights

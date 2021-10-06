@@ -1,4 +1,5 @@
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import (confusion_matrix, explained_variance_score,
+                             mean_squared_error, r2_score)
 import numpy as np
 import tensorflow as tf
 import os, argparse
@@ -10,18 +11,21 @@ from data import process_image_file
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size, mapping):
+def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size, mapping={'normal': 0, 'pneumonia': 1, 'COVID-19': 2}):
     image_tensor = graph.get_tensor_by_name(input_tensor)
     pred_tensor = graph.get_tensor_by_name(output_tensor)
 
     y_test = []
     pred = []
+
     for i in range(len(testfile)):
         line = testfile[i].split()
         x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
         x = x.astype('float32') / 255.0
         y_test.append(mapping[line[2]])
-        pred.append(np.array(sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})).argmax(axis=1))
+        pred.append(np.array(sess.run(pred_tensor,
+                                      feed_dict={image_tensor: np.expand_dims(x, axis=0),
+                                                 'is_training:0':False})).argmax(axis=1))
     y_test = np.array(y_test)
     pred = np.array(pred)
 
@@ -30,12 +34,69 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     #cm_norm = matrix / matrix.sum(axis=1)[:, np.newaxis]
     print(matrix)
     #class_acc = np.array(cm_norm.diagonal())
-    class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
+    class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0
+                    for i in range(len(matrix))]
+    try: # 3 class
+        print('class_acc: {}: {:.3f}, {}: {:.3f}, {}: {:.3f}'.format(
+                list(mapping.keys())[list(mapping.values()).index(0)], class_acc[0],
+                list(mapping.keys())[list(mapping.values()).index(1)], class_acc[1],
+                list(mapping.keys())[list(mapping.values()).index(2)], class_acc[2]))
+    except: # 2 class
+        print('class_acc: {}: {:.3f}, {}: {:.3f}'.format(
+                list(mapping.keys())[list(mapping.values()).index(0)], class_acc[0],
+                list(mapping.keys())[list(mapping.values()).index(1)], class_acc[1]))
 
-    print('Sens', ', '.join('{}: {:.3f}'.format(cls.capitalize(), class_acc[i]) for cls, i in mapping.items()))
     ppvs = [matrix[i,i]/np.sum(matrix[:,i]) if np.sum(matrix[:,i]) else 0 for i in range(len(matrix))]
-    print('PPV', ', '.join('{}: {:.3f}'.format(cls.capitalize(), ppvs[i]) for cls, i in mapping.items()))
+    try: # 3 class
+        print('ppvs: {}: {:.3f}, {}: {:.3f}, {}: {:.3f}'.format(
+                list(mapping.keys())[list(mapping.values()).index(0)], ppvs[0],
+                list(mapping.keys())[list(mapping.values()).index(1)], ppvs[1],
+                list(mapping.keys())[list(mapping.values()).index(2)], ppvs[2]))
+    except: # 2 class
+        print('ppvs: {}: {:.3f}, {}: {:.3f}'.format(
+                list(mapping.keys())[list(mapping.values()).index(0)], ppvs[0],
+                list(mapping.keys())[list(mapping.values()).index(1)], ppvs[1]))
 
+
+def eval_severity(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,
+                  measure='geo'):
+    '''
+    Regression evaluation for severity data (geographic extent and total opacity)
+        - measure is one of: {"geo", "opc", "both"}
+    '''
+    image_tensor = graph.get_tensor_by_name(input_tensor)
+    pred_tensor = graph.get_tensor_by_name(output_tensor)
+
+    y_test = []
+    pred = []
+
+    for i in range(len(testfile)):
+        line = testfile[i].split()
+        x = process_image_file(os.path.join(testfolder, line[0]), 0.08, input_size)
+        x = x.astype('float32') / 255.0
+        y_test.append(line[2:])
+        pred.append(np.array(sess.run(pred_tensor,
+                                      feed_dict={image_tensor: np.expand_dims(x, axis=0)})))
+
+    y_test = np.array(y_test, dtype=np.float32)
+    # isolate the target for the desired measure
+    if measure == 'geo':
+        y_test = y_test[:, 0]
+    elif measure == 'opc':
+        y_test = y_test[:, 1]
+    elif measure == 'both':
+        raise NotImplementedError # in case this is desired later
+    else:
+        raise ValueError
+    pred = np.array(pred).squeeze()
+
+    mse_val = mean_squared_error(y_test, pred)
+    expl_var_val = explained_variance_score(y_test, pred)
+    r2_val = r2_score(y_test, pred)
+
+    print(f'MSE: {mse_val}')
+    print(f'Explained Variance: {expl_var_val}')
+    print(f'R^2: {r2_val}')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='COVID-Net Evaluation')
@@ -49,6 +110,8 @@ if __name__ == '__main__':
     parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str, help='Name of output tensor from graph')
     parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
     parser.add_argument('--is_severity_model', action='store_true', help='Add flag if training COVIDNet CXR-S model')
+    parser.add_argument('--reg_geo', action='store_true', help='Perform evaluation with regression on geographic extent measure')
+    parser.add_argument('--reg_opc', action='store_true', help='Perform evaluation with regression on opacity measure')
 
     args = parser.parse_args()
 
@@ -62,28 +125,36 @@ if __name__ == '__main__':
     file = open(args.testfile, 'r')
     testfile = file.readlines()
 
-    if args.is_severity_model:
-        # For COVIDNet CXR-S training with COVIDxSev level 1 and level 2 air space seveirty grading
-        mapping = {
-            'level2': 0,
-            'level1': 1
-        }
-    elif args.n_classes == 2:
-        # For COVID-19 positive/negative detection
-        mapping = {
-            'negative': 0,
-            'positive': 1,
-        }
-    elif args.n_classes == 3:
-        # For detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia
-        mapping = {
-            'normal': 0,
-            'pneumonia': 1,
-            'COVID-19': 2
-        }
-    else:
-        raise Exception('''COVID-Net currently only supports 2 class COVID-19 positive/negative detection
-            or 3 class detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia''')
+    # montefiore severity processing
+    if args.reg_geo:
+        eval_severity(sess, graph, testfile, args.testfolder, args.in_tensorname,
+                      args.out_tensorname, args.input_size, measure='geo')
+    elif args.reg_opc:
+        eval_severity(sess, graph, testfile, args.testfolder, args.in_tensorname,
+                      args.out_tensorname, args.input_size, measure='opc')
+    else: # normal processing
+        if args.is_severity_model:
+            # For COVIDNet CXR-S training with COVIDxSev level 1 and level 2 air space seveirty grading
+            mapping = {
+                'level2': 0,
+                'level1': 1
+            }
+        elif args.n_classes == 2:
+            # For COVID-19 positive/negative detection
+            mapping = {
+                'negative': 0,
+                'positive': 1,
+            }
+        elif args.n_classes == 3:
+            # For detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia
+            mapping = {
+                'normal': 0,
+                'pneumonia': 1,
+                'COVID-19': 2
+            }
+        else:
+            raise Exception('''COVID-Net currently only supports 2 class COVID-19 positive/negative detection
+                or 3 class detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia''')
 
-
-    eval(sess, graph, testfile, args.testfolder, args.in_tensorname, args.out_tensorname, args.input_size, mapping)
+        eval(sess, graph, testfile, args.testfolder, args.in_tensorname,
+             args.out_tensorname, args.input_size, mapping)
