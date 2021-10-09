@@ -92,7 +92,7 @@ with tf.Session() as sess:
     graph = tf.get_default_graph()
 
     image_tensor = graph.get_tensor_by_name(args.in_tensorname)
-    # labels_tensor = graph.get_tensor_by_name(args.label_tensorname)
+    labels_tensor = graph.get_tensor_by_name(args.label_tensorname)
     sample_weights = graph.get_tensor_by_name(args.weights_tensorname)
     pred_tensor = graph.get_tensor_by_name(args.logit_tensorname)
     # loss expects unscaled logits since it performs a softmax on logits internally for efficiency
@@ -101,7 +101,7 @@ with tf.Session() as sess:
     # output of base COVIDNet model (just before prediction head)
     prev_tensor = graph.get_tensor_by_name('flatten_1/Reshape:0')
     prev_tensor.set_shape([None, 460800])
-
+ 
     if args.sev_reg:
         regr_head = tf.layers.Dense(1, activation='linear', trainable=True,
                                     name='regr_head')(prev_tensor)
@@ -131,11 +131,12 @@ with tf.Session() as sess:
     saver = tf.train.Saver()
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
-    print('Baseline eval:')i
+    print('Baseline eval:')
 
     # found exact string by using:
     # print_node_children(regr_head.op)
     out_tensorname = 'regr_head/BiasAdd:0'
+
     # for classification head, probably use the original eval() function
     eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'test'),
                   args.in_tensorname, out_tensorname, args.input_size, measure='geo')
