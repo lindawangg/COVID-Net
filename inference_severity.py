@@ -55,7 +55,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    x = process_image_file(args.imagepath, args.top_percent, args.input_size)
+    x = process_image_file(args.imagepath, args.input_size, top_percent=args.top_percent)
     x = x.astype('float32') / 255.0
 
     # check if models exists

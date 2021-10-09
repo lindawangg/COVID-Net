@@ -17,7 +17,7 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     pred = []
     for i in range(len(testfile)):
         line = testfile[i].split()
-        x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
+        x = process_image_file(os.path.join(testfolder, line[1]), input_size, top_percent=0.08)
         x = x.astype('float32') / 255.0
         y_test.append(mapping[line[2]])
         pred.append(np.array(sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})).argmax(axis=1))
