@@ -17,14 +17,19 @@ def central_crop(img):
     offset_w = int((img.shape[1] - size) / 2)
     return img[offset_h:offset_h + size, offset_w:offset_w + size]
 
-def process_image_file(filepath, top_percent, size):
+def process_image_file(filepath, size, top_percent=0.08):
     img = cv2.imread(filepath)
     img = crop_top(img, percent=top_percent)
     img = central_crop(img)
     img = cv2.resize(img, (size, size))
     return img
 
-def process_image_file_semantic(filepath, size):
+def process_image_file_no_crop(filepath, size, **kwargs):
+    img = cv2.imread(filepath)
+    img = cv2.resize(img, (size, size))
+    return img
+
+def process_image_file_medusa(filepath, size):
     img = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
     img = cv2.resize(img, (size, size))
     img = img.astype('float64')
@@ -92,7 +97,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             csv_file,
             is_training=True,
             batch_size=8,
-            semantic_input_shape=(256, 256),
+            medusa_input_shape=(256, 256),
             input_shape=(480, 480),
             n_classes=2,
             num_channels=3,
@@ -114,7 +119,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.is_training = is_training
         self.batch_size = batch_size
         self.N = len(self.dataset)
-        self.semantic_input_shape = semantic_input_shape
+        self.medusa_input_shape = medusa_input_shape
         self.input_shape = input_shape
         self.n_classes = n_classes
         self.num_channels = num_channels
@@ -127,6 +132,12 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.top_percent = top_percent
         self.is_severity_model = is_severity_model
         self.is_medusa_backbone = is_medusa_backbone
+
+        # If using MEDUSA backbone load images without crop
+        if self.is_medusa_backbone:
+            self.load_image = process_image_file_no_crop
+        else:
+            self.load_image = process_image_file
 
         datasets = {}
         for key in self.mapping.keys():
@@ -184,7 +195,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         batch_y = np.zeros(self.batch_size)
 
         if self.is_medusa_backbone:
-            batch_sem_x = np.zeros((self.batch_size, *self.semantic_input_shape, 1))
+            batch_sem_x = np.zeros((self.batch_size, *self.medusa_input_shape, 1))
 
         batch_files = self.datasets[0][idx * self.batch_size:(idx + 1) * self.batch_size]
 
@@ -212,9 +223,11 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 folder = 'test'
 
             image_file = os.path.join(self.datadir, folder, sample[1])
-            x = process_image_file(image_file,
-                                   self.top_percent,
-                                   self.input_shape[0])
+            x = self.load_image(
+                image_file,
+                self.input_shape[0],
+                top_percent=self.top_percent,
+            )
 
             if self.is_training and hasattr(self, 'augmentation'):
                 x = self.augmentation(x)
@@ -222,7 +235,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             x = x.astype('float32') / 255.0
 
             if self.is_medusa_backbone:
-                sem_x = process_image_file_semantic(image_file, self.semantic_input_shape[0])
+                sem_x = process_image_file_medusa(image_file, self.medusa_input_shape[0])
                 batch_sem_x[i] = sem_x
             
             y = self.mapping[sample[2]]

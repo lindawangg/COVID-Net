@@ -1,8 +1,19 @@
 # Training, Evaluation and Inference
 ## COVID-19 positive/negative detection
-COVIDNet-CXR-2 model takes as input an image of shape (N, 480, 480, 3) and outputs the softmax probabilities of COVID-19 positive and negative detection as (N, 2), where N is the number of batches.
-If using the TF checkpoints, here are some useful tensors:
+COVIDNet-CXR-3 model takes as input two images, one of shape (N, 256, 256, 1) for the MEDUSA architecture and one of shape (N, 480, 480, 3) for the COVIDNet architecture and outputs the softmax probabilities of COVID-19 positive and negative detection as (N, 2), where N is the number of batches.
+Older COVIDNet models take a single input of shape (N, 480, 480, 3) and do not leverage a MEDUSA architecture. 
 
+If using the TF checkpoints, here are some useful tensors:
+For COVIDNet-CXR-3:
+* input tensor: `input_2:0`
+* input medusa tensor: `input_1:0`
+* logit tensor: `final_output/MatMul:0`
+* output tensor: `softmax/Softmax:0`
+* label tensor: `Placeholder:0`
+* class weights tensor: `Placeholder_1:0`
+* loss tensor: `Mean:0`
+
+For COVIDNet-CXR-2:
 * input tensor: `input_1:0`
 * logit tensor: `norm_dense_2/MatMul:0`
 * output tensor: `norm_dense_2/Softmax:0`
@@ -32,7 +43,20 @@ python train_tf.py \
 
 1. We provide you with the tensorflow evaluation script, [eval.py](../eval.py)
 2. Locate the tensorflow checkpoint files
-3. To evaluate a tf checkpoint:
+3. To evaluate a tf checkpoint
+For COVIDNet-CXR-3:
+```
+python eval.py \
+    --weightspath models/COVIDNet-CXR-3 \
+    --metaname model.meta \
+    --ckptname model \
+    --n_classes 2 \
+    --testfile labels/test_COVIDx8B.txt \
+    --out_tensorname softmax/Softmax:0 \
+    --is_medusa_backbone
+```
+
+For COVIDNet-CXR-2:
 ```
 python eval.py \
     --weightspath models/COVIDNet-CXR-2 \
@@ -49,7 +73,20 @@ python eval.py \
 
 1. Download a model from the [pretrained models section](models.md)
 2. Locate models and xray image to be inferenced
-3. To inference,
+3. To inference
+For COVIDNet-CXR-3:
+```
+python inference.py \
+    --weightspath models/COVIDNet-CXR-3 \
+    --metaname model.meta \
+    --ckptname model \
+    --n_classes 2 \
+    --imagepath assets/ex-covid.jpeg \
+    --out_tensorname softmax/Softmax:0 \
+    --is_medusa_backbone
+```
+
+For COVIDNet-CXR-2:
 ```
 python inference.py \
     --weightspath models/COVIDNet-CXR-2 \

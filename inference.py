@@ -3,7 +3,11 @@ import tensorflow as tf
 import os, argparse
 import cv2
 
-from data import process_image_file, process_image_file_semantic
+from data import (
+    process_image_file, 
+    process_image_file_no_crop, 
+    process_image_file_medusa,
+)
 
 # To remove TF Warnings
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
@@ -17,12 +21,12 @@ parser.add_argument('--ckptname', default='model', type=str, help='Name of model
 parser.add_argument('--n_classes', default=2, type=int, help='Number of detected classes, defaults to 2')
 parser.add_argument('--imagepath', default='assets/ex-covid.jpeg', type=str, help='Full path to image to be inferenced')
 parser.add_argument('--in_tensorname', default='input_2:0', type=str, help='Name of input tensor to graph')
-parser.add_argument('--in_tensorname_semantic', default='input_1:0', type=str, 
-                    help='Name of input tensor to semantic graph for COVIDNet-CXR-3')
+parser.add_argument('--in_tensorname_medusa', default='input_1:0', type=str, 
+                    help='Name of input tensor to MEDUSA graph for COVIDNet-CXR-3')
 parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str, help='Name of output tensor from graph')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
-parser.add_argument('--input_size_semantic', default=256, type=int, 
-                    help='Size of input to semantic graph (ex: if 256x256, --input_size 256)')
+parser.add_argument('--input_size_medusa', default=256, type=int, 
+                    help='Size of input to MEDUSA graph (ex: if 256x256, --input_size 256)')
 parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
 parser.add_argument('--is_severity_model', action='store_true', help='Add flag if training COVIDNet CXR-S model')
 parser.add_argument('--is_medusa_backbone', action='store_true', 
@@ -57,17 +61,18 @@ graph = tf.get_default_graph()
 image_tensor = graph.get_tensor_by_name(args.in_tensorname)
 pred_tensor = graph.get_tensor_by_name(args.out_tensorname)
 
-x = process_image_file(args.imagepath, args.top_percent, args.input_size)
-x = x.astype('float32') / 255.0
-
 if args.is_medusa_backbone:
-    semantic_image_tensor = graph.get_tensor_by_name(args.in_tensorname_semantic)
-    semantic_x = process_image_file_semantic(args.imagepath, args.semantic_input_size)
+    x = process_image_file_no_crop(args.imagepath, args.input_size)
+    x = x.astype('float32') / 255.0
+    medusa_image_tensor = graph.get_tensor_by_name(args.in_tensorname_medusa)
+    medusa_x = process_image_file_medusa(args.imagepath, args.input_size_medusa)
     feed_dict = {
-                semantic_image_tensor: np.expand_dims(semantic_x, axis=0),
+                medusa_image_tensor: np.expand_dims(medusa_x, axis=0),
                 image_tensor: np.expand_dims(x, axis=0),
             } 
 else:
+    x = process_image_file(args.imagepath, args.input_size, top_percent=args.top_percent)
+    x = x.astype('float32') / 255.0
     feed_dict = {image_tensor: np.expand_dims(x, axis=0)}
 
 pred = sess.run(pred_tensor, feed_dict=feed_dict)

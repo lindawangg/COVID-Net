@@ -4,14 +4,18 @@ import tensorflow as tf
 import os, argparse
 import cv2
 
-from data import process_image_file, process_image_file_semantic
+from data import (
+    process_image_file_no_crop, 
+    process_image_file, 
+    process_image_file_medusa,
+)
 
 # To remove TF Warnings
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
-def print_metrics(y_test, pred):
+def print_metrics(y_test, pred, mapping):
     matrix = confusion_matrix(y_test, pred)
     matrix = matrix.astype('float')
     print(matrix)
@@ -28,10 +32,10 @@ def eval(
     graph, 
     testfile, 
     testfolder, 
-    semantic_input_tensor, 
+    medusa_input_tensor, 
     input_tensor, 
     output_tensor, 
-    semantic_input_size, 
+    medusa_input_size, 
     input_size, 
     mapping, 
     is_medusa_backbone
@@ -43,26 +47,27 @@ def eval(
         line = testfile[i].split()
         image_file = os.path.join(testfolder, line[1])
 
-        x = process_image_file(image_file, 0.08, input_size)
-        x = x.astype('float32') / 255.0
-
         y_test.append(mapping[line[2]])
 
         if is_medusa_backbone:
-            semantic_x = process_image_file_semantic(image_file, semantic_input_size)
+            x = process_image_file_no_crop(image_file, input_size)
+            x = x.astype('float32') / 255.0
+            medusa_x = process_image_file_medusa(image_file, medusa_input_size)
             feed_dict = {
-                semantic_input_tensor: np.expand_dims(semantic_x, axis=0),
+                medusa_input_tensor: np.expand_dims(medusa_x, axis=0),
                 input_tensor: np.expand_dims(x, axis=0),
             }
         else:
+            x = process_image_file(image_file, input_size, top_percent=0.08)
+            x = x.astype('float32') / 255.0
             feed_dict = {input_tensor: np.expand_dims(x, axis=0)}
         
-        pred.append(np.array(sess.run(pred_tensor, feed_dict=feed_dict)).argmax(axis=1))
+        pred.append(np.array(sess.run(output_tensor, feed_dict=feed_dict)).argmax(axis=1))
     
     y_test = np.array(y_test)
     pred = np.array(pred)
 
-    print_metrics(y_test, pred)
+    print_metrics(y_test, pred, mapping)
 
 
 if __name__ == '__main__':
@@ -75,12 +80,12 @@ if __name__ == '__main__':
     parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, help='Name of testfile')
     parser.add_argument('--testfolder', default='data/test', type=str, help='Folder where test data is located')
     parser.add_argument('--in_tensorname', default='input_2:0', type=str, help='Name of input tensor to graph')
-    parser.add_argument('--in_tensorname_semantic', default='input_1:0', type=str, 
-                    help='Name of input tensor to semantic graph for COVIDNet-CXR-3')
+    parser.add_argument('--in_tensorname_medusa', default='input_1:0', type=str, 
+                    help='Name of input tensor to MEDUSA graph for COVIDNet-CXR-3')
     parser.add_argument('--out_tensorname', default='softmax/Softmax:0', type=str, help='Name of output tensor from graph')
     parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
-    parser.add_argument('--input_size_semantic', default=256, type=int, 
-                    help='Size of input to semantic graph (ex: if 256x256, --input_size 256)')
+    parser.add_argument('--input_size_medusa', default=256, type=int, 
+                    help='Size of input to MEDUSA graph (ex: if 256x256, --input_size 256)')
     parser.add_argument('--is_severity_model', action='store_true', help='Add flag if training COVIDNet CXR-S model')
     parser.add_argument('--is_medusa_backbone', action='store_true', 
                     help='Add flag if training COVIDNet CXR-3 model, do not include for other versions')
@@ -120,16 +125,15 @@ if __name__ == '__main__':
         raise Exception('''COVID-Net currently only supports 2 class COVID-19 positive/negative detection
             or 3 class detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia''')
 
-
     eval(
         sess, 
         graph, 
         testfile, 
         args.testfolder, 
-        args.in_tensorname_semantic, 
+        args.in_tensorname_medusa, 
         args.in_tensorname, 
         args.out_tensorname,
-        args.semantic_input_size,
+        args.input_size_medusa,
         args.input_size, 
         mapping,
         args.is_medusa_backbone,
