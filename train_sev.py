@@ -107,13 +107,20 @@ with tf.Session() as sess:
                                     name='regr_head')(prev_tensor)
         loss_op = tf.reduce_mean(tf.losses.mean_squared_error(
             labels=labels_ph, predictions=regr_head))
+        # found exact string by using:
+        # print_node_children(regr_head.op)
+        out_tensorname = "regr_head/BiasAdd:0"
     elif args.sev_clf:
-        # TODO this is where the classification severity method should go
-        raise NotImplementedError
+        regr_bin_head = tf.layers.Dense(16, activation='softmax', trainable=True,
+                                    name='regr_bin_head')(prev_tensor)
+        centroids = tf.constant([0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0], shape=[16, 1])
+        output_head = tf.matmul(regr_bin_head, centroids)
+        loss_op = tf.reduce_mean(tf.losses.mean_squared_error(
+            labels=labels_ph, predictions=output_head))
+        out_tensorname = 'MatMul:0'
     else: # just leaving here so we know where it fits when this goes back to train_tf.py
         loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(
             logits=pred_tensor, labels=labels_tensor)*sample_weights)
-
     # Define loss and optimizer
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss_op)
@@ -133,15 +140,10 @@ with tf.Session() as sess:
     print('Saved baseline checkpoint')
     print('Baseline eval:')
 
-    # found exact string by using:
-    # print_node_children(regr_head.op)
-    out_tensorname = 'regr_head/BiasAdd:0'
-
-    # for classification head, probably use the original eval() function
     eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'test'),
                   args.in_tensorname, out_tensorname, args.input_size, measure='geo')
 
-    # Training cycle
+#     # Training cycle
     print('Training started')
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
