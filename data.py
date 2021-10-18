@@ -150,7 +150,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 ]
             else:
                 raise Exception('Only binary or 3 class classification currently supported.')
-        print(len(self.datasets[0]), len(self.datasets[1]))
+            print(len(self.datasets[0]), len(self.datasets[1]))
 
         self.on_epoch_end()
 
