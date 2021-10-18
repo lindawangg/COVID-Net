@@ -7,6 +7,8 @@ import cv2
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
+np.random.seed(1)
+
 def crop_top(img, percent=0.15):
     offset = int(img.shape[0] * percent)
     return img[offset:]

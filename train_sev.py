@@ -13,7 +13,7 @@ Created Oct 4, 2021
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
 parser.add_argument('--epochs', default=20, type=int, help='Number of epochs')
-parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
+parser.add_argument('--lr', default=0.00002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
 parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
@@ -31,13 +31,17 @@ parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=
 parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
 parser.add_argument('--sev_reg', action='store_true', default=False, help='Set model to Severity Regression head')
 parser.add_argument('--sev_clf', action='store_true', default=False, help='Set model to Severity Classification head')
+parser.add_argument('--geo', type=str, default=False, help='Whether to train on geo. If false will use opacity')
 
 args = parser.parse_args()
+
+metric = "geo" if args.geo else "opc"
 
 # Parameters
 learning_rate = args.lr
 batch_size = args.bs
 display_step = 1
+SEED = 2
 
 # output path
 outputPath = './output/'
@@ -108,13 +112,17 @@ with tf.Session() as sess:
         loss_op = tf.reduce_mean(tf.losses.mean_squared_error(
             labels=labels_ph, predictions=regr_head))
         # found exact string by using:
-        # print_node_children(regr_head.op)
+        print_node_children(regr_head.op)
         out_tensorname = "regr_head/BiasAdd:0"
     elif args.sev_clf:
-        regr_bin_head = tf.layers.Dense(16, activation='softmax', trainable=True,
+        regr_bin_head = tf.layers.Dense(8, activation='softmax', trainable=True,
                                     name='regr_bin_head')(prev_tensor)
-        centroids = tf.constant([0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0], shape=[16, 1])
+        print("regr head")
+        print_node_children(regr_bin_head.op)
+        centroids = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0], shape=[8, 1])
         output_head = tf.matmul(regr_bin_head, centroids)
+        print("OUTPUT head")
+        print_node_children(output_head.op)
         loss_op = tf.reduce_mean(tf.losses.mean_squared_error(
             labels=labels_ph, predictions=output_head))
         out_tensorname = 'MatMul:0'
@@ -141,32 +149,42 @@ with tf.Session() as sess:
     print('Baseline eval:')
 
     eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-                  args.in_tensorname, out_tensorname, args.input_size, measure='geo')
+                  args.in_tensorname, out_tensorname, args.input_size, measure=metric)
 
 #     # Training cycle
     print('Training started')
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
+    tf.compat.v1.set_random_seed(SEED)
     for epoch in range(args.epochs):
         for i in range(total_batch):
             # Run optimization
             batch_x, batch_y, weights = next(generator)
             # geo: batch_y[0], opc: batch_y[1], both: batch_y[:]
+
+            if metric == "geo":
+                labels_y = batch_y[:, 0].reshape(batch_size, 1)
+            else:
+                labels_y = batch_y[:, 1].reshape(batch_size, 1)
+
             sess.run(train_op, feed_dict={image_tensor: batch_x,
-                                          labels_ph: batch_y[:, 0].reshape(batch_size, 1),
+                                          labels_ph: labels_y,
                                           sample_weights: weights})
             progbar.update(i+1)
 
         if epoch % display_step == 0:
             # pred = sess.run(pred_tensor, feed_dict={image_tensor:batch_x})
+
             loss = sess.run(loss_op, feed_dict={image_tensor:batch_x,
-                                                labels_ph: batch_y[:, 0].reshape(batch_size, 1),
+                                                labels_ph: labels_y,
                                                 sample_weights: weights})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
             eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-                          args.in_tensorname, out_tensorname, args.input_size, measure='geo')
+                          args.in_tensorname, out_tensorname, args.input_size, measure=metric)
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
+    print("Saving Final Model")
+    saver.save(sess, os.path.join(runPath, 'model'))
 
 print("Optimization Finished!")
