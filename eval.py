@@ -2,10 +2,8 @@ from sklearn.metrics import confusion_matrix
 import numpy as np
 import tensorflow as tf
 import os, argparse
-import cv2
 
 from data import (
-    process_image_file_no_crop, 
     process_image_file, 
     process_image_file_medusa,
 )
@@ -32,13 +30,13 @@ def eval(
     graph, 
     testfile, 
     testfolder, 
-    medusa_input_tensor, 
     input_tensor, 
     output_tensor, 
-    medusa_input_size, 
     input_size, 
     mapping, 
-    is_medusa_backbone
+    is_medusa_backbone=False,
+    medusa_input_tensor="input_1:0",
+    medusa_input_size=256, 
 ):
     y_test = []
     pred = []
@@ -50,7 +48,7 @@ def eval(
         y_test.append(mapping[line[2]])
 
         if is_medusa_backbone:
-            x = process_image_file_no_crop(image_file, input_size)
+            x = process_image_file(image_file, input_size, top_percent=0, crop=False)
             x = x.astype('float32') / 255.0
             medusa_x = process_image_file_medusa(image_file, medusa_input_size)
             feed_dict = {
@@ -129,12 +127,12 @@ if __name__ == '__main__':
         sess, 
         graph, 
         testfile, 
-        args.testfolder, 
-        args.in_tensorname_medusa, 
+        args.testfolder,
         args.in_tensorname, 
         args.out_tensorname,
-        args.input_size_medusa,
         args.input_size, 
         mapping,
-        args.is_medusa_backbone,
+        is_medusa_backbone=args.is_medusa_backbone,
+        medusa_input_tensor=args.in_tensorname_medusa,
+        medusa_input_size=args.input_size_medusa,
     )

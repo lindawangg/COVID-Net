@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 
+from functools import partial
 import numpy as np
 import os
 import cv2
@@ -17,15 +18,11 @@ def central_crop(img):
     offset_w = int((img.shape[1] - size) / 2)
     return img[offset_h:offset_h + size, offset_w:offset_w + size]
 
-def process_image_file(filepath, size, top_percent=0.08):
+def process_image_file(filepath, size, top_percent=0.08, crop=True):
     img = cv2.imread(filepath)
     img = crop_top(img, percent=top_percent)
-    img = central_crop(img)
-    img = cv2.resize(img, (size, size))
-    return img
-
-def process_image_file_no_crop(filepath, size, **kwargs):
-    img = cv2.imread(filepath)
+    if crop:
+        img = central_crop(img)
     img = cv2.resize(img, (size, size))
     return img
 
@@ -111,7 +108,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             class_weights=[1., 1.],
             top_percent=0.08,
             is_severity_model=False,
-            is_medusa_backbone=True,
+            is_medusa_backbone=False,
     ):
         'Initialization'
         self.datadir = data_dir
@@ -135,7 +132,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
 
         # If using MEDUSA backbone load images without crop
         if self.is_medusa_backbone:
-            self.load_image = process_image_file_no_crop
+            self.load_image = partial(process_image_file, top_percent=0, crop=False)
         else:
             self.load_image = process_image_file
 
@@ -243,11 +240,12 @@ class BalanceCovidDataset(keras.utils.Sequence):
             batch_x[i] = x
             batch_y[i] = y
 
+        class_weights = self.class_weights
+        weights = np.take(class_weights, batch_y.astype('int64'))
         batch_y = keras.utils.to_categorical(batch_y, num_classes=self.n_classes)
-        weights = np.take(self.class_weights, batch_y.astype('int64'))
 
         if self.is_medusa_backbone:
-            return [batch_sem_x, batch_x, batch_y, weights, self.is_training]
+            return batch_sem_x, batch_x, batch_y, weights, self.is_training
         else:
-            return [batch_x, batch_y, weights, self.is_training]
+            return batch_x, batch_y, weights, self.is_training
         

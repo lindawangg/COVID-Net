@@ -64,6 +64,7 @@ python eval.py \
     --ckptname model \
     --n_classes 2 \
     --testfile labels/test_COVIDx8B.txt \
+    --in_tensorname input_1:0 \
     --out_tensorname norm_dense_2/Softmax:0
 ```
 4. For more options and information, `python eval.py --help`
@@ -94,6 +95,7 @@ python inference.py \
     --ckptname model \
     --n_classes 2 \
     --imagepath assets/ex-covid.jpeg \
+    --in_tensorname input_1:0 \
     --out_tensorname norm_dense_2/Softmax:0
 ```
 4. For more options and information, `python inference.py --help`
@@ -139,6 +141,7 @@ python eval.py \
     --ckptname model-18540 \
     --n_classes 3 \
     --testfile labels/test_COVIDx8A.txt \
+    --in_tensorname input_1:0 \
     --out_tensorname norm_dense_1/Softmax:0
 ```
 4. For more options and information, `python eval.py --help`
@@ -156,6 +159,7 @@ python inference.py \
     --ckptname model-18540 \
     --n_classes 3 \
     --imagepath assets/ex-covid.jpeg \
+    --in_tensorname input_1:0 \
     --out_tensorname norm_dense_1/Softmax:0
 ```
 4. For more options and information, `python inference.py --help`

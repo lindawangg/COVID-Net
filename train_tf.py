@@ -108,7 +108,7 @@ with tf.Session() as sess:
     labels_tensor = graph.get_tensor_by_name(args.label_tensorname)
     sample_weights = graph.get_tensor_by_name(args.weights_tensorname)
     pred_tensor = graph.get_tensor_by_name(args.logit_tensorname)
-    is_training = graph.get_tensor_by_name(args.training_tensorname)
+    training_tensor = graph.get_tensor_by_name(args.training_tensorname)
     # loss expects unscaled logits since it performs a softmax on logits internally for efficiency
 
     # Define loss and optimizer
@@ -131,8 +131,8 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    eval(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-         args.in_tensorname, args.out_tensorname, args.input_size, mapping)
+    # eval(sess, graph, testfiles, os.path.join(args.datadir,'test'),
+    #      args.in_tensorname, args.out_tensorname, args.input_size, mapping)
 
     # Training cycle
     print('Training started')
@@ -141,11 +141,11 @@ with tf.Session() as sess:
     for epoch in range(args.epochs):
         for i in range(total_batch):
             # Run optimization
-            batch_x, batch_y, weights = next(generator)
+            batch_x, batch_y, weights, is_training = next(generator)
             sess.run(train_op, feed_dict={image_tensor: batch_x,
                                           labels_tensor: batch_y,
                                           sample_weights: weights,
-                                          is_training: True})
+                                          training_tensor: is_training})
             progbar.update(i+1)
 
         if epoch % display_step == 0:

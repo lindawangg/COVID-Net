@@ -4,8 +4,7 @@ import os, argparse
 import cv2
 
 from data import (
-    process_image_file, 
-    process_image_file_no_crop, 
+    process_image_file,
     process_image_file_medusa,
 )
 
@@ -23,7 +22,7 @@ parser.add_argument('--imagepath', default='assets/ex-covid.jpeg', type=str, hel
 parser.add_argument('--in_tensorname', default='input_2:0', type=str, help='Name of input tensor to graph')
 parser.add_argument('--in_tensorname_medusa', default='input_1:0', type=str, 
                     help='Name of input tensor to MEDUSA graph for COVIDNet-CXR-3')
-parser.add_argument('--out_tensorname', default='norm_dense_2/Softmax:0', type=str, help='Name of output tensor from graph')
+parser.add_argument('--out_tensorname', default='softmax/Softmax:0', type=str, help='Name of output tensor from graph')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
 parser.add_argument('--input_size_medusa', default=256, type=int, 
                     help='Size of input to MEDUSA graph (ex: if 256x256, --input_size 256)')
@@ -62,7 +61,7 @@ image_tensor = graph.get_tensor_by_name(args.in_tensorname)
 pred_tensor = graph.get_tensor_by_name(args.out_tensorname)
 
 if args.is_medusa_backbone:
-    x = process_image_file_no_crop(args.imagepath, args.input_size)
+    x = process_image_file(args.imagepath, args.input_size, top_percent=0, crop=False)
     x = x.astype('float32') / 255.0
     medusa_image_tensor = graph.get_tensor_by_name(args.in_tensorname_medusa)
     medusa_x = process_image_file_medusa(args.imagepath, args.input_size_medusa)
