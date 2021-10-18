@@ -131,8 +131,8 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
-    # eval(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-    #      args.in_tensorname, args.out_tensorname, args.input_size, mapping)
+    eval(sess, graph, testfiles, os.path.join(args.datadir,'test'),
+         args.in_tensorname, args.out_tensorname, args.input_size, mapping)
 
     # Training cycle
     print('Training started')
