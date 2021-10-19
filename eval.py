@@ -98,6 +98,9 @@ def eval_severity(sess, graph, testfile, testfolder, input_tensor, output_tensor
     print(f'Explained Variance: {expl_var_val}')
     print(f'R^2: {r2_val}')
 
+
+    return mse_val, expl_var_val, r2_val
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='COVID-Net Evaluation')
     parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to model files, defaults to \'models/COVIDNet-CXR-2\'')

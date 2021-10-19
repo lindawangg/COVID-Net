@@ -23,7 +23,8 @@ class MetaModel:
             self.saver = tf.train.import_meta_graph(self.meta_file)
             self.input_tr = self.graph.get_tensor_by_name('input_1:0')
             self.phase_tr = self.graph.get_tensor_by_name('keras_learning_phase:0')
-            self.output_tr = self.graph.get_tensor_by_name('MLP/dense_1/MatMul:0')
+            #self.output_tr = self.graph.get_tensor_by_name('MLP/dense_1/MatMul:0')
+            self.output_tr = self.graph.get_tensor_by_name('MatMul:0')
 
     def infer_single_image(self, image):
         with tf.Session(graph=self.graph) as sess:
@@ -61,29 +62,29 @@ class MetaModel:
                                     self.input_tr: np.expand_dims(image, axis=0),
                                     self.phase_tr: False
                                 })
-                outputs['logits'].append(outs)
+                #outputs['logits'].append(outs)
 
-                for k in outputs.keys():
-                    outputs[k] = np.concatenate(outputs[k], axis=0)
+                #for k in outputs.keys():
+                #    outputs[k] = np.concatenate(outputs[k], axis=0)
 
-                outputs['softmax'] = np.exp(outputs['logits']) / np.sum(
-                    np.exp(outputs['logits']), axis=-1, keepdims=True)
-                outputs['score'] = score_prediction(outputs['softmax'], 1 / 3.)
-                output_dict[key] = outputs['score']
-
+                #outputs['softmax'] = np.exp(outputs['logits']) / np.sum(
+                #    np.exp(outputs['logits']), axis=-1, keepdims=True)
+                #outputs['score'] = score_prediction(outputs['softmax'], 1 / 3.)
+                #output_dict[key] = outputs['score']
+                output_dict[key] = outs
         return output_dict
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='COVID-Net Lung Severity Scoring')
-    parser.add_argument('--weightspath_geo', default='models/COVIDNet-SEV-GEO', type=str, help='Path to output folder')
+    parser.add_argument('--weightspath_geo', default='output/COVIDNet-MNTF-Sev-geo-lr2e-05', type=str, help='Path to output folder')
     parser.add_argument('--weightspath_opc', default='models/COVIDNet-SEV-OPC', type=str, help='Path to output folder')
     parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
     parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
-    parser.add_argument('--image_dir', default='montefiore_severity/', type=str, help='Full path to set of images to perfom scoring on')
+    parser.add_argument('--image_dir', default='../montefiore_severity/CXR/', type=str, help='Full path to set of images to perfom scoring on')
     parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
     parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
-    parser.add_argument('--labels_file', type=str, help='File with labels for evaluation - if specified, only these images in imagedir will be tested, else all files in imagedir will be evaluated.')
+    parser.add_argument('--labels_file', default='test_mntf_sev.txt',type=str, help='File with labels for evaluation - if specified, only these images in imagedir will be tested, else all files in imagedir will be evaluated.')
 
     args = parser.parse_args()
 
@@ -116,38 +117,42 @@ if __name__ == '__main__':
     if infer_geo:
         model_geo = MetaModel(os.path.join(args.weightspath_geo, args.metaname),
                               os.path.join(args.weightspath_geo, args.ckptname))
+       
         geo_scores = model_geo.infer_multiple_images(image_path_dict)
+
+        # collect scores and labels into np arrays
+        g_s_pred = []
+        g_s_labels = []
+        for k, g_s in geo_scores.items():
+            g_s_pred.append(g_s[0])
+            g_s_labels.append(geo_labels[k])
+        g_s_labels = np.array(g_s_labels, dtype=np.float16)
+        g_s_pred = np.array(g_s_pred)
+
+        # plot results vs labels with lines of best fit
+        plt.scatter(g_s_labels, g_s_pred, label='Geo')
+        m_geo, b_geo = np.polyfit(g_s_labels, g_s_pred, 1)
+        plt.plot(g_s_labels, m_geo*g_s_labels + b_geo, label='Geo LOBF')
 
     if infer_opc:
         model_opc = MetaModel(os.path.join(args.weightspath_opc, args.metaname),
                               os.path.join(args.weightspath_opc, args.ckptname))
         opc_scores = model_geo.infer_multiple_images(image_path_dict)
 
-    # collect scores and labels into np arrays
-    g_s_pred = []
-    g_s_labels = []
-    for k, g_s in geo_scores.items():
-        g_s_pred.append(g_s[0])
-        g_s_labels.append(geo_labels[k])
-    g_s_labels = np.array(g_s_labels, dtype=np.float16)
-    g_s_pred = np.array(g_s_pred)
+        o_s_pred = []
+        o_s_labels = []
+        for k, o_s in opc_scores.items():
+            o_s_pred.append(o_s[0])
+            o_s_labels.append(opc_labels[k])
+        o_s_labels = np.array(o_s_labels, dtype=np.float16)
+        o_s_pred = np.array(o_s_pred)
 
-    o_s_pred = []
-    o_s_labels = []
-    for k, o_s in opc_scores.items():
-        o_s_pred.append(o_s[0])
-        o_s_labels.append(opc_labels[k])
-    o_s_labels = np.array(o_s_labels, dtype=np.float16)
-    o_s_pred = np.array(o_s_pred)
+        plt.scatter(o_s_labels, o_s_pred, label='Opc')
+        m_opc, b_opc = np.polyfit(o_s_labels, o_s_pred, 1)
+        plt.plot(o_s_labels, m_opc*o_s_labels + b_opc, label='Opacity LOBF')
+        
 
-    # plot results vs labels with lines of best fit
-    plt.scatter(g_s_labels, g_s_pred*8, label='Geo')
-    m_geo, b_geo = np.polyfit(g_s_labels, g_s_pred*8, 1)
-    plt.plot(g_s_labels, m_geo*g_s_labels + b_geo, label='Geo LOBF')
-
-    plt.scatter(o_s_labels, o_s_pred*8, label='Opc')
-    m_opc, b_opc = np.polyfit(o_s_labels, o_s_pred*8, 1)
-    plt.plot(o_s_labels, m_opc*o_s_labels + b_opc, label='Opacity LOBF')
+    
 
     plt.xlabel('Radiologist Score')
     plt.ylabel('Predicted Score')

@@ -7,6 +7,8 @@ import cv2
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
+np.random.seed(1)
+
 def crop_top(img, percent=0.15):
     offset = int(img.shape[0] * percent)
     return img[offset:]
@@ -150,7 +152,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 ]
             else:
                 raise Exception('Only binary or 3 class classification currently supported.')
-        print(len(self.datasets[0]), len(self.datasets[1]))
+        #print(len(self.datasets[0]), len(self.datasets[1]))
 
         self.on_epoch_end()
 

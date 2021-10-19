@@ -6,14 +6,17 @@ import os, argparse, pathlib
 from eval import eval, eval_severity
 from data import BalanceCovidDataset
 
+import numpy as np
+import json
+
 '''
 Internal script made for training Montefiore Severity data
 Created Oct 4, 2021
 '''
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
-parser.add_argument('--epochs', default=20, type=int, help='Number of epochs')
-parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
+parser.add_argument('--epochs', default=15, type=int, help='Number of epochs')
+parser.add_argument('--lr', default=0.00002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
 parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
@@ -30,18 +33,23 @@ parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=
 parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str, help='Name of label tensor for loss')
 parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
 parser.add_argument('--sev_reg', action='store_true', default=False, help='Set model to Severity Regression head')
-parser.add_argument('--sev_clf', action='store_true', default=False, help='Set model to Severity Classification head')
+parser.add_argument('--sev_clf', action='store_true', default=True, help='Set model to Severity Classification head')
+parser.add_argument('--geo', type=str, default=True, help='Whether to train on geo. If false will use opacity')
 
 args = parser.parse_args()
 
+metric = "geo" if args.geo else "opc"
+
 # Parameters
 learning_rate = args.lr
+decay_steps = 1000
 batch_size = args.bs
 display_step = 1
+SEED = 3
 
 # output path
 outputPath = './output/'
-runID = args.name + '-lr' + str(learning_rate)
+runID = args.name + "-" + metric + '-lr' + str(learning_rate)
 runPath = outputPath + runID
 pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
 print('Output: ' + runPath)
@@ -107,14 +115,31 @@ with tf.Session() as sess:
                                     name='regr_head')(prev_tensor)
         loss_op = tf.reduce_mean(tf.losses.mean_squared_error(
             labels=labels_ph, predictions=regr_head))
+        # found exact string by using:
+        # print_node_children(regr_head.op)
+        out_tensorname = 'regr_head/BiasAdd:0'
     elif args.sev_clf:
-        # TODO this is where the classification severity method should go
-        raise NotImplementedError
+        regr_bin_head = tf.layers.Dense(8, activation='softmax', trainable=True,
+                                    name='regr_bin_head')(prev_tensor)
+        print("regr head")
+        print_node_children(regr_bin_head.op)
+        centroids = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0], shape = [8, 1])
+        #centroids = tf.constant([0.0, 2.0, 4.0, 6.0, 8.0], shape = [5, 1])
+        output_head = tf.matmul(regr_bin_head, centroids)
+        print("OUTPUT head")
+        print_node_children(output_head.op)
+        loss_op = tf.reduce_mean(tf.losses.mean_squared_error(
+            labels=labels_ph, predictions=output_head))
+        out_tensorname = 'MatMul:0'
     else: # just leaving here so we know where it fits when this goes back to train_tf.py
         loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(
             logits=pred_tensor, labels=labels_tensor)*sample_weights)
 
     # Define loss and optimizer
+    global_step = tf.compat.v1.train.create_global_step(
+        graph=graph
+    )
+    lr_decayed = tf.train.cosine_decay(learning_rate, global_step, decay_steps)
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss_op)
 
@@ -131,26 +156,39 @@ with tf.Session() as sess:
     saver = tf.train.Saver()
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
-    print('Baseline eval:')i
+    print('Baseline eval:')
 
-    # found exact string by using:
-    # print_node_children(regr_head.op)
-    out_tensorname = 'regr_head/BiasAdd:0'
+    
     # for classification head, probably use the original eval() function
-    eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'test'),
+    mse_val, expl_var_val, r2_val = eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'test'),
                   args.in_tensorname, out_tensorname, args.input_size, measure='geo')
 
     # Training cycle
+    mse_vals = []
+    expl_var_vals = []
+    r2_vals = []
+
+    mse_vals.append(mse_val)
+    expl_var_vals.append(expl_var_val)
+    r2_vals.append(r2_val)
+
     print('Training started')
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
+    tf.compat.v1.set_random_seed(SEED)
     for epoch in range(args.epochs):
         for i in range(total_batch):
             # Run optimization
             batch_x, batch_y, weights = next(generator)
             # geo: batch_y[0], opc: batch_y[1], both: batch_y[:]
+            
+            if metric == "geo":
+                labels_y = batch_y[:, 0].reshape(batch_size, 1)
+            else:
+                labels_y = batch_y[:, 1].reshape(batch_size, 1)
+            
             sess.run(train_op, feed_dict={image_tensor: batch_x,
-                                          labels_ph: batch_y[:, 0].reshape(batch_size, 1),
+                                          labels_ph: labels_y,
                                           sample_weights: weights})
             progbar.update(i+1)
 
@@ -160,10 +198,29 @@ with tf.Session() as sess:
                                                 labels_ph: batch_y[:, 0].reshape(batch_size, 1),
                                                 sample_weights: weights})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
-            eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'test'),
+            mse_val, expl_var_val, r2_val = eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'test'),
                           args.in_tensorname, out_tensorname, args.input_size, measure='geo')
+            
+            mse_vals.append(mse_val)
+            expl_var_vals.append(expl_var_val)
+            r2_vals.append(r2_val)
+                    
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
+    print("Saving Final Model")
+    saver.save(sess, os.path.join(runPath, 'model'))
 
 print("Optimization Finished!")
+
+print("Saving accuracy and losses.")
+
+test_metrics = {'mse_val': np.asarray(mse_vals, dtype='float64').tolist(), 'expl_var_val': np.asarray(expl_var_vals, dtype='float64').tolist(), 'r2_val': np.asarray(r2_vals, dtype='float64').tolist()}
+
+with open(runPath + "/test_metric", "w") as fp:
+    json.dump(test_metrics, fp)
+
+#with open(runPath + "/test_metric", "r") as fp:
+#b = json.load(fp)
+
+
