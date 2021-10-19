@@ -33,9 +33,7 @@ parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=
 parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str, help='Name of label tensor for loss')
 parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
 parser.add_argument('--sev_reg', action='store_true', default=False, help='Set model to Severity Regression head')
-parser.add_argument('--sev_clf', action='store_true', default=False, help='Set model to Severity Classification head')
 parser.add_argument('--sev_wa', action='store_true', default=True, help='Set model to Severity Weighted Averaging Softmax head')
-#parser.add_argument('--geo', type=str, default=True, help='Whether to train on geo. If false will use opacity')
 parser.add_argument('--geo', action='store_true', default=True)
 parser.add_argument('--opc', action='store_true', default=False)
 parser.add_argument('--gpus', type=int, nargs='*', help='List GPU numbers to use while training')
@@ -52,10 +50,10 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = ','.join([str(g) for g in args.gpus])
 
 # Parameters
-learning_rate = args.lr
+base_lr = args.lr
 batch_size = args.bs
 display_step = 1
-SEED = 3
+SEED = 2
 
 # build up output path
 outputPath = './output/'
@@ -155,8 +153,7 @@ with tf.Session() as sess:
                                     name='regr_bin_head')(prev_tensor)
         print("regr head")
         print_node_children(regr_bin_head.op)
-        centroids = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0], shape = [8, 1])
-        #centroids = tf.constant([0.0, 2.0, 4.0, 6.0, 8.0], shape = [5, 1])
+        centroids = tf.constant([0.89, 1.78, 2.67, 3.56, 4.45, 5.34, 6.23, 7.12, 8.0], shape = [8, 1])
         output_head = tf.matmul(regr_bin_head, centroids)
         print("OUTPUT head")
         print_node_children(output_head.op)
@@ -172,7 +169,7 @@ with tf.Session() as sess:
     # use cosine decayed learning rate with warm restarting
     global_step = tf.train.get_or_create_global_step()
     decayed_lr = tf.compat.v1.train.cosine_decay(base_lr, global_step,
-                                                 decay_steps=500, alpha=0.01)
+                                                 decay_steps=1000, alpha=0.01)
     optimizer = tf.train.AdamOptimizer(learning_rate=decayed_lr)
     train_op = optimizer.minimize(loss_op)
 
