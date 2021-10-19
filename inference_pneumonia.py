@@ -31,7 +31,7 @@ graph = tf.get_default_graph()
 image_tensor = graph.get_tensor_by_name(args.in_tensorname)
 pred_tensor = graph.get_tensor_by_name(args.out_tensorname)
 
-x = process_image_file(args.imagepath, args.top_percent, args.input_size)
+x = process_image_file(args.imagepath, args.input_size, top_percent=args.top_percent)
 x = x.astype('float32') / 255.0
 pred = sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})
 # Combining pneumonia and covid predictions into single pneumonia prediction.
