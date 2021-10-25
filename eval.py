@@ -88,6 +88,8 @@ def eval_severity(sess, graph, testfile, testfolder, input_tensor, output_tensor
         raise NotImplementedError # in case this is desired later
     else:
         raise ValueError
+    # since data is loaded in as (0.0, 1.0) rather than (0.0, 8.0)
+    y_test = y_test / 8.0
     pred = np.array(pred).squeeze()
 
     mse_val = mean_squared_error(y_test, pred)
@@ -97,6 +99,9 @@ def eval_severity(sess, graph, testfile, testfolder, input_tensor, output_tensor
     print(f'MSE: {mse_val}')
     print(f'Explained Variance: {expl_var_val}')
     print(f'R^2: {r2_val}')
+
+
+    return mse_val, expl_var_val, r2_val
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='COVID-Net Evaluation')

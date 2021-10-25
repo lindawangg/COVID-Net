@@ -6,20 +6,23 @@ import os, argparse, pathlib
 from eval import eval, eval_severity
 from data import BalanceCovidDataset
 
+import numpy as np
+import json
+
 '''
 Internal script made for training Montefiore Severity data
 Created Oct 4, 2021
 '''
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
-parser.add_argument('--epochs', default=20, type=int, help='Number of epochs')
+parser.add_argument('--epochs', default=15, type=int, help='Number of epochs')
 parser.add_argument('--lr', default=0.00002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
 parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
 parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
 parser.add_argument('--trainfile', default='train_mntf_sev.txt', type=str, help='Name of train file')
-parser.add_argument('--testfile', default='test_mntf_sev.txt', type=str, help='Name of test file')
+parser.add_argument('--testfile', default='valid_mntf_sev.txt', type=str, help='Name of test file')
 parser.add_argument('--name', default='COVIDNet-MNTF-Sev', type=str, help='Name of folder to store training checkpoints')
 parser.add_argument('--datadir', default='../montefiore_severity/CXR', type=str, help='Path to data folder')
 parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
@@ -30,22 +33,39 @@ parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=
 parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str, help='Name of label tensor for loss')
 parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
 parser.add_argument('--sev_reg', action='store_true', default=False, help='Set model to Severity Regression head')
-parser.add_argument('--sev_clf', action='store_true', default=False, help='Set model to Severity Classification head')
-parser.add_argument('--geo', type=str, default=False, help='Whether to train on geo. If false will use opacity')
+parser.add_argument('--sev_wa', action='store_true', default=True, help='Set model to Severity Weighted Averaging Softmax head')
+parser.add_argument('--geo', action='store_true', default=True)
+parser.add_argument('--opc', action='store_true', default=False)
+parser.add_argument('--gpus', type=int, nargs='*', help='List GPU numbers to use while training')
+parser.add_argument('--mae', action='store_true', default=False, help='Use Mean Absolute Error instead of MSE')
+parser.add_argument('--msle', action='store_true', default=False, help='Use Mean Squared Log Error')
+parser.add_argument('--huber', action='store_true', default=False, help='Use Huber Loss')
 
 args = parser.parse_args()
 
-metric = "geo" if args.geo else "opc"
+if not args.gpus:
+    os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+else:
+    # args.gpus should be list of gpu numbers, e.g. [0, 1, 5, 8]
+    os.environ['CUDA_VISIBLE_DEVICES'] = ','.join([str(g) for g in args.gpus])
 
 # Parameters
-learning_rate = args.lr
+base_lr = args.lr
 batch_size = args.bs
 display_step = 1
 SEED = 2
 
-# output path
+# build up output path
 outputPath = './output/'
-runID = args.name + '-lr' + str(learning_rate)
+measure = 'geo' if args.geo else 'opc' if args.opc else 'invalid'
+if measure == 'invalid': raise ValueError
+runID = args.name + '-lr' + str(learning_rate) + f'-{measure}'
+if args.mae:
+    runID = runID + '-mae'
+elif args.msle:
+    runID = runID + '-msle'
+elif args.huber:
+    runID = runID + '-huber'
 runPath = outputPath + runID
 pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
 print('Output: ' + runPath)
@@ -107,30 +127,49 @@ with tf.Session() as sess:
     prev_tensor.set_shape([None, 460800])
  
     if args.sev_reg:
-        regr_head = tf.layers.Dense(1, activation='linear', trainable=True,
-                                    name='regr_head')(prev_tensor)
-        loss_op = tf.reduce_mean(tf.losses.mean_squared_error(
-            labels=labels_ph, predictions=regr_head))
-        # found exact string by using:
-        print_node_children(regr_head.op)
-        out_tensorname = "regr_head/BiasAdd:0"
-    elif args.sev_clf:
-        regr_bin_head = tf.layers.Dense(9, activation='softmax', trainable=True,
+        # add another hidden linear layer for kicks
+        regr_hl = tf.layers.Dense(64, activation='relu', trainable=True,
+                                  name='regr_hl')(prev_tensor)
+        # sigmoid activation to force output in (0, 1) range
+        regr_head = tf.layers.Dense(1, activation='sigmoid', trainable=True,
+                                    name='regr_head')(regr_hl)
+        # experimenting with loss functions (though mse seem to work best)
+        if args.mae:
+            loss_op = tf.reduce_mean(tf.losses.absolute_difference(
+                labels=labels_ph, predictions=regr_head))
+        elif args.msle:
+            loss_op = tf.reduce_mean(tf.math.square(tf.losses.log_loss(
+                labels=labels_ph, predictions=regr_head)))
+        elif args.huber:
+            loss_op = tf.reduce_mean(tf.losses.huber_loss(
+                labels=labels_ph, predictions=regr_head, delta=0.1))
+        else: # default to MSE
+            loss_op = tf.reduce_mean(tf.losses.mean_squared_error(
+                labels=labels_ph, predictions=regr_head))
+
+        out_tensorname = 'regr_head/BiasAdd:0'
+    elif args.sev_wa:   # weighted averaging
+        regr_bin_head = tf.layers.Dense(8, activation='softmax', trainable=True,
                                     name='regr_bin_head')(prev_tensor)
         print("regr head")
         print_node_children(regr_bin_head.op)
-        centroids = tf.constant([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0], shape=[9, 1])
+        centroids = tf.constant([0.89, 1.78, 2.67, 3.56, 4.45, 5.34, 6.23, 7.12, 8.0], shape = [8, 1])
         output_head = tf.matmul(regr_bin_head, centroids)
         print("OUTPUT head")
         print_node_children(output_head.op)
         loss_op = tf.reduce_mean(tf.losses.mean_squared_error(
             labels=labels_ph, predictions=output_head))
         out_tensorname = 'MatMul:0'
+        
     else: # just leaving here so we know where it fits when this goes back to train_tf.py
         loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(
             logits=pred_tensor, labels=labels_tensor)*sample_weights)
     # Define loss and optimizer
-    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+    # use cosine decayed learning rate with warm restarting
+    global_step = tf.train.get_or_create_global_step()
+    decayed_lr = tf.compat.v1.train.cosine_decay(base_lr, global_step,
+                                                 decay_steps=1000, alpha=0.01)
+    optimizer = tf.train.AdamOptimizer(learning_rate=decayed_lr)
     train_op = optimizer.minimize(loss_op)
 
     # Initialize the variables
@@ -143,15 +182,25 @@ with tf.Session() as sess:
     saver_old.restore(sess, os.path.join(args.weightspath, args.ckptname))
 
     # save base model
+    # build new saver for newly built model architecture
     saver = tf.train.Saver()
     saver.save(sess, os.path.join(runPath, 'model'))
     print('Saved baseline checkpoint')
     print('Baseline eval:')
 
-    eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-                  args.in_tensorname, out_tensorname, args.input_size, measure=metric)
+    # for classification head, probably use the original eval() function
+    mse_val, expl_var_val, r2_val = eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'valid'),
+                  args.in_tensorname, out_tensorname, args.input_size, measure=measure)
 
-#     # Training cycle
+    # Training cycle
+    mse_vals = []
+    expl_var_vals = []
+    r2_vals = []
+
+    mse_vals.append(mse_val)
+    expl_var_vals.append(expl_var_val)
+    r2_vals.append(r2_val)
+
     print('Training started')
     total_batch = len(generator)
     progbar = tf.keras.utils.Progbar(total_batch)
@@ -161,14 +210,17 @@ with tf.Session() as sess:
             # Run optimization
             batch_x, batch_y, weights = next(generator)
             # geo: batch_y[0], opc: batch_y[1], both: batch_y[:]
-
-            if metric == "geo":
-                labels_y = batch_y[:, 0].reshape(batch_size, 1)
+            if args.geo:
+                batch_y = batch_y[:, 0]
+            elif args.opc:
+                batch_y = batch_y[:, 1]
             else:
-                labels_y = batch_y[:, 1].reshape(batch_size, 1)
-
+                raise ValueError
+            # set to size (batch_size, 1) and scale to (0, 1)
+            #batch_y = batch_y.reshape(batch_size, 1) / 8.0
+            batch_y = batch_y.reshape(batch_size, 1)
             sess.run(train_op, feed_dict={image_tensor: batch_x,
-                                          labels_ph: labels_y,
+                                          labels_ph: batch_y,
                                           sample_weights: weights})
             progbar.update(i+1)
 
@@ -176,11 +228,16 @@ with tf.Session() as sess:
             # pred = sess.run(pred_tensor, feed_dict={image_tensor:batch_x})
 
             loss = sess.run(loss_op, feed_dict={image_tensor:batch_x,
-                                                labels_ph: labels_y,
+                                                labels_ph: batch_y,
                                                 sample_weights: weights})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
-            eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'test'),
-                          args.in_tensorname, out_tensorname, args.input_size, measure=metric)
+            mse_val, expl_var_val, r2_val = eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'valid'),
+                          args.in_tensorname, out_tensorname, args.input_size, measure='geo')
+            
+            mse_vals.append(mse_val)
+            expl_var_vals.append(expl_var_val)
+            r2_vals.append(r2_val)
+                    
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
             print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
@@ -188,3 +245,15 @@ with tf.Session() as sess:
     saver.save(sess, os.path.join(runPath, 'model'))
 
 print("Optimization Finished!")
+
+print("Saving accuracy and losses.")
+
+test_metrics = {'mse_val': np.asarray(mse_vals, dtype='float64').tolist(), 'expl_var_val': np.asarray(expl_var_vals, dtype='float64').tolist(), 'r2_val': np.asarray(r2_vals, dtype='float64').tolist()}
+
+with open(runPath + "/test_metric", "w") as fp:
+    json.dump(test_metrics, fp)
+
+#with open(runPath + "/test_metric", "r") as fp:
+#b = json.load(fp)
+
+
