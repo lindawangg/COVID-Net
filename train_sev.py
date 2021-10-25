@@ -115,11 +115,11 @@ with tf.Session() as sess:
         print_node_children(regr_head.op)
         out_tensorname = "regr_head/BiasAdd:0"
     elif args.sev_clf:
-        regr_bin_head = tf.layers.Dense(8, activation='softmax', trainable=True,
+        regr_bin_head = tf.layers.Dense(9, activation='softmax', trainable=True,
                                     name='regr_bin_head')(prev_tensor)
         print("regr head")
         print_node_children(regr_bin_head.op)
-        centroids = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0], shape=[8, 1])
+        centroids = tf.constant([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0], shape=[9, 1])
         output_head = tf.matmul(regr_bin_head, centroids)
         print("OUTPUT head")
         print_node_children(output_head.op)
