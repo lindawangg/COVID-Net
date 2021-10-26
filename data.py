@@ -76,16 +76,21 @@ def _process_csv_file(file):
         files = fr.readlines()
     return files
 
-def _categorize_severity(score):
+def _categorize_severity(score, bin_map=np.array([[0,3], [3,6], [6,8]])):
+    if (score < 0.0) or (score > 8.0):
+            raise ValueError('Scores must be between 0.0 and 8.0')
+
+    for i in np.arange(bin_map.shape[0]):
+        if bin_map[i,0] > bin_map[i,1]:
+            raise ValueError('Bin boundaries must be in format:[left bound, right bound]')
+        if i > 0:
+            if bin_map[i,0] < bin_map[i-1,1]:
+                ValueError('Bins must not overlap')
     category = None
-    if 0.0 <= score and score < 3.0:
-        category = 0 # low severity
-    elif 3.0 <= score and score < 6.0:
-        category = 1 # medium severity
-    elif 6.0 <= score and score <= 8.0:
-        category = 2 # high severity
-    else:
-        raise ValueError('Scores must be between 0.0 and 8.0')
+    for i in np.arange(bin_map.shape[0]):
+        if bin_map[i,0] <= score and score < bin_map[i,1]:
+            category = i
+            break
 
     return category
 
