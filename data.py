@@ -158,11 +158,12 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 opc_labels.append(_categorize_severity(sample[3]))
             geo_labels = tf.one_hot(geo_labels, len(self.dataset))
             opc_labels = tf.one_hot(opc_labels, len(self.dataset))
-            self.datasets['clf'] = [{
+            datasets['clf'] = {
                 'img_paths': img_paths,
                 'geo_labels': geo_labels,
                 'opc_labels': opc_labels,
-            }]
+            }
+            self.datasets = [datasets['clf']]
 
         else:
             for l in self.dataset:
