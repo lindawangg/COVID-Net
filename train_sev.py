@@ -55,6 +55,7 @@ base_lr = args.lr
 batch_size = args.bs
 display_step = 1
 SEED = 2
+bin_map = np.array([[0,3], [3,6], [6,8]])
 
 # build up output path
 outputPath = './output/'
@@ -162,13 +163,12 @@ with tf.Session() as sess:
             labels=labels_ph, predictions=output_head))
         out_tensorname = 'MatMul:0'
     elif args.sev_clf:
-        clf_layer = tf.layers.Dense(3, activation=None, trainable=True,
+        clf_layer = tf.layers.Dense(bin_map.shape[0], activation=None, trainable=True,
                                     name='clf_layer')(prev_tensor)
         loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(
             labels=labels_ph, logits=clf_layer))
         out_tensorname = 'clf_layer/BiasAdd:0'
         print_node_children(clf_layer.op)
-        exit()
 
     else: # just leaving here so we know where it fits when this goes back to train_tf.py
         loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(
@@ -212,7 +212,9 @@ with tf.Session() as sess:
         expl_var_vals.append(expl_var_val)
         r2_vals.append(r2_val)
     else: # classification eval
-        pass
+        eval(sess, graph, testfiles, os.path.join(args.datadir,'valid'), args.in_tensorname, out_tensorname, args.input_size,
+                    mapping={'bin_map': bin_map}, sev=True):
+        #pass
 
     print('Training started')
     total_batch = len(generator)

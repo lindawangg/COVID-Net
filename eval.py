@@ -5,13 +5,13 @@ import tensorflow as tf
 import os, argparse
 import cv2
 
-from data import process_image_file
+from data import process_image_file, _categorize_severity
 
 # To remove TF Warnings
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size, mapping={'normal': 0, 'pneumonia': 1, 'COVID-19': 2}):
+def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size, mapping={'normal': 0, 'pneumonia': 1, 'COVID-19': 2}, sev=False):
     image_tensor = graph.get_tensor_by_name(input_tensor)
     pred_tensor = graph.get_tensor_by_name(output_tensor)
 
@@ -22,7 +22,13 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
         line = testfile[i].split()
         x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
         x = x.astype('float32') / 255.0
-        y_test.append(mapping[line[2]])
+        if sev:
+            if 'bin_map' in mapping.keys():
+                y_test.append(_categorize_severity(score, mapping['bin_map']))
+            else:
+                y_test.append(_categorize_severity(score))
+        else:
+            y_test.append(mapping[line[2]])
         pred.append(np.array(sess.run(pred_tensor,
                                       feed_dict={image_tensor: np.expand_dims(x, axis=0),
                                                  'is_training:0':False})).argmax(axis=1))
