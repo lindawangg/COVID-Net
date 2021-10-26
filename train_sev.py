@@ -33,7 +33,8 @@ parser.add_argument('--logit_tensorname', default='norm_dense_2/MatMul:0', type=
 parser.add_argument('--label_tensorname', default='norm_dense_1_target:0', type=str, help='Name of label tensor for loss')
 parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights:0', type=str, help='Name of sample weights tensor for loss')
 parser.add_argument('--sev_reg', action='store_true', default=False, help='Set model to Severity Regression head')
-parser.add_argument('--sev_wa', action='store_true', default=True, help='Set model to Severity Weighted Averaging Softmax head')
+parser.add_argument('--sev_wa', action='store_true', default=False, help='Set model to Severity Weighted Averaging Softmax head')
+parser.add_argument('--sev_clf', action='store_true', default=False, help='Set model to Classification Softmax head')
 parser.add_argument('--geo', action='store_true', default=True)
 parser.add_argument('--opc', action='store_true', default=False)
 parser.add_argument('--gpus', type=int, nargs='*', help='List GPU numbers to use while training')
@@ -59,7 +60,7 @@ SEED = 2
 outputPath = './output/'
 measure = 'geo' if args.geo else 'opc' if args.opc else 'invalid'
 if measure == 'invalid': raise ValueError
-runID = args.name + '-lr' + str(learning_rate) + f'-{measure}'
+runID = args.name + '-lr' + str(base_lr) + f'-{measure}'
 if args.mae:
     runID = runID + '-mae'
 elif args.msle:
@@ -160,7 +161,15 @@ with tf.Session() as sess:
         loss_op = tf.reduce_mean(tf.losses.mean_squared_error(
             labels=labels_ph, predictions=output_head))
         out_tensorname = 'MatMul:0'
-        
+    elif args.sev_clf:
+        clf_layer = tf.layers.Dense(3, activation=None, trainable=True,
+                                    name='clf_layer')(prev_tensor)
+        loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(
+            labels=labels_ph, logits=clf_layer))
+        out_tensorname = 'clf_layer/BiasAdd:0'
+        print_node_children(clf_layer.op)
+        exit()
+
     else: # just leaving here so we know where it fits when this goes back to train_tf.py
         loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(
             logits=pred_tensor, labels=labels_tensor)*sample_weights)
@@ -189,17 +198,21 @@ with tf.Session() as sess:
     print('Baseline eval:')
 
     # for classification head, probably use the original eval() function
-    mse_val, expl_var_val, r2_val = eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'valid'),
-                  args.in_tensorname, out_tensorname, args.input_size, measure=measure)
 
-    # Training cycle
-    mse_vals = []
-    expl_var_vals = []
-    r2_vals = []
+    if not args.is_classification:
+        mse_val, expl_var_val, r2_val = eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'valid'),
+                    args.in_tensorname, out_tensorname, args.input_size, measure=measure)
 
-    mse_vals.append(mse_val)
-    expl_var_vals.append(expl_var_val)
-    r2_vals.append(r2_val)
+        # Training cycle
+        mse_vals = []
+        expl_var_vals = []
+        r2_vals = []
+
+        mse_vals.append(mse_val)
+        expl_var_vals.append(expl_var_val)
+        r2_vals.append(r2_val)
+    else: # classification eval
+        pass
 
     print('Training started')
     total_batch = len(generator)
@@ -231,15 +244,15 @@ with tf.Session() as sess:
                                                 labels_ph: batch_y,
                                                 sample_weights: weights})
             print("Epoch:", '%04d' % (epoch + 1), "Minibatch loss=", "{:.9f}".format(loss))
-            mse_val, expl_var_val, r2_val = eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'valid'),
-                          args.in_tensorname, out_tensorname, args.input_size, measure='geo')
-            
-            mse_vals.append(mse_val)
-            expl_var_vals.append(expl_var_val)
-            r2_vals.append(r2_val)
-                    
+            # mse_val, expl_var_val, r2_val = eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'valid'),
+            #               args.in_tensorname, out_tensorname, args.input_size, measure='geo')
+
+            # mse_vals.append(mse_val)
+            # expl_var_vals.append(expl_var_val)
+            # r2_vals.append(r2_val)
+
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
-            print('Saving checkpoint at epoch {}'.format(epoch + 1))
+            # print('Saving checkpoint at epoch {}'.format(epoch + 1))
 
     print("Saving Final Model")
     saver.save(sess, os.path.join(runPath, 'model'))

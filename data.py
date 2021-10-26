@@ -76,6 +76,19 @@ def _process_csv_file(file):
         files = fr.readlines()
     return files
 
+def _categorize_severity(score):
+    category = None
+    if 0.0 <= score and score < 3.0:
+        category = 0 # low severity
+    elif 3.0 <= score and score < 6.0:
+        category = 1 # medium severity
+    elif 6.0 <= score and score <= 8.0:
+        category = 2 # high severity
+    else:
+        raise ValueError('Scores must be between 0.0 and 8.0')
+
+    return category
+
 
 class BalanceCovidDataset(keras.utils.Sequence):
     'Generates data for Keras'
@@ -100,6 +113,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             top_percent=0.08,
             is_severity_model=False,
             is_regression=False,
+            is_classification=False,
     ):
         'Initialization'
         self.datadir = data_dir
@@ -119,9 +133,12 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.top_percent = top_percent
         self.is_severity_model = is_severity_model
         self.is_regression = is_regression
+        self.is_classification = is_classification
 
         if self.is_regression:  # to keep consistency
             self.mapping = {'regr':0}
+        if self.is_classification:
+            self.mapping = {'clf': 0}
         datasets = {}
         for key in self.mapping.keys():
             datasets[key] = []
@@ -130,6 +147,23 @@ class BalanceCovidDataset(keras.utils.Sequence):
             for l in self.dataset:
                 datasets['regr'].append(l)
             self.datasets = [datasets['regr']]
+        elif self.is_classification:
+            geo_labels = []
+            opc_labels = []
+            img_paths = []
+            for l in self.dataset:
+                sample = l.split()
+                img_paths.append(sample[0])
+                geo_labels.append(_categorize_severity(sample[2]))
+                opc_labels.append(_categorize_severity(sample[3]))
+            geo_labels = tf.one_hot(geo_labels, len(self.dataset))
+            opc_labels = tf.one_hot(opc_labels, len(self.dataset))
+            self.datasets['clf'] = [{
+                'img_paths': img_paths,
+                'geo_labels': geo_labels,
+                'opc_labels': opc_labels,
+            }]
+
         else:
             for l in self.dataset:
                 if l.split()[-1] == 'sirm':
@@ -199,7 +233,26 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 if self.is_training and hasattr(self, 'augmentation'):
                     x = self.augmentation(x)
                 x = x.astype('float32') / 255.0
+
                 y = sample[2:] # get both geo and opc values
+                batch_x[i] = x
+                batch_y[i, :] = y
+                weights = np.ones(self.batch_size) # treat all samples equally (for now...)
+            return batch_x, batch_y, weights
+
+        if self.is_classification:
+            for i, (img_path, geo_label, opc_label) in enumerate(zip(
+                batch_files['img_path'],
+                batch_files['geo_labels'],
+                batch_files['opc_labels']
+            )):
+                x = process_image_file(os.path.join(self.datadir, 'train', img_path),
+                                       self.top_percent,
+                                       self.input_shape[0])
+                if self.is_training and hasattr(self, 'augmentation'):
+                    x = self.augmentation(x)
+                x = x.astype('float32') / 255.0
+                y = [geo_label, opc_label] # get both geo and opc values
                 batch_x[i] = x
                 batch_y[i, :] = y
                 weights = np.ones(self.batch_size) # treat all samples equally (for now...)
