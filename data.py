@@ -21,6 +21,8 @@ def central_crop(img):
 
 def process_image_file(filepath, top_percent, size):
     img = cv2.imread(filepath)
+    if img is None:
+        print(filepath)
     img = crop_top(img, percent=top_percent)
     img = central_crop(img)
     img = cv2.resize(img, (size, size))
@@ -76,7 +78,8 @@ def _process_csv_file(file):
         files = fr.readlines()
     return files
 
-def _categorize_severity(score, bin_map=np.array([[0,3], [3,6], [6,8]])):
+def _categorize_severity(score, bin_map=np.array([[0.0,3.0], [3.0,6.0], [6.0,8.0]])):
+    score = float(score)
     if (score < 0.0) or (score > 8.0):
             raise ValueError('Scores must be between 0.0 and 8.0')
 
@@ -90,9 +93,10 @@ def _categorize_severity(score, bin_map=np.array([[0,3], [3,6], [6,8]])):
     for i in np.arange(bin_map.shape[0]):
         if bin_map[i,0] <= score and score < bin_map[i,1]:
             category = i
-            break
-
-    return category
+            return category
+    if score == bin_map[-1,1]:
+            category = bin_map.shape[0] - 1
+            return category
 
 
 class BalanceCovidDataset(keras.utils.Sequence):
@@ -153,21 +157,23 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 datasets['regr'].append(l)
             self.datasets = [datasets['regr']]
         elif self.is_classification:
-            geo_labels = []
-            opc_labels = []
-            img_paths = []
+            #geo_labels = []
+            #opc_labels = []
+            #img_paths = []
+            #for l in self.dataset:
+            #    sample = l.split()
+            #    img_paths.append(sample[0])
+            #    geo_labels.append(_categorize_severity(sample[2]))
+            #    opc_labels.append(_categorize_severity(sample[3]))
+            #geo_labels = tf.one_hot(geo_labels, len(self.dataset))
+            #opc_labels = tf.one_hot(opc_labels, len(self.dataset))
+            #self.dataset['clf'] = [{
+            #    'img_paths': img_paths,
+            #    'geo_labels': geo_labels,
+            #    'opc_labels': opc_labels,
+            #}]
             for l in self.dataset:
-                sample = l.split()
-                img_paths.append(sample[0])
-                geo_labels.append(_categorize_severity(sample[2]))
-                opc_labels.append(_categorize_severity(sample[3]))
-            geo_labels = tf.one_hot(geo_labels, len(self.dataset))
-            opc_labels = tf.one_hot(opc_labels, len(self.dataset))
-            datasets['clf'] = {
-                'img_paths': img_paths,
-                'geo_labels': geo_labels,
-                'opc_labels': opc_labels,
-            }
+                datasets['clf'].append(l)
             self.datasets = [datasets['clf']]
 
         else:
@@ -247,22 +253,39 @@ class BalanceCovidDataset(keras.utils.Sequence):
             return batch_x, batch_y, weights
 
         if self.is_classification:
-            for i, (img_path, geo_label, opc_label) in enumerate(zip(
-                batch_files['img_path'],
-                batch_files['geo_labels'],
-                batch_files['opc_labels']
-            )):
-                x = process_image_file(os.path.join(self.datadir, 'train', img_path),
-                                       self.top_percent,
-                                       self.input_shape[0])
+            #for i, (img_path, geo_label, opc_label) in enumerate(zip(
+            #    batch_files['img_path'],
+            #    batch_files['geo_labels'],
+            #    batch_files['opc_labels']
+            #)):
+            
+            # y contains 2 values (geo and opc)
+            batch_y = np.zeros((self.batch_size, 2))
+
+            for i in range(len(batch_files)):
+                sample = batch_files[i].split()
+
+                x = process_image_file(os.path.join(self.datadir, 'train', sample[0]),
+                                    self.top_percent,
+                                    self.input_shape[0])
+
                 if self.is_training and hasattr(self, 'augmentation'):
                     x = self.augmentation(x)
+
                 x = x.astype('float32') / 255.0
-                y = [geo_label, opc_label] # get both geo and opc values
+                
+                y = sample[2:] # get both geo and opc values
+                y = [_categorize_severity(yi) for yi in y]
+
                 batch_x[i] = x
                 batch_y[i, :] = y
-                weights = np.ones(self.batch_size) # treat all samples equally (for now...)
+
+            #class_weights = self.class_weights
+            #weights = np.take(class_weights, batch_y.astype('int64'))
+            weights = np.ones(self.batch_size) # treat all samples equally (for now...)
+            
             return batch_x, batch_y, weights
+            
 
         # upsample covid cases
         covid_size = max(int(len(batch_files) * self.covid_percent), 1)

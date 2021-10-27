@@ -11,7 +11,7 @@ from data import process_image_file, _categorize_severity
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size, mapping={'normal': 0, 'pneumonia': 1, 'COVID-19': 2}, sev=False):
+def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size, mapping={'normal': 0, 'pneumonia': 1, 'COVID-19': 2}, sev=False, measure='geo'):
     image_tensor = graph.get_tensor_by_name(input_tensor)
     pred_tensor = graph.get_tensor_by_name(output_tensor)
 
@@ -20,18 +20,35 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
 
     for i in range(len(testfile)):
         line = testfile[i].split()
-        x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
-        x = x.astype('float32') / 255.0
+    
         if sev:
-            if 'bin_map' in mapping.keys():
-                y_test.append(_categorize_severity(score, mapping['bin_map']))
+            x = process_image_file(os.path.join(testfolder, line[0]), 0.08, input_size)
+            x = x.astype('float32') / 255.0
+
+            if measure == 'geo':
+                if 'bin_map' in mapping.keys():
+                    y_test.append(_categorize_severity(line[2], mapping['bin_map']))
+                else:
+                    y_test.append(_categorize_severity(line[2]))
+            elif measure == 'opc':
+                if 'bin_map' in mapping.keys():
+                    y_test.append(_categorize_severity(line[3], mapping['bin_map']))
+                else:
+                    y_test.append(_categorize_severity(line[3]))
+            elif measure == 'both':
+                raise NotImplementedError # in case this is desired later
             else:
-                y_test.append(_categorize_severity(score))
+                raise ValueError
+            pred.append(np.array(sess.run(pred_tensor,
+                                      feed_dict={image_tensor: np.expand_dims(x, axis=0)})).argmax(axis=1))
+            
         else:
+            x = process_image_file(os.path.join(testfolder, line[1]), 0.08, input_size)
+            x = x.astype('float32') / 255.0
             y_test.append(mapping[line[2]])
-        pred.append(np.array(sess.run(pred_tensor,
-                                      feed_dict={image_tensor: np.expand_dims(x, axis=0),
-                                                 'is_training:0':False})).argmax(axis=1))
+            pred.append(np.array(sess.run(pred_tensor,
+                                        feed_dict={image_tensor: np.expand_dims(x, axis=0),
+                                                    'is_training:0':False})).argmax(axis=1))
     y_test = np.array(y_test)
     pred = np.array(pred)
 
@@ -42,26 +59,34 @@ def eval(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_s
     #class_acc = np.array(cm_norm.diagonal())
     class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0
                     for i in range(len(matrix))]
-    try: # 3 class
-        print('class_acc: {}: {:.3f}, {}: {:.3f}, {}: {:.3f}'.format(
-                list(mapping.keys())[list(mapping.values()).index(0)], class_acc[0],
-                list(mapping.keys())[list(mapping.values()).index(1)], class_acc[1],
-                list(mapping.keys())[list(mapping.values()).index(2)], class_acc[2]))
-    except: # 2 class
-        print('class_acc: {}: {:.3f}, {}: {:.3f}'.format(
-                list(mapping.keys())[list(mapping.values()).index(0)], class_acc[0],
-                list(mapping.keys())[list(mapping.values()).index(1)], class_acc[1]))
+    
+    if sev:
+        if 'bin_map' in mapping.keys():
+            for i in range(len(class_acc)):
+                print('class_acc: {}: {:.3f}'.format(i,  class_acc[i]))
+               
+    else:
 
-    ppvs = [matrix[i,i]/np.sum(matrix[:,i]) if np.sum(matrix[:,i]) else 0 for i in range(len(matrix))]
-    try: # 3 class
-        print('ppvs: {}: {:.3f}, {}: {:.3f}, {}: {:.3f}'.format(
-                list(mapping.keys())[list(mapping.values()).index(0)], ppvs[0],
-                list(mapping.keys())[list(mapping.values()).index(1)], ppvs[1],
-                list(mapping.keys())[list(mapping.values()).index(2)], ppvs[2]))
-    except: # 2 class
-        print('ppvs: {}: {:.3f}, {}: {:.3f}'.format(
-                list(mapping.keys())[list(mapping.values()).index(0)], ppvs[0],
-                list(mapping.keys())[list(mapping.values()).index(1)], ppvs[1]))
+        try: # 3 class
+            print('class_acc: {}: {:.3f}, {}: {:.3f}, {}: {:.3f}'.format(
+                    list(mapping.keys())[list(mapping.values()).index(0)], class_acc[0],
+                    list(mapping.keys())[list(mapping.values()).index(1)], class_acc[1],
+                    list(mapping.keys())[list(mapping.values()).index(2)], class_acc[2]))
+        except: # 2 class
+            print('class_acc: {}: {:.3f}, {}: {:.3f}'.format(
+                    list(mapping.keys())[list(mapping.values()).index(0)], class_acc[0],
+                    list(mapping.keys())[list(mapping.values()).index(1)], class_acc[1]))
+
+        ppvs = [matrix[i,i]/np.sum(matrix[:,i]) if np.sum(matrix[:,i]) else 0 for i in range(len(matrix))]
+        try: # 3 class
+            print('ppvs: {}: {:.3f}, {}: {:.3f}, {}: {:.3f}'.format(
+                    list(mapping.keys())[list(mapping.values()).index(0)], ppvs[0],
+                    list(mapping.keys())[list(mapping.values()).index(1)], ppvs[1],
+                    list(mapping.keys())[list(mapping.values()).index(2)], ppvs[2]))
+        except: # 2 class
+            print('ppvs: {}: {:.3f}, {}: {:.3f}'.format(
+                    list(mapping.keys())[list(mapping.values()).index(0)], ppvs[0],
+                    list(mapping.keys())[list(mapping.values()).index(1)], ppvs[1]))
 
 
 def eval_severity(sess, graph, testfile, testfolder, input_tensor, output_tensor, input_size,
