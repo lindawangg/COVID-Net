@@ -81,7 +81,8 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
                                 csv_file=args.trainfile,
                                 batch_size=batch_size,
                                 input_shape=(args.input_size, args.input_size),
-                                is_regression=True) # process regr values
+                                is_regression=args.sev_reg,
+                                is_classification=args.sev_clf) # process regr values
 
 # utils for getting dependencies of tensors
 def parents(op):
@@ -199,7 +200,7 @@ with tf.Session() as sess:
 
     # for classification head, probably use the original eval() function
 
-    if not args.is_classification:
+    if not args.sev_clf:
         mse_val, expl_var_val, r2_val = eval_severity(sess, graph, testfiles, os.path.join(args.datadir,'valid'),
                     args.in_tensorname, out_tensorname, args.input_size, measure=measure)
 
@@ -213,7 +214,7 @@ with tf.Session() as sess:
         r2_vals.append(r2_val)
     else: # classification eval
         eval(sess, graph, testfiles, os.path.join(args.datadir,'valid'), args.in_tensorname, out_tensorname, args.input_size,
-                    mapping={'bin_map': bin_map}, sev=True):
+                    mapping={'bin_map': bin_map}, sev=True)
         #pass
 
     print('Training started')
