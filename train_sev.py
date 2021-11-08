@@ -15,8 +15,8 @@ Created Oct 4, 2021
 '''
 
 parser = argparse.ArgumentParser(description='COVID-Net Training Script')
-parser.add_argument('--epochs', default=15, type=int, help='Number of epochs')
-parser.add_argument('--lr', default=0.00002, type=float, help='Learning rate')
+parser.add_argument('--epochs', default=25, type=int, help='Number of epochs')
+parser.add_argument('--lr', default=0.0002, type=float, help='Learning rate')
 parser.add_argument('--bs', default=8, type=int, help='Batch size')
 parser.add_argument('--weightspath', default='models/COVIDNet-CXR-2', type=str, help='Path to output folder')
 parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
@@ -35,12 +35,13 @@ parser.add_argument('--weights_tensorname', default='norm_dense_1_sample_weights
 parser.add_argument('--sev_reg', action='store_true', default=False, help='Set model to Severity Regression head')
 parser.add_argument('--sev_wa', action='store_true', default=False, help='Set model to Severity Weighted Averaging Softmax head')
 parser.add_argument('--sev_clf', action='store_true', default=False, help='Set model to Classification Softmax head')
-parser.add_argument('--geo', action='store_true', default=True)
+parser.add_argument('--geo', action='store_true', default=False)
 parser.add_argument('--opc', action='store_true', default=False)
 parser.add_argument('--gpus', type=int, nargs='*', help='List GPU numbers to use while training')
 parser.add_argument('--mae', action='store_true', default=False, help='Use Mean Absolute Error instead of MSE')
 parser.add_argument('--msle', action='store_true', default=False, help='Use Mean Squared Log Error')
 parser.add_argument('--huber', action='store_true', default=False, help='Use Huber Loss')
+parser.add_argument('--cosine_decay', action='store_true', default=False, help='Use Cosine Loss Decay')
 
 args = parser.parse_args()
 
@@ -55,7 +56,7 @@ base_lr = args.lr
 batch_size = args.bs
 display_step = 1
 SEED = 2
-bin_map = np.array([[0,3], [3,6], [6,8]])
+bin_map = np.array([[0.0, 3.0], [3.0, 6.0], [6.0, 8.0]])
 
 # build up output path
 outputPath = './output/'
@@ -68,6 +69,13 @@ elif args.msle:
     runID = runID + '-msle'
 elif args.huber:
     runID = runID + '-huber'
+elif args.cosine_decay:
+    runID += '-cosine-decay'
+
+if args.sev_clf:
+    incre = bin_map[0][1] - bin_map[0][0]
+    runID += f"-{incre}incre"
+
 runPath = outputPath + runID
 pathlib.Path(runPath).mkdir(parents=True, exist_ok=True)
 print('Output: ' + runPath)
@@ -81,8 +89,9 @@ generator = BalanceCovidDataset(data_dir=args.datadir,
                                 csv_file=args.trainfile,
                                 batch_size=batch_size,
                                 input_shape=(args.input_size, args.input_size),
-                                is_regression=args.sev_reg,
-                                is_classification=args.sev_clf) # process regr values
+                                is_regression=args.sev_reg, # process regr values
+                                is_classification=args.sev_clf,
+                                sev_bin_mapping=bin_map) 
 
 # utils for getting dependencies of tensors
 def parents(op):
@@ -124,7 +133,7 @@ with tf.Session() as sess:
     pred_tensor = graph.get_tensor_by_name(args.logit_tensorname)
     # loss expects unscaled logits since it performs a softmax on logits internally for efficiency
 
-    labels_ph = tf.compat.v1.placeholder(dtype=tf.float32, shape=[None,1], name='norm_dense_1_target')
+    labels_ph = tf.compat.v1.placeholder(dtype=tf.float32, shape=[None, 1], name='norm_dense_1_target')
     # output of base COVIDNet model (just before prediction head)
     prev_tensor = graph.get_tensor_by_name('flatten_1/Reshape:0')
     prev_tensor.set_shape([None, 460800])
@@ -164,6 +173,7 @@ with tf.Session() as sess:
             labels=labels_ph, predictions=output_head))
         out_tensorname = 'MatMul:0'
     elif args.sev_clf:
+        labels_ph = tf.compat.v1.placeholder(dtype=tf.float32, shape=[None, bin_map.shape[0]], name='norm_dense_1_target')
         clf_layer = tf.layers.Dense(bin_map.shape[0], activation=None, trainable=True,
                                     name='clf_layer')(prev_tensor)
         loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(
@@ -179,7 +189,9 @@ with tf.Session() as sess:
     global_step = tf.train.get_or_create_global_step()
     decayed_lr = tf.compat.v1.train.cosine_decay(base_lr, global_step,
                                                  decay_steps=1000, alpha=0.01)
-    optimizer = tf.train.AdamOptimizer(learning_rate=decayed_lr)
+
+    learning_rate = decayed_lr if args.cosine_decay else base_lr
+    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss_op)
 
     # Initialize the variables
@@ -214,8 +226,7 @@ with tf.Session() as sess:
         r2_vals.append(r2_val)
     else: # classification eval
         eval(sess, graph, testfiles, os.path.join(args.datadir,'valid'), args.in_tensorname, out_tensorname, args.input_size,
-                    mapping={'bin_map': bin_map}, sev=True)
-        #pass
+                    mapping={'bin_map': bin_map}, sev=True, measure=measure)
 
     print('Training started')
     total_batch = len(generator)
@@ -228,13 +239,14 @@ with tf.Session() as sess:
             # geo: batch_y[0], opc: batch_y[1], both: batch_y[:]
             if args.geo:
                 batch_y = batch_y[:, 0]
+                weights = weights[:, 0]
             elif args.opc:
                 batch_y = batch_y[:, 1]
+                weights = weights[:, 1]
             else:
                 raise ValueError
             # set to size (batch_size, 1) and scale to (0, 1)
             #batch_y = batch_y.reshape(batch_size, 1) / 8.0
-            batch_y = batch_y.reshape(batch_size, 1)
             sess.run(train_op, feed_dict={image_tensor: batch_x,
                                           labels_ph: batch_y,
                                           sample_weights: weights})
@@ -253,6 +265,8 @@ with tf.Session() as sess:
             # mse_vals.append(mse_val)
             # expl_var_vals.append(expl_var_val)
             # r2_vals.append(r2_val)
+            eval(sess, graph, testfiles, os.path.join(args.datadir,'valid'), args.in_tensorname, out_tensorname, args.input_size,
+                    mapping={'bin_map': bin_map}, sev=True, measure=measure)
 
             saver.save(sess, os.path.join(runPath, 'model'), global_step=epoch+1, write_meta_graph=False)
             # print('Saving checkpoint at epoch {}'.format(epoch + 1))

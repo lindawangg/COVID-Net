@@ -118,11 +118,12 @@ class BalanceCovidDataset(keras.utils.Sequence):
             shuffle=True,
             augmentation=apply_augmentation,
             covid_percent=0.5,
-            class_weights=[1., 1.],
+            class_weights=[2.557142857, 1.366412214, 1.0],
             top_percent=0.08,
             is_severity_model=False,
             is_regression=False,
             is_classification=False,
+            sev_bin_mapping = None
     ):
         'Initialization'
         self.datadir = data_dir
@@ -143,6 +144,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
         self.is_severity_model = is_severity_model
         self.is_regression = is_regression
         self.is_classification = is_classification
+        self.sev_bin_mapping = sev_bin_mapping
 
         if self.is_regression:  # to keep consistency
             self.mapping = {'regr':0}
@@ -157,21 +159,6 @@ class BalanceCovidDataset(keras.utils.Sequence):
                 datasets['regr'].append(l)
             self.datasets = [datasets['regr']]
         elif self.is_classification:
-            #geo_labels = []
-            #opc_labels = []
-            #img_paths = []
-            #for l in self.dataset:
-            #    sample = l.split()
-            #    img_paths.append(sample[0])
-            #    geo_labels.append(_categorize_severity(sample[2]))
-            #    opc_labels.append(_categorize_severity(sample[3]))
-            #geo_labels = tf.one_hot(geo_labels, len(self.dataset))
-            #opc_labels = tf.one_hot(opc_labels, len(self.dataset))
-            #self.dataset['clf'] = [{
-            #    'img_paths': img_paths,
-            #    'geo_labels': geo_labels,
-            #    'opc_labels': opc_labels,
-            #}]
             for l in self.dataset:
                 datasets['clf'].append(l)
             self.datasets = [datasets['clf']]
@@ -253,12 +240,6 @@ class BalanceCovidDataset(keras.utils.Sequence):
             return batch_x, batch_y, weights
 
         if self.is_classification:
-            #for i, (img_path, geo_label, opc_label) in enumerate(zip(
-            #    batch_files['img_path'],
-            #    batch_files['geo_labels'],
-            #    batch_files['opc_labels']
-            #)):
-            
             # y contains 2 values (geo and opc)
             batch_y = np.zeros((self.batch_size, 2))
 
@@ -273,19 +254,18 @@ class BalanceCovidDataset(keras.utils.Sequence):
                     x = self.augmentation(x)
 
                 x = x.astype('float32') / 255.0
-                
+
                 y = sample[2:] # get both geo and opc values
-                y = [_categorize_severity(yi) for yi in y]
+                y = [_categorize_severity(yi, self.sev_bin_mapping) for yi in y]
 
                 batch_x[i] = x
                 batch_y[i, :] = y
 
-            #class_weights = self.class_weights
-            #weights = np.take(class_weights, batch_y.astype('int64'))
-            weights = np.ones(self.batch_size) # treat all samples equally (for now...)
-            
+            class_weights = self.class_weights
+            weights = np.take(class_weights, batch_y.astype('int64'))
+            batch_y = keras.utils.to_categorical(batch_y, num_classes=self.sev_bin_mapping.shape[0])
             return batch_x, batch_y, weights
-            
+
 
         # upsample covid cases
         covid_size = max(int(len(batch_files) * self.covid_percent), 1)
