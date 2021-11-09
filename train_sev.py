@@ -177,7 +177,7 @@ with tf.Session() as sess:
         clf_layer = tf.layers.Dense(bin_map.shape[0], activation=None, trainable=True,
                                     name='clf_layer')(prev_tensor)
         loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(
-            labels=labels_ph, logits=clf_layer))
+            labels=labels_ph, logits=clf_layer)*sample_weights)
         out_tensorname = 'clf_layer/BiasAdd:0'
         print_node_children(clf_layer.op)
 
