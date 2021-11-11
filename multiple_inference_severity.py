@@ -15,11 +15,16 @@ def score_prediction(softmax, step_size):
     return np.sum(softmax * vals, axis=-1)
 
 class MetaModel:
-    def __init__(self, meta_file, ckpt_file, old_model=False):
+    def __init__(self, meta_file, ckpt_file, sev_clf=False, old_model=False):
         self.meta_file = meta_file
         self.ckpt_file = ckpt_file
+
+        if sev_clf and old_model:
+            raise ValueError("Both sev_clf and old_model cannot be set as True.")
+
         # old_model is original one from Maya
         self.old_model = old_model
+        self.sev_clf = sev_clf
 
         self.graph = tf.Graph()
         with self.graph.as_default():
@@ -31,6 +36,9 @@ class MetaModel:
                 self.input_tr = self.graph.get_tensor_by_name('input_1:0')
                 self.phase_tr = self.graph.get_tensor_by_name('keras_learning_phase:0')
                 self.output_tr = self.graph.get_tensor_by_name('MLP/dense_1/MatMul:0')
+            elif self.sev_clf:
+                self.input_tr = self.graph.get_tensor_by_name('input_1:0')
+                self.output_tr = self.graph.get_tensor_by_name('clf_layer/BiasAdd:0')
             else:
                 self.input_tr = self.graph.get_tensor_by_name('input_1:0')
                 # NOTE: change this to the output tensor for your model
@@ -86,6 +94,14 @@ class MetaModel:
                     #outputs['score'] = score_prediction(outputs['softmax'], 1 / 3.)
                     #output_dict[key] = outputs['score']
                     output_dict[key] = outs
+                elif self.sev_clf:
+                    centroids = tf.constant([0.8, 2.4, 4.0, 5.6, 7.2], shape = [5, 1])
+                    out_tensor = tf.matmul(tf.nn.softmax(self.output_tr), centroids)
+                    outs = sess.run(out_tensor,
+                                feed_dict={
+                                    self.input_tr: np.expand_dims(image, axis=0),
+                                })
+                    output_dict[key] = outs[0]
                 else:
                     # COVID-Net style model
                     outs = sess.run(self.output_tr,
@@ -94,14 +110,13 @@ class MetaModel:
                                 })
                     output_dict[key] = outs[0]
 
-
         return output_dict
 
 
 if __name__ == '__main__':
     # defaults are set to newer, montefiore based models
     parser = argparse.ArgumentParser(description='COVID-Net Lung Severity Scoring')
-    parser.add_argument('--weightspath_geo', default='output/sev-8-bins-equal-tfseed-2-np-seed-1-epochs-20-lr2e-05', type=str, help='Path to output folder')
+    parser.add_argument('--weightspath_geo', default='output/clf-5-bins-lr2e-05-geo-cosine-decay-1.6incre', type=str, help='Path to output folder')
     parser.add_argument('--weightspath_opc', default='models/COVIDNet-SEV-OPC', type=str, help='Path to output folder')
     parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
     parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
@@ -109,6 +124,7 @@ if __name__ == '__main__':
     parser.add_argument('--input_size', default=480, type=int, help='Size of input (ex: if 480x480, --input_size 480)')
     parser.add_argument('--top_percent', default=0.08, type=float, help='Percent top crop from top of image')
     parser.add_argument('--labels_file', default='./test_mntf_sev.txt', type=str, help='File with labels for evaluation - if specified, only these images in imagedir will be tested, else all files in imagedir will be evaluated.')
+    parser.add_argument('--sev_clf', action='store_true', default=False, help='Use Severity Classification Model')
 
     args = parser.parse_args()
 
@@ -151,7 +167,8 @@ if __name__ == '__main__':
 
     if infer_geo:
         model_geo = MetaModel(os.path.join(args.weightspath_geo, args.metaname),
-                              os.path.join(args.weightspath_geo, args.ckptname))
+                              os.path.join(args.weightspath_geo, args.ckptname),
+                              sev_clf=args.sev_clf)
        
         geo_scores = model_geo.infer_multiple_images(image_path_dict)
 
@@ -162,9 +179,11 @@ if __name__ == '__main__':
             g_s_pred.append(g_s[0])
             g_s_labels.append(geo_labels[k])
         g_s_labels = np.array(g_s_labels, dtype=np.float16) / 8.0
-        g_s_pred = np.array(g_s_pred)
+        g_s_pred = np.array(g_s_pred) / 8.0 if args.sev_clf else np.array(g_s_pred)
         g_mse = mean_squared_error(g_s_labels, g_s_pred)
         g_r2 = r2_score(g_s_labels, g_s_pred)
+        print(f"GEO r2 score: {g_r2}")
+        print(f"GEO mse score: {g_mse}")
 
         # plot results vs labels with lines of best fit
         #plt.scatter(g_s_labels, g_s_pred, label='Geo')

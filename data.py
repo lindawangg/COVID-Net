@@ -118,7 +118,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             shuffle=True,
             augmentation=apply_augmentation,
             covid_percent=0.5,
-            class_weights=[1.376811694, 0.541310541, 2.345679012],
+            class_weights=[2.878787879, 2.0, 2.0, 0.530726257],
             top_percent=0.08,
             is_severity_model=False,
             is_regression=False,

@@ -56,7 +56,7 @@ base_lr = args.lr
 batch_size = args.bs
 display_step = 1
 SEED = 2
-bin_map = np.array([[0.0, 3.0], [3.0, 6.0], [6.0, 8.0]])
+bin_map = np.array([[0.0, 2.0], [2.0, 4.0], [4.0, 6.0], [6.0, 8.0]])
 
 # build up output path
 outputPath = './output/'
