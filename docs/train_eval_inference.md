@@ -32,8 +32,8 @@ python train_tf.py \
     --metaname model.meta \
     --ckptname model \
     --n_classes 2 \
-    --trainfile labels/train_COVIDx8B.txt \
-    --testfile labels/test_COVIDx8B.txt \
+    --trainfile labels/train_COVIDx9B.txt \
+    --testfile labels/test_COVIDx9B.txt \
     --out_tensorname norm_dense_2/Softmax:0 \
     --logit_tensorname norm_dense_2/MatMul:0
 ```
@@ -51,7 +51,7 @@ python eval.py \
     --metaname model.meta \
     --ckptname model \
     --n_classes 2 \
-    --testfile labels/test_COVIDx8B.txt \
+    --testfile labels/test_COVIDx9B.txt \
     --out_tensorname softmax/Softmax:0 \
     --is_medusa_backbone
 ```
@@ -63,7 +63,7 @@ python eval.py \
     --metaname model.meta \
     --ckptname model \
     --n_classes 2 \
-    --testfile labels/test_COVIDx8B.txt \
+    --testfile labels/test_COVIDx9B.txt \
     --in_tensorname input_1:0 \
     --out_tensorname norm_dense_2/Softmax:0
 ```

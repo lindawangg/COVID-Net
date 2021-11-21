@@ -75,7 +75,7 @@ if __name__ == '__main__':
     parser.add_argument('--metaname', default='model.meta', type=str, help='Name of ckpt meta file')
     parser.add_argument('--ckptname', default='model', type=str, help='Name of model ckpts')
     parser.add_argument('--n_classes', default=2, type=int, help='Number of detected classes, defaults to 2')
-    parser.add_argument('--testfile', default='labels/test_COVIDx8B.txt', type=str, help='Name of testfile')
+    parser.add_argument('--testfile', default='labels/test_COVIDx9B.txt', type=str, help='Name of testfile')
     parser.add_argument('--testfolder', default='data/test', type=str, help='Folder where test data is located')
     parser.add_argument('--in_tensorname', default='input_2:0', type=str, help='Name of input tensor to graph')
     parser.add_argument('--in_tensorname_medusa', default='input_1:0', type=str, 
