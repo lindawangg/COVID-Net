@@ -63,7 +63,7 @@ Chest radiography images distribution
 Patients distribution
 |  Type | COVID-19 Negative | COVID-19 Positive | Total |
 |:-----:|:-----------------:|:-----------------:|:-----:|
-| train |       13850       |        2808       | 16658 |
+| train |       13850       |        2808       | 16648 |
 |  test |        200        |         178       |  378  |
 
 
