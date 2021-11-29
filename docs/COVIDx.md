@@ -1,4 +1,5 @@
 # COVIDx Dataset
+**Update 11/26/2021:Released a new training dataset with over 30,000 CXR images from a multinational cohort of over 16,400 patients. The dataset contains 16,490 positive COVID-19 images from over 2,800 patients. The COVIDx V9A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V9B dataset is for COVID-19 positive/negative detection.**\
 **Update 04/21/2021:Released COVIDxSev, a new airspace severity grading dataset for COVID-19 positive patients for COVIDNet CXR-S model.**\
 **Update 03/19/2021:Released new datasets with both over 16,000 CXR images from a multinational cohort of over 15,100 patients from at least 51 countries. The dataset contains over 2,300 positive COVID-19 images from over 1,500 patients. The COVIDx V8A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V8B dataset is for COVID-19 positive/negative detection.**\
 **Update 01/28/2021:Released new datasets with over 15600 CXR images and over 1700 positive COVID-19 images. The COVIDx V7A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V7B dataset is for COVID-19 positive/negative detection.**\
@@ -7,18 +8,34 @@
 **Update 06/26/2020: Released new dataset with over 14000 CXR images containing 473 COVID-19 train samples. Test dataset remains the same for consistency.**\
 **Update 05/13/2020: Released new dataset with 258 COVID-19 train and 100 COVID-19 test samples. There are constantly new xray images being added to covid-chestxray-dataset, Figure1, Actualmed and COVID-19 radiography database so we included train_COVIDx3.txt and test_COVIDx3.txt, which are the xray images we used for training and testing of the CovidNet-CXR3 models.**
 
-The current COVIDx dataset is constructed by the following open source chest radiography datasets:
+The current COVIDx dataset can be downloaded from the following open source site:
+* https://www.kaggle.com/andyczhao/covidx-cxr2?select=competition_test
+
+Or can be manually constructed through our dataset scripts using the following open source chest radiography datasets:
 * https://github.com/ieee8023/covid-chestxray-dataset
 * https://github.com/agchung/Figure1-COVID-chestxray-dataset
 * https://github.com/agchung/Actualmed-COVID-chestxray-dataset
 * https://www.kaggle.com/tawsifurrahman/covid19-radiography-database
 * https://www.kaggle.com/c/rsna-pneumonia-detection-challenge (which came from: https://nihcc.app.box.com/v/ChestXray-NIHCC)
 * https://wiki.cancerimagingarchive.net/pages/viewpage.action?pageId=70230281
+* https://wiki.cancerimagingarchive.net/pages/viewpage.action?pageId=89096912
+* https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/
 
 <!--We especially thank the Radiological Society of North America, National Institutes of Health, Figure1, Actualmed, M.E.H. Chowdhury et al., Dr. Joseph Paul Cohen and the team at MILA involved in the COVID-19 image data collection project for making data available to the global community.-->
 
-## Steps to generate the dataset
+## Steps to download the dataset directly
+The latest COVIDx9 training and testing dataset can be downloaded directly from Kaggle using the following steps:
+1. Download the complete train and test datasets for Covidx9 from the [COVIDx CXR-2 Kaggle Dataset](https://www.kaggle.com/andyczhao/covidx-cxr2?select=competition_test)
 
+The version 5 train and test text files are compatible with the latest [train\_COVIDx9B.txt](../labels/train_COVIDx9B.txt) and [test\_COVIDx9B.txt](../labels/test_COVIDx9B.txt) label files for COVID-19 positive/negative detection, and [train\_COVIDx9A.txt](../labels/train_COVIDx9A.txt) and [test\_COVIDx9A.txt](../labels/test_COVIDx9A.txt) label files for for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia.
+
+ * [train\_COVIDx9A.txt](../labels/train_COVIDx9A.txt): This file contains the training labels for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia.
+ * [test\_COVIDx9A.txt](../labels/test_COVIDx9A.txt): This file contains the testing labels for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia.
+ * [train\_COVIDx9B.txt](../labels/train_COVIDx9B.txt): This file contains the training labels for COVID-19 positive/negative detection.
+ * [test\_COVIDx9B.txt](../labels/test_COVIDx9B.txt): This file contains the testing labels for COVID-19 positive/negative detection.
+
+## Steps to generate the dataset
+The older COVIDx8 training and testing dataset can be reconstructed using the following steps:
 1. Download the datasets listed above
  * `git clone https://github.com/ieee8023/covid-chestxray-dataset.git`
  * `git clone https://github.com/agchung/Figure1-COVID-chestxray-dataset.git`
@@ -35,30 +52,30 @@ The current COVIDx dataset is constructed by the following open source chest rad
  * [train\_COVIDx8B.txt](../labels/train_COVIDx8B.txt): This file contains the samples used for training COVIDNet-CXR for COVID-19 positive/negative detection.
  * [test\_COVIDx8B.txt](../labels/test_COVIDx8B.txt): This file contains the samples used for testing COVIDNet-CXR for COVID-19 positive/negative detection.
 
-## COVIDx data distribution
-COVIDx V8B
+## Latest COVIDx data distribution
+COVIDx V9B
 Chest radiography images distribution
 |  Type | COVID-19 Negative | COVID-19 Positive | Total |
 |:-----:|:-----------------:|:-----------------:|:-----:|
-| train |       13794       |        2158       | 15952 |
+| train |       13992       |        16490      | 30482 |
 |  test |        200        |        200        |  400  |
 
 Patients distribution
 |  Type | COVID-19 Negative | COVID-19 Positive | Total |
 |:-----:|:-----------------:|:-----------------:|:-----:|
-| train |       13651       |        1327       | 14978 |
+| train |       13850       |        2808       | 16648 |
 |  test |        200        |         178       |  378  |
 
 
-COVIDx V7A 
+COVIDx V9A 
 Chest radiography images distribution
 |  Type | Normal | Pneumonia | COVID-19 | Total |
 |:-----:|:------:|:---------:|:--------:|:-----:|
-| train |  7966  |    5475   |   2158   | 15599 |
+| train |  8085  |    5555   |   16490  | 30130 |
 |  test |   100  |     100   |   200    |   400 |
 
 Patients distribution
 |  Type | Normal | Pneumonia | COVID-19 |  Total |
 |:-----:|:------:|:---------:|:--------:|:------:|
-| train |  7966  |    5451   |   1327   |  14744 |
+| train |  8085  |    5531   |   2808   |  16424 |
 |  test |   100  |     100   |    178   |    378 |

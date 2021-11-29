@@ -141,10 +141,7 @@ class BalanceCovidDataset(keras.utils.Sequence):
             datasets[key] = []
 
         for l in self.dataset:
-            if l.split()[-1] == 'sirm':
-                datasets[l.split()[3]].append(l)
-            else:
-                datasets[l.split()[2]].append(l)
+            datasets[l.split()[2]].append(l)
         
         if self.is_severity_model:
             self.datasets = [
@@ -209,10 +206,6 @@ class BalanceCovidDataset(keras.utils.Sequence):
 
         for i in range(len(batch_files)):
             sample = batch_files[i].split()
-
-            # Remove first item from sirm samples for proper indexing as a result of spacing in file name
-            if sample[-1] == 'sirm':
-                sample.pop(0)
 
             if self.is_training:
                 folder = 'train'
