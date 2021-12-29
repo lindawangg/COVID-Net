@@ -1,6 +1,8 @@
 # COVIDNet CXR-S Air Space Severity Grading
-COVDNet CXR-S model takes as input a chest x-ray image of shape (N, 480, 480, 3). where N is the number of batches, 
+COVIDNet CXR-S model takes as input a chest x-ray image of shape (N, 480, 480, 3). where N is the number of batches, 
 and outputs the airspace severity of a SARS-CoV-2 positive patient. The airspace severity is grouped into two levels: 1) Level 1: opacities in 1-2 lung zones, and 2) Level 2: opacities in 3 or more lung zones.
+
+For a detailed description on the methodology behind COVIDNet CXR-S, please click [here](https://www.mdpi.com/2075-4418/12/1/25).
 
 If using the TF checkpoints, here are some useful tensors:
 
@@ -26,6 +28,7 @@ python train_tf.py \
     --datadir data_sev \
     --trainfile labels/train_COVIDxSev.txt \
     --testfile labels/test_COVIDxSev.txt \
+    --in_tensorname input_1:0 \
     --out_tensorname norm_dense_2/Softmax:0 \
     --logit_tensorname norm_dense_2/MatMul:0 \
     --is_severity_model
@@ -45,6 +48,7 @@ python eval.py \
     --n_classes 2 \
     --testfolder data_sev/test \
     --testfile labels/test_COVIDxSev.txt \
+    --in_tensorname input_1:0 \
     --out_tensorname norm_dense_2/Softmax:0 \
     --is_severity_model
 ```
@@ -63,6 +67,7 @@ python inference.py \
     --ckptname model \
     --n_classes 2 \
     --imagepath assets/ex-covid.jpeg \
+    --in_tensorname input_1:0 \
     --out_tensorname norm_dense_2/Softmax:0 \
     --is_severity_model
 ```

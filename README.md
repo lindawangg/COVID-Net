@@ -32,7 +32,8 @@ The COVID-19 pandemic continues to have a devastating effect on the health and w
 
 For a detailed description of the methodology behind COVID-Net and a full description of the COVIDx dataset, please click [here](https://www.nature.com/articles/s41598-020-76550-z).
 
-For a detailed description of the methodology behind COVID-Net based deep neural networks for geographic extent and opacity extent scoring of chest X-rays for SARS-CoV-2 lung disease severity, please click [here](https://arxiv.org/abs/2005.12855).
+For a detailed description of the methodology behind COVIDNet CXR-S severity assessment, please click [here](https://www.mdpi.com/2075-4418/12/1/25). \
+For more information on COVIDNet-S deep neural networks for geographic extent and opacity extent scoring of chest X-rays for SARS-CoV-2 lung disease severity, please click [here](https://arxiv.org/abs/2005.12855).
 
 For a detailed description of the methodology behind COVIDNet-CT and the associated dataset of 104,009 CT images from 1,489 patients, please click [here](https://github.com/haydengunraj/COVIDNet-CT).
 
