@@ -4,6 +4,7 @@
 
 **Recording to webinar on [How we built COVID-Net in 7 days with Gensynth](https://darwinai.news/fny)**
 
+**Update 06/02/2022:** We released [COVIDx CXR-3](https://www.kaggle.com/datasets/andyczhao/covidx-cxr2/versions/7), a cleaned version of the dataset in which several hundred bad training images have been removed. The new dataset contains 29,986 images from 16,648 patients.\
 **Update 11/28/2021:** We released a new training dataset with over 30,000 CXR images from a multinational cohort of over 16,400 patients. The dataset contains 16,490 positive COVID-19 images from over 2,800 patients. The COVIDx V9A dataset is for detection of no pneumonia/non-COVID-19 pneumonia/COVID-19 pneumonia, and COVIDx V9B dataset is for COVID-19 positive/negative detection.\
 **Update 10/19/2021:** We released a new COVID-Net CXR-3 [model](docs/models.md) for COVID-19 positive/negative detection which was trained and tested on the COVIDx8B dataset leveraging the new MEDUSA (Multi-scale Encoder-Decoder Self-Attention) architecture.\
 **Update 04/21/2021:** We released a new COVIDNet CXR-S [model](docs/models.md) and [COVIDxSev](create_COVIDxSev.ipynb) dataset for airspace severity grading in COVID-19 positive patient CXR images. For more information on training, testing and inference please refer to severity [docs](docs/covidnet_severity.md).\
@@ -71,14 +72,14 @@ If you find our work useful, can cite our paper using:
 }
 ```
 ## Quick Links
-1. COVIDNet-CXR models (COVID-19 detection using chest x-rays): https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
-2. COVIDNet-CT models (COVID-19 detection using chest CT scans): https://github.com/haydengunraj/COVIDNet-CT/blob/master/docs/models.md
-3. COVIDNet-CXR-S models (COVID-19 airspace severity grading using chest x-rays): https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
-4. COVIDNet-S models (COVID-19 lung severity assessment using chest x-rays): https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
-5. COVIDx-CXR dataset: https://github.com/lindawangg/COVID-Net/blob/master/docs/COVIDx.md
-6. COVIDx-CT dataset: https://github.com/haydengunraj/COVIDNet-CT/blob/master/docs/dataset.md
+1. COVID-Net CXR models (COVID-19 detection using chest x-rays): https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
+2. COVID-Net CT models (COVID-19 detection using chest CT scans): https://github.com/haydengunraj/COVIDNet-CT/blob/master/docs/models.md
+3. COVID-Net CXR-S models (COVID-19 airspace severity grading using chest x-rays): https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
+4. COVID-Net S models (COVID-19 lung severity assessment using chest x-rays): https://github.com/lindawangg/COVID-Net/blob/master/docs/models.md
+5. COVIDx CXR dataset: https://github.com/lindawangg/COVID-Net/blob/master/docs/COVIDx.md
+6. COVIDx CT dataset: https://github.com/haydengunraj/COVIDNet-CT/blob/master/docs/dataset.md
 7. COVIDx-S dataset: https://github.com/lindawangg/COVID-Net/tree/master/annotations
-8. COVIDNet-P inference for pneumonia: https://github.com/lindawangg/COVID-Net/blob/master/docs/covidnet_pneumonia.md
+8. COVID-Net P inference for pneumonia: https://github.com/lindawangg/COVID-Net/blob/master/docs/covidnet_pneumonia.md
 9. CancerNet-SCa models for skin cancer detection: https://github.com/jamesrenhoulee/CancerNet-SCa/blob/main/docs/models.md
 
 Training, inference, and evaluation scripts for COVIDNet-CXR, COVIDNet-CT, COVIDNet-S, and CancerNet-SCa models are available at the respective repos
